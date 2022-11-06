@@ -1,3 +1,2 @@
-.vscode/
-*.dem
 .DS_Store
+test-data/
