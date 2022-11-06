@@ -46,14 +46,18 @@ func Run() {
 
 			switch {
 			case e.AssistedFlash:
-				stats.Incr(e.Assister.SteamID64, domain.EventFlashAssist)
+				stats.Incr(e.Assister.SteamID64, domain.EventFlashbangAssist)
 			}
 		}
+
+		// if e.Killer != nil {
+		// 	stats.Incr(e.Assister.SteamID64, domain.EventDeath)
+		// }
 	})
 
 	if err = p.ParseToEnd(); err != nil {
 		log.Fatalf("failed to parse demo: %s", err.Error())
 	}
 
-	fmt.Println(stats)
+	fmt.Println(stats.Slug())
 }
