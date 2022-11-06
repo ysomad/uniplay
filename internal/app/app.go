@@ -24,6 +24,10 @@ func Run() {
 	stats := domain.NewPlayerStats()
 
 	p.RegisterEventHandler(func(e events.Kill) {
+		if e.Victim != nil {
+			stats.Incr(e.Victim.SteamID64, domain.EventDeath)
+		}
+
 		if e.Killer != nil {
 			stats.Incr(e.Killer.SteamID64, domain.EventKill)
 
@@ -49,10 +53,6 @@ func Run() {
 				stats.Incr(e.Assister.SteamID64, domain.EventFlashbangAssist)
 			}
 		}
-
-		// if e.Killer != nil {
-		// 	stats.Incr(e.Assister.SteamID64, domain.EventDeath)
-		// }
 	})
 
 	if err = p.ParseToEnd(); err != nil {
