@@ -31,6 +31,7 @@
   },
   "76561198853689073": {
    "assists": 1,
+   "bomb_defused": 1,
    "damage_dealt": 2123,
    "damage_taken": 2506,
    "deaths": 18,
@@ -40,6 +41,7 @@
   },
   "76561198875819474": {
    "assists": 3,
+   "bomb_planted": 1,
    "damage_dealt": 1331,
    "damage_taken": 2580,
    "deaths": 19,
@@ -50,6 +52,7 @@
   },
   "76561198952732180": {
    "assists": 3,
+   "bomb_planted": 1,
    "damage_dealt": 2167,
    "damage_taken": 1872,
    "deaths": 13,
@@ -59,6 +62,7 @@
   },
   "76561199056504634": {
    "assists": 5,
+   "bomb_planted": 1,
    "damage_dealt": 2954,
    "damage_taken": 2171,
    "deaths": 13,
@@ -70,6 +74,8 @@
   },
   "76561199094097116": {
    "assists": 5,
+   "bomb_defused": 1,
+   "bomb_planted": 1,
    "damage_dealt": 2187,
    "damage_taken": 2123,
    "deaths": 16,
@@ -80,6 +86,7 @@
   },
   "76561199126952073": {
    "assists": 3,
+   "bomb_planted": 1,
    "damage_dealt": 2248,
    "damage_taken": 2324,
    "deaths": 18,
@@ -88,6 +95,7 @@
   },
   "76561199131286670": {
    "assists": 6,
+   "bomb_planted": 1,
    "damage_dealt": 1604,
    "damage_taken": 2563,
    "deaths": 20,

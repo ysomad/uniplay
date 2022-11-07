@@ -189,6 +189,27 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 		}
 	})
 
+	// handle bomb defuse
+	p.RegisterEventHandler(func(e events.BombDefused) {
+		if !p.GameState().IsMatchStarted() {
+			return
+		}
+
+		if e.BombEvent.Player != nil {
+			metrics.Incr(e.BombEvent.Player.SteamID64, metric.BombDefused)
+		}
+	})
+
+	p.RegisterEventHandler(func(e events.BombPlanted) {
+		if !p.GameState().IsMatchStarted() {
+			return
+		}
+
+		if e.BombEvent.Player != nil {
+			metrics.Incr(e.BombEvent.Player.SteamID64, metric.BombPlanted)
+		}
+	})
+
 	if err := p.ParseToEnd(); err != nil {
 		return nil, nil, domain.Match{}, err
 	}
