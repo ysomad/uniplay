@@ -22,7 +22,7 @@ func Run() {
 	p := demoinfocs.NewParser(demo)
 	defer p.Close()
 
-	stats := domain.NewPlayerStats()
+	metrics := domain.NewPlayerMetrics()
 	score := domain.NewRoundScore()
 
 	// handle score
@@ -41,32 +41,32 @@ func Run() {
 	// handle kills
 	p.RegisterEventHandler(func(e events.Kill) {
 		if e.Victim != nil {
-			stats.Incr(e.Victim.SteamID64, domain.MetricDeath)
+			metrics.Incr(e.Victim.SteamID64, domain.MetricDeath)
 		}
 
 		if e.Killer != nil {
-			stats.Incr(e.Killer.SteamID64, domain.MetricKill)
+			metrics.Incr(e.Killer.SteamID64, domain.MetricKill)
 
 			switch {
 			case e.IsHeadshot:
-				stats.Incr(e.Killer.SteamID64, domain.MetricHSKill)
+				metrics.Incr(e.Killer.SteamID64, domain.MetricHSKill)
 			case e.AttackerBlind:
-				stats.Incr(e.Killer.SteamID64, domain.MetricBlindKill)
+				metrics.Incr(e.Killer.SteamID64, domain.MetricBlindKill)
 			case e.IsWallBang():
-				stats.Incr(e.Killer.SteamID64, domain.MetricWallbangKill)
+				metrics.Incr(e.Killer.SteamID64, domain.MetricWallbangKill)
 			case e.NoScope:
-				stats.Incr(e.Killer.SteamID64, domain.MetricNoScopeKill)
+				metrics.Incr(e.Killer.SteamID64, domain.MetricNoScopeKill)
 			case e.ThroughSmoke:
-				stats.Incr(e.Killer.SteamID64, domain.MetricThroughSmokeKill)
+				metrics.Incr(e.Killer.SteamID64, domain.MetricThroughSmokeKill)
 			}
 		}
 
 		if e.Assister != nil {
-			stats.Incr(e.Assister.SteamID64, domain.MetricAssist)
+			metrics.Incr(e.Assister.SteamID64, domain.MetricAssist)
 
 			switch {
 			case e.AssistedFlash:
-				stats.Incr(e.Assister.SteamID64, domain.MetricFlashbangAssist)
+				metrics.Incr(e.Assister.SteamID64, domain.MetricFlashbangAssist)
 			}
 		}
 	})
@@ -74,11 +74,11 @@ func Run() {
 	// handle player damage taken or dealt
 	p.RegisterEventHandler(func(e events.PlayerHurt) {
 		if e.Attacker != nil {
-			stats.Add(e.Attacker.SteamID64, domain.MetricDamageDealt, uint16(e.HealthDamage)+uint16(e.ArmorDamage))
+			metrics.Add(e.Attacker.SteamID64, domain.MetricDamageDealt, uint16(e.HealthDamage)+uint16(e.ArmorDamage))
 		}
 
 		if e.Player != nil {
-			stats.Add(e.Player.SteamID64, domain.MetricDamageTaken, uint16(e.HealthDamage)+uint16(e.ArmorDamage))
+			metrics.Add(e.Player.SteamID64, domain.MetricDamageTaken, uint16(e.HealthDamage)+uint16(e.ArmorDamage))
 		}
 
 	})
@@ -86,7 +86,7 @@ func Run() {
 	// handle mvp of the round
 	p.RegisterEventHandler(func(e events.RoundMVPAnnouncement) {
 		if e.Player != nil {
-			stats.Incr(e.Player.SteamID64, domain.MetricRountMVPCount)
+			metrics.Incr(e.Player.SteamID64, domain.MetricRountMVPCount)
 		}
 	})
 
@@ -94,6 +94,6 @@ func Run() {
 		log.Fatalf("failed to parse demo: %s", err.Error())
 	}
 
-	fmt.Println(stats)
+	fmt.Println(metrics)
 	fmt.Println(score)
 }
