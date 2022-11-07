@@ -4,7 +4,7 @@ import (
 	"io"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
-	"github.com/ssssargsian/uniplay/internal/metric"
+	"github.com/ssssargsian/uniplay/internal/domain/metric"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
@@ -19,30 +19,39 @@ func New(r io.Reader) *parser {
 	return &parser{demoinfocs.NewParser(r)}
 }
 
-func (p *parser) Parse() (*domain.PlayerMetrics, *domain.PlayerWeaponEvents, domain.RoundScore, error) {
+func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, match domain.Match, err error) {
 	metrics := domain.NewPlayerMetrics()
-	weaponEvents := domain.NewPlayerWeaponEvents()
-	roundScore := domain.NewRoundScore()
+	weaponMetrics := domain.NewWeaponMetrics()
 
-	// handle score
-	p.RegisterEventHandler(func(e events.RoundEnd) {
-		gs := p.GameState()
-		switch e.Winner {
-		case common.TeamTerrorists:
-			roundScore.Set(gs.TeamTerrorists().Score()+1, gs.TeamCounterTerrorists().Score())
+	var (
+		team1 domain.MatchTeam
+		team2 domain.MatchTeam
+	)
+
+	// handle match end
+	p.RegisterEventHandler(func(e events.AnnouncementWinPanelMatch) {
+		match.Map = p.Header().MapName
+		match.Duration = p.Header().PlaybackTime
+	})
+
+	// handle score update
+	p.RegisterEventHandler(func(e events.ScoreUpdated) {
+		switch e.TeamState.Team() {
 		case common.TeamCounterTerrorists:
-			roundScore.Set(gs.TeamTerrorists().Score(), gs.TeamCounterTerrorists().Score()+1)
-		default:
-			// tie
+			team1.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), e.TeamState.Score())
+		case common.TeamTerrorists:
+			team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), e.TeamState.Score())
 		}
 	})
 
 	// handle kills
 	p.RegisterEventHandler(func(e events.Kill) {
+		if !p.GameState().IsMatchStarted() {
+			return
+		}
+
 		var (
-			victimHealth uint16
-			victimArmor  uint16
-			weapon       string
+			weapon string
 		)
 
 		if e.Weapon != nil {
@@ -50,77 +59,75 @@ func (p *parser) Parse() (*domain.PlayerMetrics, *domain.PlayerWeaponEvents, dom
 		}
 
 		if e.Victim != nil {
-			victimHealth, victimArmor = uint16(e.Victim.Health()), uint16(e.Victim.Armor())
-
-			// total deaths
+			// количество смертей ОТ оружия
 			metrics.Incr(e.Victim.SteamID64, metric.Death)
-			weaponEvents.Add(e.Victim.SteamID64, metric.WeaponEvent{
-				Event:        metric.Death,
-				Weapon:       weapon,
-				HealthDamage: victimHealth,
-				ArmorDamage:  victimArmor,
+			weaponMetrics.Add(e.Victim.SteamID64, domain.WeaponMetric{
+				Metric:        metric.Death,
+				Weapon:        weapon,
+				Value:         1,
+				IsValueDamage: false,
 			})
 		}
 
 		if e.Killer != nil {
-			// kills total
+			// количество убийств оружием
 			metrics.Incr(e.Killer.SteamID64, metric.Kill)
-			weaponEvents.Add(e.Killer.SteamID64, metric.WeaponEvent{
-				Event:        metric.Kill,
-				Weapon:       weapon,
-				HealthDamage: victimHealth,
-				ArmorDamage:  victimArmor,
+			weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
+				Metric:        metric.Kill,
+				Weapon:        weapon,
+				Value:         1,
+				IsValueDamage: false,
 			})
 
 			switch {
-			// headshot kills
+			// количество хс оружием
 			case e.IsHeadshot:
 				metrics.Incr(e.Killer.SteamID64, metric.HSKill)
-				weaponEvents.Add(e.Killer.SteamID64, metric.WeaponEvent{
-					Event:        metric.HSKill,
-					Weapon:       weapon,
-					HealthDamage: victimHealth,
-					ArmorDamage:  victimArmor,
+				weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
+					Metric:        metric.HSKill,
+					Weapon:        weapon,
+					Value:         1,
+					IsValueDamage: false,
 				})
 
-			// blind kills
+			// слепых убийств оружием
 			case e.AttackerBlind:
 				metrics.Incr(e.Killer.SteamID64, metric.BlindKill)
-				weaponEvents.Add(e.Killer.SteamID64, metric.WeaponEvent{
-					Event:        metric.BlindKill,
-					Weapon:       weapon,
-					HealthDamage: victimHealth,
-					ArmorDamage:  victimArmor,
+				weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
+					Metric:        metric.BlindKill,
+					Weapon:        weapon,
+					Value:         1,
+					IsValueDamage: false,
 				})
 
-			// wallbang kills
+			// вб убийств оружием
 			case e.IsWallBang():
 				metrics.Incr(e.Killer.SteamID64, metric.WallbangKill)
-				weaponEvents.Add(e.Killer.SteamID64, metric.WeaponEvent{
-					Event:        metric.WallbangKill,
-					Weapon:       weapon,
-					HealthDamage: victimHealth,
-					ArmorDamage:  victimArmor,
+				weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
+					Metric:        metric.WallbangKill,
+					Weapon:        weapon,
+					Value:         1,
+					IsValueDamage: false,
 				})
 
-			// noscope kills
+			// убийств без прицела оружием
 			case e.NoScope:
 				metrics.Incr(e.Killer.SteamID64, metric.NoScopeKill)
-				weaponEvents.Add(e.Killer.SteamID64, metric.WeaponEvent{
-					Event:        metric.NoScopeKill,
-					Weapon:       weapon,
-					HealthDamage: victimHealth,
-					ArmorDamage:  victimArmor,
+				weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
+					Metric:        metric.NoScopeKill,
+					Weapon:        weapon,
+					Value:         1,
+					IsValueDamage: false,
 				})
 
-			// kills through smoke
+			// убийств через смоук оружием
 			case e.ThroughSmoke:
 				metrics.Incr(e.Killer.SteamID64, metric.ThroughSmokeKill)
-				weaponEvents.Add(e.Killer.SteamID64, metric.WeaponEvent{
-					Event:        metric.ThroughSmokeKill,
-					Weapon:       weapon,
-					HealthDamage: victimHealth,
-					ArmorDamage:  victimArmor,
+				weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
+					Metric:        metric.ThroughSmokeKill,
+					Weapon:        weapon,
+					Value:         1,
+					IsValueDamage: false,
 				})
 			}
 		}
@@ -138,8 +145,9 @@ func (p *parser) Parse() (*domain.PlayerMetrics, *domain.PlayerWeaponEvents, dom
 
 	// handle player damage taken or dealt
 	p.RegisterEventHandler(func(e events.PlayerHurt) {
-		totalDamage := uint16(e.HealthDamage) + uint16(e.ArmorDamage)      // total damage
-		damage := uint16(e.HealthDamageTaken) + uint16(e.ArmorDamageTaken) // damage excluding over damage
+		if !p.GameState().IsMatchStarted() {
+			return
+		}
 
 		var weapon string
 
@@ -148,56 +156,45 @@ func (p *parser) Parse() (*domain.PlayerMetrics, *domain.PlayerWeaponEvents, dom
 		}
 
 		if e.Attacker != nil {
-			// dealt damage without over damage
-			metrics.Add(e.Attacker.SteamID64, metric.DamageDealt, damage)
-			weaponEvents.Add(e.Attacker.SteamID64, metric.WeaponEvent{
-				Event:        metric.DamageDealt,
-				Weapon:       weapon,
-				HealthDamage: uint16(e.HealthDamageTaken),
-				ArmorDamage:  uint16(e.ArmorDamageTaken),
-			})
-
-			// dealt total damage with over damage
-			metrics.Add(e.Attacker.SteamID64, metric.DamageDealtWithOver, totalDamage)
-			weaponEvents.Add(e.Attacker.SteamID64, metric.WeaponEvent{
-				Event:        metric.DamageDealtWithOver,
-				Weapon:       weapon,
-				HealthDamage: uint16(e.HealthDamage),
-				ArmorDamage:  uint16(e.ArmorDamage),
+			// нанесено урона оружием
+			metrics.Add(e.Attacker.SteamID64, metric.DamageDealt, e.HealthDamage)
+			weaponMetrics.Add(e.Attacker.SteamID64, domain.WeaponMetric{
+				Metric:        metric.DamageDealt,
+				Weapon:        weapon,
+				Value:         e.HealthDamage,
+				IsValueDamage: true,
 			})
 		}
 
 		if e.Player != nil {
-			// damage taken without over damage
-			metrics.Add(e.Player.SteamID64, metric.DamageTaken, damage)
-			weaponEvents.Add(e.Player.SteamID64, metric.WeaponEvent{
-				Event:        metric.DamageTaken,
-				Weapon:       weapon,
-				HealthDamage: uint16(e.HealthDamageTaken),
-				ArmorDamage:  uint16(e.ArmorDamageTaken),
-			})
-
-			// total damage taken with over damage
-			metrics.Add(e.Player.SteamID64, metric.DamageTakenWithOver, totalDamage)
-			weaponEvents.Add(e.Player.SteamID64, metric.WeaponEvent{
-				Event:        metric.DamageTakenWithOver,
-				Weapon:       weapon,
-				HealthDamage: uint16(e.HealthDamage),
-				ArmorDamage:  uint16(e.ArmorDamage),
+			// получено урона оружием
+			metrics.Add(e.Player.SteamID64, metric.DamageTaken, e.HealthDamage)
+			weaponMetrics.Add(e.Player.SteamID64, domain.WeaponMetric{
+				Metric:        metric.DamageTaken,
+				Weapon:        weapon,
+				Value:         e.HealthDamage,
+				IsValueDamage: true,
 			})
 		}
 	})
 
 	// handle mvp of the round
 	p.RegisterEventHandler(func(e events.RoundMVPAnnouncement) {
+		if !p.GameState().IsMatchStarted() {
+			return
+		}
+
 		if e.Player != nil {
 			metrics.Incr(e.Player.SteamID64, metric.RoundMVPCount)
 		}
 	})
 
 	if err := p.ParseToEnd(); err != nil {
-		return nil, nil, domain.RoundScore{}, err
+		return nil, nil, domain.Match{}, err
 	}
 
-	return metrics, weaponEvents, roundScore, nil
+	match.Team1 = team1
+	match.Team2 = team2
+
+	return metrics, weaponMetrics, match, nil
 }

@@ -3,73 +3,68 @@ package domain
 import (
 	"sync"
 
-	"github.com/ssssargsian/uniplay/internal/metric"
+	"github.com/ssssargsian/uniplay/internal/domain/metric"
 )
 
 // SteamID represents steam uint64 id.
 type SteamID uint64
 
-// metrics is a map of metric, key is metric, value is amount of entries of the event.
-type metrics map[metric.Metric]uint16
-
 // PlayerMetrics is a map of player event entries.
 type PlayerMetrics struct {
-	mx      sync.RWMutex
-	metrics map[SteamID]metrics
+	mx      sync.RWMutex                      `json:"-"`
+	Metrics map[SteamID]map[metric.Metric]int `json:"metrics"`
 }
 
 func NewPlayerMetrics() *PlayerMetrics {
 	return &PlayerMetrics{
-		metrics: make(map[SteamID]metrics),
+		Metrics: make(map[SteamID]map[metric.Metric]int),
 	}
 }
 
+type PlayerMetricsOut struct {
+	Metrics map[SteamID]map[string]int `json:"metrics"`
+}
+
 // Get returns stats of specific player with steamID.
-func (p *PlayerMetrics) Get(steamID uint64) (metrics, bool) {
+func (p *PlayerMetrics) Get(steamID uint64) (map[metric.Metric]int, bool) {
 	p.mx.RLock()
 	defer p.mx.RUnlock()
 
-	v, ok := p.metrics[SteamID(steamID)]
+	v, ok := p.Metrics[SteamID(steamID)]
 	return v, ok
 }
 
 // Add n to amount of player metric entries in the stats map of specific player with steamID.
-func (p *PlayerMetrics) Add(steamID uint64, m metric.Metric, n uint16) { p.add(steamID, m, n) }
+func (p *PlayerMetrics) Add(steamID uint64, m metric.Metric, n int) { p.add(steamID, m, n) }
 
 // Incr increments metric entries count for player with steamID.
 func (p *PlayerMetrics) Incr(steamID uint64, m metric.Metric) { p.add(steamID, m, 1) }
 
-func (p *PlayerMetrics) add(steamID uint64, m metric.Metric, n uint16) {
+func (p *PlayerMetrics) add(steamID uint64, m metric.Metric, n int) {
 	p.mx.Lock()
 	defer p.mx.Unlock()
 
-	if _, ok := p.metrics[SteamID(steamID)]; !ok {
-		p.metrics[SteamID(steamID)] = make(metrics)
+	if _, ok := p.Metrics[SteamID(steamID)]; !ok {
+		p.Metrics[SteamID(steamID)] = make(map[metric.Metric]int)
 	}
 
-	p.metrics[SteamID(steamID)][m] += n
+	p.Metrics[SteamID(steamID)][m] += n
 }
 
-type weaponEvents []metric.WeaponEvent
+func (p *PlayerMetrics) Out() *PlayerMetricsOut {
+	out := make(map[SteamID]map[string]int)
 
-type PlayerWeaponEvents struct {
-	mx      sync.RWMutex
-	metrics map[SteamID]weaponEvents
-}
+	for steamID, metrics := range p.Metrics {
+		for metric, val := range metrics {
+			if _, ok := out[steamID]; !ok {
+				out[steamID] = make(map[string]int)
+			}
 
-func NewPlayerWeaponEvents() *PlayerWeaponEvents {
-	return &PlayerWeaponEvents{
-		metrics: make(map[SteamID]weaponEvents),
-	}
-}
-
-func (w *PlayerWeaponEvents) Add(steamID uint64, m metric.WeaponEvent) {
-	w.mx.Lock()
-	defer w.mx.Unlock()
-
-	if _, ok := w.metrics[SteamID(steamID)]; !ok {
-		w.metrics[SteamID(steamID)] = []metric.WeaponEvent{}
+			out[steamID][metric.String()] = val
+		}
 	}
 
-	w.metrics[SteamID(steamID)] = append(w.metrics[SteamID(steamID)], m)
+	return &PlayerMetricsOut{
+		Metrics: out,
+	}
 }

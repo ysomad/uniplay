@@ -1,7 +1,8 @@
 package app
 
 import (
-	"fmt"
+	"encoding/json"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -18,12 +19,36 @@ func Run() {
 	p := demoparser.New(demo)
 	defer p.Close()
 
-	metrics, weaponEvents, roundScore, err := p.Parse()
+	metrics, wmetrics, match, err := p.Parse()
 	if err != nil {
 		log.Fatalf("parse error: %s", err.Error())
 	}
 
-	fmt.Println(metrics)
-	fmt.Println(weaponEvents)
-	fmt.Println(roundScore)
+	metricsFile, err := json.MarshalIndent(metrics.Out(), "", " ")
+	if err != nil {
+		log.Fatalf("json.MarshalIndent: %s", err.Error())
+	}
+
+	if err = ioutil.WriteFile("metrics.json", metricsFile, 0644); err != nil {
+		log.Fatalf("ioutil.WriteFile: %s", err.Error())
+	}
+
+	wmetricsFile, err := json.MarshalIndent(wmetrics.Out(), "", " ")
+	if err != nil {
+		log.Fatalf("json.MarshalIndent: %s", err.Error())
+	}
+
+	if err = ioutil.WriteFile("weapon_metrics.json", wmetricsFile, 0644); err != nil {
+		log.Fatalf("ioutil.WriteFile: %s", err.Error())
+	}
+
+	matchFile, err := json.MarshalIndent(match, "", " ")
+	if err != nil {
+		log.Fatalf("json.MarshalIndent: %s", err.Error())
+	}
+
+	if err = ioutil.WriteFile("match.json", matchFile, 0644); err != nil {
+		log.Fatalf("ioutil.WriteFile: %s", err.Error())
+	}
+
 }

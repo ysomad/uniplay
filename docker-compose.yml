@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: "postgres:14.5-alpine"
+    container_name: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "pass"
+      POSTGRES_DB: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  app:
+    image: app
+    container_name: app
+    restart: on-failure
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+
+volumes:
+  pg-data:
