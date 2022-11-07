@@ -200,6 +200,7 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 		}
 	})
 
+	// handle bomb plant
 	p.RegisterEventHandler(func(e events.BombPlanted) {
 		if !p.GameState().IsMatchStarted() {
 			return
