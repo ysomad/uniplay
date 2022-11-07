@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -201,7 +202,7 @@ func Run() {
 		log.Fatalf("failed to parse demo: %s", err.Error())
 	}
 
-	// fmt.Println(metrics)
-	// fmt.Println(score)
-	// fmt.Println(weaponMetrics)
+	fmt.Println(metrics)
+	fmt.Println(score)
+	fmt.Println(weaponEvents)
 }
