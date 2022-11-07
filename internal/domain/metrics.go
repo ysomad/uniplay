@@ -50,25 +50,25 @@ func (p *playerMetrics) add(steamID uint64, m metric.Metric, n uint16) {
 	p.metrics[SteamID(steamID)][m] += n
 }
 
-type weaponMetrics []metric.WeaponMetric
+type weaponEvents []metric.WeaponEvent
 
-type playerWeaponMetrics struct {
+type playerWeaponEvents struct {
 	mx      sync.RWMutex
-	metrics map[SteamID]weaponMetrics
+	metrics map[SteamID]weaponEvents
 }
 
-func NewPlayerWeaponMetrics() *playerWeaponMetrics {
-	return &playerWeaponMetrics{
-		metrics: make(map[SteamID]weaponMetrics),
+func NewPlayerWeaponEvents() *playerWeaponEvents {
+	return &playerWeaponEvents{
+		metrics: make(map[SteamID]weaponEvents),
 	}
 }
 
-func (w *playerWeaponMetrics) Add(steamID uint64, m metric.WeaponMetric) {
+func (w *playerWeaponEvents) Add(steamID uint64, m metric.WeaponEvent) {
 	w.mx.Lock()
 	defer w.mx.Unlock()
 
 	if _, ok := w.metrics[SteamID(steamID)]; !ok {
-		w.metrics[SteamID(steamID)] = []metric.WeaponMetric{}
+		w.metrics[SteamID(steamID)] = []metric.WeaponEvent{}
 	}
 
 	w.metrics[SteamID(steamID)] = append(w.metrics[SteamID(steamID)], m)

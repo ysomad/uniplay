@@ -26,13 +26,9 @@ const (
 	RoundMVPCount
 )
 
-type WeaponMetric struct {
-	Metric Metric
-	Weapon string // HE Grenade for example or AWP
-	Damage uint16
+type WeaponEvent struct {
+	Event        Metric
+	Weapon       string // HE Grenade for example or AWP
+	HealthDamage uint16
+	ArmorDamage  uint16
 }
-
-const (
-	DamageKill   uint16 = 100
-	DamageAssist uint16 = 0
-)
