@@ -9,8 +9,8 @@ func NewRoundScore() roundScore {
 	return roundScore{}
 }
 
-// Update updates RoundScore with provided values for T and CT sides.
-func (s *roundScore) Update(TScore, CTScore int) {
+// Set sets sides score.
+func (s *roundScore) Set(TScore, CTScore int) {
 	s.t, s.ct = uint8(TScore), uint8(CTScore)
 }
 
