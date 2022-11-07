@@ -41,32 +41,32 @@ func Run() {
 	// handle kills
 	p.RegisterEventHandler(func(e events.Kill) {
 		if e.Victim != nil {
-			stats.Add(e.Victim.SteamID64, domain.MetricDeath, 1)
+			stats.Incr(e.Victim.SteamID64, domain.MetricDeath)
 		}
 
 		if e.Killer != nil {
-			stats.Add(e.Killer.SteamID64, domain.MetricKill, 1)
+			stats.Incr(e.Killer.SteamID64, domain.MetricKill)
 
 			switch {
 			case e.IsHeadshot:
-				stats.Add(e.Killer.SteamID64, domain.MetricHSKill, 1)
+				stats.Incr(e.Killer.SteamID64, domain.MetricHSKill)
 			case e.AttackerBlind:
-				stats.Add(e.Killer.SteamID64, domain.MetricBlindKill, 1)
+				stats.Incr(e.Killer.SteamID64, domain.MetricBlindKill)
 			case e.IsWallBang():
-				stats.Add(e.Killer.SteamID64, domain.MetricWallbangKill, 1)
+				stats.Incr(e.Killer.SteamID64, domain.MetricWallbangKill)
 			case e.NoScope:
-				stats.Add(e.Killer.SteamID64, domain.MetricNoScopeKill, 1)
+				stats.Incr(e.Killer.SteamID64, domain.MetricNoScopeKill)
 			case e.ThroughSmoke:
-				stats.Add(e.Killer.SteamID64, domain.MetricThroughSmokeKill, 1)
+				stats.Incr(e.Killer.SteamID64, domain.MetricThroughSmokeKill)
 			}
 		}
 
 		if e.Assister != nil {
-			stats.Add(e.Assister.SteamID64, domain.MetricAssist, 1)
+			stats.Incr(e.Assister.SteamID64, domain.MetricAssist)
 
 			switch {
 			case e.AssistedFlash:
-				stats.Add(e.Assister.SteamID64, domain.MetricFlashbangAssist, 1)
+				stats.Incr(e.Assister.SteamID64, domain.MetricFlashbangAssist)
 			}
 		}
 	})
@@ -86,7 +86,7 @@ func Run() {
 	// handle mvp of the round
 	p.RegisterEventHandler(func(e events.RoundMVPAnnouncement) {
 		if e.Player != nil {
-			stats.Add(e.Player.SteamID64, domain.MetricRoundMVP, 1)
+			stats.Incr(e.Player.SteamID64, domain.MetricRountMVPCount)
 		}
 	})
 

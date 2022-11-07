@@ -15,7 +15,7 @@ const (
 	MetricAssist
 	MetricFlashbangAssist
 
-	MetricRoundMVP
+	MetricRountMVPCount
 
 	MetricDamageTaken
 	MetricDamageDealt

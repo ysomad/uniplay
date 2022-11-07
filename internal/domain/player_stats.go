@@ -1,5 +1,7 @@
 package domain
 
+import "sync"
+
 // SteamID represents steam uint64 id.
 type SteamID uint64
 
@@ -8,6 +10,7 @@ type stats map[metric]uint16
 
 // playerStats is a map of player event entries.
 type playerStats struct {
+	mx    sync.RWMutex
 	stats map[SteamID]stats
 }
 
@@ -19,14 +22,24 @@ func NewPlayerStats() *playerStats {
 
 // Get returns stats of specific player with steamID.
 func (s *playerStats) Get(steamID uint64) (stats, bool) {
+	s.mx.RLock()
+	defer s.mx.RUnlock()
+
 	v, ok := s.stats[SteamID(steamID)]
 	return v, ok
 }
 
 // Add n to amount of player metric entries in the stats map of specific player with steamID.
-func (s *playerStats) Add(steamID uint64, m metric, n uint16) {
-	_, ok := s.stats[SteamID(steamID)]
-	if !ok {
+func (s *playerStats) Add(steamID uint64, m metric, n uint16) { s.add(steamID, m, n) }
+
+// Incr increments metric entries count for playey with steamID.
+func (s *playerStats) Incr(steamID uint64, m metric) { s.add(steamID, m, 1) }
+
+func (s *playerStats) add(steamID uint64, m metric, n uint16) {
+	s.mx.Lock()
+	defer s.mx.Unlock()
+
+	if _, ok := s.stats[SteamID(steamID)]; !ok {
 		s.stats[SteamID(steamID)] = make(stats)
 	}
 
