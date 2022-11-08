@@ -36,6 +36,5 @@ CREATE TABLE IF NOT EXISTS weapon_metric (
     player_id bigint NOT NULL REFERENCES player (steam_id),
     metric smallint NOT NULL,
     weapon varchar(64) NOT NULL,
-    value smallint NOT NULL,
-    is_value_damage boolean DEFAULT FALSE NOT NULL
+    value smallint NOT NULL
 );

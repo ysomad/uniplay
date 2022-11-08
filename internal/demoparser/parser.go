@@ -4,7 +4,6 @@ import (
 	"io"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
-	"github.com/ssssargsian/uniplay/internal/domain/metric"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
@@ -60,85 +59,50 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 
 		if e.Victim != nil {
 			// количество смертей ОТ оружия
-			metrics.Incr(e.Victim.SteamID64, metric.Death)
-			weaponMetrics.Add(e.Victim.SteamID64, domain.WeaponMetric{
-				Metric:        metric.Death,
-				Weapon:        weapon,
-				Value:         1,
-				IsValueDamage: false,
-			})
+			metrics.Incr(e.Victim.SteamID64, domain.MetricDeath)
+			weaponMetrics.Incr(e.Victim.SteamID64, domain.Weapon(weapon), domain.MetricDeath)
 		}
 
 		if e.Killer != nil {
 			// количество убийств оружием
-			metrics.Incr(e.Killer.SteamID64, metric.Kill)
-			weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
-				Metric:        metric.Kill,
-				Weapon:        weapon,
-				Value:         1,
-				IsValueDamage: false,
-			})
+			metrics.Incr(e.Killer.SteamID64, domain.MetricKill)
+			weaponMetrics.Incr(e.Killer.SteamID64, domain.Weapon(weapon), domain.MetricKill)
 
 			switch {
 			// количество хс оружием
 			case e.IsHeadshot:
-				metrics.Incr(e.Killer.SteamID64, metric.HSKill)
-				weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
-					Metric:        metric.HSKill,
-					Weapon:        weapon,
-					Value:         1,
-					IsValueDamage: false,
-				})
+				metrics.Incr(e.Killer.SteamID64, domain.MetricHSKill)
+				weaponMetrics.Incr(e.Killer.SteamID64, domain.Weapon(weapon), domain.MetricHSKill)
 
 			// слепых убийств оружием
 			case e.AttackerBlind:
-				metrics.Incr(e.Killer.SteamID64, metric.BlindKill)
-				weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
-					Metric:        metric.BlindKill,
-					Weapon:        weapon,
-					Value:         1,
-					IsValueDamage: false,
-				})
+				metrics.Incr(e.Killer.SteamID64, domain.MetricBlindKill)
+				weaponMetrics.Incr(e.Killer.SteamID64, domain.Weapon(weapon), domain.MetricBlindKill)
 
 			// вб убийств оружием
 			case e.IsWallBang():
-				metrics.Incr(e.Killer.SteamID64, metric.WallbangKill)
-				weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
-					Metric:        metric.WallbangKill,
-					Weapon:        weapon,
-					Value:         1,
-					IsValueDamage: false,
-				})
+				metrics.Incr(e.Killer.SteamID64, domain.MetricWallbangKill)
+				weaponMetrics.Incr(e.Killer.SteamID64, domain.Weapon(weapon), domain.MetricWallbangKill)
 
 			// убийств без прицела оружием
 			case e.NoScope:
-				metrics.Incr(e.Killer.SteamID64, metric.NoScopeKill)
-				weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
-					Metric:        metric.NoScopeKill,
-					Weapon:        weapon,
-					Value:         1,
-					IsValueDamage: false,
-				})
+				metrics.Incr(e.Killer.SteamID64, domain.MetricNoScopeKill)
+				weaponMetrics.Incr(e.Killer.SteamID64, domain.Weapon(weapon), domain.MetricNoScopeKill)
 
 			// убийств через смоук оружием
 			case e.ThroughSmoke:
-				metrics.Incr(e.Killer.SteamID64, metric.ThroughSmokeKill)
-				weaponMetrics.Add(e.Killer.SteamID64, domain.WeaponMetric{
-					Metric:        metric.ThroughSmokeKill,
-					Weapon:        weapon,
-					Value:         1,
-					IsValueDamage: false,
-				})
+				metrics.Incr(e.Killer.SteamID64, domain.MetricThroughSmokeKill)
+				weaponMetrics.Incr(e.Killer.SteamID64, domain.Weapon(weapon), domain.MetricThroughSmokeKill)
 			}
 		}
 
 		if e.Assister != nil {
-			// total assists
-			metrics.Incr(e.Assister.SteamID64, metric.Assist)
+			// всего кол-во ассистов
+			metrics.Incr(e.Assister.SteamID64, domain.MetricAssist)
 
-			// total assists with flash
+			// кол-во ассистов флешкой
 			if e.AssistedFlash {
-				metrics.Incr(e.Assister.SteamID64, metric.FlashbangAssist)
+				metrics.Incr(e.Assister.SteamID64, domain.MetricFlashbangAssist)
 			}
 		}
 	})
@@ -157,24 +121,14 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 
 		if e.Attacker != nil {
 			// нанесено урона оружием
-			metrics.Add(e.Attacker.SteamID64, metric.DamageDealt, e.HealthDamage)
-			weaponMetrics.Add(e.Attacker.SteamID64, domain.WeaponMetric{
-				Metric:        metric.DamageDealt,
-				Weapon:        weapon,
-				Value:         e.HealthDamage,
-				IsValueDamage: true,
-			})
+			metrics.Add(e.Attacker.SteamID64, domain.MetricDamageDealt, e.HealthDamage)
+			weaponMetrics.Add(e.Attacker.SteamID64, domain.Weapon(weapon), domain.MetricDamageDealt, e.HealthDamage)
 		}
 
 		if e.Player != nil {
 			// получено урона оружием
-			metrics.Add(e.Player.SteamID64, metric.DamageTaken, e.HealthDamage)
-			weaponMetrics.Add(e.Player.SteamID64, domain.WeaponMetric{
-				Metric:        metric.DamageTaken,
-				Weapon:        weapon,
-				Value:         e.HealthDamage,
-				IsValueDamage: true,
-			})
+			metrics.Add(e.Player.SteamID64, domain.MetricDamageTaken, e.HealthDamage)
+			weaponMetrics.Add(e.Player.SteamID64, domain.Weapon(weapon), domain.MetricDamageTaken, e.HealthDamage)
 		}
 	})
 
@@ -185,7 +139,7 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 		}
 
 		if e.Player != nil {
-			metrics.Incr(e.Player.SteamID64, metric.RoundMVPCount)
+			metrics.Incr(e.Player.SteamID64, domain.MetricRoundMVPCount)
 		}
 	})
 
@@ -196,7 +150,7 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 		}
 
 		if e.BombEvent.Player != nil {
-			metrics.Incr(e.BombEvent.Player.SteamID64, metric.BombDefused)
+			metrics.Incr(e.BombEvent.Player.SteamID64, domain.MetricBombDefused)
 		}
 	})
 
@@ -207,7 +161,7 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 		}
 
 		if e.BombEvent.Player != nil {
-			metrics.Incr(e.BombEvent.Player.SteamID64, metric.BombPlanted)
+			metrics.Incr(e.BombEvent.Player.SteamID64, domain.MetricBombPlanted)
 		}
 	})
 

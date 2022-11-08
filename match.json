@@ -1,14 +1,14 @@
 {
- "map": "de_dust2",
- "duration": 2021171920896,
- "team_1": {
-  "name": "team_Sydachok",
-  "flag_code": "",
-  "score": 6
+ "Map": "de_dust2",
+ "Duration": 2021171920896,
+ "Team1": {
+  "Name": "team_Sydachok",
+  "FlagCode": "",
+  "Score": 6
  },
- "team_2": {
-  "name": "team___KZ__",
-  "flag_code": "",
-  "score": 16
+ "Team2": {
+  "Name": "team___KZ__",
+  "FlagCode": "",
+  "Score": 16
  }
 }

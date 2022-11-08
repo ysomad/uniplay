@@ -2,69 +2,37 @@ package domain
 
 import (
 	"sync"
-
-	"github.com/ssssargsian/uniplay/internal/domain/metric"
 )
 
-type WeaponMetric struct {
-	Metric        metric.Metric `json:"metric"`
-	Weapon        string        `json:"weapon"`
-	Value         int           `json:"value"`
-	IsValueDamage bool          `json:"is_value_damage"`
-}
-
-type WeaponMetricOut struct {
-	Metric        string `json:"metric"`
-	Weapon        string `json:"weapon"`
-	Value         int    `json:"value"`
-	IsValueDamage bool   `json:"is_value_damage"`
-}
-
-type WeaponMetricsOut struct {
-	Metrics map[SteamID][]WeaponMetricOut `json:"metrics,omitempty"`
-}
+type Weapon string
 
 type WeaponMetrics struct {
-	mx      sync.RWMutex               `json:"-"`
-	Metrics map[SteamID][]WeaponMetric `json:"metrics"`
+	mx      sync.RWMutex
+	Metrics map[SteamID]map[Weapon]map[Metric]int
 }
 
 func NewWeaponMetrics() *WeaponMetrics {
 	return &WeaponMetrics{
-		Metrics: make(map[SteamID][]WeaponMetric),
+		Metrics: make(map[SteamID]map[Weapon]map[Metric]int),
 	}
 }
 
-func (p *WeaponMetrics) Add(steamID uint64, m WeaponMetric) {
+func (p *WeaponMetrics) Add(steamID64 uint64, w Weapon, m Metric, v int) { p.add(steamID64, w, m, v) }
+func (p *WeaponMetrics) Incr(steamID64 uint64, w Weapon, m Metric)       { p.add(steamID64, w, m, 1) }
+
+func (p *WeaponMetrics) add(steamID64 uint64, w Weapon, m Metric, v int) {
 	p.mx.Lock()
 	defer p.mx.Unlock()
 
-	if _, ok := p.Metrics[SteamID(steamID)]; !ok {
-		p.Metrics[SteamID(steamID)] = []WeaponMetric{}
+	steamID := SteamID(steamID64)
+
+	if _, ok := p.Metrics[steamID]; !ok {
+		p.Metrics[steamID] = make(map[Weapon]map[Metric]int)
 	}
 
-	p.Metrics[SteamID(steamID)] = append(p.Metrics[SteamID(steamID)], m)
-}
-
-func (p *WeaponMetrics) Out() *WeaponMetricsOut {
-	out := make(map[SteamID][]WeaponMetricOut)
-
-	for steamID, metrics := range p.Metrics {
-		for i, val := range metrics {
-			if _, ok := out[steamID]; !ok {
-				out[steamID] = make([]WeaponMetricOut, len(metrics))
-			}
-
-			out[steamID][i] = WeaponMetricOut{
-				Metric:        val.Metric.String(),
-				Weapon:        val.Weapon,
-				Value:         val.Value,
-				IsValueDamage: val.IsValueDamage,
-			}
-		}
+	if _, ok := p.Metrics[steamID][w]; !ok {
+		p.Metrics[steamID][w] = make(map[Metric]int)
 	}
 
-	return &WeaponMetricsOut{
-		Metrics: out,
-	}
+	p.Metrics[steamID][w][m] += v
 }
