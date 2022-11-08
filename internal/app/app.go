@@ -2,11 +2,10 @@ package app
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"log"
 	"os"
 
-	"github.com/ssssargsian/uniplay/demoparser"
+	"github.com/ssssargsian/uniplay/internal/demoparser"
 )
 
 func Run() {
@@ -29,7 +28,7 @@ func Run() {
 		log.Fatalf("json.MarshalIndent: %s", err.Error())
 	}
 
-	if err = ioutil.WriteFile("metrics.json", metricsFile, 0644); err != nil {
+	if err = os.WriteFile("metrics.json", metricsFile, 0644); err != nil {
 		log.Fatalf("ioutil.WriteFile: %s", err.Error())
 	}
 
@@ -38,7 +37,7 @@ func Run() {
 		log.Fatalf("json.MarshalIndent: %s", err.Error())
 	}
 
-	if err = ioutil.WriteFile("weapon_metrics.json", wmetricsFile, 0644); err != nil {
+	if err = os.WriteFile("weapon_metrics.json", wmetricsFile, 0644); err != nil {
 		log.Fatalf("ioutil.WriteFile: %s", err.Error())
 	}
 
@@ -47,7 +46,7 @@ func Run() {
 		log.Fatalf("json.MarshalIndent: %s", err.Error())
 	}
 
-	if err = ioutil.WriteFile("match.json", matchFile, 0644); err != nil {
+	if err = os.WriteFile("match.json", matchFile, 0644); err != nil {
 		log.Fatalf("ioutil.WriteFile: %s", err.Error())
 	}
 
