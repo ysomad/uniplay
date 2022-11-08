@@ -20,18 +20,17 @@ func New(r io.Reader) *parser {
 
 // allowedCollect c
 func (p *parser) allowedCollect(gs demoinfocs.GameState) bool {
-	if !gs.IsMatchStarted() {
-		return false
-	}
-
 	for _, p := range gs.TeamCounterTerrorists().Members() {
 		weapons := p.Weapons()
+		if len(weapons) < 1 {
+			continue
+		}
 		if len(weapons) == 1 && weapons[0].Type == common.EqKnife {
 			return false
 		}
 	}
 
-	return true
+	return gs.IsMatchStarted()
 }
 
 func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, match domain.Match, err error) {

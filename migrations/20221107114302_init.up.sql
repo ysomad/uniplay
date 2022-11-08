@@ -14,12 +14,11 @@ CREATE TABLE IF NOT EXISTS team_player (
 
 CREATE TABLE IF NOT EXISTS match (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid () NOT NULL,
-    map varchar(64) NOT NULL,
+    map_name varchar(64) NOT NULL,
     team1_name varchar(16) NOT NULL REFERENCES team (name),
     team1_score smallint NOT NULL,
     team2_name varchar(16) NOT NULL REFERENCES team (name),
     team2_score smallint NOT NULL,
-    rounds_played smallint NOT NULL,
     duration interval NOT NULL,
     upload_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
