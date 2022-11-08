@@ -17,22 +17,20 @@ func NewWeaponMetrics() *WeaponMetrics {
 	}
 }
 
-func (p *WeaponMetrics) Add(steamID64 uint64, w Weapon, m Metric, v int) { p.add(steamID64, w, m, v) }
-func (p *WeaponMetrics) Incr(steamID64 uint64, w Weapon, m Metric)       { p.add(steamID64, w, m, 1) }
+func (p *WeaponMetrics) Add(sid SteamID, w Weapon, m Metric, v int) { p.add(sid, w, m, v) }
+func (p *WeaponMetrics) Incr(sid SteamID, w Weapon, m Metric)       { p.add(sid, w, m, 1) }
 
-func (p *WeaponMetrics) add(steamID64 uint64, w Weapon, m Metric, v int) {
+func (p *WeaponMetrics) add(sid SteamID, w Weapon, m Metric, v int) {
 	p.mx.Lock()
 	defer p.mx.Unlock()
 
-	steamID := SteamID(steamID64)
-
-	if _, ok := p.Metrics[steamID]; !ok {
-		p.Metrics[steamID] = make(map[Weapon]map[Metric]int)
+	if _, ok := p.Metrics[sid]; !ok {
+		p.Metrics[sid] = make(map[Weapon]map[Metric]int)
 	}
 
-	if _, ok := p.Metrics[steamID][w]; !ok {
-		p.Metrics[steamID][w] = make(map[Metric]int)
+	if _, ok := p.Metrics[sid][w]; !ok {
+		p.Metrics[sid][w] = make(map[Metric]int)
 	}
 
-	p.Metrics[steamID][w][m] += v
+	p.Metrics[sid][w][m] += v
 }

@@ -29,18 +29,18 @@ func (p *PlayerMetrics) Get(steamID uint64) (map[Metric]int, bool) {
 }
 
 // Add n to amount of player metric entries in the stats map of specific player with steamID.
-func (p *PlayerMetrics) Add(steamID uint64, m Metric, n int) { p.add(steamID, m, n) }
+func (p *PlayerMetrics) Add(sid SteamID, m Metric, n int) { p.add(sid, m, n) }
 
 // Incr increments metric entries count for player with steamID.
-func (p *PlayerMetrics) Incr(steamID uint64, m Metric) { p.add(steamID, m, 1) }
+func (p *PlayerMetrics) Incr(sid SteamID, m Metric) { p.add(sid, m, 1) }
 
-func (p *PlayerMetrics) add(steamID uint64, m Metric, n int) {
+func (p *PlayerMetrics) add(sid SteamID, m Metric, n int) {
 	p.mx.Lock()
 	defer p.mx.Unlock()
 
-	if _, ok := p.Metrics[SteamID(steamID)]; !ok {
-		p.Metrics[SteamID(steamID)] = make(map[Metric]int)
+	if _, ok := p.Metrics[sid]; !ok {
+		p.Metrics[sid] = make(map[Metric]int)
 	}
 
-	p.Metrics[SteamID(steamID)][m] += n
+	p.Metrics[sid][m] += n
 }
