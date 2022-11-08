@@ -12,35 +12,39 @@ import (
 
 type parser struct {
 	demoinfocs.Parser
+	isKnifeRound bool
 }
 
 func New(r io.Reader) *parser {
-	return &parser{demoinfocs.NewParser(r)}
+	return &parser{demoinfocs.NewParser(r), false}
 }
 
-// allowedCollect c
-func (p *parser) allowedCollect(gs demoinfocs.GameState) bool {
-	for _, p := range gs.TeamCounterTerrorists().Members() {
-		weapons := p.Weapons()
-		if len(weapons) < 1 {
-			continue
-		}
-		if len(weapons) == 1 && weapons[0].Type == common.EqKnife {
-			return false
-		}
+// collect stats return false if current round is knife round or match is not started.
+func (p *parser) collectStats(gs demoinfocs.GameState) bool {
+	if p.isKnifeRound || !gs.IsMatchStarted() {
+		return false
 	}
 
-	return gs.IsMatchStarted()
+	return true
 }
 
-func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, match domain.Match, err error) {
+func (p *parser) Parse() (*domain.PlayerMetrics, *domain.WeaponMetrics, domain.Match, error) {
 	metrics := domain.NewPlayerMetrics()
 	weaponMetrics := domain.NewWeaponMetrics()
+	match := domain.Match{}
 
-	var (
-		team1 domain.MatchTeam
-		team2 domain.MatchTeam
-	)
+	// проверка на ножевой раунд
+	p.RegisterEventHandler(func(e events.RoundFreezetimeEnd) {
+		p.isKnifeRound = false
+
+		for _, player := range p.GameState().TeamCounterTerrorists().Members() {
+			weapons := player.Weapons()
+			if len(player.Weapons()) == 1 && weapons[0].Type == common.EqKnife {
+				p.isKnifeRound = true
+				break
+			}
+		}
+	})
 
 	// handle match end
 	p.RegisterEventHandler(func(e events.AnnouncementWinPanelMatch) {
@@ -50,28 +54,25 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 
 	// handle score update
 	p.RegisterEventHandler(func(e events.ScoreUpdated) {
-		if !p.allowedCollect(p.GameState()) {
+		if !p.collectStats(p.GameState()) {
 			return
 		}
 
 		switch e.TeamState.Team() {
 		case common.TeamCounterTerrorists:
-			team1.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), e.TeamState.Score())
+			match.Team1.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), e.TeamState.Score())
 		case common.TeamTerrorists:
-			team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), e.TeamState.Score())
+			match.Team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), e.TeamState.Score())
 		}
 	})
 
 	// handle kills
 	p.RegisterEventHandler(func(e events.Kill) {
-		if !p.allowedCollect(p.GameState()) {
+		if !p.collectStats(p.GameState()) {
 			return
 		}
 
-		var (
-			weapon string
-		)
-
+		var weapon string
 		if e.Weapon != nil {
 			weapon = e.Weapon.String()
 		}
@@ -128,12 +129,11 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 
 	// handle player damage taken or dealt
 	p.RegisterEventHandler(func(e events.PlayerHurt) {
-		if !p.allowedCollect(p.GameState()) {
+		if !p.collectStats(p.GameState()) {
 			return
 		}
 
 		var weapon string
-
 		if e.Weapon != nil {
 			weapon = e.Weapon.String()
 		}
@@ -153,7 +153,7 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 
 	// handle mvp of the round
 	p.RegisterEventHandler(func(e events.RoundMVPAnnouncement) {
-		if !p.allowedCollect(p.GameState()) {
+		if !p.collectStats(p.GameState()) {
 			return
 		}
 
@@ -164,7 +164,7 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 
 	// handle bomb defuse
 	p.RegisterEventHandler(func(e events.BombDefused) {
-		if !p.allowedCollect(p.GameState()) {
+		if !p.collectStats(p.GameState()) {
 			return
 		}
 
@@ -175,7 +175,7 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 
 	// handle bomb plant
 	p.RegisterEventHandler(func(e events.BombPlanted) {
-		if !p.allowedCollect(p.GameState()) {
+		if !p.collectStats(p.GameState()) {
 			return
 		}
 
@@ -187,9 +187,6 @@ func (p *parser) Parse() (pm *domain.PlayerMetrics, wm *domain.WeaponMetrics, ma
 	if err := p.ParseToEnd(); err != nil {
 		return nil, nil, domain.Match{}, err
 	}
-
-	match.Team1 = team1
-	match.Team2 = team2
 
 	return metrics, weaponMetrics, match, nil
 }
