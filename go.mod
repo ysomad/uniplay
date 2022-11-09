@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.15.2
+	github.com/google/uuid v1.3.0
 	github.com/markus-wa/demoinfocs-golang/v3 v3.0.1
 )
 

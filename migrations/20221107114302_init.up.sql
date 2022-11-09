@@ -1,15 +1,19 @@
 CREATE TABLE IF NOT EXISTS player (
-    steam_id bigint PRIMARY KEY NOT NULL
+    steam_id bigint PRIMARY KEY NOT NULL,
+    create_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    update_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS team (
     name varchar(16) PRIMARY KEY NOT NULL,
-    flag_code char(2) NOT NULL
+    flag_code char(2) NOT NULL,
+    create_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    update_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS team_player (
     team_name varchar(16) PRIMARY KEY NOT NULL REFERENCES team (name),
-    player_id bigint PRIMARY KEY NOT NULL REFERENCES player (steam_id)
+    player_steam_id bigint PRIMARY KEY NOT NULL REFERENCES player (steam_id)
 );
 
 CREATE TABLE IF NOT EXISTS match (
@@ -24,16 +28,16 @@ CREATE TABLE IF NOT EXISTS match (
 );
 
 CREATE TABLE IF NOT EXISTS metric (
-    match_id bigint NOT NULL REFERENCES match (id),
-    player_id bigint NOT NULL REFERENCES player (steam_id),
+    match_id uuid NOT NULL REFERENCES match (id),
+    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
     metric smallint NOT NULL,
     value integer NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS weapon_metric (
     match_id bigint NOT NULL REFERENCES match (id),
-    player_id bigint NOT NULL REFERENCES player (steam_id),
+    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
     metric smallint NOT NULL,
     weapon varchar(64) NOT NULL,
-    value smallint NOT NULL
+    value integer NOT NULL
 );

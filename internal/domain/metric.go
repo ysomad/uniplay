@@ -1,5 +1,7 @@
 package domain
 
+import "github.com/google/uuid"
+
 type Metric uint8
 
 const (
@@ -46,4 +48,11 @@ func (m Metric) String() string {
 		return "undefined"
 	}
 	return strMetrics[m]
+}
+
+type MetricModel struct {
+	MatchID       uuid.UUID
+	PlayerSteamID uint64
+	Metric        Metric
+	Value         int32
 }
