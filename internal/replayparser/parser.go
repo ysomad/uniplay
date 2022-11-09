@@ -210,7 +210,7 @@ func (p *parser) Parse() (parseResult, error) {
 	p.handleBombEvents()
 
 	p.RegisterEventHandler(func(e events.AnnouncementWinPanelMatch) {
-		p.match.Map = p.Header().MapName
+		p.match.MapName = p.Header().MapName
 		p.match.Duration = p.Header().PlaybackTime
 	})
 
