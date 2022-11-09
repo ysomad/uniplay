@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/ssssargsian/uniplay/internal/demoparser"
+	"github.com/ssssargsian/uniplay/internal/replayparser"
 )
 
 func Run() {
@@ -15,15 +15,15 @@ func Run() {
 	}
 	defer demo.Close()
 
-	p := demoparser.New(demo)
+	p := replayparser.New(demo)
 	defer p.Close()
 
-	metrics, wmetrics, match, err := p.Parse()
+	res, err := p.Parse()
 	if err != nil {
 		log.Fatalf("parse error: %s", err.Error())
 	}
 
-	metricsFile, err := json.MarshalIndent(metrics, "", " ")
+	metricsFile, err := json.MarshalIndent(res.Metrics, "", " ")
 	if err != nil {
 		log.Fatalf("json.MarshalIndent: %s", err.Error())
 	}
@@ -32,7 +32,7 @@ func Run() {
 		log.Fatalf("ioutil.WriteFile: %s", err.Error())
 	}
 
-	wmetricsFile, err := json.MarshalIndent(wmetrics, "", " ")
+	wmetricsFile, err := json.MarshalIndent(res.WeaponMetrics, "", " ")
 	if err != nil {
 		log.Fatalf("json.MarshalIndent: %s", err.Error())
 	}
@@ -41,7 +41,7 @@ func Run() {
 		log.Fatalf("ioutil.WriteFile: %s", err.Error())
 	}
 
-	matchFile, err := json.MarshalIndent(match, "", " ")
+	matchFile, err := json.MarshalIndent(res.Match, "", " ")
 	if err != nil {
 		log.Fatalf("json.MarshalIndent: %s", err.Error())
 	}
