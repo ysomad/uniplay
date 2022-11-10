@@ -1,7 +1,19 @@
 package main
 
-import "github.com/ssssargsian/uniplay/internal/app"
+import (
+	"log"
+
+	"github.com/ilyakaznacheev/cleanenv"
+
+	"github.com/ssssargsian/uniplay/internal/app"
+	"github.com/ssssargsian/uniplay/internal/config"
+)
 
 func main() {
-	app.Run()
+	var conf config.Config
+	if err := cleanenv.ReadConfig("./configs/local.yml", &conf); err != nil {
+		log.Fatalf("config parse error: %s", err)
+	}
+
+	app.Run(&conf)
 }
