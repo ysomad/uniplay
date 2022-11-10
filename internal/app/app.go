@@ -1,21 +1,27 @@
 package app
 
-import "github.com/ssssargsian/uniplay/internal/config"
+import (
+	"log"
+	"os"
+
+	"github.com/ssssargsian/uniplay/internal/config"
+	"github.com/ssssargsian/uniplay/internal/replayparser"
+)
 
 func Run(conf *config.Config) {
-	// demo, err := os.Open("./test-data/1.dem")
-	// if err != nil {
-	// 	log.Fatalf("failed to open demo file: %s", err.Error())
-	// }
-	// defer demo.Close()
+	demo, err := os.Open("./test-data/1.dem")
+	if err != nil {
+		log.Fatalf("failed to open demo file: %s", err.Error())
+	}
+	defer demo.Close()
 
-	// p := replayparser.New(demo)
-	// defer p.Close()
+	p := replayparser.New(demo)
+	defer p.Close()
 
-	// res, err := p.Parse()
-	// if err != nil {
-	// 	log.Fatalf("parse error: %s", err.Error())
-	// }
+	_, err = p.Parse()
+	if err != nil {
+		log.Fatalf("parse error: %s", err.Error())
+	}
 
 	// metricsFile, err := json.MarshalIndent(res.Metrics.ToDTO(uuid.UUID{}), "", " ")
 	// if err != nil {

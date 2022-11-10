@@ -62,7 +62,6 @@ func New(connString string, opts ...Option) (*Client, error) {
 	}
 
 	c.Builder = sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
-
 	return c, nil
 }
 

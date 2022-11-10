@@ -10,13 +10,15 @@ type Match struct {
 }
 
 type MatchTeam struct {
-	Name     string
-	FlagCode string
-	Score    int
+	Name           string
+	FlagCode       string
+	Score          int8
+	PlayerSteamIDs []uint64
 }
 
-func (t *MatchTeam) SetAll(name, flag string, score int) {
+func (t *MatchTeam) SetAll(name, flag string, score int8, steamIDs []uint64) {
 	t.Name = name
 	t.FlagCode = flag
 	t.Score = score
+	t.PlayerSteamIDs = steamIDs
 }
