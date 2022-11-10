@@ -28,8 +28,8 @@ type parseResult struct {
 	Match         domain.Match
 }
 
-func New(r io.Reader) *parser {
-	return &parser{
+func New(r io.Reader) parser {
+	return parser{
 		demoinfocs.NewParser(r),
 		newPlayerMetrics(),
 		newWeaponMetrics(),
