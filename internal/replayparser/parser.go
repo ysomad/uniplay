@@ -4,6 +4,7 @@ import (
 	"io"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ssssargsian/uniplay/internal/dto"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
@@ -17,15 +18,9 @@ type parser struct {
 
 	metrics       *playerMetrics
 	weaponMetrics *weaponMetrics
-	match         domain.Match
+	match         *dto.CreateMatchArgs
 
 	isKnifeRound bool
-}
-
-type parseResult struct {
-	Metrics       *playerMetrics
-	WeaponMetrics *weaponMetrics
-	Match         domain.Match
 }
 
 func New(r io.Reader) *parser {
@@ -33,9 +28,43 @@ func New(r io.Reader) *parser {
 		demoinfocs.NewParser(r),
 		newPlayerMetrics(),
 		newWeaponMetrics(),
-		domain.Match{},
+		&dto.CreateMatchArgs{},
 		false,
 	}
+}
+
+func (p *parser) Parse() (parseResult, error) {
+	p.RegisterEventHandler(func(e events.RoundFreezetimeEnd) {
+		p.detectKnifeRound()
+	})
+
+	p.handleKills()
+	p.handlePlayerHurt()
+	p.handleScoreUpdate()
+	p.handleMVPAnnouncement()
+	p.handleBombEvents()
+
+	p.RegisterEventHandler(func(e events.AnnouncementWinPanelMatch) {
+		p.match.MapName = p.Header().MapName
+		p.match.Duration = p.Header().PlaybackTime
+	})
+
+	if err := p.ParseToEnd(); err != nil {
+		return parseResult{}, err
+	}
+
+	return parseResult{
+		metrics:       p.metrics,
+		weaponMetrics: p.weaponMetrics,
+		match:         p.match,
+	}, nil
+}
+
+func (p *parser) Close() error {
+	if p != nil {
+		return p.Close()
+	}
+	return nil
 }
 
 // collectStats detects if stats can be collected to prevent collection of stats on knife or warmup rounds.
@@ -152,11 +181,23 @@ func (p *parser) handleKills() {
 // handleScoreUpdate updates match teams score on ScoreUpdated event.
 func (p *parser) handleScoreUpdate() {
 	p.RegisterEventHandler(func(e events.ScoreUpdated) {
+		// TODO: TEST e.TeamState.Score() < 15
+		if e.TeamState.Score() < 15 {
+			return
+		}
+
+		teamMembers := e.TeamState.Members()
+		playerSteamIDs := make([]uint64, len(teamMembers))
+
+		for i, player := range teamMembers {
+			playerSteamIDs[i] = player.SteamID64
+		}
+
 		switch e.TeamState.Team() {
-		case common.TeamCounterTerrorists:
-			p.match.Team1.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), e.TeamState.Score())
 		case common.TeamTerrorists:
-			p.match.Team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), e.TeamState.Score())
+			p.match.Team1.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), int8(e.TeamState.Score()), playerSteamIDs)
+		case common.TeamCounterTerrorists:
+			p.match.Team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), int8(e.TeamState.Score()), playerSteamIDs)
 		}
 	})
 }
@@ -231,31 +272,4 @@ func (p *parser) handleMVPAnnouncement() {
 			p.metrics.incr(e.Player.SteamID64, domain.MetricRoundMVPCount)
 		}
 	})
-}
-
-func (p *parser) Parse() (parseResult, error) {
-	p.RegisterEventHandler(func(e events.RoundFreezetimeEnd) {
-		p.detectKnifeRound()
-	})
-
-	p.handleKills()
-	p.handlePlayerHurt()
-	p.handleScoreUpdate()
-	p.handleMVPAnnouncement()
-	p.handleBombEvents()
-
-	p.RegisterEventHandler(func(e events.AnnouncementWinPanelMatch) {
-		p.match.MapName = p.Header().MapName
-		p.match.Duration = p.Header().PlaybackTime
-	})
-
-	if err := p.ParseToEnd(); err != nil {
-		return parseResult{}, err
-	}
-
-	return parseResult{
-		Metrics:       p.metrics,
-		WeaponMetrics: p.weaponMetrics,
-		Match:         p.match,
-	}, nil
 }
