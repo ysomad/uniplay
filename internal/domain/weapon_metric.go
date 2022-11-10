@@ -6,7 +6,7 @@ type WeaponMetric struct {
 	MatchID       uuid.UUID
 	PlayerSteamID uint64
 	Metric        Metric
-	Weapon        string
-	Class         EquipmentClass
+	WeaponName    string
+	WeaponClass   EquipmentClass
 	Value         int32
 }
