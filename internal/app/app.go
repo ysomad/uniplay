@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/google/uuid"
 	"github.com/ssssargsian/uniplay/internal/replayparser"
 )
 
@@ -23,21 +24,21 @@ func Run() {
 		log.Fatalf("parse error: %s", err.Error())
 	}
 
-	metricsFile, err := json.MarshalIndent(res.Metrics, "", " ")
+	metricsFile, err := json.MarshalIndent(res.Metrics.ToDTO(uuid.UUID{}), "", " ")
 	if err != nil {
 		log.Fatalf("json.MarshalIndent: %s", err.Error())
 	}
 
-	if err = os.WriteFile("metrics.json", metricsFile, 0644); err != nil {
+	if err = os.WriteFile("metrics_dto.json", metricsFile, 0644); err != nil {
 		log.Fatalf("ioutil.WriteFile: %s", err.Error())
 	}
 
-	wmetricsFile, err := json.MarshalIndent(res.WeaponMetrics, "", " ")
+	wmetricsFile, err := json.MarshalIndent(res.WeaponMetrics.ToDTO(uuid.UUID{}), "", " ")
 	if err != nil {
 		log.Fatalf("json.MarshalIndent: %s", err.Error())
 	}
 
-	if err = os.WriteFile("weapon_metrics.json", wmetricsFile, 0644); err != nil {
+	if err = os.WriteFile("weapon_metrics_dto.json", wmetricsFile, 0644); err != nil {
 		log.Fatalf("ioutil.WriteFile: %s", err.Error())
 	}
 

@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS weapon_metric (
     match_id bigint NOT NULL REFERENCES match (id),
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
     weapon_name varchar(64) NOT NULL,
-    weapon_class varchar(64) NOT NULL,
+    weapon_class smallint NOT NULL,
     metric smallint NOT NULL,
     value integer NOT NULL
 );
