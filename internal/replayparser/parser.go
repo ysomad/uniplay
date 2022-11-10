@@ -83,7 +83,7 @@ func (p *parser) detectKnifeRound() {
 
 	for _, player := range p.GameState().TeamCounterTerrorists().Members() {
 		weapons := player.Weapons()
-		if len(player.Weapons()) == 1 && weapons[0].Type == common.EqKnife {
+		if len(weapons) == 1 && weapons[0].Type == common.EqKnife {
 			p.isKnifeRound = true
 			break
 		}
