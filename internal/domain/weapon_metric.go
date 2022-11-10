@@ -7,5 +7,6 @@ type WeaponMetric struct {
 	PlayerSteamID uint64
 	Metric        Metric
 	Weapon        string
+	Class         EquipmentClass
 	Value         int32
 }

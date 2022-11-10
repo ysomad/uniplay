@@ -3,7 +3,9 @@ package replayparser
 import (
 	"sync"
 
+	"github.com/google/uuid"
 	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ssssargsian/uniplay/internal/dto"
 )
 
 // steamID represents steam uint64 id.
@@ -40,4 +42,21 @@ func (p *playerMetrics) addn(sid steamID, m domain.Metric, n int) {
 	}
 
 	p.Metrics[sid][m] += n
+}
+
+func (p *playerMetrics) ToDTO(matchID uuid.UUID) []dto.CreateMetricArgs {
+	args := []dto.CreateMetricArgs{}
+
+	for steamID, metrics := range p.Metrics {
+		for m, v := range metrics {
+			args = append(args, dto.CreateMetricArgs{
+				MatchID:       matchID,
+				PlayerSteamID: uint64(steamID),
+				Metric:        m,
+				Value:         int32(v),
+			})
+		}
+	}
+
+	return args
 }

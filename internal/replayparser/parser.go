@@ -68,47 +68,72 @@ func (p *parser) handleKills() {
 			return
 		}
 
-		var weapon string
+		var (
+			weapon      string
+			weaponClass domain.EquipmentClass
+		)
 		if e.Weapon != nil {
 			weapon = e.Weapon.String()
+			weaponClass = domain.EquipmentClass(e.Weapon.Class())
 		}
 
 		if e.Victim != nil {
 			// death amount FROM weapon
 			p.metrics.incr(e.Victim.SteamID64, domain.MetricDeath)
-			p.weaponMetrics.incr(e.Victim.SteamID64, weapon, domain.MetricDeath)
+			p.weaponMetrics.incr(e.Victim.SteamID64, weaponMetric{
+				weaponName:  weapon,
+				weaponClass: weaponClass,
+			}, domain.MetricDeath)
 		}
 
 		if e.Killer != nil {
 			// kill amount
 			p.metrics.incr(e.Killer.SteamID64, domain.MetricKill)
-			p.weaponMetrics.incr(e.Killer.SteamID64, weapon, domain.MetricKill)
+			p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
+				weaponName:  weapon,
+				weaponClass: weaponClass,
+			}, domain.MetricKill)
 
 			switch {
 			// headshot kill amount
 			case e.IsHeadshot:
 				p.metrics.incr(e.Killer.SteamID64, domain.MetricHSKill)
-				p.weaponMetrics.incr(e.Killer.SteamID64, weapon, domain.MetricHSKill)
+				p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
+					weaponName:  weapon,
+					weaponClass: weaponClass,
+				}, domain.MetricHSKill)
 
 			// blind kill amount
 			case e.AttackerBlind:
 				p.metrics.incr(e.Killer.SteamID64, domain.MetricBlindKill)
-				p.weaponMetrics.incr(e.Killer.SteamID64, weapon, domain.MetricBlindKill)
+				p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
+					weaponName:  weapon,
+					weaponClass: weaponClass,
+				}, domain.MetricBlindKill)
 
 			// wallbang kill amount
 			case e.IsWallBang():
 				p.metrics.incr(e.Killer.SteamID64, domain.MetricWallbangKill)
-				p.weaponMetrics.incr(e.Killer.SteamID64, weapon, domain.MetricWallbangKill)
+				p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
+					weaponName:  weapon,
+					weaponClass: weaponClass,
+				}, domain.MetricWallbangKill)
 
 			// noscope kill amount
 			case e.NoScope:
 				p.metrics.incr(e.Killer.SteamID64, domain.MetricNoScopeKill)
-				p.weaponMetrics.incr(e.Killer.SteamID64, weapon, domain.MetricNoScopeKill)
+				p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
+					weaponName:  weapon,
+					weaponClass: weaponClass,
+				}, domain.MetricNoScopeKill)
 
 			// through smoke kill amount
 			case e.ThroughSmoke:
 				p.metrics.incr(e.Killer.SteamID64, domain.MetricThroughSmokeKill)
-				p.weaponMetrics.incr(e.Killer.SteamID64, weapon, domain.MetricThroughSmokeKill)
+				p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
+					weaponName:  weapon,
+					weaponClass: weaponClass,
+				}, domain.MetricThroughSmokeKill)
 			}
 		}
 
@@ -143,21 +168,31 @@ func (p *parser) handlePlayerHurt() {
 			return
 		}
 
-		var weapon string
+		var (
+			weaponName  string
+			weaponClass domain.EquipmentClass
+		)
 		if e.Weapon != nil {
-			weapon = e.Weapon.String()
+			weaponName = e.Weapon.String()
+			weaponClass = domain.EquipmentClass(e.Weapon.Class())
 		}
 
 		if e.Attacker != nil {
 			// dealt damage
 			p.metrics.add(e.Attacker.SteamID64, domain.MetricDamageDealt, e.HealthDamage)
-			p.weaponMetrics.add(e.Attacker.SteamID64, weapon, domain.MetricDamageDealt, e.HealthDamage)
+			p.weaponMetrics.add(e.Attacker.SteamID64, weaponMetric{
+				weaponName:  weaponName,
+				weaponClass: weaponClass,
+			}, domain.MetricDamageDealt, e.HealthDamage)
 		}
 
 		if e.Player != nil {
 			// taken damage
 			p.metrics.add(e.Player.SteamID64, domain.MetricDamageTaken, e.HealthDamage)
-			p.weaponMetrics.add(e.Player.SteamID64, weapon, domain.MetricDamageTaken, e.HealthDamage)
+			p.weaponMetrics.add(e.Player.SteamID64, weaponMetric{
+				weaponName:  weaponName,
+				weaponClass: weaponClass,
+			}, domain.MetricDamageTaken, e.HealthDamage)
 		}
 	})
 }
