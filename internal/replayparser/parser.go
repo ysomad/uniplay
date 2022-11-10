@@ -1,10 +1,10 @@
 package replayparser
 
 import (
-	"fmt"
 	"io"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ssssargsian/uniplay/internal/dto"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
@@ -18,23 +18,17 @@ type parser struct {
 
 	metrics       *playerMetrics
 	weaponMetrics *weaponMetrics
-	match         domain.Match
+	match         *dto.CreateMatchArgs
 
 	isKnifeRound bool
 }
 
-type parseResult struct {
-	Metrics       *playerMetrics
-	WeaponMetrics *weaponMetrics
-	Match         domain.Match
-}
-
-func New(r io.Reader) parser {
-	return parser{
+func New(r io.Reader) *parser {
+	return &parser{
 		demoinfocs.NewParser(r),
 		newPlayerMetrics(),
 		newWeaponMetrics(),
-		domain.Match{},
+		&dto.CreateMatchArgs{},
 		false,
 	}
 }
@@ -60,10 +54,17 @@ func (p *parser) Parse() (parseResult, error) {
 	}
 
 	return parseResult{
-		Metrics:       p.metrics,
-		WeaponMetrics: p.weaponMetrics,
-		Match:         p.match,
+		metrics:       p.metrics,
+		weaponMetrics: p.weaponMetrics,
+		match:         p.match,
 	}, nil
+}
+
+func (p *parser) Close() error {
+	if p != nil {
+		return p.Close()
+	}
+	return nil
 }
 
 // collectStats detects if stats can be collected to prevent collection of stats on knife or warmup rounds.
@@ -198,8 +199,6 @@ func (p *parser) handleScoreUpdate() {
 		case common.TeamCounterTerrorists:
 			p.match.Team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), int8(e.TeamState.Score()), playerSteamIDs)
 		}
-
-		fmt.Println(p.match)
 	})
 }
 

@@ -7,6 +7,10 @@ import (
 	"github.com/ssssargsian/uniplay/internal/dto"
 )
 
-type playerRepository interface {
-	InsertReplayStats(context.Context, dto.CreateMetricArgs, dto.CreateWeaponMetricArgs, domain.Match) error
+type replayRepository interface {
+	InsertStats(context.Context, []dto.CreateMetricArgs, []dto.CreateWeaponMetricArgs) error
+}
+
+type matchRepository interface {
+	Create(context.Context, *dto.CreateMatchArgs) (*domain.Match, error)
 }

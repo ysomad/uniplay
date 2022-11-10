@@ -1,8 +1,13 @@
 package domain
 
-import "time"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type Match struct {
+	ID       uuid.UUID
 	MapName  string
 	Duration time.Duration
 	Team1    MatchTeam
