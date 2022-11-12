@@ -5,22 +5,23 @@ import (
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ssssargsian/uniplay/internal/dto"
 	"github.com/ysomad/pgxatomic"
 )
 
-type matchRepo struct {
+type replayRepo struct {
 	pool    pgxatomic.Pool
 	builder sq.StatementBuilderType
 }
 
-func NewMatchRepo(p pgxatomic.Pool, b sq.StatementBuilderType) *matchRepo {
-	return &matchRepo{
+func NewReplayRepo(p pgxatomic.Pool, b sq.StatementBuilderType) *replayRepo {
+	return &replayRepo{
 		pool:    p,
 		builder: b,
 	}
 }
 
-func (r *matchRepo) Save(ctx context.Context, m *domain.Match) error {
+func (r *replayRepo) SaveMatch(ctx context.Context, m *domain.Match) error {
 	// insert teams
 	sql, args, err := r.builder.
 		Insert("team").
@@ -105,5 +106,9 @@ func (r *matchRepo) Save(ctx context.Context, m *domain.Match) error {
 		return err
 	}
 
+	return nil
+}
+
+func (r *replayRepo) SaveStats(ctx context.Context, metrics []dto.CreateMetricArgs, wmetrics []dto.CreateWeaponMetricArgs) error {
 	return nil
 }

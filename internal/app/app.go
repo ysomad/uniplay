@@ -34,10 +34,10 @@ func Run(conf *config.Config) {
 	}
 
 	// repos
-	matchRepo := postgres.NewMatchRepo(pool, pgClient.Builder)
+	replayRepo := postgres.NewReplayRepo(pool, pgClient.Builder)
 
 	// services
-	replayService := service.NewReplay(nil, matchRepo)
+	replayService := service.NewReplay(replayRepo)
 
 	// test
 	replayFile, err := os.Open("./test-data/1.dem")
