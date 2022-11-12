@@ -9,14 +9,12 @@ import (
 )
 
 type replay struct {
-	replayRepo replayRepository
-	matchRepo  matchRepository
+	repo replayRepository
 }
 
-func NewReplay(rr replayRepository, mr matchRepository) *replay {
+func NewReplay(r replayRepository) *replay {
 	return &replay{
-		replayRepo: rr,
-		matchRepo:  mr,
+		repo: r,
 	}
 }
 
@@ -40,7 +38,7 @@ func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*domain.Ma
 		return nil, err
 	}
 
-	if err = r.matchRepo.Save(ctx, m); err != nil {
+	if err = r.repo.SaveMatch(ctx, m); err != nil {
 		return nil, err
 	}
 
