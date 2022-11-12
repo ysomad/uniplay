@@ -1,12 +1,11 @@
 package dto
 
 import (
-	"github.com/google/uuid"
 	"github.com/ssssargsian/uniplay/internal/domain"
 )
 
 type CreateWeaponMetricArgs struct {
-	MatchID       uuid.UUID
+	MatchID       domain.MatchID
 	PlayerSteamID uint64
 	WeaponName    string
 	WeaponClass   domain.EquipmentClass

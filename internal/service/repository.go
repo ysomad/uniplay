@@ -8,9 +8,9 @@ import (
 )
 
 type replayRepository interface {
-	InsertStats(context.Context, []dto.CreateMetricArgs, []dto.CreateWeaponMetricArgs) error
+	SaveStats(context.Context, []dto.CreateMetricArgs, []dto.CreateWeaponMetricArgs) error
 }
 
 type matchRepository interface {
-	Create(context.Context, *dto.CreateMatchArgs) (*domain.Match, error)
+	Save(context.Context, *domain.Match) error
 }

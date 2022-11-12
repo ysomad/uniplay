@@ -60,13 +60,6 @@ func (p *parser) Parse() (parseResult, error) {
 	}, nil
 }
 
-func (p *parser) Close() error {
-	if p != nil {
-		return p.Close()
-	}
-	return nil
-}
-
 // collectStats detects if stats can be collected to prevent collection of stats on knife or warmup rounds.
 // return false if current round is knife round or match is not started.
 func (p *parser) collectStats(gs demoinfocs.GameState) bool {
@@ -83,7 +76,7 @@ func (p *parser) detectKnifeRound() {
 
 	for _, player := range p.GameState().TeamCounterTerrorists().Members() {
 		weapons := player.Weapons()
-		if len(player.Weapons()) == 1 && weapons[0].Type == common.EqKnife {
+		if len(weapons) == 1 && weapons[0].Type == common.EqKnife {
 			p.isKnifeRound = true
 			break
 		}
@@ -181,11 +174,6 @@ func (p *parser) handleKills() {
 // handleScoreUpdate updates match teams score on ScoreUpdated event.
 func (p *parser) handleScoreUpdate() {
 	p.RegisterEventHandler(func(e events.ScoreUpdated) {
-		// TODO: TEST e.TeamState.Score() < 15
-		if e.TeamState.Score() < 15 {
-			return
-		}
-
 		teamMembers := e.TeamState.Members()
 		playerSteamIDs := make([]uint64, len(teamMembers))
 
@@ -195,9 +183,9 @@ func (p *parser) handleScoreUpdate() {
 
 		switch e.TeamState.Team() {
 		case common.TeamTerrorists:
-			p.match.Team1.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), int8(e.TeamState.Score()), playerSteamIDs)
+			p.match.Team1.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), uint8(e.TeamState.Score()), playerSteamIDs)
 		case common.TeamCounterTerrorists:
-			p.match.Team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), int8(e.TeamState.Score()), playerSteamIDs)
+			p.match.Team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), uint8(e.TeamState.Score()), playerSteamIDs)
 		}
 	})
 }

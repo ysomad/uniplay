@@ -3,62 +3,50 @@ package service
 import (
 	"context"
 	"io"
-	"os"
 
-	"github.com/google/uuid"
-
-	"github.com/ssssargsian/uniplay/internal/dto"
+	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ssssargsian/uniplay/internal/replayparser"
 )
 
-type replayParser interface {
-	Parse() (interface {
-		CreateMetricArgsList(matchID uuid.UUID) []dto.CreateMetricArgs
-		CreateWeaponArgsList(matchID uuid.UUID) []dto.CreateWeaponMetricArgs
-		CreateMatchArgs() *dto.CreateMatchArgs
-	}, error)
-	Close() error
-}
-
-type replayParserFactory func(io.Reader) replayParser
-
 type replay struct {
-	newReplayParser replayParserFactory
-	replayRepo      replayRepository
-	matchRepo       matchRepository
+	replayRepo replayRepository
+	matchRepo  matchRepository
 }
 
-func NewReplay(rpf replayParserFactory, rp replayRepository, mr matchRepository) *replay {
+func NewReplay(rr replayRepository, mr matchRepository) *replay {
 	return &replay{
-		newReplayParser: rpf,
-		replayRepo:      rp,
-		matchRepo:       mr,
+		replayRepo: rr,
+		matchRepo:  mr,
 	}
 }
 
-func (r *replay) CollectStats(ctx context.Context, replay io.Reader) error {
-	demo, err := os.Open("./test-data/1.dem")
-	if err != nil {
-		return err
-	}
-	defer demo.Close()
+func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*domain.Match, error) {
+	p := replayparser.New(replay)
+	defer p.Close()
 
-	rp := r.newReplayParser(demo)
-	defer rp.Close()
-
-	res, err := rp.Parse()
+	res, err := p.Parse()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	match, err := r.matchRepo.Create(ctx, res.CreateMatchArgs())
+	/*
+		1. сделать match id из мета информации из демки, например "карта-длительность-команда1-счет1-команда2-счет2" в base64
+		2. создать матч, если создался, то создавать стату, если нет - вернуть ошибку что эта демка уже была загружена ранее.
+	*/
+
+	a := res.CreateMatchArgs()
+	m, err := domain.NewMatch(a.MapName, a.Duration, a.Team1, a.Team2)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	err = r.replayRepo.InsertStats(ctx, res.CreateMetricArgsList(match.ID), res.CreateWeaponArgsList(match.ID))
-	if err != nil {
-		return err
+	if err = r.matchRepo.Save(ctx, m); err != nil {
+		return nil, err
 	}
 
-	return nil
+	// if err = r.replayRepo.SaveStats(ctx, res.CreateMetricArgsList(m.ID), res.CreateWeaponArgsList(m.ID)); err != nil {
+	// 	return nil, err
+	// }
+
+	return m, nil
 }

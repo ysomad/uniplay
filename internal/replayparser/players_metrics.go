@@ -3,7 +3,6 @@ package replayparser
 import (
 	"sync"
 
-	"github.com/google/uuid"
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 )
@@ -44,7 +43,7 @@ func (p *playerMetrics) addn(sid steamID, m domain.Metric, n int) {
 	p.Metrics[sid][m] += n
 }
 
-func (p *playerMetrics) toDTO(matchID uuid.UUID) []dto.CreateMetricArgs {
+func (p *playerMetrics) toDTO(matchID domain.MatchID) []dto.CreateMetricArgs {
 	args := []dto.CreateMetricArgs{}
 
 	for steamID, metrics := range p.Metrics {
