@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -20,7 +21,7 @@ type MatchID struct {
 	uuid.UUID
 }
 
-func newMatchID(a matchIDArgs) MatchID {
+func newMatchID(a *matchIDArgs) MatchID {
 	s := fmt.Sprintf(
 		"%s,%s,%d,%s,%d,%d",
 		a.mapName,
@@ -34,16 +35,33 @@ func newMatchID(a matchIDArgs) MatchID {
 }
 
 type Match struct {
-	ID       MatchID
-	MapName  string
-	Duration time.Duration
-	Team1    MatchTeam
-	Team2    MatchTeam
+	ID         MatchID
+	MapName    string
+	Duration   time.Duration
+	Team1      MatchTeam
+	Team2      MatchTeam
+	UploadTime time.Time
 }
 
-func NewMatch(mapName string, matchDuration time.Duration, t1, t2 MatchTeam) *Match {
+func NewMatch(mapName string, matchDuration time.Duration, t1, t2 MatchTeam) (*Match, error) {
+	if mapName == "" {
+		return nil, errors.New("empty mapName")
+	}
+
+	if matchDuration.Minutes() < 5 {
+		return nil, errors.New("too short match duration, minimum is 5 minutes")
+	}
+
+	if err := t1.validate(); err != nil {
+		return nil, err
+	}
+
+	if err := t2.validate(); err != nil {
+		return nil, err
+	}
+
 	return &Match{
-		ID: newMatchID(matchIDArgs{
+		ID: newMatchID(&matchIDArgs{
 			mapName:       mapName,
 			team1name:     t1.Name,
 			team1score:    t1.Score,
@@ -51,11 +69,12 @@ func NewMatch(mapName string, matchDuration time.Duration, t1, t2 MatchTeam) *Ma
 			team2score:    t2.Score,
 			matchDuration: matchDuration,
 		}),
-		MapName:  mapName,
-		Duration: matchDuration,
-		Team1:    t1,
-		Team2:    t2,
-	}
+		MapName:    mapName,
+		Duration:   matchDuration,
+		Team1:      t1,
+		Team2:      t2,
+		UploadTime: time.Now(),
+	}, nil
 }
 
 type MatchTeam struct {
@@ -70,4 +89,14 @@ func (t *MatchTeam) SetAll(name, flag string, score uint8, steamIDs []uint64) {
 	t.FlagCode = flag
 	t.Score = score
 	t.PlayerSteamIDs = steamIDs
+}
+
+func (t *MatchTeam) validate() error {
+	if t.Name == "" {
+		return errors.New("empty team name")
+	}
+	if len(t.PlayerSteamIDs) < 5 {
+		return errors.New("amount of player steam ids in team must be atleast 5")
+	}
+	return nil
 }

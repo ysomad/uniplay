@@ -174,11 +174,6 @@ func (p *parser) handleKills() {
 // handleScoreUpdate updates match teams score on ScoreUpdated event.
 func (p *parser) handleScoreUpdate() {
 	p.RegisterEventHandler(func(e events.ScoreUpdated) {
-		// TODO: TEST e.TeamState.Score() < 15
-		if e.TeamState.Score() < 15 {
-			return
-		}
-
 		teamMembers := e.TeamState.Members()
 		playerSteamIDs := make([]uint64, len(teamMembers))
 

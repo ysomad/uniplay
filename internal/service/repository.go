@@ -12,5 +12,5 @@ type replayRepository interface {
 }
 
 type matchRepository interface {
-	Save(context.Context, *domain.Match) (*domain.Match, error)
+	Save(context.Context, *domain.Match) error
 }

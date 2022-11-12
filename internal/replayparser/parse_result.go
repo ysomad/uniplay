@@ -11,14 +11,14 @@ type parseResult struct {
 	match         *dto.CreateMatchArgs
 }
 
-func (r *parseResult) Metrics(matchID domain.MatchID) []dto.CreateMetricArgs {
+func (r *parseResult) CreateMetricsArgsList(matchID domain.MatchID) []dto.CreateMetricArgs {
 	return r.metrics.toDTO(matchID)
 }
 
-func (r *parseResult) WeaponMetrics(matchID domain.MatchID) []dto.CreateWeaponMetricArgs {
+func (r *parseResult) CreateWeaponMetricArgsList(matchID domain.MatchID) []dto.CreateWeaponMetricArgs {
 	return r.weaponMetrics.toDTO(matchID)
 }
 
-func (r *parseResult) Match() *dto.CreateMatchArgs {
+func (r *parseResult) CreateMatchArgs() *dto.CreateMatchArgs {
 	return r.match
 }

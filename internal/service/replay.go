@@ -34,18 +34,19 @@ func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*domain.Ma
 		2. создать матч, если создался, то создавать стату, если нет - вернуть ошибку что эта демка уже была загружена ранее.
 	*/
 
-	a := res.Match()
+	a := res.CreateMatchArgs()
+	m, err := domain.NewMatch(a.MapName, a.Duration, a.Team1, a.Team2)
+	if err != nil {
+		return nil, err
+	}
 
-	// m, err := r.matchRepo.Save(ctx, domain.NewMatch(a.MapName, a.Duration, a.Team1, a.Team2))
-	// if err != nil {
-	// 	return nil, err
-	// }
+	if err = r.matchRepo.Save(ctx, m); err != nil {
+		return nil, err
+	}
 
 	// if err = r.replayRepo.SaveStats(ctx, res.CreateMetricArgsList(m.ID), res.CreateWeaponArgsList(m.ID)); err != nil {
 	// 	return nil, err
 	// }
-
-	m := domain.NewMatch(a.MapName, a.Duration, a.Team1, a.Team2)
 
 	return m, nil
 }
