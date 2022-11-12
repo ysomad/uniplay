@@ -6,7 +6,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/ssssargsian/uniplay/internal/config"
+	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
 	"github.com/ssssargsian/uniplay/internal/postgres"
 	"github.com/ssssargsian/uniplay/internal/service"
@@ -14,18 +16,25 @@ import (
 )
 
 func Run(conf *config.Config) {
+	var err error
+
 	pgClient, err := pgclient.New(conf.PG.URL, pgclient.WithMaxConns(conf.PG.MaxConns))
 	if err != nil {
 		log.Fatalf("pgclient.New: %s", err.Error())
 	}
 
-	p, err := pgxatomic.NewPool(pgClient.Pool)
+	pool, err := pgxatomic.NewPool(pgClient.Pool)
 	if err != nil {
 		log.Fatalf("pgxatomic.NewPool: %s", err.Error())
 	}
 
+	txrunner, err := pgxatomic.NewRunner(pgClient.Pool, pgx.TxOptions{})
+	if err != nil {
+		log.Fatalf("pgxatomic.NewRunner: %s", err.Error())
+	}
+
 	// repos
-	matchRepo := postgres.NewMatchRepo(p, pgClient.Builder)
+	matchRepo := postgres.NewMatchRepo(pool, pgClient.Builder)
 
 	// services
 	replayService := service.NewReplay(nil, matchRepo)
@@ -37,12 +46,18 @@ func Run(conf *config.Config) {
 	}
 	defer replayFile.Close()
 
-	m, err := replayService.CollectStats(context.Background(), replayFile)
+	var match *domain.Match
+
+	// test run atomically
+	err = txrunner.Run(context.Background(), func(txCtx context.Context) error {
+		match, err = replayService.CollectStats(txCtx, replayFile)
+		return err
+	})
 	if err != nil {
-		log.Fatalf("collect error :%s", err.Error())
+		log.Fatalf("demo collect error :%s", err.Error())
 	}
 
-	fmt.Println(m.ID.String())
+	fmt.Println(match.ID.String())
 
 	// metricsFile, err := json.MarshalIndent(res.Metrics.ToDTO(uuid.UUID{}), "", " ")
 	// if err != nil {
