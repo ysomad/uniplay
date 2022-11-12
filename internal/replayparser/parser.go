@@ -60,13 +60,6 @@ func (p *parser) Parse() (parseResult, error) {
 	}, nil
 }
 
-func (p *parser) Close() error {
-	if p != nil {
-		return p.Close()
-	}
-	return nil
-}
-
 // collectStats detects if stats can be collected to prevent collection of stats on knife or warmup rounds.
 // return false if current round is knife round or match is not started.
 func (p *parser) collectStats(gs demoinfocs.GameState) bool {
@@ -195,9 +188,9 @@ func (p *parser) handleScoreUpdate() {
 
 		switch e.TeamState.Team() {
 		case common.TeamTerrorists:
-			p.match.Team1.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), int8(e.TeamState.Score()), playerSteamIDs)
+			p.match.Team1.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), uint8(e.TeamState.Score()), playerSteamIDs)
 		case common.TeamCounterTerrorists:
-			p.match.Team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), int8(e.TeamState.Score()), playerSteamIDs)
+			p.match.Team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), uint8(e.TeamState.Score()), playerSteamIDs)
 		}
 	})
 }
