@@ -4,9 +4,10 @@ import (
 	"context"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/ysomad/pgxatomic"
+
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
-	"github.com/ysomad/pgxatomic"
 )
 
 type replayRepo struct {
@@ -77,7 +78,9 @@ func (r *replayRepo) SaveMatch(ctx context.Context, m *domain.Match) error {
 	}
 
 	// insert team players
-	sb = r.builder.Insert("team_player").Columns("team_name, player_steam_id, is_active")
+	sb = r.builder.
+		Insert("team_player").
+		Columns("team_name, player_steam_id, is_active")
 
 	for _, p := range teamPlayers {
 		sb = sb.Values(p.teamName, p.steamID, true)
@@ -110,5 +113,41 @@ func (r *replayRepo) SaveMatch(ctx context.Context, m *domain.Match) error {
 }
 
 func (r *replayRepo) SaveStats(ctx context.Context, metrics []dto.CreateMetricArgs, wmetrics []dto.CreateWeaponMetricArgs) error {
+	// insert metrics
+	sb := r.builder.
+		Insert("metric").
+		Columns("match_id, player_steam_id, metric, value")
+
+	for _, m := range metrics {
+		sb = sb.Values(m.MatchID, m.PlayerSteamID, m.Metric, m.Value)
+	}
+
+	sql, args, err := sb.ToSql()
+	if err != nil {
+		return err
+	}
+
+	if _, err = r.pool.Exec(ctx, sql, args...); err != nil {
+		return err
+	}
+
+	// insert weapon metrics
+	sb = r.builder.
+		Insert("weapon_metric").
+		Columns("match_id, player_steam_id, weapon_name, weapon_class, metric, value")
+
+	for _, wm := range wmetrics {
+		sb = sb.Values(wm.MatchID, wm.PlayerSteamID, wm.WeaponName, wm.WeaponClass, wm.Metric, wm.Value)
+	}
+
+	sql, args, err = sb.ToSql()
+	if err != nil {
+		return err
+	}
+
+	if _, err = r.pool.Exec(ctx, sql, args...); err != nil {
+		return err
+	}
+
 	return nil
 }

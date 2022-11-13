@@ -42,9 +42,9 @@ func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*domain.Ma
 		return nil, err
 	}
 
-	// if err = r.replayRepo.SaveStats(ctx, res.CreateMetricArgsList(m.ID), res.CreateWeaponArgsList(m.ID)); err != nil {
-	// 	return nil, err
-	// }
+	if err = r.repo.SaveStats(ctx, res.CreateMetricsArgsList(m.ID), res.CreateWeaponMetricArgsList(m.ID)); err != nil {
+		return nil, err
+	}
 
 	return m, nil
 }
