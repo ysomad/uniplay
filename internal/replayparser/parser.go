@@ -29,21 +29,13 @@ func New(r io.Reader) *parser {
 	}
 }
 
-// TODO: refactor
 func (p *parser) Parse() (parseResult, error) {
 	p.RegisterEventHandler(func(e events.RoundFreezetimeEnd) {
 		p.detectKnifeRound()
 	})
 
 	p.RegisterEventHandler(func(e events.MatchStart) {
-		gs := p.GameState()
-
-		// set teams and players after match start
-		t := gs.TeamTerrorists()
-		p.match.setTeam1(newMatchTeam(t.ClanName(), t.Flag(), t.Team(), t.Members()))
-
-		ct := gs.TeamCounterTerrorists()
-		p.match.setTeam2(newMatchTeam(ct.ClanName(), ct.Flag(), ct.Team(), ct.Members()))
+		p.setTeams(p.GameState())
 	})
 
 	p.RegisterEventHandler(func(e events.TeamSideSwitch) {
@@ -54,18 +46,33 @@ func (p *parser) Parse() (parseResult, error) {
 		p.match.updateTeamsScore(e)
 	})
 
-	p.handleKills()
-	p.handlePlayerHurt()
-	p.handleBombEvents()
+	p.RegisterEventHandler(func(e events.Kill) {
+		p.handleKills(e)
+	})
 
-	p.RegisterEventHandler(func(e events.RoundMVPAnnouncement) {
-		if !p.collectStats(p.GameState()) {
+	p.RegisterEventHandler(func(e events.PlayerHurt) {
+		p.handlePlayerHurt(e)
+	})
+
+	p.RegisterEventHandler(func(e events.BombDefused) {
+		if !p.collectStats(p.GameState()) || !p.playerConnected(e.BombEvent.Player) {
 			return
 		}
+		p.metrics.incr(e.BombEvent.Player.SteamID64, domain.MetricBombDefused)
+	})
 
-		if e.Player != nil && e.Player.SteamID64 != 0 {
-			p.metrics.incr(e.Player.SteamID64, domain.MetricRoundMVPCount)
+	p.RegisterEventHandler(func(e events.BombPlanted) {
+		if !p.collectStats(p.GameState()) || !p.playerConnected(e.BombEvent.Player) {
+			return
 		}
+		p.metrics.incr(e.BombEvent.Player.SteamID64, domain.MetricBombPlanted)
+	})
+
+	p.RegisterEventHandler(func(e events.RoundMVPAnnouncement) {
+		if !p.collectStats(p.GameState()) || !p.playerConnected(e.Player) {
+			return
+		}
+		p.metrics.incr(e.Player.SteamID64, domain.MetricRoundMVPCount)
 	})
 
 	p.RegisterEventHandler(func(e events.AnnouncementWinPanelMatch) {
@@ -107,150 +114,145 @@ func (p *parser) detectKnifeRound() {
 	}
 }
 
-// handleKills counts all kills and weapon kills.
-func (p *parser) handleKills() {
-	p.RegisterEventHandler(func(e events.Kill) {
-		if !p.collectStats(p.GameState()) {
-			return
-		}
+// playerConnected checks is player connected and steamID is not equal to 0.
+func (p *parser) playerConnected(pl *common.Player) bool {
+	return pl != nil && pl.SteamID64 != 0
+}
 
-		var (
-			weapon      string
-			weaponClass domain.EquipmentClass
-		)
+// setTeams sets teams clan names, flags, sides (ct/t) and their members to p.match.
+func (p *parser) setTeams(gs demoinfocs.GameState) {
+	t := gs.TeamTerrorists()
+	p.match.setTeam1(newMatchTeam(t.ClanName(), t.Flag(), t.Team(), t.Members()))
+
+	ct := gs.TeamCounterTerrorists()
+	p.match.setTeam2(newMatchTeam(ct.ClanName(), ct.Flag(), ct.Team(), ct.Members()))
+}
+
+// handleKills collects metrics and weapon metrics on kill event.
+func (p *parser) handleKills(e events.Kill) {
+	if !p.collectStats(p.GameState()) {
+		return
+	}
+
+	if p.playerConnected(e.Victim) {
+		// death amount FROM weapon
+		p.metrics.incr(e.Victim.SteamID64, domain.MetricDeath)
 
 		if e.Weapon != nil {
-			weapon = e.Weapon.String()
-			weaponClass = domain.EquipmentClass(e.Weapon.Class())
-		}
-
-		if e.Victim != nil && e.Victim.SteamID64 != 0 {
-			// death amount FROM weapon
-			p.metrics.incr(e.Victim.SteamID64, domain.MetricDeath)
 			p.weaponMetrics.incr(e.Victim.SteamID64, weaponMetric{
-				weaponName:  weapon,
-				weaponClass: weaponClass,
+				weaponName:  e.Weapon.String(),
+				weaponClass: e.Weapon.Class(),
 			}, domain.MetricDeath)
 		}
+	}
 
-		if e.Killer != nil && e.Killer.SteamID64 != 0 {
-			// kill amount
-			p.metrics.incr(e.Killer.SteamID64, domain.MetricKill)
+	if p.playerConnected(e.Killer) {
+		// kill amount
+		p.metrics.incr(e.Killer.SteamID64, domain.MetricKill)
+
+		if e.Weapon != nil {
 			p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
-				weaponName:  weapon,
-				weaponClass: weaponClass,
+				weaponName:  e.Weapon.String(),
+				weaponClass: e.Weapon.Class(),
 			}, domain.MetricKill)
+		}
 
-			switch {
-			// headshot kill amount
-			case e.IsHeadshot:
-				p.metrics.incr(e.Killer.SteamID64, domain.MetricHSKill)
+		switch {
+		// headshot kill amount
+		case e.IsHeadshot:
+			p.metrics.incr(e.Killer.SteamID64, domain.MetricHSKill)
+
+			if e.Weapon != nil {
 				p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
-					weaponName:  weapon,
-					weaponClass: weaponClass,
+					weaponName:  e.Weapon.String(),
+					weaponClass: e.Weapon.Class(),
 				}, domain.MetricHSKill)
+			}
 
-			// blind kill amount
-			case e.AttackerBlind:
-				p.metrics.incr(e.Killer.SteamID64, domain.MetricBlindKill)
+		// blind kill amount
+		case e.AttackerBlind:
+			p.metrics.incr(e.Killer.SteamID64, domain.MetricBlindKill)
+
+			if e.Weapon != nil {
 				p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
-					weaponName:  weapon,
-					weaponClass: weaponClass,
+					weaponName:  e.Weapon.String(),
+					weaponClass: e.Weapon.Class(),
 				}, domain.MetricBlindKill)
+			}
 
-			// wallbang kill amount
-			case e.IsWallBang():
-				p.metrics.incr(e.Killer.SteamID64, domain.MetricWallbangKill)
+		// wallbang kill amount
+		case e.IsWallBang():
+			p.metrics.incr(e.Killer.SteamID64, domain.MetricWallbangKill)
+
+			if e.Weapon != nil {
 				p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
-					weaponName:  weapon,
-					weaponClass: weaponClass,
+					weaponName:  e.Weapon.String(),
+					weaponClass: e.Weapon.Class(),
 				}, domain.MetricWallbangKill)
+			}
 
-			// noscope kill amount
-			case e.NoScope:
-				p.metrics.incr(e.Killer.SteamID64, domain.MetricNoScopeKill)
+		// noscope kill amount
+		case e.NoScope:
+			p.metrics.incr(e.Killer.SteamID64, domain.MetricNoScopeKill)
+
+			if e.Weapon != nil {
 				p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
-					weaponName:  weapon,
-					weaponClass: weaponClass,
+					weaponName:  e.Weapon.String(),
+					weaponClass: e.Weapon.Class(),
 				}, domain.MetricNoScopeKill)
+			}
 
-			// through smoke kill amount
-			case e.ThroughSmoke:
-				p.metrics.incr(e.Killer.SteamID64, domain.MetricThroughSmokeKill)
+		// through smoke kill amount
+		case e.ThroughSmoke:
+			p.metrics.incr(e.Killer.SteamID64, domain.MetricThroughSmokeKill)
+
+			if e.Weapon != nil {
 				p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
-					weaponName:  weapon,
-					weaponClass: weaponClass,
+					weaponName:  e.Weapon.String(),
+					weaponClass: e.Weapon.Class(),
 				}, domain.MetricThroughSmokeKill)
 			}
 		}
+	}
 
-		if e.Assister != nil && e.Assister.SteamID64 != 0 {
-			// assist total amount
-			p.metrics.incr(e.Assister.SteamID64, domain.MetricAssist)
+	if p.playerConnected(e.Assister) {
+		// assist total amount
+		p.metrics.incr(e.Assister.SteamID64, domain.MetricAssist)
 
-			// flashbang assist amount
-			if e.AssistedFlash {
-				p.metrics.incr(e.Assister.SteamID64, domain.MetricFlashbangAssist)
-			}
+		// flashbang assist amount
+		if e.AssistedFlash {
+			p.metrics.incr(e.Assister.SteamID64, domain.MetricFlashbangAssist)
 		}
-	})
+	}
 }
 
-// handlePlayerHurt calculates metrics for taken, dealt damage and for taken and dealt damage by a weapon.
-func (p *parser) handlePlayerHurt() {
-	p.RegisterEventHandler(func(e events.PlayerHurt) {
-		if !p.collectStats(p.GameState()) {
-			return
-		}
+// handlePlayerHurt collects metrics and weapon metrics on player hurt.
+func (p *parser) handlePlayerHurt(e events.PlayerHurt) {
+	if !p.collectStats(p.GameState()) {
+		return
+	}
 
-		var (
-			weaponName  string
-			weaponClass domain.EquipmentClass
-		)
+	if p.playerConnected(e.Attacker) {
+		// dealt damage
+		p.metrics.add(e.Attacker.SteamID64, domain.MetricDamageDealt, e.HealthDamage)
+
 		if e.Weapon != nil {
-			weaponName = e.Weapon.String()
-			weaponClass = domain.EquipmentClass(e.Weapon.Class())
-		}
-
-		if e.Attacker != nil && e.Attacker.SteamID64 != 0 {
-			// dealt damage
-			p.metrics.add(e.Attacker.SteamID64, domain.MetricDamageDealt, e.HealthDamage)
 			p.weaponMetrics.add(e.Attacker.SteamID64, weaponMetric{
-				weaponName:  weaponName,
-				weaponClass: weaponClass,
+				weaponName:  e.Weapon.String(),
+				weaponClass: e.Weapon.Class(),
 			}, domain.MetricDamageDealt, e.HealthDamage)
 		}
+	}
 
-		if e.Player != nil && e.Player.SteamID64 != 0 {
-			// taken damage
-			p.metrics.add(e.Player.SteamID64, domain.MetricDamageTaken, e.HealthDamage)
+	if p.playerConnected(e.Player) {
+		// taken damage
+		p.metrics.add(e.Player.SteamID64, domain.MetricDamageTaken, e.HealthDamage)
+
+		if e.Weapon != nil {
 			p.weaponMetrics.add(e.Player.SteamID64, weaponMetric{
-				weaponName:  weaponName,
-				weaponClass: weaponClass,
+				weaponName:  e.Weapon.String(),
+				weaponClass: e.Weapon.Class(),
 			}, domain.MetricDamageTaken, e.HealthDamage)
 		}
-	})
-}
-
-// handleBomdEvent counts number of planted and defused bombs.
-func (p *parser) handleBombEvents() {
-	p.RegisterEventHandler(func(e events.BombDefused) {
-		if !p.collectStats(p.GameState()) {
-			return
-		}
-
-		if e.BombEvent.Player != nil && e.BombEvent.Player.SteamID64 != 0 {
-			p.metrics.incr(e.BombEvent.Player.SteamID64, domain.MetricBombDefused)
-		}
-	})
-
-	p.RegisterEventHandler(func(e events.BombPlanted) {
-		if !p.collectStats(p.GameState()) {
-			return
-		}
-
-		if e.BombEvent.Player != nil && e.BombEvent.Player.SteamID64 != 0 {
-			p.metrics.incr(e.BombEvent.Player.SteamID64, domain.MetricBombPlanted)
-		}
-	})
+	}
 }

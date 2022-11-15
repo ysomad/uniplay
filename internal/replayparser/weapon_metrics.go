@@ -3,13 +3,14 @@ package replayparser
 import (
 	"sync"
 
+	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 )
 
 type weaponMetric struct {
 	weaponName  string
-	weaponClass domain.EquipmentClass
+	weaponClass common.EquipmentClass
 }
 
 type weaponMetrics struct {
@@ -58,7 +59,7 @@ func (p *weaponMetrics) toDTO(matchID domain.MatchID) []dto.WeaponMetric {
 					MatchID:       matchID,
 					PlayerSteamID: uint64(steamID),
 					WeaponName:    wm.weaponName,
-					WeaponClass:   wm.weaponClass,
+					WeaponClass:   domain.EquipmentClass(wm.weaponClass),
 					Metric:        m,
 					Value:         int32(v),
 				})
