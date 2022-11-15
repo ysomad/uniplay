@@ -1,7 +1,6 @@
 package replayparser
 
 import (
-	"fmt"
 	"io"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
@@ -64,7 +63,7 @@ func (p *parser) Parse() (parseResult, error) {
 			return
 		}
 
-		if e.Player != nil {
+		if e.Player != nil && e.Player.SteamID64 != 0 {
 			p.metrics.incr(e.Player.SteamID64, domain.MetricRoundMVPCount)
 		}
 	})
@@ -77,8 +76,6 @@ func (p *parser) Parse() (parseResult, error) {
 	if err := p.ParseToEnd(); err != nil {
 		return parseResult{}, err
 	}
-
-	fmt.Println(p.match)
 
 	return parseResult{
 		metrics:       p.metrics,
@@ -127,7 +124,7 @@ func (p *parser) handleKills() {
 			weaponClass = domain.EquipmentClass(e.Weapon.Class())
 		}
 
-		if e.Victim != nil {
+		if e.Victim != nil && e.Victim.SteamID64 != 0 {
 			// death amount FROM weapon
 			p.metrics.incr(e.Victim.SteamID64, domain.MetricDeath)
 			p.weaponMetrics.incr(e.Victim.SteamID64, weaponMetric{
@@ -136,7 +133,7 @@ func (p *parser) handleKills() {
 			}, domain.MetricDeath)
 		}
 
-		if e.Killer != nil {
+		if e.Killer != nil && e.Killer.SteamID64 != 0 {
 			// kill amount
 			p.metrics.incr(e.Killer.SteamID64, domain.MetricKill)
 			p.weaponMetrics.incr(e.Killer.SteamID64, weaponMetric{
@@ -187,7 +184,7 @@ func (p *parser) handleKills() {
 			}
 		}
 
-		if e.Assister != nil {
+		if e.Assister != nil && e.Assister.SteamID64 != 0 {
 			// assist total amount
 			p.metrics.incr(e.Assister.SteamID64, domain.MetricAssist)
 
@@ -215,7 +212,7 @@ func (p *parser) handlePlayerHurt() {
 			weaponClass = domain.EquipmentClass(e.Weapon.Class())
 		}
 
-		if e.Attacker != nil {
+		if e.Attacker != nil && e.Attacker.SteamID64 != 0 {
 			// dealt damage
 			p.metrics.add(e.Attacker.SteamID64, domain.MetricDamageDealt, e.HealthDamage)
 			p.weaponMetrics.add(e.Attacker.SteamID64, weaponMetric{
@@ -224,7 +221,7 @@ func (p *parser) handlePlayerHurt() {
 			}, domain.MetricDamageDealt, e.HealthDamage)
 		}
 
-		if e.Player != nil {
+		if e.Player != nil && e.Player.SteamID64 != 0 {
 			// taken damage
 			p.metrics.add(e.Player.SteamID64, domain.MetricDamageTaken, e.HealthDamage)
 			p.weaponMetrics.add(e.Player.SteamID64, weaponMetric{
@@ -242,7 +239,7 @@ func (p *parser) handleBombEvents() {
 			return
 		}
 
-		if e.BombEvent.Player != nil {
+		if e.BombEvent.Player != nil && e.BombEvent.Player.SteamID64 != 0 {
 			p.metrics.incr(e.BombEvent.Player.SteamID64, domain.MetricBombDefused)
 		}
 	})
@@ -252,7 +249,7 @@ func (p *parser) handleBombEvents() {
 			return
 		}
 
-		if e.BombEvent.Player != nil {
+		if e.BombEvent.Player != nil && e.BombEvent.Player.SteamID64 != 0 {
 			p.metrics.incr(e.BombEvent.Player.SteamID64, domain.MetricBombPlanted)
 		}
 	})

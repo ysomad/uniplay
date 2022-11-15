@@ -2,10 +2,14 @@ package postgres
 
 import (
 	"context"
+	"errors"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/jackc/pgerrcode"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/ysomad/pgxatomic"
 
+	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 )
 
@@ -95,6 +99,14 @@ func (r *replayRepo) SaveMatch(ctx context.Context, m *dto.Match) error {
 	}
 
 	if _, err = r.pool.Exec(ctx, sql, args...); err != nil {
+		var pgErr *pgconn.PgError
+
+		if errors.As(err, &pgErr) {
+			if pgErr.Code == pgerrcode.UniqueViolation {
+				return domain.ErrMatchAlreadyExist
+			}
+		}
+
 		return err
 	}
 

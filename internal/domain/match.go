@@ -8,6 +8,29 @@ import (
 	"github.com/google/uuid"
 )
 
+var (
+	ErrMatchAlreadyExist = errors.New("match from the replay already exist")
+)
+
+type Match struct {
+	ID         MatchID
+	MapName    string
+	Duration   time.Duration
+	Team1      MatchTeam
+	Team2      MatchTeam
+	UploadTime time.Time
+}
+
+type MatchTeam struct {
+	ClanName       string
+	FlagCode       string
+	Score          uint8
+	PlayerSteamIDs []uint64
+}
+
+type MatchID struct {
+	uuid.UUID
+}
 type MatchIDArgs struct {
 	MapName       string
 	Team1Name     string
@@ -15,26 +38,6 @@ type MatchIDArgs struct {
 	Team2Name     string
 	Team2Score    uint8
 	MatchDuration time.Duration
-}
-
-func (a *MatchIDArgs) validate() error {
-	if a.MapName == "" {
-		return errors.New("empty map name")
-	}
-	if a.Team1Name == "" {
-		return errors.New("empty team 1 name")
-	}
-	if a.Team2Name == "" {
-		return errors.New("empty team 2 name")
-	}
-	if a.MatchDuration <= time.Minute {
-		return errors.New("match cannot last less than a minute")
-	}
-	return nil
-}
-
-type MatchID struct {
-	uuid.UUID
 }
 
 func NewMatchID(a *MatchIDArgs) (MatchID, error) {
@@ -53,18 +56,18 @@ func NewMatchID(a *MatchIDArgs) (MatchID, error) {
 	return MatchID{uuid.NewMD5(uuid.UUID{}, []byte(s))}, nil
 }
 
-type Match struct {
-	ID         MatchID
-	MapName    string
-	Duration   time.Duration
-	Team1      MatchTeam
-	Team2      MatchTeam
-	UploadTime time.Time
-}
-
-type MatchTeam struct {
-	ClanName       string
-	FlagCode       string
-	Score          uint8
-	PlayerSteamIDs []uint64
+func (a *MatchIDArgs) validate() error {
+	if a.MapName == "" {
+		return errors.New("empty map name")
+	}
+	if a.Team1Name == "" {
+		return errors.New("empty team 1 name")
+	}
+	if a.Team2Name == "" {
+		return errors.New("empty team 2 name")
+	}
+	if a.MatchDuration <= time.Minute {
+		return errors.New("match cannot last less than a minute")
+	}
+	return nil
 }

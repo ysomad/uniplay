@@ -74,5 +74,9 @@ func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*dto.Match
 		return nil, err
 	}
 
+	if err = r.repo.SaveMetrics(ctx, res.MetricList(m.ID), res.WeaponMetricList(m.ID)); err != nil {
+		return nil, err
+	}
+
 	return m, nil
 }
