@@ -48,13 +48,13 @@ func (p *weaponMetrics) addv(sid steamID, wm weaponMetric, m domain.Metric, v in
 	p.Metrics[sid][wm][m] += v
 }
 
-func (p *weaponMetrics) toDTO(matchID domain.MatchID) []dto.CreateWeaponMetricArgs {
-	args := []dto.CreateWeaponMetricArgs{}
+func (p *weaponMetrics) toDTO(matchID domain.MatchID) []dto.WeaponMetric {
+	args := []dto.WeaponMetric{}
 
 	for steamID, wmetrics := range p.Metrics {
 		for wm, metrics := range wmetrics {
 			for m, v := range metrics {
-				args = append(args, dto.CreateWeaponMetricArgs{
+				args = append(args, dto.WeaponMetric{
 					MatchID:       matchID,
 					PlayerSteamID: uint64(steamID),
 					WeaponName:    wm.weaponName,

@@ -3,11 +3,13 @@ package service
 import (
 	"context"
 
-	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 )
 
 type replayRepository interface {
-	SaveMatch(context.Context, *domain.Match) error
-	SaveStats(context.Context, []dto.CreateMetricArgs, []dto.CreateWeaponMetricArgs) error
+	SavePlayers(context.Context, dto.PlayerSteamIDs) error
+	SaveTeams(context.Context, dto.Teams) error
+	AddPlayersToTeams(context.Context, []dto.TeamPlayer) error
+	SaveMetrics(context.Context, []dto.Metric, []dto.WeaponMetric) error
+	SaveMatch(context.Context, *dto.Match) error
 }

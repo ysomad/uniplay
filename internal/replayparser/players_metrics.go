@@ -43,12 +43,12 @@ func (p *playerMetrics) addn(sid steamID, m domain.Metric, n int) {
 	p.Metrics[sid][m] += n
 }
 
-func (p *playerMetrics) toDTO(matchID domain.MatchID) []dto.CreateMetricArgs {
-	args := []dto.CreateMetricArgs{}
+func (p *playerMetrics) toDTO(matchID domain.MatchID) []dto.Metric {
+	args := []dto.Metric{}
 
 	for steamID, metrics := range p.Metrics {
 		for m, v := range metrics {
-			args = append(args, dto.CreateMetricArgs{
+			args = append(args, dto.Metric{
 				MatchID:       matchID,
 				PlayerSteamID: uint64(steamID),
 				Metric:        m,
