@@ -2,10 +2,17 @@ package domain
 
 import "time"
 
+type PlayerProfile struct {
+	Player           Player
+	Stats            PlayerStats
+	TeamNames        []string
+	WeaponStats      PlayerWeaponStats
+	WeaponClassStats PlayerWeaponClassStats
+}
+
 type Player struct {
 	SteamID      uint64
-	TeamName     string
-	TeamFlagCode string
+	MainTeamName string
 	CreateTime   time.Time
 	UpdateTime   time.Time
 }
