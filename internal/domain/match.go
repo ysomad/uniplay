@@ -8,30 +8,49 @@ import (
 	"github.com/google/uuid"
 )
 
-type matchIDArgs struct {
-	mapName       string
-	team1name     string
-	team1score    uint8
-	team2name     string
-	team2score    uint8
-	matchDuration time.Duration
+type MatchIDArgs struct {
+	MapName       string
+	Team1Name     string
+	Team1Score    uint8
+	Team2Name     string
+	Team2Score    uint8
+	MatchDuration time.Duration
+}
+
+func (a *MatchIDArgs) validate() error {
+	if a.MapName == "" {
+		return errors.New("empty map name")
+	}
+	if a.Team1Name == "" {
+		return errors.New("empty team 1 name")
+	}
+	if a.Team2Name == "" {
+		return errors.New("empty team 2 name")
+	}
+	if a.MatchDuration <= time.Minute {
+		return errors.New("match cannot last less than a minute")
+	}
+	return nil
 }
 
 type MatchID struct {
 	uuid.UUID
 }
 
-func newMatchID(a *matchIDArgs) MatchID {
+func NewMatchID(a *MatchIDArgs) (MatchID, error) {
+	if err := a.validate(); err != nil {
+		return MatchID{}, err
+	}
+
 	s := fmt.Sprintf(
 		"%s,%s,%d,%s,%d,%d",
-		a.mapName,
-		a.team1name,
-		a.team1score,
-		a.team2name,
-		a.team2score,
-		a.matchDuration,
-	)
-	return MatchID{uuid.NewMD5(uuid.UUID{}, []byte(s))}
+		a.MapName,
+		a.Team1Name,
+		a.Team1Score,
+		a.Team2Name,
+		a.Team2Score,
+		a.MatchDuration)
+	return MatchID{uuid.NewMD5(uuid.UUID{}, []byte(s))}, nil
 }
 
 type Match struct {
@@ -43,60 +62,9 @@ type Match struct {
 	UploadTime time.Time
 }
 
-func NewMatch(mapName string, matchDuration time.Duration, t1, t2 MatchTeam) (*Match, error) {
-	if mapName == "" {
-		return nil, errors.New("empty mapName")
-	}
-
-	if matchDuration.Minutes() < 5 {
-		return nil, errors.New("too short match duration, minimum is 5 minutes")
-	}
-
-	if err := t1.validate(); err != nil {
-		return nil, err
-	}
-
-	if err := t2.validate(); err != nil {
-		return nil, err
-	}
-
-	return &Match{
-		ID: newMatchID(&matchIDArgs{
-			mapName:       mapName,
-			team1name:     t1.Name,
-			team1score:    t1.Score,
-			team2name:     t2.Name,
-			team2score:    t2.Score,
-			matchDuration: matchDuration,
-		}),
-		MapName:    mapName,
-		Duration:   matchDuration,
-		Team1:      t1,
-		Team2:      t2,
-		UploadTime: time.Now(),
-	}, nil
-}
-
 type MatchTeam struct {
-	Name           string
+	ClanName       string
 	FlagCode       string
 	Score          uint8
 	PlayerSteamIDs []uint64
-}
-
-func (t *MatchTeam) SetAll(name, flag string, score uint8, steamIDs []uint64) {
-	t.Name = name
-	t.FlagCode = flag
-	t.Score = score
-	t.PlayerSteamIDs = steamIDs
-}
-
-func (t *MatchTeam) validate() error {
-	if t.Name == "" {
-		return errors.New("empty team name")
-	}
-	if len(t.PlayerSteamIDs) < 5 {
-		return errors.New("amount of player steam ids in team must be atleast 5")
-	}
-	return nil
 }

@@ -1,10 +1,10 @@
 package replayparser
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
-	"github.com/ssssargsian/uniplay/internal/dto"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
@@ -18,9 +18,7 @@ type parser struct {
 
 	metrics       *playerMetrics
 	weaponMetrics *weaponMetrics
-	match         *dto.CreateMatchArgs
-
-	isKnifeRound bool
+	match         *match
 }
 
 func New(r io.Reader) *parser {
@@ -28,30 +26,59 @@ func New(r io.Reader) *parser {
 		demoinfocs.NewParser(r),
 		newPlayerMetrics(),
 		newWeaponMetrics(),
-		&dto.CreateMatchArgs{},
-		false,
+		&match{},
 	}
 }
 
+// TODO: refactor
 func (p *parser) Parse() (parseResult, error) {
 	p.RegisterEventHandler(func(e events.RoundFreezetimeEnd) {
 		p.detectKnifeRound()
 	})
 
+	p.RegisterEventHandler(func(e events.MatchStart) {
+		gs := p.GameState()
+
+		// set teams and players after match start
+		t := gs.TeamTerrorists()
+		p.match.setTeam1(newMatchTeam(t.ClanName(), t.Flag(), t.Team(), t.Members()))
+
+		ct := gs.TeamCounterTerrorists()
+		p.match.setTeam2(newMatchTeam(ct.ClanName(), ct.Flag(), ct.Team(), ct.Members()))
+	})
+
+	p.RegisterEventHandler(func(e events.TeamSideSwitch) {
+		p.match.swapTeamSides()
+	})
+
+	p.RegisterEventHandler(func(e events.ScoreUpdated) {
+		p.match.updateTeamsScore(e)
+	})
+
 	p.handleKills()
 	p.handlePlayerHurt()
-	p.handleScoreUpdate()
-	p.handleMVPAnnouncement()
 	p.handleBombEvents()
 
+	p.RegisterEventHandler(func(e events.RoundMVPAnnouncement) {
+		if !p.collectStats(p.GameState()) {
+			return
+		}
+
+		if e.Player != nil {
+			p.metrics.incr(e.Player.SteamID64, domain.MetricRoundMVPCount)
+		}
+	})
+
 	p.RegisterEventHandler(func(e events.AnnouncementWinPanelMatch) {
-		p.match.MapName = p.Header().MapName
-		p.match.Duration = p.Header().PlaybackTime
+		p.match.mapName = p.Header().MapName
+		p.match.duration = p.Header().PlaybackTime
 	})
 
 	if err := p.ParseToEnd(); err != nil {
 		return parseResult{}, err
 	}
+
+	fmt.Println(p.match)
 
 	return parseResult{
 		metrics:       p.metrics,
@@ -63,7 +90,7 @@ func (p *parser) Parse() (parseResult, error) {
 // collectStats detects if stats can be collected to prevent collection of stats on knife or warmup rounds.
 // return false if current round is knife round or match is not started.
 func (p *parser) collectStats(gs demoinfocs.GameState) bool {
-	if p.isKnifeRound || !gs.IsMatchStarted() {
+	if p.match.isKnifeRound() || !gs.IsMatchStarted() {
 		return false
 	}
 
@@ -72,12 +99,12 @@ func (p *parser) collectStats(gs demoinfocs.GameState) bool {
 
 // detectKnifeRound sets isKnifeRound to true if any player has no secondary weapon and first slot is a knife.
 func (p *parser) detectKnifeRound() {
-	p.isKnifeRound = false
+	p.match.setIsKnifeRound(false)
 
 	for _, player := range p.GameState().TeamCounterTerrorists().Members() {
 		weapons := player.Weapons()
 		if len(weapons) == 1 && weapons[0].Type == common.EqKnife {
-			p.isKnifeRound = true
+			p.match.setIsKnifeRound(true)
 			break
 		}
 	}
@@ -94,6 +121,7 @@ func (p *parser) handleKills() {
 			weapon      string
 			weaponClass domain.EquipmentClass
 		)
+
 		if e.Weapon != nil {
 			weapon = e.Weapon.String()
 			weaponClass = domain.EquipmentClass(e.Weapon.Class())
@@ -171,25 +199,6 @@ func (p *parser) handleKills() {
 	})
 }
 
-// handleScoreUpdate updates match teams score on ScoreUpdated event.
-func (p *parser) handleScoreUpdate() {
-	p.RegisterEventHandler(func(e events.ScoreUpdated) {
-		teamMembers := e.TeamState.Members()
-		playerSteamIDs := make([]uint64, len(teamMembers))
-
-		for i, player := range teamMembers {
-			playerSteamIDs[i] = player.SteamID64
-		}
-
-		switch e.TeamState.Team() {
-		case common.TeamTerrorists:
-			p.match.Team1.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), uint8(e.TeamState.Score()), playerSteamIDs)
-		case common.TeamCounterTerrorists:
-			p.match.Team2.SetAll(e.TeamState.ClanName(), e.TeamState.Flag(), uint8(e.TeamState.Score()), playerSteamIDs)
-		}
-	})
-}
-
 // handlePlayerHurt calculates metrics for taken, dealt damage and for taken and dealt damage by a weapon.
 func (p *parser) handlePlayerHurt() {
 	p.RegisterEventHandler(func(e events.PlayerHurt) {
@@ -245,19 +254,6 @@ func (p *parser) handleBombEvents() {
 
 		if e.BombEvent.Player != nil {
 			p.metrics.incr(e.BombEvent.Player.SteamID64, domain.MetricBombPlanted)
-		}
-	})
-}
-
-// handleMVPAnnouncement increments player mvp amount metric on RoundMVPAnnouncement event.
-func (p *parser) handleMVPAnnouncement() {
-	p.RegisterEventHandler(func(e events.RoundMVPAnnouncement) {
-		if !p.collectStats(p.GameState()) {
-			return
-		}
-
-		if e.Player != nil {
-			p.metrics.incr(e.Player.SteamID64, domain.MetricRoundMVPCount)
 		}
 	})
 }

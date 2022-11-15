@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS team (
 CREATE TABLE IF NOT EXISTS team_player (
     team_name varchar(16) NOT NULL REFERENCES team (name),
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
-    is_active boolean DEFAULT FALSE NOT NULL,
+    is_active boolean DEFAULT TRUE NOT NULL,
 
     PRIMARY KEY (team_name, player_steam_id)
 );
