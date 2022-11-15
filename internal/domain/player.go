@@ -19,7 +19,8 @@ type PlayerStats struct {
 	KillsPerRound          float32 // KPR
 	AssistsPerRound        float32
 	DeathsPerRound         float32 // DPR
-	FlashedPerRound        float32
+	BlindPerRound          float32
+	BlindedPerRound        float32
 	HeadshotPercentage     float32
 	MatchesPlayed          uint16
 	RoundsPlayed           uint32
