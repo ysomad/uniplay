@@ -24,6 +24,9 @@ const (
 	MetricBombDefused
 
 	MetricRoundMVPCount
+
+	MetricBlind   // сколько раз ослепил
+	MetricBlinded // был ослеплен
 )
 
 var strMetrics = map[Metric]string{

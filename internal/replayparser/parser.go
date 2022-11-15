@@ -68,6 +68,20 @@ func (p *parser) Parse() (parseResult, error) {
 		p.metrics.incr(e.BombEvent.Player.SteamID64, domain.MetricBombPlanted)
 	})
 
+	p.RegisterEventHandler(func(e events.PlayerFlashed) {
+		if !p.collectStats(p.GameState()) {
+			return
+		}
+
+		if p.playerConnected(e.Player) {
+			p.metrics.incr(e.Player.SteamID64, domain.MetricBlinded)
+		}
+
+		if p.playerConnected(e.Attacker) {
+			p.metrics.incr(e.Attacker.SteamID64, domain.MetricBlind)
+		}
+	})
+
 	p.RegisterEventHandler(func(e events.RoundMVPAnnouncement) {
 		if !p.collectStats(p.GameState()) || !p.playerConnected(e.Player) {
 			return
