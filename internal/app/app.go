@@ -17,6 +17,7 @@ import (
 func Run(conf *config.Config) {
 	var err error
 
+	// db
 	pgClient, err := pgclient.New(conf.PG.URL, pgclient.WithMaxConns(conf.PG.MaxConns))
 	if err != nil {
 		log.Fatalf("pgclient.New: %s", err.Error())
@@ -39,49 +40,29 @@ func Run(conf *config.Config) {
 	replayService := service.NewReplay(replayRepo)
 
 	// test
-	replayFile, err := os.Open("./test-data/1.dem")
+	replayFiles, err := os.ReadDir("./test-data/")
 	if err != nil {
-		log.Fatalf("open demo err: %s", err.Error())
-	}
-	defer replayFile.Close()
-
-	// var match *domain.Match
-
-	// test run atomically
-	err = txrunner.Run(context.Background(), func(txCtx context.Context) error {
-		_, err = replayService.CollectStats(txCtx, replayFile)
-		return err
-	})
-	if err != nil {
-		log.Fatalf("demo collect error :%s", err.Error())
+		log.Fatalf("ioutil.ReadDir: %s", err.Error())
 	}
 
-	// fmt.Println(match.ID.String())
+	for _, file := range replayFiles {
+		if file.Name() == ".DS_Store" {
+			continue
+		}
 
-	// metricsFile, err := json.MarshalIndent(res.Metrics.ToDTO(uuid.UUID{}), "", " ")
-	// if err != nil {
-	// 	log.Fatalf("json.MarshalIndent: %s", err.Error())
-	// }
+		replayFile, err := os.Open("./test-data/" + file.Name())
+		if err != nil {
+			log.Fatalf("open file error: %s, replay filename %s", err.Error(), replayFile.Name())
+		}
+		defer replayFile.Close()
 
-	// if err = os.WriteFile("metrics_dto.json", metricsFile, 0644); err != nil {
-	// 	log.Fatalf("ioutil.WriteFile: %s", err.Error())
-	// }
+		err = txrunner.Run(context.Background(), func(txCtx context.Context) error {
+			_, err = replayService.CollectStats(txCtx, replayFile)
+			return err
+		})
 
-	// wmetricsFile, err := json.MarshalIndent(res.WeaponMetrics.ToDTO(uuid.UUID{}), "", " ")
-	// if err != nil {
-	// 	log.Fatalf("json.MarshalIndent: %s", err.Error())
-	// }
-
-	// if err = os.WriteFile("weapon_metrics_dto.json", wmetricsFile, 0644); err != nil {
-	// 	log.Fatalf("ioutil.WriteFile: %s", err.Error())
-	// }
-
-	// matchFile, err := json.MarshalIndent(res.Match, "", " ")
-	// if err != nil {
-	// 	log.Fatalf("json.MarshalIndent: %s", err.Error())
-	// }
-
-	// if err = os.WriteFile("match.json", matchFile, 0644); err != nil {
-	// 	log.Fatalf("ioutil.WriteFile: %s", err.Error())
-	// }
+		if err != nil {
+			log.Fatalf("demo collect error: %s, replay filename %s", err.Error(), replayFile.Name())
+		}
+	}
 }
