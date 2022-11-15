@@ -39,7 +39,7 @@ func Run(conf *config.Config) {
 	replayService := service.NewReplay(replayRepo)
 
 	// test
-	replayFile, err := os.Open("./test-data/2.dem")
+	replayFile, err := os.Open("./test-data/1.dem")
 	if err != nil {
 		log.Fatalf("open demo err: %s", err.Error())
 	}
