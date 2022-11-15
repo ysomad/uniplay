@@ -24,6 +24,9 @@ const (
 	MetricBombDefused
 
 	MetricRoundMVPCount
+
+	MetricBlind   // сколько раз ослепил
+	MetricBlinded // был ослеплен
 )
 
 var strMetrics = map[Metric]string{
@@ -41,11 +44,13 @@ var strMetrics = map[Metric]string{
 	MetricBombPlanted:      "bomb_planted",
 	MetricBombDefused:      "bomb_defused",
 	MetricRoundMVPCount:    "round_mvps",
+	MetricBlind:            "blinded_players",
+	MetricBlinded:          "was_blinded",
 }
 
 func (m Metric) String() string {
 	if _, ok := strMetrics[m]; !ok {
-		return "undefined"
+		return "undefined_metric"
 	}
 	return strMetrics[m]
 }

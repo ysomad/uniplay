@@ -1,12 +1,13 @@
-CREATE TABLE IF NOT EXISTS player (
-    steam_id bigint PRIMARY KEY NOT NULL,
+CREATE TABLE IF NOT EXISTS team (
+    name varchar(16) PRIMARY KEY NOT NULL,
+    flag_code char(2) NOT NULL,
     create_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     update_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS team (
-    name varchar(16) PRIMARY KEY NOT NULL,
-    flag_code char(2) NOT NULL,
+CREATE TABLE IF NOT EXISTS player (
+    steam_id bigint PRIMARY KEY NOT NULL,
+    main_team_name varchar(16) REFERENCES team(name),
     create_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     update_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
