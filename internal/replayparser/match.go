@@ -1,12 +1,14 @@
 package replayparser
 
 import (
+	"fmt"
 	"sync"
 	"time"
 
+	"github.com/ssssargsian/uniplay/internal/dto"
+
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/events"
-	"github.com/ssssargsian/uniplay/internal/dto"
 )
 
 type match struct {
@@ -31,12 +33,19 @@ func (m *match) updateTeamsScore(e events.ScoreUpdated) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
+	if e.NewScore <= 0 {
+		return
+	}
+
 	switch e.TeamState.Team() {
 	case m._team1.side:
 		m._team1.score = e.NewScore
 	case m._team2.side:
 		m._team2.score = e.NewScore
 	}
+
+	fmt.Println(m._team1.score)
+	fmt.Println(m._team2.score)
 }
 
 // isKnifeRound returns true if current round is a knife round.

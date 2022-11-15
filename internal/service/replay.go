@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"io"
 	"time"
 
@@ -43,8 +44,13 @@ func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*dto.Match
 		return nil, err
 	}
 
+	playerSteamIDs := res.PlayerSteamIDs()
+	if len(playerSteamIDs) <= 0 {
+		return nil, errors.New("empty list of player steam ids")
+	}
+
 	err = r.repo.SavePlayers(ctx, dto.PlayerSteamIDs{
-		SteamIDs:   res.PlayerSteamIDs(),
+		SteamIDs:   playerSteamIDs,
 		CreateTime: now,
 	})
 	if err != nil {
@@ -74,7 +80,17 @@ func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*dto.Match
 		return nil, err
 	}
 
-	if err = r.repo.SaveMetrics(ctx, res.MetricList(m.ID), res.WeaponMetricList(m.ID)); err != nil {
+	metricList := res.MetricList(m.ID)
+	if len(metricList) <= 0 {
+		return nil, errors.New("empty metric list")
+	}
+
+	wmetricList := res.WeaponMetricList(m.ID)
+	if len(wmetricList) <= 0 {
+		return nil, errors.New("empty weapon metric list")
+	}
+
+	if err = r.repo.SaveMetrics(ctx, metricList, wmetricList); err != nil {
 		return nil, err
 	}
 

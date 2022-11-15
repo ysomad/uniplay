@@ -1,6 +1,7 @@
 package replayparser
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
@@ -30,15 +31,21 @@ func New(r io.Reader) *parser {
 }
 
 func (p *parser) Parse() (parseResult, error) {
-	p.RegisterEventHandler(func(e events.RoundFreezetimeEnd) {
+	p.RegisterEventHandler(func(_ events.RoundFreezetimeEnd) {
 		p.detectKnifeRound()
 	})
 
-	p.RegisterEventHandler(func(e events.MatchStart) {
+	// TODO: https://github.com/markus-wa/demoinfocs-golang/discussions/366
+	// p.RegisterEventHandler(func(e events.MatchStartedChanged) {
+	// 	p.setTeams(p.GameState())
+	// })
+
+	p.RegisterEventHandler(func(_ events.MatchStart) {
 		p.setTeams(p.GameState())
 	})
 
-	p.RegisterEventHandler(func(e events.TeamSideSwitch) {
+	p.RegisterEventHandler(func(_ events.TeamSideSwitch) {
+		fmt.Println("TEAM SWITCH")
 		p.match.swapTeamSides()
 	})
 
@@ -55,17 +62,17 @@ func (p *parser) Parse() (parseResult, error) {
 	})
 
 	p.RegisterEventHandler(func(e events.BombDefused) {
-		if !p.collectStats(p.GameState()) || !p.playerConnected(e.BombEvent.Player) {
+		if !p.collectStats(p.GameState()) || !p.playerConnected(e.Player) {
 			return
 		}
-		p.metrics.incr(e.BombEvent.Player.SteamID64, domain.MetricBombDefused)
+		p.metrics.incr(e.Player.SteamID64, domain.MetricBombDefused)
 	})
 
 	p.RegisterEventHandler(func(e events.BombPlanted) {
-		if !p.collectStats(p.GameState()) || !p.playerConnected(e.BombEvent.Player) {
+		if !p.collectStats(p.GameState()) || !p.playerConnected(e.Player) {
 			return
 		}
-		p.metrics.incr(e.BombEvent.Player.SteamID64, domain.MetricBombPlanted)
+		p.metrics.incr(e.Player.SteamID64, domain.MetricBombPlanted)
 	})
 
 	p.RegisterEventHandler(func(e events.PlayerFlashed) {
@@ -86,10 +93,9 @@ func (p *parser) Parse() (parseResult, error) {
 		if !p.collectStats(p.GameState()) || !p.playerConnected(e.Player) {
 			return
 		}
-		p.metrics.incr(e.Player.SteamID64, domain.MetricRoundMVPCount)
 	})
 
-	p.RegisterEventHandler(func(e events.AnnouncementWinPanelMatch) {
+	p.RegisterEventHandler(func(_ events.AnnouncementWinPanelMatch) {
 		p.match.mapName = p.Header().MapName
 		p.match.duration = p.Header().PlaybackTime
 	})
@@ -140,6 +146,7 @@ func (p *parser) setTeams(gs demoinfocs.GameState) {
 
 	ct := gs.TeamCounterTerrorists()
 	p.match.setTeam2(newMatchTeam(ct.ClanName(), ct.Flag(), ct.Team(), ct.Members()))
+
 }
 
 // handleKills collects metrics and weapon metrics on kill event.
