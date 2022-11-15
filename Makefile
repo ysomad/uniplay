@@ -23,7 +23,7 @@ run:
 .PHONY: run-migrate
 run-migrate:
 	go mod tidy && go mod download && \
-	go run -tags migrate ./cmd
+	go run -tags migrate ./cmd/app
 
 .PHONY: migrate-new
 migrate-new:
