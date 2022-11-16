@@ -1,7 +1,6 @@
 package replayparser
 
 import (
-	"fmt"
 	"sync"
 	"time"
 
@@ -33,10 +32,6 @@ func (m *match) updateTeamsScore(e events.ScoreUpdated) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
-	if e.NewScore <= 0 {
-		return
-	}
-
 	switch e.TeamState.Team() {
 	case m._team1.side:
 		m._team1.score = e.NewScore
@@ -44,8 +39,6 @@ func (m *match) updateTeamsScore(e events.ScoreUpdated) {
 		m._team2.score = e.NewScore
 	}
 
-	fmt.Println(m._team1.score)
-	fmt.Println(m._team2.score)
 }
 
 // isKnifeRound returns true if current round is a knife round.
