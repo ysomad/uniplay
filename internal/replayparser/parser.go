@@ -1,7 +1,6 @@
 package replayparser
 
 import (
-	"fmt"
 	"io"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
@@ -45,7 +44,6 @@ func (p *parser) Parse() (parseResult, error) {
 	})
 
 	p.RegisterEventHandler(func(_ events.TeamSideSwitch) {
-		fmt.Println("TEAM SWITCH")
 		p.match.swapTeamSides()
 	})
 
@@ -80,6 +78,11 @@ func (p *parser) Parse() (parseResult, error) {
 			return
 		}
 
+		// do not collect metrics if player got flashed in spectators
+		if p.playerSpectator(e.Player) {
+			return
+		}
+
 		if p.playerConnected(e.Player) {
 			p.metrics.incr(e.Player.SteamID64, domain.MetricBlinded)
 		}
@@ -109,6 +112,10 @@ func (p *parser) Parse() (parseResult, error) {
 		weaponMetrics: p.weaponMetrics,
 		match:         p.match,
 	}, nil
+}
+
+func (p *parser) playerSpectator(player *common.Player) bool {
+	return player != nil && (player.Team == common.TeamSpectators || player.Team == common.TeamUnassigned)
 }
 
 // collectStats detects if stats can be collected to prevent collection of stats on knife or warmup rounds.

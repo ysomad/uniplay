@@ -1,6 +1,8 @@
 package replayparser
 
 import (
+	"errors"
+
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 )
@@ -38,7 +40,11 @@ func (p *playerMetrics) addn(sid steamID, m domain.Metric, n int) {
 }
 
 // TODO: refactor with goroutines
-func (p *playerMetrics) toDTO(matchID domain.MatchID) []dto.Metric {
+func (p *playerMetrics) toDTO(matchID domain.MatchID) ([]dto.Metric, error) {
+	if len(p.metrics) == 0 {
+		return nil, errors.New("empty list of metrics")
+	}
+
 	args := []dto.Metric{}
 
 	for steamID, metrics := range p.metrics {
@@ -52,5 +58,5 @@ func (p *playerMetrics) toDTO(matchID domain.MatchID) []dto.Metric {
 		}
 	}
 
-	return args
+	return args, nil
 }

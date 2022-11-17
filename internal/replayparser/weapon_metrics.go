@@ -1,6 +1,8 @@
 package replayparser
 
 import (
+	"errors"
+
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
@@ -44,7 +46,11 @@ func (p *weaponMetrics) addv(sid steamID, wm weaponMetric, m domain.Metric, v in
 }
 
 // TODO: refactor with goroutines
-func (p *weaponMetrics) toDTO(matchID domain.MatchID) []dto.WeaponMetric {
+func (p *weaponMetrics) toDTO(matchID domain.MatchID) ([]dto.WeaponMetric, error) {
+	if len(p.metrics) == 0 {
+		return nil, errors.New("empty list of weapon metrics")
+	}
+
 	args := []dto.WeaponMetric{}
 
 	for steamID, wmetrics := range p.metrics {
@@ -62,5 +68,5 @@ func (p *weaponMetrics) toDTO(matchID domain.MatchID) []dto.WeaponMetric {
 		}
 	}
 
-	return args
+	return args, nil
 }
