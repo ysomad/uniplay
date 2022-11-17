@@ -7,20 +7,23 @@ import (
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 	"github.com/ssssargsian/uniplay/internal/replayparser"
+	"go.uber.org/zap"
 )
 
 type replay struct {
+	log  *zap.Logger
 	repo replayRepository
 }
 
-func NewReplay(r replayRepository) *replay {
+func NewReplay(l *zap.Logger, r replayRepository) *replay {
 	return &replay{
+		log:  l,
 		repo: r,
 	}
 }
 
 func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*dto.Match, error) {
-	p := replayparser.New(replay)
+	p := replayparser.New(replay, r.log)
 	defer p.Close()
 
 	res, err := p.Parse()

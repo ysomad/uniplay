@@ -3,6 +3,8 @@ package replayparser
 import (
 	"io"
 
+	"go.uber.org/zap"
+
 	"github.com/ssssargsian/uniplay/internal/domain"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs"
@@ -15,14 +17,17 @@ import (
 type parser struct {
 	demoinfocs.Parser
 
+	log *zap.Logger
+
 	metrics       *playerMetrics
 	weaponMetrics *weaponMetrics
 	match         *match
 }
 
-func New(r io.Reader) *parser {
+func New(r io.Reader, l *zap.Logger) *parser {
 	return &parser{
 		demoinfocs.NewParser(r),
+		l,
 		newPlayerMetrics(),
 		newWeaponMetrics(),
 		&match{},
