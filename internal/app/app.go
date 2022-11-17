@@ -40,29 +40,45 @@ func Run(conf *config.Config) {
 	replayService := service.NewReplay(replayRepo)
 
 	// test
-	replayFiles, err := os.ReadDir("./test-data/")
+	// replayFiles, err := os.ReadDir("./test-data/")
+	// if err != nil {
+	// 	log.Fatalf("ioutil.ReadDir: %s", err.Error())
+	// }
+
+	// for _, file := range replayFiles {
+	// 	if file.Name() == ".DS_Store" {
+	// 		continue
+	// 	}
+
+	// 	replayFile, err := os.Open("./test-data/" + file.Name())
+	// 	if err != nil {
+	// 		log.Fatalf("open file error: %s, replay filename %s", err.Error(), replayFile.Name())
+	// 	}
+	// 	defer replayFile.Close()
+
+	// 	err = txrunner.Run(context.Background(), func(txCtx context.Context) error {
+	// 		_, err = replayService.CollectStats(txCtx, replayFile)
+	// 		return err
+	// 	})
+
+	// 	if err != nil {
+	// 		log.Fatalf("demo collect error: %s, replay filename %s", err.Error(), replayFile.Name())
+	// 	}
+	// }
+
+	replayFile, err := os.Open("./test-data/5.dem")
 	if err != nil {
-		log.Fatalf("ioutil.ReadDir: %s", err.Error())
+		log.Fatalf("open file error: %s, replay filename %s", err.Error(), replayFile.Name())
+	}
+	defer replayFile.Close()
+
+	err = txrunner.Run(context.Background(), func(txCtx context.Context) error {
+		_, err = replayService.CollectStats(txCtx, replayFile)
+		return err
+	})
+
+	if err != nil {
+		log.Fatalf("demo collect error: %s, replay filename %s", err.Error(), replayFile.Name())
 	}
 
-	for _, file := range replayFiles {
-		if file.Name() == ".DS_Store" {
-			continue
-		}
-
-		replayFile, err := os.Open("./test-data/" + file.Name())
-		if err != nil {
-			log.Fatalf("open file error: %s, replay filename %s", err.Error(), replayFile.Name())
-		}
-		defer replayFile.Close()
-
-		err = txrunner.Run(context.Background(), func(txCtx context.Context) error {
-			_, err = replayService.CollectStats(txCtx, replayFile)
-			return err
-		})
-
-		if err != nil {
-			log.Fatalf("demo collect error: %s, replay filename %s", err.Error(), replayFile.Name())
-		}
-	}
 }

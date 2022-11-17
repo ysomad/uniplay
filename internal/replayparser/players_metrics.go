@@ -1,8 +1,6 @@
 package replayparser
 
 import (
-	"sync"
-
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 )
@@ -12,13 +10,12 @@ type steamID uint64
 
 // playerMetrics is a map of player metrics.
 type playerMetrics struct {
-	mu      sync.RWMutex
-	Metrics map[steamID]map[domain.Metric]int
+	metrics map[steamID]map[domain.Metric]int
 }
 
 func newPlayerMetrics() *playerMetrics {
 	return &playerMetrics{
-		Metrics: make(map[steamID]map[domain.Metric]int),
+		metrics: make(map[steamID]map[domain.Metric]int),
 	}
 }
 
@@ -33,20 +30,18 @@ func (p *playerMetrics) incr(steamID64 uint64, m domain.Metric) {
 }
 
 func (p *playerMetrics) addn(sid steamID, m domain.Metric, n int) {
-	p.mu.Lock()
-	defer p.mu.Unlock()
-
-	if _, ok := p.Metrics[sid]; !ok {
-		p.Metrics[sid] = make(map[domain.Metric]int)
+	if _, ok := p.metrics[sid]; !ok {
+		p.metrics[sid] = make(map[domain.Metric]int)
 	}
 
-	p.Metrics[sid][m] += n
+	p.metrics[sid][m] += n
 }
 
+// TODO: refactor with goroutines
 func (p *playerMetrics) toDTO(matchID domain.MatchID) []dto.Metric {
 	args := []dto.Metric{}
 
-	for steamID, metrics := range p.Metrics {
+	for steamID, metrics := range p.metrics {
 		for m, v := range metrics {
 			args = append(args, dto.Metric{
 				MatchID:       matchID,
