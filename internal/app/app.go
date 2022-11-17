@@ -1,19 +1,27 @@
 package app
 
 import (
-	"context"
 	"log"
+	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jackc/pgx/v5"
 	"github.com/ysomad/pgxatomic"
 	"go.uber.org/zap"
 
 	"github.com/ssssargsian/uniplay/internal/config"
+	v1 "github.com/ssssargsian/uniplay/internal/handler/v1"
+	"github.com/ssssargsian/uniplay/internal/pkg/httpserver"
 	"github.com/ssssargsian/uniplay/internal/pkg/logger"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
 	"github.com/ssssargsian/uniplay/internal/postgres"
 	"github.com/ssssargsian/uniplay/internal/service"
+
+	v1gen "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
 )
 
 func Run(conf *config.Config) {
@@ -30,61 +38,48 @@ func Run(conf *config.Config) {
 		l.Fatal("pgclient.New", zap.Error(err))
 	}
 
-	pool, err := pgxatomic.NewPool(pgClient.Pool)
+	atomicPool, err := pgxatomic.NewPool(pgClient.Pool)
 	if err != nil {
 		l.Fatal("pgxatomic.NewPool", zap.Error(err))
 	}
 
-	atomic, err := pgxatomic.NewRunner(pgClient.Pool, pgx.TxOptions{})
+	atomicRunner, err := pgxatomic.NewRunner(pgClient.Pool, pgx.TxOptions{})
 	if err != nil {
 		l.Fatal("pgxatomic.NewRunner", zap.Error(err))
 	}
 
 	// repos
-	replayRepo := postgres.NewReplayRepo(pool, pgClient.Builder)
+	replayRepo := postgres.NewReplayRepo(atomicPool, pgClient.Builder)
 
 	// services
 	replayService := service.NewReplay(l, replayRepo)
 
-	// test all
-	// replayFiles, err := os.ReadDir("./test-data/")
-	// if err != nil {
-	// 	l.Fatal("os.ReadDir", zap.Error(err))
-	// }
+	// init handlers
+	mux := chi.NewMux()
+	mux.Use(middleware.Logger, middleware.Recoverer)
 
-	// for _, file := range replayFiles {
-	// 	if file.Name() == ".DS_Store" {
-	// 		continue
-	// 	}
+	handlerV1 := v1.NewHandler(l, atomicRunner, replayService)
+	v1gen.HandlerFromMuxWithBaseURL(handlerV1, mux, "/v1")
 
-	// 	replayFile, err := os.Open("./test-data/" + file.Name())
-	// 	if err != nil {
-	// 		l.Fatal("open file error", zap.Error(err))
-	// 	}
-	// 	defer replayFile.Close()
+	runHTTPServer(mux, l, conf.HTTP.Port)
+}
 
-	// 	err = atomic.Run(context.Background(), func(txCtx context.Context) error {
-	// 		_, err = replayService.CollectStats(txCtx, replayFile)
-	// 		return err
-	// 	})
-	// 	if err != nil {
-	// 		l.Fatal("demo collect error", zap.Error(err), zap.String("filename", file.Name()))
-	// 	}
-	// }
+func runHTTPServer(mux http.Handler, l *zap.Logger, port string) {
+	l.Info("starting http server", zap.String("port", port))
 
-	// test one
-	replayFile, err := os.Open("./test-data/quazar_11.dem")
-	if err != nil {
-		l.Fatal("open file error", zap.Error(err))
-	}
-	defer replayFile.Close()
+	httpServer := httpserver.New(mux, httpserver.WithPort(port))
 
-	err = atomic.Run(context.Background(), func(txCtx context.Context) error {
-		_, err = replayService.CollectStats(txCtx, replayFile)
-		return err
-	})
-	if err != nil {
-		l.Fatal("demo collect error", zap.Error(err))
+	interrupt := make(chan os.Signal, 1)
+	signal.Notify(interrupt, syscall.SIGINT, syscall.SIGTERM)
+
+	select {
+	case s := <-interrupt:
+		l.Info("received signal from httpserver", zap.String("signal", s.String()))
+	case err := <-httpServer.Notify():
+		l.Info("got error from http server notify", zap.Error(err))
 	}
 
+	if err := httpServer.Shutdown(); err != nil {
+		l.Info("got error on http server shutdown", zap.Error(err))
+	}
 }
