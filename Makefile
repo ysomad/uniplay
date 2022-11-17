@@ -47,3 +47,10 @@ migrate-drop:
 
 .PHONY: dry-run
 dry-run: migrate-drop run-migrate
+
+.PHONY: gen-oapi
+gen-oapi:
+	oapi-codegen \
+	--package v1 \
+	-generate chi-server,types \
+	./api/openapi3_v1.yaml > ./internal/gen/oapi/v1/v1.gen.go

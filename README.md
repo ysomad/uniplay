@@ -1,4 +1,11 @@
 # uniplay
 
-## API docs
-- [OpenAPI](https://app.swaggerhub.com/apis/ysomad/UniplayAPI/1.0.0)
+## Local development
+1. Run service deps
+```sh
+$ make compose-up
+```
+2. Run the application
+```sh
+$ make run-migrate
+```
