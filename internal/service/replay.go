@@ -2,9 +2,7 @@ package service
 
 import (
 	"context"
-	"errors"
 	"io"
-	"time"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
@@ -30,28 +28,27 @@ func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*dto.Match
 		return nil, err
 	}
 
-	m := res.Match()
-	now := time.Now()
+	match := res.Match()
 
 	err = r.repo.SaveTeams(ctx, dto.Teams{
-		Team1Name:  m.Team1.ClanName,
-		Team1Flag:  m.Team1.FlagCode,
-		Team2Name:  m.Team2.ClanName,
-		Team2Flag:  m.Team2.FlagCode,
-		CreateTime: now,
+		Team1Name:  match.Team1.ClanName,
+		Team1Flag:  match.Team1.FlagCode,
+		Team2Name:  match.Team2.ClanName,
+		Team2Flag:  match.Team2.FlagCode,
+		CreateTime: match.UploadTime,
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	playerSteamIDs := res.PlayerSteamIDs()
-	if len(playerSteamIDs) <= 0 {
-		return nil, errors.New("empty list of player steam ids")
+	playerSteamIDs, err := res.PlayerSteamIDs()
+	if err != nil {
+		return nil, err
 	}
 
 	err = r.repo.SavePlayers(ctx, dto.PlayerSteamIDs{
 		SteamIDs:   playerSteamIDs,
-		CreateTime: now,
+		CreateTime: match.UploadTime,
 	})
 	if err != nil {
 		return nil, err
@@ -61,38 +58,35 @@ func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*dto.Match
 		return nil, err
 	}
 
-	matchID, err := domain.NewMatchID(&domain.MatchIDArgs{
-		MapName:       m.MapName,
-		MatchDuration: m.Duration,
-		Team1Name:     m.Team1.ClanName,
-		Team1Score:    m.Team1.Score,
-		Team2Name:     m.Team2.ClanName,
-		Team2Score:    m.Team2.Score,
+	match.ID, err = domain.NewMatchID(&domain.MatchIDArgs{
+		MapName:       match.MapName,
+		Team1Name:     match.Team1.ClanName,
+		Team1Score:    match.Team1.Score,
+		Team2Name:     match.Team2.ClanName,
+		Team2Score:    match.Team2.Score,
+		MatchDuration: match.Duration,
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	m.ID = matchID
-	m.UploadTime = now
-
-	if err = r.repo.SaveMatch(ctx, m); err != nil {
+	if err = r.repo.SaveMatch(ctx, match); err != nil {
 		return nil, err
 	}
 
-	metricList := res.MetricList(m.ID)
-	if len(metricList) <= 0 {
-		return nil, errors.New("empty metric list")
+	metricList, err := res.MetricList(match.ID)
+	if err != nil {
+		return nil, err
 	}
 
-	wmetricList := res.WeaponMetricList(m.ID)
-	if len(wmetricList) <= 0 {
-		return nil, errors.New("empty weapon metric list")
+	wmetricList, err := res.WeaponMetricList(match.ID)
+	if err != nil {
+		return nil, err
 	}
 
 	if err = r.repo.SaveMetrics(ctx, metricList, wmetricList); err != nil {
 		return nil, err
 	}
 
-	return m, nil
+	return match, nil
 }

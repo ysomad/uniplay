@@ -1,7 +1,6 @@
 package replayparser
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/ssssargsian/uniplay/internal/dto"
@@ -31,17 +30,15 @@ func (m *match) updateTeamsScore(e events.ScoreUpdated) {
 	case m.team2.side:
 		m.team2.score = e.NewScore
 	}
-
-	fmt.Println(m.team1.score)
-	fmt.Println(m.team2.score)
 }
 
 func (m *match) toDTO() *dto.Match {
 	return &dto.Match{
-		MapName:  m.mapName,
-		Duration: m.duration,
-		Team1:    m.team1.toDTO(),
-		Team2:    m.team2.toDTO(),
+		MapName:    m.mapName,
+		Duration:   m.duration,
+		Team1:      m.team1.toDTO(),
+		Team2:      m.team2.toDTO(),
+		UploadTime: time.Now(),
 	}
 }
 
