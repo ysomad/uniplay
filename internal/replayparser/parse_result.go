@@ -25,22 +25,23 @@ func (r *parseResult) Match() *dto.Match {
 }
 
 func (r *parseResult) PlayerSteamIDs() []uint64 {
-	return append(r.match._team1.playerSteamIDs, r.match._team2.playerSteamIDs...)
+	return append(r.match.team1.playerSteamIDs, r.match.team2.playerSteamIDs...)
 }
 
+// TODO: refactor with goroutines
 func (r *parseResult) TeamPlayers() []dto.TeamPlayer {
-	team1len := len(r.match._team1.playerSteamIDs)
-	tp := make([]dto.TeamPlayer, team1len+len(r.match._team2.playerSteamIDs))
+	team1len := len(r.match.team1.playerSteamIDs)
+	tp := make([]dto.TeamPlayer, team1len+len(r.match.team2.playerSteamIDs))
 
-	for i, steamID := range r.match._team1.playerSteamIDs {
+	for i, steamID := range r.match.team1.playerSteamIDs {
 		tp[i] = dto.TeamPlayer{
-			TeamName:      r.match._team1.clanName,
+			TeamName:      r.match.team1.clanName,
 			PlayerSteamID: steamID,
 		}
 	}
-	for i, steamID := range r.match._team2.playerSteamIDs {
+	for i, steamID := range r.match.team2.playerSteamIDs {
 		tp[team1len+i] = dto.TeamPlayer{
-			TeamName:      r.match._team2.clanName,
+			TeamName:      r.match.team2.clanName,
 			PlayerSteamID: steamID,
 		}
 	}
