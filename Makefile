@@ -44,3 +44,6 @@ migrate-down:
 migrate-drop:
 	@echo "Dropping everything in database..."
 	@$(MIGRATE) drop
+
+.PHONY: dry-run
+dry-run: migrate-drop run-migrate
