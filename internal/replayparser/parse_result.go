@@ -1,6 +1,8 @@
 package replayparser
 
 import (
+	"errors"
+
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 )
@@ -11,11 +13,11 @@ type parseResult struct {
 	match         *match
 }
 
-func (r *parseResult) MetricList(matchID domain.MatchID) []dto.Metric {
+func (r *parseResult) MetricList(matchID domain.MatchID) ([]dto.Metric, error) {
 	return r.metrics.toDTO(matchID)
 }
 
-func (r *parseResult) WeaponMetricList(matchID domain.MatchID) []dto.WeaponMetric {
+func (r *parseResult) WeaponMetricList(matchID domain.MatchID) ([]dto.WeaponMetric, error) {
 	return r.weaponMetrics.toDTO(matchID)
 }
 
@@ -24,23 +26,28 @@ func (r *parseResult) Match() *dto.Match {
 	return r.match.toDTO()
 }
 
-func (r *parseResult) PlayerSteamIDs() []uint64 {
-	return append(r.match._team1.playerSteamIDs, r.match._team2.playerSteamIDs...)
+// PlayerSteamIDs returns list of player steam ids or error if list is empty.
+func (r *parseResult) PlayerSteamIDs() ([]uint64, error) {
+	if len(r.match.team1.playerSteamIDs)+len(r.match.team2.playerSteamIDs) == 0 {
+		return nil, errors.New("empty list of player steam ids")
+	}
+	return append(r.match.team1.playerSteamIDs, r.match.team2.playerSteamIDs...), nil
 }
 
+// TODO: refactor with goroutines
 func (r *parseResult) TeamPlayers() []dto.TeamPlayer {
-	team1len := len(r.match._team1.playerSteamIDs)
-	tp := make([]dto.TeamPlayer, team1len+len(r.match._team2.playerSteamIDs))
+	team1len := len(r.match.team1.playerSteamIDs)
+	tp := make([]dto.TeamPlayer, team1len+len(r.match.team2.playerSteamIDs))
 
-	for i, steamID := range r.match._team1.playerSteamIDs {
+	for i, steamID := range r.match.team1.playerSteamIDs {
 		tp[i] = dto.TeamPlayer{
-			TeamName:      r.match._team1.clanName,
+			TeamName:      r.match.team1.clanName,
 			PlayerSteamID: steamID,
 		}
 	}
-	for i, steamID := range r.match._team2.playerSteamIDs {
+	for i, steamID := range r.match.team2.playerSteamIDs {
 		tp[team1len+i] = dto.TeamPlayer{
-			TeamName:      r.match._team2.clanName,
+			TeamName:      r.match.team2.clanName,
 			PlayerSteamID: steamID,
 		}
 	}

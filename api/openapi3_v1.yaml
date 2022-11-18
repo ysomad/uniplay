@@ -1,0 +1,316 @@
+---
+openapi: 3.0.3
+info:
+  title: Uniplay private API
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/v1
+tags:
+- name: player
+  description: player profile operations
+- name: replay
+  description: replay operations
+paths:
+  /players/{steam_id}:
+    get:
+      tags:
+      - player
+      summary: Get player profile
+      operationId: getPlayerProfile
+      parameters:
+      - name: steam_id
+        in: path
+        description: 64 bit UInt64 steam id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 18446744073709551615
+          minimum: 1
+          type: integer
+          x-go-type: uint64
+          x-go-name: SteamID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerProfile'
+        "404":
+          description: Player Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+  /replays:
+    post:
+      tags:
+      - replay
+      summary: Upload replay
+      operationId: uploadReplay
+      requestBody:
+        $ref: '#/components/requestBodies/ReplayUploadRequestBody'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplayUploadResponse'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "409":
+          description: Replay already exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+components:
+  schemas:
+    Error:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: error code, unique per error
+        message:
+          type: string
+          description: error message
+    InternalError:
+      required:
+      - message
+      type: object
+      properties:
+        message:
+          type: string
+    PlayerProfile:
+      required:
+      - create_time
+      - main_team_name
+      - stats
+      - steam_id
+      - update_time
+      - weapon_class_stats
+      - weapon_stats
+      type: object
+      properties:
+        steam_id:
+          maximum: 18446744073709551615
+          minimum: 1
+          type: integer
+          x-go-name: SteamID
+          x-go-type: uint64
+        main_team_name:
+          type: string
+        stats:
+          $ref: '#/components/schemas/PlayerStats'
+        weapon_stats:
+          $ref: '#/components/schemas/WeaponStats'
+        weapon_class_stats:
+          $ref: '#/components/schemas/WeaponClassStats'
+        create_time:
+          type: string
+          description: RFC3339 datetime string
+          format: date-time
+          x-go-type: time.Time
+        update_time:
+          type: string
+          description: RFC3339 datetime string
+          format: date-time
+          x-go-type: time.Time
+    PlayerStats:
+      required:
+      - assists_per_round
+      - blind_per_round
+      - blinded_per_round
+      - damage_per_round
+      - deaths_per_round
+      - grenade_damage_per_round
+      - headshot_percentage
+      - kill_death_ratio
+      - kills_per_round
+      - matches_played
+      - rounds_played
+      - total_deaths
+      - total_kills
+      type: object
+      properties:
+        total_kills:
+          maximum: 4294967295
+          minimum: 0
+          type: integer
+          x-go-type: uint32
+        total_deaths:
+          maximum: 4294967295
+          minimum: 0
+          type: integer
+          x-go-type: uint32
+        kill_death_ratio:
+          type: number
+          format: float
+          x-go-type: float32
+        damage_per_round:
+          type: number
+          format: float
+          x-go-type: float32
+        grenade_damage_per_round:
+          type: number
+          format: float
+          x-go-type: float32
+        kills_per_round:
+          type: number
+          format: float
+          x-go-type: float32
+        assists_per_round:
+          type: number
+          format: float
+          x-go-type: float32
+        deaths_per_round:
+          type: number
+          format: float
+          x-go-type: float32
+        blind_per_round:
+          type: number
+          format: float
+          x-go-type: float32
+        blinded_per_round:
+          type: number
+          format: float
+          x-go-type: float32
+        headshot_percentage:
+          type: number
+          format: float
+          x-go-type: float32
+        matches_played:
+          maximum: 65535
+          minimum: 0
+          type: integer
+          x-go-type: uint16
+        rounds_played:
+          maximum: 4294967295
+          minimum: 0
+          type: integer
+          x-go-type: uint32
+    WeaponStat:
+      required:
+      - total_kills
+      - weapon_name
+      type: object
+      properties:
+        weapon_name:
+          type: string
+        total_kills:
+          maximum: 4294967295
+          minimum: 0
+          type: integer
+          x-go-type: uint32
+    WeaponClassStat:
+      required:
+      - total_kills
+      - weapon_class
+      type: object
+      properties:
+        weapon_class:
+          type: string
+        total_kills:
+          maximum: 4294967295
+          minimum: 0
+          type: integer
+          x-go-type: uint32
+    WeaponStats:
+      type: array
+      items:
+        $ref: '#/components/schemas/WeaponStat'
+    WeaponClassStats:
+      type: array
+      items:
+        $ref: '#/components/schemas/WeaponClassStat'
+    MatchTeam:
+      required:
+      - clan_name
+      - flag_code
+      - player_steam_ids
+      - score
+      type: object
+      properties:
+        clan_name:
+          type: string
+        flag_code:
+          type: string
+          description: ISO 3166 flag code
+        score:
+          maximum: 255
+          minimum: 0
+          type: integer
+          x-go-type: uint8
+        player_steam_ids:
+          type: array
+          items:
+            maximum: 18446744073709551615
+            minimum: 1
+            type: integer
+    ReplayUploadResponse:
+      required:
+      - map_name
+      - match_duration
+      - match_id
+      - team1
+      - team2
+      - upload_time
+      type: object
+      properties:
+        match_id:
+          type: string
+          format: uuid
+          x-go-name: MatchID
+          x-go-type: google_uuid.UUID
+          x-go-type-import:
+            name: google_uuid
+            path: github.com/google/uuid
+        map_name:
+          type: string
+        match_duration:
+          type: integer
+          format: int64
+          x-go-type: time.Duration
+        team1:
+          $ref: '#/components/schemas/MatchTeam'
+        team2:
+          $ref: '#/components/schemas/MatchTeam'
+        upload_time:
+          type: string
+          description: RFC3339 datetime string
+          format: date-time
+          x-go-type: time.Time
+  requestBodies:
+    ReplayUploadRequestBody:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              replay_archive:
+                type: string
+                description: архив с демкой, только 1 демка из архива будет загружена, макс. размер архива - 500 мб
+                format: binary
+      required: true

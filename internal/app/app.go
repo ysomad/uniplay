@@ -1,87 +1,85 @@
 package app
 
 import (
-	"context"
 	"log"
+	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jackc/pgx/v5"
 	"github.com/ysomad/pgxatomic"
+	"go.uber.org/zap"
 
 	"github.com/ssssargsian/uniplay/internal/config"
+	v1 "github.com/ssssargsian/uniplay/internal/handler/v1"
+	"github.com/ssssargsian/uniplay/internal/pkg/httpserver"
+	"github.com/ssssargsian/uniplay/internal/pkg/logger"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
 	"github.com/ssssargsian/uniplay/internal/postgres"
 	"github.com/ssssargsian/uniplay/internal/service"
+
+	v1gen "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
 )
 
 func Run(conf *config.Config) {
 	var err error
 
+	l, err := logger.New(os.Stderr, conf.Log.Level)
+	if err != nil {
+		log.Fatalf("logger.New: %s", err.Error())
+	}
+
+	// db
 	pgClient, err := pgclient.New(conf.PG.URL, pgclient.WithMaxConns(conf.PG.MaxConns))
 	if err != nil {
-		log.Fatalf("pgclient.New: %s", err.Error())
+		l.Fatal("pgclient.New", zap.Error(err))
 	}
 
-	pool, err := pgxatomic.NewPool(pgClient.Pool)
+	atomicPool, err := pgxatomic.NewPool(pgClient.Pool)
 	if err != nil {
-		log.Fatalf("pgxatomic.NewPool: %s", err.Error())
+		l.Fatal("pgxatomic.NewPool", zap.Error(err))
 	}
 
-	txrunner, err := pgxatomic.NewRunner(pgClient.Pool, pgx.TxOptions{})
+	atomicRunner, err := pgxatomic.NewRunner(pgClient.Pool, pgx.TxOptions{})
 	if err != nil {
-		log.Fatalf("pgxatomic.NewRunner: %s", err.Error())
+		l.Fatal("pgxatomic.NewRunner", zap.Error(err))
 	}
 
 	// repos
-	replayRepo := postgres.NewReplayRepo(pool, pgClient.Builder)
+	replayRepo := postgres.NewReplayRepo(atomicPool, pgClient.Builder)
 
 	// services
-	replayService := service.NewReplay(replayRepo)
+	replayService := service.NewReplay(l, replayRepo)
 
-	// test
-	replayFile, err := os.Open("./test-data/1.dem")
-	if err != nil {
-		log.Fatalf("open demo err: %s", err.Error())
+	// init handlers
+	mux := chi.NewMux()
+	mux.Use(middleware.Logger, middleware.Recoverer)
+
+	handlerV1 := v1.NewHandler(l, atomicRunner, replayService)
+	v1gen.HandlerFromMuxWithBaseURL(handlerV1, mux, "/v1")
+
+	runHTTPServer(mux, l, conf.HTTP.Port)
+}
+
+func runHTTPServer(mux http.Handler, l *zap.Logger, port string) {
+	l.Info("starting http server", zap.String("port", port))
+
+	httpServer := httpserver.New(mux, httpserver.WithPort(port))
+
+	interrupt := make(chan os.Signal, 1)
+	signal.Notify(interrupt, syscall.SIGINT, syscall.SIGTERM)
+
+	select {
+	case s := <-interrupt:
+		l.Info("received signal from httpserver", zap.String("signal", s.String()))
+	case err := <-httpServer.Notify():
+		l.Info("got error from http server notify", zap.Error(err))
 	}
-	defer replayFile.Close()
 
-	// var match *domain.Match
-
-	// test run atomically
-	err = txrunner.Run(context.Background(), func(txCtx context.Context) error {
-		_, err = replayService.CollectStats(txCtx, replayFile)
-		return err
-	})
-	if err != nil {
-		log.Fatalf("demo collect error :%s", err.Error())
+	if err := httpServer.Shutdown(); err != nil {
+		l.Info("got error on http server shutdown", zap.Error(err))
 	}
-
-	// fmt.Println(match.ID.String())
-
-	// metricsFile, err := json.MarshalIndent(res.Metrics.ToDTO(uuid.UUID{}), "", " ")
-	// if err != nil {
-	// 	log.Fatalf("json.MarshalIndent: %s", err.Error())
-	// }
-
-	// if err = os.WriteFile("metrics_dto.json", metricsFile, 0644); err != nil {
-	// 	log.Fatalf("ioutil.WriteFile: %s", err.Error())
-	// }
-
-	// wmetricsFile, err := json.MarshalIndent(res.WeaponMetrics.ToDTO(uuid.UUID{}), "", " ")
-	// if err != nil {
-	// 	log.Fatalf("json.MarshalIndent: %s", err.Error())
-	// }
-
-	// if err = os.WriteFile("weapon_metrics_dto.json", wmetricsFile, 0644); err != nil {
-	// 	log.Fatalf("ioutil.WriteFile: %s", err.Error())
-	// }
-
-	// matchFile, err := json.MarshalIndent(res.Match, "", " ")
-	// if err != nil {
-	// 	log.Fatalf("json.MarshalIndent: %s", err.Error())
-	// }
-
-	// if err = os.WriteFile("match.json", matchFile, 0644); err != nil {
-	// 	log.Fatalf("ioutil.WriteFile: %s", err.Error())
-	// }
 }
