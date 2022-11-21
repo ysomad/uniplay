@@ -14,7 +14,7 @@ func (h *handler) UploadReplay(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: implement
 	w.WriteHeader(http.StatusOK)
-	err := json.NewEncoder(w).Encode(v1.ReplayUploadResponse{
+	err := json.NewEncoder(w).Encode(v1.Match{
 		MapName:       "de_dust2",
 		MatchDuration: time.Hour,
 		MatchID:       uuid.NewMD5(uuid.UUID{}, []byte("YEEET")),

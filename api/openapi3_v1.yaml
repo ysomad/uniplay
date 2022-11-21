@@ -49,6 +49,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalError'
+  /players/{steam_id}/matches:
+    post:
+      tags:
+      - player
+      summary: Get player matches
+      operationId: getPlayerMatches
+      parameters:
+      - name: steam_id
+        in: path
+        description: 64 bit UInt64 steam id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 18446744073709551615
+          minimum: 1
+          type: integer
+          x-go-type: uint64
+          x-go-name: SteamID
+      requestBody:
+        $ref: '#/components/requestBodies/PlayerMatchListRequestBody'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchList'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError' 
   /replays:
     post:
       tags:
@@ -63,7 +103,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReplayUploadResponse'
+                $ref: '#/components/schemas/Match'
         "400":
           description: Bad request
           content:
@@ -269,7 +309,7 @@ components:
             maximum: 18446744073709551615
             minimum: 1
             type: integer
-    ReplayUploadResponse:
+    Match:
       required:
       - map_name
       - match_duration
@@ -302,6 +342,48 @@ components:
           description: RFC3339 datetime string
           format: date-time
           x-go-type: time.Time
+    MatchList:
+      required:
+        - matches
+        - next_page_token
+      type: object
+      properties:
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/Match'
+        next_page_token:
+          type: string
+          example: U3dhZ2dlciByb2Nrcw==
+    SortOrder:
+      type: string
+      enum:
+        - ASC
+        - DESC
+    PlayerMatchListSort:
+      required:
+        - upload_time
+      type: object
+      properties:
+        upload_time:
+          $ref: '#/components/schemas/SortOrder'
+    PlayerMatchListRequest:
+      required:
+        - sort
+        - page_size
+        - page_token
+      type: object
+      properties:
+        sort:
+          $ref: '#/components/schemas/PlayerMatchListSort'
+        page_size:
+          type: integer
+          description: uint16 integer
+          x-go-type: uint64
+        page_token:
+          type: string
+          description: base64 string
+          example: U3dhZ2dlciByb2Nrcw== 
   requestBodies:
     ReplayUploadRequestBody:
       content:
@@ -314,3 +396,10 @@ components:
                 description: архив с демкой, только 1 демка из архива будет загружена, макс. размер архива - 500 мб
                 format: binary
       required: true
+    PlayerMatchListRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PlayerMatchListRequest' 
+      required: true
+            
