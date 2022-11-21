@@ -14,6 +14,12 @@ import (
 	google_uuid "github.com/google/uuid"
 )
 
+// Defines values for SortOrder.
+const (
+	ASC  SortOrder = "ASC"
+	DESC SortOrder = "DESC"
+)
+
 // Error defines model for Error.
 type Error struct {
 	// Code error code, unique per error
@@ -28,6 +34,24 @@ type InternalError struct {
 	Message string `json:"message"`
 }
 
+// Match defines model for Match.
+type Match struct {
+	MapName       string           `json:"map_name"`
+	MatchDuration time.Duration    `json:"match_duration"`
+	MatchID       google_uuid.UUID `json:"match_id"`
+	Team1         MatchTeam        `json:"team1"`
+	Team2         MatchTeam        `json:"team2"`
+
+	// UploadTime RFC3339 datetime string
+	UploadTime time.Time `json:"upload_time"`
+}
+
+// MatchList defines model for MatchList.
+type MatchList struct {
+	Matches       []Match `json:"matches"`
+	NextPageToken string  `json:"next_page_token"`
+}
+
 // MatchTeam defines model for MatchTeam.
 type MatchTeam struct {
 	ClanName string `json:"clan_name"`
@@ -36,6 +60,21 @@ type MatchTeam struct {
 	FlagCode       string `json:"flag_code"`
 	PlayerSteamIds []int  `json:"player_steam_ids"`
 	Score          uint8  `json:"score"`
+}
+
+// PlayerMatchListRequest defines model for PlayerMatchListRequest.
+type PlayerMatchListRequest struct {
+	// PageSize uint16 integer
+	PageSize uint64 `json:"page_size"`
+
+	// PageToken base64 string
+	PageToken string              `json:"page_token"`
+	Sort      PlayerMatchListSort `json:"sort"`
+}
+
+// PlayerMatchListSort defines model for PlayerMatchListSort.
+type PlayerMatchListSort struct {
+	UploadTime SortOrder `json:"upload_time"`
 }
 
 // PlayerProfile defines model for PlayerProfile.
@@ -69,17 +108,8 @@ type PlayerStats struct {
 	TotalKills            uint32  `json:"total_kills"`
 }
 
-// ReplayUploadResponse defines model for ReplayUploadResponse.
-type ReplayUploadResponse struct {
-	MapName       string           `json:"map_name"`
-	MatchDuration time.Duration    `json:"match_duration"`
-	MatchID       google_uuid.UUID `json:"match_id"`
-	Team1         MatchTeam        `json:"team1"`
-	Team2         MatchTeam        `json:"team2"`
-
-	// UploadTime RFC3339 datetime string
-	UploadTime time.Time `json:"upload_time"`
-}
+// SortOrder defines model for SortOrder.
+type SortOrder string
 
 // WeaponClassStat defines model for WeaponClassStat.
 type WeaponClassStat struct {
@@ -99,11 +129,17 @@ type WeaponStat struct {
 // WeaponStats defines model for WeaponStats.
 type WeaponStats = []WeaponStat
 
+// PlayerMatchListRequestBody defines model for PlayerMatchListRequestBody.
+type PlayerMatchListRequestBody = PlayerMatchListRequest
+
 // UploadReplayMultipartBody defines parameters for UploadReplay.
 type UploadReplayMultipartBody struct {
 	// ReplayArchive архив с демкой, только 1 демка из архива будет загружена, макс. размер архива - 500 мб
 	ReplayArchive *openapi_types.File `json:"replay_archive,omitempty"`
 }
+
+// GetPlayerMatchesJSONRequestBody defines body for GetPlayerMatches for application/json ContentType.
+type GetPlayerMatchesJSONRequestBody = PlayerMatchListRequest
 
 // UploadReplayMultipartRequestBody defines body for UploadReplay for multipart/form-data ContentType.
 type UploadReplayMultipartRequestBody UploadReplayMultipartBody
@@ -113,6 +149,9 @@ type ServerInterface interface {
 	// Get player profile
 	// (GET /players/{steam_id})
 	GetPlayerProfile(w http.ResponseWriter, r *http.Request, steamId uint64)
+	// Get player matches
+	// (POST /players/{steam_id}/matches)
+	GetPlayerMatches(w http.ResponseWriter, r *http.Request, steamId uint64)
 	// Upload replay
 	// (POST /replays)
 	UploadReplay(w http.ResponseWriter, r *http.Request)
@@ -144,6 +183,32 @@ func (siw *ServerInterfaceWrapper) GetPlayerProfile(w http.ResponseWriter, r *ht
 
 	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.GetPlayerProfile(w, r, steamId)
+	})
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r.WithContext(ctx))
+}
+
+// GetPlayerMatches operation middleware
+func (siw *ServerInterfaceWrapper) GetPlayerMatches(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var err error
+
+	// ------------- Path parameter "steam_id" -------------
+	var steamId uint64
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "steam_id", runtime.ParamLocationPath, chi.URLParam(r, "steam_id"), &steamId)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "steam_id", Err: err})
+		return
+	}
+
+	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetPlayerMatches(w, r, steamId)
 	})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -283,6 +348,9 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/players/{steam_id}", wrapper.GetPlayerProfile)
+	})
+	r.Group(func(r chi.Router) {
+		r.Post(options.BaseURL+"/players/{steam_id}/matches", wrapper.GetPlayerMatches)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/replays", wrapper.UploadReplay)

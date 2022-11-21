@@ -54,6 +54,32 @@ func Run(conf *config.Config) {
 	// services
 	replayService := service.NewReplay(l, replayRepo)
 
+	// test all
+	// replayFiles, err := os.ReadDir("./test-data/")
+	// if err != nil {
+	// 	l.Fatal("os.ReadDir", zap.Error(err))
+	// }
+
+	// for _, file := range replayFiles {
+	// 	if file.Name() == ".DS_Store" {
+	// 		continue
+	// 	}
+
+	// 	replayFile, err := os.Open("./test-data/" + file.Name())
+	// 	if err != nil {
+	// 		l.Fatal("open file error", zap.Error(err))
+	// 	}
+	// 	defer replayFile.Close()
+
+	// 	err = atomicRunner.Run(context.Background(), func(txCtx context.Context) error {
+	// 		_, err = replayService.CollectStats(txCtx, replayFile)
+	// 		return err
+	// 	})
+	// 	if err != nil {
+	// 		l.Fatal("demo collect error", zap.Error(err), zap.String("filename", file.Name()))
+	// 	}
+	// }
+
 	// init handlers
 	mux := chi.NewMux()
 	mux.Use(middleware.Logger, middleware.Recoverer)
