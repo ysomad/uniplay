@@ -18,14 +18,10 @@ func writeError(w http.ResponseWriter, status int, err error) error {
 		code = apperr.Code
 	}
 
-	if err := json.NewEncoder(w).Encode(v1.Error{
+	return json.NewEncoder(w).Encode(v1.Error{
 		Code:    code,
 		Message: err.Error(),
-	}); err != nil {
-		return err
-	}
-
-	return nil
+	})
 }
 
 func writeBody(w http.ResponseWriter, status int, body any) error {
