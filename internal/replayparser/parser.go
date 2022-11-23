@@ -101,6 +101,10 @@ func (p *parser) Parse() (parseResult, error) {
 		if !p.collectStats(p.GameState()) || !p.playerConnected(e.Player) {
 			return
 		}
+
+		if p.playerConnected(e.Player) {
+			p.metrics.incr(e.Player.SteamID64, domain.MetricRoundMVPCount)
+		}
 	})
 
 	p.RegisterEventHandler(func(_ events.AnnouncementWinPanelMatch) {
