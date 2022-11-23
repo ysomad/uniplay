@@ -6,10 +6,12 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/ssssargsian/uniplay/internal/pkg/apperror"
 )
 
 var (
-	ErrMatchAlreadyExist = errors.New("match from the replay already exist")
+	ErrMatchAlreadyExist = apperror.New(600, "match already exist")
 )
 
 type Match struct {
@@ -31,6 +33,7 @@ type MatchTeam struct {
 type MatchID struct {
 	uuid.UUID
 }
+
 type MatchIDArgs struct {
 	MapName       string
 	Team1Name     string

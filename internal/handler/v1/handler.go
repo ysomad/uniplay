@@ -2,11 +2,11 @@ package v1
 
 import (
 	"context"
-	"io"
+
+	"go.uber.org/zap"
 
 	"github.com/ssssargsian/uniplay/internal/dto"
 	v1 "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
-	"go.uber.org/zap"
 )
 
 var _ v1.ServerInterface = &handler{}
@@ -16,7 +16,7 @@ type atomicRunner interface {
 }
 
 type replayService interface {
-	CollectStats(context.Context, io.Reader) (*dto.Match, error)
+	CollectStats(ctx context.Context, filename string) (*dto.Match, error)
 }
 
 type handler struct {

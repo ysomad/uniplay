@@ -7,27 +7,26 @@ servers:
 - url: http://localhost:8080/v1
 tags:
 - name: player
-  description: player profile operations
+  description: Профиль игрока
 - name: replay
-  description: replay operations
+  description: Запись матча
 paths:
   /players/{steam_id}:
     get:
       tags:
       - player
-      summary: Get player profile
+      summary: Получения профиля игрока
       operationId: getPlayerProfile
       parameters:
       - name: steam_id
         in: path
-        description: 64 bit UInt64 steam id
+        description: uint64
         required: true
         style: simple
         explode: false
         schema:
-          maximum: 18446744073709551615
-          minimum: 1
           type: integer
+          format: uint64
           x-go-type: uint64
           x-go-name: SteamID
       responses:
@@ -38,7 +37,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PlayerProfile'
         "404":
-          description: Player Not Found
+          description: Not Found
           content:
             application/json:
               schema:
@@ -48,24 +47,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalError'
+                $ref: '#/components/schemas/Error'
   /players/{steam_id}/matches:
     post:
       tags:
       - player
-      summary: Get player matches
+      summary: Получение списка матчей игрока
       operationId: getPlayerMatches
       parameters:
       - name: steam_id
         in: path
-        description: 64 bit UInt64 steam id
+        description: uint64
         required: true
         style: simple
         explode: false
         schema:
-          maximum: 18446744073709551615
-          minimum: 1
           type: integer
+          format: uint64
           x-go-type: uint64
           x-go-name: SteamID
       requestBody:
@@ -88,12 +86,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalError'
+                $ref: '#/components/schemas/Error'
   /replays:
     post:
       tags:
       - replay
-      summary: Upload replay
+      summary: Загрузить запись матча
       operationId: uploadReplay
       requestBody:
         $ref: '#/components/requestBodies/ReplayUploadRequestBody'
@@ -111,7 +109,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         "409":
-          description: Replay already exist
+          description: Conflict
           content:
             application/json:
               schema:
@@ -121,7 +119,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalError'
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Error:
@@ -131,18 +129,13 @@ components:
       type: object
       properties:
         code:
-          type: string
-          description: error code, unique per error
+          type: integer
+          description: статус ответа или код ошибки >= 600
+          format: uint16
+          x-go-type: uint16
         message:
           type: string
-          description: error message
-    InternalError:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
+          description: сообщение ошибки
     PlayerProfile:
       required:
       - create_time
@@ -155,9 +148,8 @@ components:
       type: object
       properties:
         steam_id:
-          maximum: 18446744073709551615
-          minimum: 1
           type: integer
+          format: uint64
           x-go-name: SteamID
           x-go-type: uint64
         main_team_name:
@@ -196,60 +188,56 @@ components:
       type: object
       properties:
         total_kills:
-          maximum: 4294967295
-          minimum: 0
           type: integer
+          format: uint32
           x-go-type: uint32
         total_deaths:
-          maximum: 4294967295
-          minimum: 0
           type: integer
+          format: uint32
           x-go-type: uint32
         kill_death_ratio:
           type: number
-          format: float
-          x-go-type: float32
+          format: double
+          x-go-type: float64
         damage_per_round:
           type: number
-          format: float
-          x-go-type: float32
+          format: double
+          x-go-type: float64
         grenade_damage_per_round:
           type: number
-          format: float
-          x-go-type: float32
+          format: double
+          x-go-type: float64
         kills_per_round:
           type: number
-          format: float
-          x-go-type: float32
+          format: double
+          x-go-type: float64
         assists_per_round:
           type: number
-          format: float
-          x-go-type: float32
+          format: double
+          x-go-type: float64
         deaths_per_round:
           type: number
-          format: float
-          x-go-type: float32
+          format: double
+          x-go-type: float64
         blind_per_round:
           type: number
-          format: float
-          x-go-type: float32
+          format: double
+          x-go-type: float64
         blinded_per_round:
           type: number
-          format: float
-          x-go-type: float32
+          format: double
+          x-go-type: float64
         headshot_percentage:
           type: number
-          format: float
-          x-go-type: float32
+          format: double
+          x-go-type: float64
         matches_played:
-          maximum: 65535
-          minimum: 0
           type: integer
+          format: uint16
           x-go-type: uint16
         rounds_played:
-          maximum: 4294967295
-          minimum: 0
           type: integer
+          format: uint32
           x-go-type: uint32
     WeaponStat:
       required:
@@ -260,9 +248,8 @@ components:
         weapon_name:
           type: string
         total_kills:
-          maximum: 4294967295
-          minimum: 0
           type: integer
+          format: uint32
           x-go-type: uint32
     WeaponClassStat:
       required:
@@ -273,9 +260,8 @@ components:
         weapon_class:
           type: string
         total_kills:
-          maximum: 4294967295
-          minimum: 0
           type: integer
+          format: uint32
           x-go-type: uint32
     WeaponStats:
       type: array
@@ -295,20 +281,19 @@ components:
       properties:
         clan_name:
           type: string
+          description: название команды, берется из загруженной записи матча
         flag_code:
           type: string
-          description: ISO 3166 flag code
+          description: ISO 3166 код флага
         score:
-          maximum: 255
-          minimum: 0
           type: integer
+          format: uint8
           x-go-type: uint8
         player_steam_ids:
           type: array
           items:
-            maximum: 18446744073709551615
-            minimum: 1
             type: integer
+            format: uint64
             x-go-type: uint64
     Match:
       required:
@@ -340,7 +325,7 @@ components:
           $ref: '#/components/schemas/MatchTeam'
         upload_time:
           type: string
-          description: RFC3339 datetime string
+          description: datetime RFC3339
           format: date-time
           x-go-type: time.Time
     MatchList:
@@ -379,8 +364,8 @@ components:
           $ref: '#/components/schemas/PlayerMatchListSort'
         page_size:
           type: integer
-          description: uint16 integer
-          x-go-type: uint64
+          format: uint16
+          x-go-type: uint16
         page_token:
           type: string
           description: base64 string
@@ -392,9 +377,9 @@ components:
           schema:
             type: object
             properties:
-              replay_archive:
+              replay:
                 type: string
-                description: архив с демкой, только 1 демка из архива будет загружена, макс. размер архива - 500 мб
+                description: запись матча в формате .dem, макс. размер 300 мб
                 format: binary
       required: true
     PlayerMatchListRequestBody:
