@@ -2,7 +2,6 @@ package v1
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -83,10 +82,7 @@ func (h *handler) UploadReplay(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-
-	err = json.NewEncoder(w).Encode(v1.Match{
+	writeBody(w, http.StatusOK, v1.Match{
 		MapName:       match.MapName,
 		MatchDuration: match.Duration,
 		MatchID:       match.ID.UUID,
@@ -104,8 +100,4 @@ func (h *handler) UploadReplay(w http.ResponseWriter, r *http.Request) {
 		},
 		UploadTime: match.UploadTime,
 	})
-	if err != nil {
-		writeError(w, http.StatusInternalServerError, err)
-		return
-	}
 }
