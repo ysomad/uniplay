@@ -108,40 +108,4 @@ func (h *handler) UploadReplay(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusInternalServerError, err)
 		return
 	}
-
-	// TODO: implement
-	// err = json.NewEncoder(w).Encode(v1.Match{
-	// 	MapName:       "de_dust2",
-	// 	MatchDuration: time.Hour,
-	// 	MatchID:       uuid.NewMD5(uuid.UUID{}, []byte("YEEET")),
-	// 	Team1: v1.MatchTeam{
-	// 		ClanName: "Na`Vi",
-	// 		FlagCode: "UA",
-	// 		Score:    7,
-	// 		PlayerSteamIds: []uint64{
-	// 			76561198039986599,
-	// 			76561197989430253,
-	// 			76561198039986599,
-	// 			76561197989430253,
-	// 			76561197989430253,
-	// 		},
-	// 	},
-	// 	Team2: v1.MatchTeam{
-	// 		ClanName: "Virtus.PRO",
-	// 		FlagCode: "RU",
-	// 		Score:    19,
-	// 		PlayerSteamIds: []uint64{
-	// 			76561198039986599,
-	// 			76561197989430253,
-	// 			76561198039986599,
-	// 			76561197989430253,
-	// 			76561197989430253,
-	// 		},
-	// 	},
-	// 	UploadTime: time.Now(),
-	// })
-	// if err != nil {
-	// 	w.WriteHeader(http.StatusInternalServerError)
-	// 	w.Write([]byte(err.Error()))
-	// }
 }
