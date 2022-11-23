@@ -57,9 +57,9 @@ type MatchTeam struct {
 	ClanName string `json:"clan_name"`
 
 	// FlagCode ISO 3166 flag code
-	FlagCode       string `json:"flag_code"`
-	PlayerSteamIds []int  `json:"player_steam_ids"`
-	Score          uint8  `json:"score"`
+	FlagCode       string   `json:"flag_code"`
+	PlayerSteamIds []uint64 `json:"player_steam_ids"`
+	Score          uint8    `json:"score"`
 }
 
 // PlayerMatchListRequest defines model for PlayerMatchListRequest.

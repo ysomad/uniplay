@@ -88,7 +88,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalError' 
+                $ref: '#/components/schemas/InternalError'
   /replays:
     post:
       tags:
@@ -309,6 +309,7 @@ components:
             maximum: 18446744073709551615
             minimum: 1
             type: integer
+            x-go-type: uint64
     Match:
       required:
       - map_name
@@ -344,8 +345,8 @@ components:
           x-go-type: time.Time
     MatchList:
       required:
-        - matches
-        - next_page_token
+      - matches
+      - next_page_token
       type: object
       properties:
         matches:
@@ -358,20 +359,20 @@ components:
     SortOrder:
       type: string
       enum:
-        - ASC
-        - DESC
+      - ASC
+      - DESC
     PlayerMatchListSort:
       required:
-        - upload_time
+      - upload_time
       type: object
       properties:
         upload_time:
           $ref: '#/components/schemas/SortOrder'
     PlayerMatchListRequest:
       required:
-        - sort
-        - page_size
-        - page_token
+      - page_size
+      - page_token
+      - sort
       type: object
       properties:
         sort:
@@ -383,7 +384,7 @@ components:
         page_token:
           type: string
           description: base64 string
-          example: U3dhZ2dlciByb2Nrcw== 
+          example: U3dhZ2dlciByb2Nrcw==
   requestBodies:
     ReplayUploadRequestBody:
       content:
@@ -400,6 +401,5 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/PlayerMatchListRequest' 
+            $ref: '#/components/schemas/PlayerMatchListRequest'
       required: true
-            

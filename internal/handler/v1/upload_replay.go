@@ -22,7 +22,7 @@ func (h *handler) UploadReplay(w http.ResponseWriter, r *http.Request) {
 			ClanName: "Na`Vi",
 			FlagCode: "UA",
 			Score:    7,
-			PlayerSteamIds: []int{
+			PlayerSteamIds: []uint64{
 				76561198039986599,
 				76561197989430253,
 				76561198039986599,
@@ -34,7 +34,7 @@ func (h *handler) UploadReplay(w http.ResponseWriter, r *http.Request) {
 			ClanName: "Virtus.PRO",
 			FlagCode: "RU",
 			Score:    19,
-			PlayerSteamIds: []int{
+			PlayerSteamIds: []uint64{
 				76561198039986599,
 				76561197989430253,
 				76561198039986599,
