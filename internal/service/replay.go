@@ -2,12 +2,13 @@ package service
 
 import (
 	"context"
-	"io"
+	"os"
+
+	"go.uber.org/zap"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 	"github.com/ssssargsian/uniplay/internal/replayparser"
-	"go.uber.org/zap"
 )
 
 type replay struct {
@@ -22,7 +23,12 @@ func NewReplay(l *zap.Logger, r replayRepository) *replay {
 	}
 }
 
-func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*dto.Match, error) {
+func (r *replay) CollectStats(ctx context.Context, filename string) (*dto.Match, error) {
+	replay, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+
 	p := replayparser.New(replay, r.log)
 	defer p.Close()
 

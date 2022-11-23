@@ -22,15 +22,10 @@ const (
 
 // Error defines model for Error.
 type Error struct {
-	// Code error code, unique per error
-	Code string `json:"code"`
+	// Code статус ответа или код ошибки >= 600
+	Code uint16 `json:"code"`
 
-	// Message error message
-	Message string `json:"message"`
-}
-
-// InternalError defines model for InternalError.
-type InternalError struct {
+	// Message сообщение ошибки
 	Message string `json:"message"`
 }
 
@@ -42,7 +37,7 @@ type Match struct {
 	Team1         MatchTeam        `json:"team1"`
 	Team2         MatchTeam        `json:"team2"`
 
-	// UploadTime RFC3339 datetime string
+	// UploadTime datetime RFC3339
 	UploadTime time.Time `json:"upload_time"`
 }
 
@@ -54,9 +49,10 @@ type MatchList struct {
 
 // MatchTeam defines model for MatchTeam.
 type MatchTeam struct {
+	// ClanName название команды, берется из загруженной записи матча
 	ClanName string `json:"clan_name"`
 
-	// FlagCode ISO 3166 flag code
+	// FlagCode ISO 3166 код флага
 	FlagCode       string   `json:"flag_code"`
 	PlayerSteamIds []uint64 `json:"player_steam_ids"`
 	Score          uint8    `json:"score"`
@@ -64,8 +60,7 @@ type MatchTeam struct {
 
 // PlayerMatchListRequest defines model for PlayerMatchListRequest.
 type PlayerMatchListRequest struct {
-	// PageSize uint16 integer
-	PageSize uint64 `json:"page_size"`
+	PageSize uint16 `json:"page_size"`
 
 	// PageToken base64 string
 	PageToken string              `json:"page_token"`
@@ -93,15 +88,15 @@ type PlayerProfile struct {
 
 // PlayerStats defines model for PlayerStats.
 type PlayerStats struct {
-	AssistsPerRound       float32 `json:"assists_per_round"`
-	BlindPerRound         float32 `json:"blind_per_round"`
-	BlindedPerRound       float32 `json:"blinded_per_round"`
-	DamagePerRound        float32 `json:"damage_per_round"`
-	DeathsPerRound        float32 `json:"deaths_per_round"`
-	GrenadeDamagePerRound float32 `json:"grenade_damage_per_round"`
-	HeadshotPercentage    float32 `json:"headshot_percentage"`
-	KillDeathRatio        float32 `json:"kill_death_ratio"`
-	KillsPerRound         float32 `json:"kills_per_round"`
+	AssistsPerRound       float64 `json:"assists_per_round"`
+	BlindPerRound         float64 `json:"blind_per_round"`
+	BlindedPerRound       float64 `json:"blinded_per_round"`
+	DamagePerRound        float64 `json:"damage_per_round"`
+	DeathsPerRound        float64 `json:"deaths_per_round"`
+	GrenadeDamagePerRound float64 `json:"grenade_damage_per_round"`
+	HeadshotPercentage    float64 `json:"headshot_percentage"`
+	KillDeathRatio        float64 `json:"kill_death_ratio"`
+	KillsPerRound         float64 `json:"kills_per_round"`
 	MatchesPlayed         uint16  `json:"matches_played"`
 	RoundsPlayed          uint32  `json:"rounds_played"`
 	TotalDeaths           uint32  `json:"total_deaths"`
@@ -134,8 +129,8 @@ type PlayerMatchListRequestBody = PlayerMatchListRequest
 
 // UploadReplayMultipartBody defines parameters for UploadReplay.
 type UploadReplayMultipartBody struct {
-	// ReplayArchive архив с демкой, только 1 демка из архива будет загружена, макс. размер архива - 500 мб
-	ReplayArchive *openapi_types.File `json:"replay_archive,omitempty"`
+	// Replay запись матча в формате .dem, макс. размер 300 мб
+	Replay *openapi_types.File `json:"replay,omitempty"`
 }
 
 // GetPlayerMatchesJSONRequestBody defines body for GetPlayerMatches for application/json ContentType.
@@ -146,13 +141,13 @@ type UploadReplayMultipartRequestBody UploadReplayMultipartBody
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
-	// Get player profile
+	// Получения профиля игрока
 	// (GET /players/{steam_id})
 	GetPlayerProfile(w http.ResponseWriter, r *http.Request, steamId uint64)
-	// Get player matches
+	// Получение списка матчей игрока
 	// (POST /players/{steam_id}/matches)
 	GetPlayerMatches(w http.ResponseWriter, r *http.Request, steamId uint64)
-	// Upload replay
+	// Загрузить запись матча
 	// (POST /replays)
 	UploadReplay(w http.ResponseWriter, r *http.Request)
 }
