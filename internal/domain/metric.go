@@ -5,28 +5,29 @@ import "github.com/google/uuid"
 type Metric uint8
 
 const (
-	MetricDeath Metric = iota + 1
+	// TODO: refactor to iota
+	MetricDeath Metric = 1
 
-	MetricKill
-	MetricHSKill
-	MetricBlindKill
-	MetricWallbangKill
-	MetricNoScopeKill
-	MetricThroughSmokeKill
+	MetricKill             Metric = 2
+	MetricHSKill           Metric = 3
+	MetricBlindKill        Metric = 4
+	MetricWallbangKill     Metric = 5
+	MetricNoScopeKill      Metric = 6
+	MetricThroughSmokeKill Metric = 7
 
-	MetricAssist
-	MetricFlashbangAssist
+	MetricAssist          Metric = 8
+	MetricFlashbangAssist Metric = 9
 
-	MetricDamageTaken
-	MetricDamageDealt
+	MetricDamageTaken Metric = 10
+	MetricDamageDealt Metric = 11
 
-	MetricBombPlanted
-	MetricBombDefused
+	MetricBombPlanted Metric = 12
+	MetricBombDefused Metric = 13
 
-	MetricRoundMVPCount
+	MetricRoundMVPCount Metric = 14
 
-	MetricBlind   // сколько раз ослепил
-	MetricBlinded // был ослеплен
+	MetricBlind   Metric = 15 // сколько раз ослепил
+	MetricBlinded Metric = 16 // был ослеплен
 )
 
 var strMetrics = map[Metric]string{

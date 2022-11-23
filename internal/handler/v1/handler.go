@@ -5,6 +5,7 @@ import (
 
 	"go.uber.org/zap"
 
+	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 	v1 "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
 )
@@ -19,13 +20,18 @@ type replayService interface {
 	CollectStats(ctx context.Context, filename string) (*dto.Match, error)
 }
 
+type playerService interface {
+	GetProfile(ctx context.Context, steamID uint64) (*domain.PlayerProfile, error)
+}
+
 type handler struct {
 	log    *zap.Logger
 	atomic atomicRunner
 	replay replayService
+	palyer playerService
 }
 
-func NewHandler(l *zap.Logger, a atomicRunner, r replayService) *handler {
+func NewHandler(l *zap.Logger, a atomicRunner, r replayService, p playerService) *handler {
 	return &handler{
 		log:    l,
 		atomic: a,

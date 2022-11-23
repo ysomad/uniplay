@@ -31,6 +31,12 @@ CREATE TABLE IF NOT EXISTS match (
     upload_time timestamptz NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS match_player(
+    match_id uuid NOT NULL REFERENCES match (id),
+    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    team_name varchar(64) NOT NULL REFERENCES team (name)
+);
+
 CREATE TABLE IF NOT EXISTS metric (
     match_id uuid NOT NULL REFERENCES match (id),
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),

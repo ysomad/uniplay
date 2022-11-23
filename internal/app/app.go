@@ -50,9 +50,11 @@ func Run(conf *config.Config) {
 
 	// repos
 	replayRepo := postgres.NewReplayRepo(atomicPool, pgClient.Builder)
+	playerRepo := postgres.NewPlayerRepo(atomicPool, pgClient.Builder)
 
 	// services
 	replayService := service.NewReplay(l, replayRepo)
+	playerService := service.NewPlayer(playerRepo)
 
 	// test all
 	// replayFiles, err := os.ReadDir("./test-data/")
@@ -84,7 +86,7 @@ func Run(conf *config.Config) {
 	mux := chi.NewMux()
 	mux.Use(middleware.Logger, middleware.Recoverer)
 
-	handlerV1 := v1.NewHandler(l, atomicRunner, replayService)
+	handlerV1 := v1.NewHandler(l, atomicRunner, replayService, playerService)
 	v1gen.HandlerFromMuxWithBaseURL(handlerV1, mux, "/v1")
 
 	runHTTPServer(mux, l, conf.HTTP.Port)

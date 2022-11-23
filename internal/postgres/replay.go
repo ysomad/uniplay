@@ -25,21 +25,38 @@ func NewReplayRepo(p pgxatomic.Pool, b sq.StatementBuilderType) *replayRepo {
 	}
 }
 
-func (r *replayRepo) SavePlayers(ctx context.Context, players dto.PlayerSteamIDs) error {
-	sb := r.builder.
+func (r *replayRepo) SavePlayers(ctx context.Context, params dto.MatchPlayers) error {
+	// build queries
+	playerSB := r.builder.
 		Insert("player").
 		Columns("steam_id, create_time, update_time")
 
-	for _, steamID := range players.SteamIDs {
-		sb = sb.Values(steamID, players.CreateTime, players.CreateTime)
+	matchPlayerSB := r.builder.
+		Insert("match_player").
+		Columns("match_id, player_steam_id, team_name")
+
+	for _, player := range params.Players {
+		playerSB = playerSB.Values(player.SteamID, params.CreateTime, params.CreateTime)
+		matchPlayerSB = matchPlayerSB.Values(params.MatchID, player.SteamID, player.TeamName)
 	}
 
-	sql, args, err := sb.Suffix("ON CONFLICT(steam_id) DO NOTHING").ToSql()
+	// save player
+	playerSQL, playerArgs, err := playerSB.Suffix("ON CONFLICT(steam_id) DO NOTHING").ToSql()
 	if err != nil {
 		return err
 	}
 
-	if _, err = r.pool.Exec(ctx, sql, args...); err != nil {
+	if _, err = r.pool.Exec(ctx, playerSQL, playerArgs...); err != nil {
+		return err
+	}
+
+	// save match_player
+	matchPlayerSQL, matchPlayerArgs, err := matchPlayerSB.ToSql()
+	if err != nil {
+		return err
+	}
+
+	if _, err = r.pool.Exec(ctx, matchPlayerSQL, matchPlayerArgs...); err != nil {
 		return err
 	}
 
@@ -73,7 +90,7 @@ func (r *replayRepo) AddPlayersToTeams(ctx context.Context, players []dto.TeamPl
 		Columns("team_name, player_steam_id")
 
 	for _, p := range players {
-		sb = sb.Values(p.TeamName, p.PlayerSteamID)
+		sb = sb.Values(p.TeamName, p.SteamID)
 	}
 
 	sql, args, err := sb.Suffix("ON CONFLICT (team_name, player_steam_id) DO NOTHING").ToSql()
