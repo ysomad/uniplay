@@ -8,6 +8,8 @@ servers:
 tags:
 - name: player
   description: Профиль игрока
+- name: metric
+  description: Метрики игрока
 - name: replay
   description: Запись матча
 paths:
@@ -35,7 +37,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlayerProfile'
+                $ref: '#/components/schemas/Player'
         "404":
           description: Not Found
           content:
@@ -120,6 +122,117 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /metrics/{steam_id}:
+    get:
+      tags:
+      - metric
+      summary: Получения метрик игрока
+      operationId: getPlayerMetrics
+      parameters:
+      - name: steam_id
+        in: path
+        description: uint64
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: uint64
+          x-go-type: uint64
+          x-go-name: SteamID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerMetrics'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /metrics/{steam_id}/weapons:
+    get:
+      tags:
+      - metric
+      summary: Получения метрик игрока по оружию
+      operationId: getWeaponMetrics
+      parameters:
+      - name: steam_id
+        in: path
+        description: uint64
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: uint64
+          x-go-type: uint64
+          x-go-name: SteamID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerWeaponMetrics'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /metrics/{steam_id}/weapon-classes:
+    get:
+      tags:
+      - metric
+      summary: Получения метрик игрока по классу оружия
+      operationId: getWeaponClassMetrics
+      parameters:
+      - name: steam_id
+        in: path
+        description: uint64
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: uint64
+          x-go-type: uint64
+          x-go-name: SteamID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerWeaponClassMetrics'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Error:
@@ -136,15 +249,13 @@ components:
         message:
           type: string
           description: сообщение ошибки
-    PlayerProfile:
+    Player:
       required:
       - create_time
-      - main_team_name
-      - stats
       - steam_id
+      - team_flag_code
+      - team_name
       - update_time
-      - weapon_class_stats
-      - weapon_stats
       type: object
       properties:
         steam_id:
@@ -152,14 +263,10 @@ components:
           format: uint64
           x-go-name: SteamID
           x-go-type: uint64
-        main_team_name:
+        team_name:
           type: string
-        stats:
-          $ref: '#/components/schemas/PlayerStats'
-        weapon_stats:
-          $ref: '#/components/schemas/WeaponStats'
-        weapon_class_stats:
-          $ref: '#/components/schemas/WeaponClassStats'
+        team_flag_code:
+          type: string
         create_time:
           type: string
           description: RFC3339 datetime string
@@ -183,18 +290,9 @@ components:
       - kills_per_round
       - matches_played
       - rounds_played
-      - total_deaths
-      - total_kills
+      - time_played
       type: object
       properties:
-        total_kills:
-          type: integer
-          format: uint32
-          x-go-type: uint32
-        total_deaths:
-          type: integer
-          format: uint32
-          x-go-type: uint32
         kill_death_ratio:
           type: number
           format: double
@@ -221,6 +319,7 @@ components:
           x-go-type: float64
         blind_per_round:
           type: number
+          description: кол-во раз ослеплен за раунд
           format: double
           x-go-type: float64
         blinded_per_round:
@@ -239,38 +338,163 @@ components:
           type: integer
           format: uint32
           x-go-type: uint32
-    WeaponStat:
+        time_played:
+          type: integer
+          format: int64
+          x-go-type: int64
+      description: набор высчитываемой статистики на основе метрик
+    PlayerMetrics:
       required:
-      - total_kills
-      - weapon_name
+      - assists
+      - blind_kills
+      - blinded_players
+      - blinded_times
+      - bombs_defused
+      - bombs_planted
+      - damage_dealt
+      - damage_taken
+      - deaths
+      - flashbang_assists
+      - headshot_kills
+      - kills
+      - mvp_count
+      - noscope_kills
+      - through_smoke_kills
+      - wallbang_kills
       type: object
       properties:
-        weapon_name:
-          type: string
-        total_kills:
+        kills:
           type: integer
           format: uint32
           x-go-type: uint32
-    WeaponClassStat:
-      required:
-      - total_kills
-      - weapon_class
-      type: object
-      properties:
-        weapon_class:
-          type: string
-        total_kills:
+        deaths:
           type: integer
           format: uint32
           x-go-type: uint32
-    WeaponStats:
-      type: array
-      items:
-        $ref: '#/components/schemas/WeaponStat'
-    WeaponClassStats:
-      type: array
-      items:
-        $ref: '#/components/schemas/WeaponClassStat'
+        headshot_kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        blind_kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        wallbang_kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        noscope_kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        through_smoke_kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        assists:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        flashbang_assists:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        damage_taken:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        damage_dealt:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        bombs_planted:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        bombs_defused:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        blinded_players:
+          type: integer
+          description: кол-во ослепленных игроков
+          format: uint32
+          x-go-type: uint32
+        blinded_times:
+          type: integer
+          description: кол-во раз ослеплен
+          format: uint32
+          x-go-type: uint32
+        mvp_count:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+      description: общая статистика по сумме метрик игрока
+    WeaponMetrics:
+      required:
+      - assists
+      - blind_kills
+      - damage_dealt
+      - damage_taken
+      - deaths
+      - flashbang_assists
+      - headshot_kills
+      - kills
+      - noscope_kills
+      - through_smoke_kills
+      - wallbang_kills
+      type: object
+      properties:
+        kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        deaths:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        headshot_kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        blind_kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        wallbang_kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        noscope_kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        through_smoke_kills:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        assists:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        damage_taken:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+        damage_dealt:
+          type: integer
+          format: uint32
+          x-go-type: uint32
+    PlayerWeaponMetrics:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/WeaponMetrics'
+      description: ключ - название оружия "ak-47", "deagle" и т.д.
+    PlayerWeaponClassMetrics:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/WeaponMetrics'
+      description: ключ - название класса оружия "rifle", "pistol" и т.д.
     MatchTeam:
       required:
       - clan_name

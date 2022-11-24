@@ -21,14 +21,14 @@ type replayService interface {
 }
 
 type playerService interface {
-	GetProfile(ctx context.Context, steamID uint64) (*domain.PlayerProfile, error)
+	Get(ctx context.Context, steamID uint64) (domain.Player, error)
 }
 
 type handler struct {
 	log    *zap.Logger
 	atomic atomicRunner
 	replay replayService
-	palyer playerService
+	player playerService
 }
 
 func NewHandler(l *zap.Logger, a atomicRunner, r replayService, p playerService) *handler {
@@ -36,5 +36,6 @@ func NewHandler(l *zap.Logger, a atomicRunner, r replayService, p playerService)
 		log:    l,
 		atomic: a,
 		replay: r,
+		player: p,
 	}
 }

@@ -16,6 +16,6 @@ func NewPlayer(r playerRepository) *player {
 	}
 }
 
-func (p *player) GetProfile(ctx context.Context, steamID uint64) (*domain.PlayerProfile, error) {
-	return nil, nil
+func (p *player) Get(ctx context.Context, steamID uint64) (domain.Player, error) {
+	return p.repo.FindBySteamID(ctx, steamID)
 }

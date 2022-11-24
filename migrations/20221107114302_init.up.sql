@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS team (
 
 CREATE TABLE IF NOT EXISTS player (
     steam_id bigint PRIMARY KEY NOT NULL,
-    main_team_name varchar(64) REFERENCES team(name),
+    team_name varchar(64) REFERENCES team(name),
     create_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     update_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
