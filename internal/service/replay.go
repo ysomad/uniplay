@@ -38,35 +38,6 @@ func (r *replay) CollectStats(ctx context.Context, filename string) (*dto.Match,
 	}
 
 	match := res.Match()
-
-	err = r.repo.SaveTeams(ctx, dto.Teams{
-		Team1Name:  match.Team1.ClanName,
-		Team1Flag:  match.Team1.FlagCode,
-		Team2Name:  match.Team2.ClanName,
-		Team2Flag:  match.Team2.FlagCode,
-		CreateTime: match.UploadTime,
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	playerSteamIDs, err := res.PlayerSteamIDs()
-	if err != nil {
-		return nil, err
-	}
-
-	err = r.repo.SavePlayers(ctx, dto.PlayerSteamIDs{
-		SteamIDs:   playerSteamIDs,
-		CreateTime: match.UploadTime,
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	if err = r.repo.AddPlayersToTeams(ctx, res.TeamPlayers()); err != nil {
-		return nil, err
-	}
-
 	match.ID, err = domain.NewMatchID(&domain.MatchIDArgs{
 		MapName:       match.MapName,
 		Team1Name:     match.Team1.ClanName,
@@ -79,7 +50,33 @@ func (r *replay) CollectStats(ctx context.Context, filename string) (*dto.Match,
 		return nil, err
 	}
 
+	err = r.repo.SaveTeams(ctx, dto.Teams{
+		Team1Name:  match.Team1.ClanName,
+		Team1Flag:  match.Team1.FlagCode,
+		Team2Name:  match.Team2.ClanName,
+		Team2Flag:  match.Team2.FlagCode,
+		CreateTime: match.UploadTime,
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	if err = r.repo.SaveMatch(ctx, match); err != nil {
+		return nil, err
+	}
+
+	teamPlayers := res.TeamPlayers()
+
+	err = r.repo.SavePlayers(ctx, dto.MatchPlayers{
+		MatchID:    match.ID,
+		Players:    teamPlayers,
+		CreateTime: match.UploadTime,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if err = r.repo.AddPlayersToTeams(ctx, teamPlayers); err != nil {
 		return nil, err
 	}
 

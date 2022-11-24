@@ -58,6 +58,18 @@ type MatchTeam struct {
 	Score          uint8    `json:"score"`
 }
 
+// Player defines model for Player.
+type Player struct {
+	// CreateTime RFC3339 datetime string
+	CreateTime   time.Time `json:"create_time"`
+	SteamID      uint64    `json:"steam_id"`
+	TeamFlagCode string    `json:"team_flag_code"`
+	TeamName     string    `json:"team_name"`
+
+	// UpdateTime RFC3339 datetime string
+	UpdateTime time.Time `json:"update_time"`
+}
+
 // PlayerMatchListRequest defines model for PlayerMatchListRequest.
 type PlayerMatchListRequest struct {
 	PageSize uint16 `json:"page_size"`
@@ -72,57 +84,52 @@ type PlayerMatchListSort struct {
 	UploadTime SortOrder `json:"upload_time"`
 }
 
-// PlayerProfile defines model for PlayerProfile.
-type PlayerProfile struct {
-	// CreateTime RFC3339 datetime string
-	CreateTime   time.Time   `json:"create_time"`
-	MainTeamName string      `json:"main_team_name"`
-	Stats        PlayerStats `json:"stats"`
-	SteamID      uint64      `json:"steam_id"`
+// PlayerMetrics общая статистика по сумме метрик игрока
+type PlayerMetrics struct {
+	Assists    uint32 `json:"assists"`
+	BlindKills uint32 `json:"blind_kills"`
 
-	// UpdateTime RFC3339 datetime string
-	UpdateTime       time.Time        `json:"update_time"`
-	WeaponClassStats WeaponClassStats `json:"weapon_class_stats"`
-	WeaponStats      WeaponStats      `json:"weapon_stats"`
+	// BlindedPlayers кол-во ослепленных игроков
+	BlindedPlayers uint32 `json:"blinded_players"`
+
+	// BlindedTimes кол-во раз ослеплен
+	BlindedTimes      uint32 `json:"blinded_times"`
+	BombsDefused      uint32 `json:"bombs_defused"`
+	BombsPlanted      uint32 `json:"bombs_planted"`
+	DamageDealt       uint32 `json:"damage_dealt"`
+	DamageTaken       uint32 `json:"damage_taken"`
+	Deaths            uint32 `json:"deaths"`
+	FlashbangAssists  uint32 `json:"flashbang_assists"`
+	HeadshotKills     uint32 `json:"headshot_kills"`
+	Kills             uint32 `json:"kills"`
+	MvpCount          uint32 `json:"mvp_count"`
+	NoscopeKills      uint32 `json:"noscope_kills"`
+	ThroughSmokeKills uint32 `json:"through_smoke_kills"`
+	WallbangKills     uint32 `json:"wallbang_kills"`
 }
 
-// PlayerStats defines model for PlayerStats.
-type PlayerStats struct {
-	AssistsPerRound       float64 `json:"assists_per_round"`
-	BlindPerRound         float64 `json:"blind_per_round"`
-	BlindedPerRound       float64 `json:"blinded_per_round"`
-	DamagePerRound        float64 `json:"damage_per_round"`
-	DeathsPerRound        float64 `json:"deaths_per_round"`
-	GrenadeDamagePerRound float64 `json:"grenade_damage_per_round"`
-	HeadshotPercentage    float64 `json:"headshot_percentage"`
-	KillDeathRatio        float64 `json:"kill_death_ratio"`
-	KillsPerRound         float64 `json:"kills_per_round"`
-	MatchesPlayed         uint16  `json:"matches_played"`
-	RoundsPlayed          uint32  `json:"rounds_played"`
-	TotalDeaths           uint32  `json:"total_deaths"`
-	TotalKills            uint32  `json:"total_kills"`
-}
+// PlayerWeaponClassMetrics ключ - название класса оружия "rifle", "pistol" и т.д.
+type PlayerWeaponClassMetrics map[string]WeaponMetrics
+
+// PlayerWeaponMetrics ключ - название оружия "ak-47", "deagle" и т.д.
+type PlayerWeaponMetrics map[string]WeaponMetrics
 
 // SortOrder defines model for SortOrder.
 type SortOrder string
 
-// WeaponClassStat defines model for WeaponClassStat.
-type WeaponClassStat struct {
-	TotalKills  uint32 `json:"total_kills"`
-	WeaponClass string `json:"weapon_class"`
+// WeaponMetrics defines model for WeaponMetrics.
+type WeaponMetrics struct {
+	Assists           uint32 `json:"assists"`
+	BlindKills        uint32 `json:"blind_kills"`
+	DamageDealt       uint32 `json:"damage_dealt"`
+	DamageTaken       uint32 `json:"damage_taken"`
+	Deaths            uint32 `json:"deaths"`
+	HeadshotKills     uint32 `json:"headshot_kills"`
+	Kills             uint32 `json:"kills"`
+	NoscopeKills      uint32 `json:"noscope_kills"`
+	ThroughSmokeKills uint32 `json:"through_smoke_kills"`
+	WallbangKills     uint32 `json:"wallbang_kills"`
 }
-
-// WeaponClassStats defines model for WeaponClassStats.
-type WeaponClassStats = []WeaponClassStat
-
-// WeaponStat defines model for WeaponStat.
-type WeaponStat struct {
-	TotalKills uint32 `json:"total_kills"`
-	WeaponName string `json:"weapon_name"`
-}
-
-// WeaponStats defines model for WeaponStats.
-type WeaponStats = []WeaponStat
 
 // PlayerMatchListRequestBody defines model for PlayerMatchListRequestBody.
 type PlayerMatchListRequestBody = PlayerMatchListRequest
@@ -141,6 +148,15 @@ type UploadReplayMultipartRequestBody UploadReplayMultipartBody
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// Получения метрик игрока
+	// (GET /metrics/{steam_id})
+	GetPlayerMetrics(w http.ResponseWriter, r *http.Request, steamId uint64)
+	// Получения метрик игрока по классу оружия
+	// (GET /metrics/{steam_id}/weapon-classes)
+	GetWeaponClassMetrics(w http.ResponseWriter, r *http.Request, steamId uint64)
+	// Получения метрик игрока по оружию
+	// (GET /metrics/{steam_id}/weapons)
+	GetWeaponMetrics(w http.ResponseWriter, r *http.Request, steamId uint64)
 	// Получения профиля игрока
 	// (GET /players/{steam_id})
 	GetPlayerProfile(w http.ResponseWriter, r *http.Request, steamId uint64)
@@ -160,6 +176,84 @@ type ServerInterfaceWrapper struct {
 }
 
 type MiddlewareFunc func(http.Handler) http.Handler
+
+// GetPlayerMetrics operation middleware
+func (siw *ServerInterfaceWrapper) GetPlayerMetrics(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var err error
+
+	// ------------- Path parameter "steam_id" -------------
+	var steamId uint64
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "steam_id", runtime.ParamLocationPath, chi.URLParam(r, "steam_id"), &steamId)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "steam_id", Err: err})
+		return
+	}
+
+	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetPlayerMetrics(w, r, steamId)
+	})
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r.WithContext(ctx))
+}
+
+// GetWeaponClassMetrics operation middleware
+func (siw *ServerInterfaceWrapper) GetWeaponClassMetrics(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var err error
+
+	// ------------- Path parameter "steam_id" -------------
+	var steamId uint64
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "steam_id", runtime.ParamLocationPath, chi.URLParam(r, "steam_id"), &steamId)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "steam_id", Err: err})
+		return
+	}
+
+	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetWeaponClassMetrics(w, r, steamId)
+	})
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r.WithContext(ctx))
+}
+
+// GetWeaponMetrics operation middleware
+func (siw *ServerInterfaceWrapper) GetWeaponMetrics(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var err error
+
+	// ------------- Path parameter "steam_id" -------------
+	var steamId uint64
+
+	err = runtime.BindStyledParameterWithLocation("simple", false, "steam_id", runtime.ParamLocationPath, chi.URLParam(r, "steam_id"), &steamId)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "steam_id", Err: err})
+		return
+	}
+
+	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetWeaponMetrics(w, r, steamId)
+	})
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r.WithContext(ctx))
+}
 
 // GetPlayerProfile operation middleware
 func (siw *ServerInterfaceWrapper) GetPlayerProfile(w http.ResponseWriter, r *http.Request) {
@@ -341,6 +435,15 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		ErrorHandlerFunc:   options.ErrorHandlerFunc,
 	}
 
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/metrics/{steam_id}", wrapper.GetPlayerMetrics)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/metrics/{steam_id}/weapon-classes", wrapper.GetWeaponClassMetrics)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/metrics/{steam_id}/weapons", wrapper.GetWeaponMetrics)
+	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/players/{steam_id}", wrapper.GetPlayerProfile)
 	})

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS team (
 
 CREATE TABLE IF NOT EXISTS player (
     steam_id bigint PRIMARY KEY NOT NULL,
-    main_team_name varchar(64) REFERENCES team(name),
+    team_name varchar(64) REFERENCES team(name),
     create_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     update_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -29,6 +29,12 @@ CREATE TABLE IF NOT EXISTS match (
     team2_score smallint NOT NULL,
     duration interval NOT NULL,
     upload_time timestamptz NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS match_player(
+    match_id uuid NOT NULL REFERENCES match (id),
+    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    team_name varchar(64) NOT NULL REFERENCES team (name)
 );
 
 CREATE TABLE IF NOT EXISTS metric (

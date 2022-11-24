@@ -70,7 +70,7 @@ func (h *handler) UploadReplay(w http.ResponseWriter, r *http.Request) {
 		return err
 	})
 	if err != nil {
-		h.log.Error("http - v1 - handler.CollectStats", zap.Error(err))
+		h.log.Error("http - v1 - handler.UploadReplay", zap.Error(err))
 
 		switch {
 		case errors.Is(err, domain.ErrMatchAlreadyExist):

@@ -22,8 +22,9 @@ type MatchTeam struct {
 	PlayerSteamIDs []uint64
 }
 
-type PlayerSteamIDs struct {
-	SteamIDs   []uint64
+type MatchPlayers struct {
+	MatchID    domain.MatchID
+	Players    []TeamPlayer
 	CreateTime time.Time
 }
 
@@ -36,8 +37,8 @@ type Teams struct {
 }
 
 type TeamPlayer struct {
-	TeamName      string
-	PlayerSteamID uint64
+	TeamName string
+	SteamID  uint64
 }
 
 type Metric struct {
