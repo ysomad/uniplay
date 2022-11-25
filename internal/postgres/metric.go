@@ -39,7 +39,10 @@ func (r *metricRepo) GetWeaponMetrics(ctx context.Context, steamID uint64, f dom
 		sb = sb.Where(sq.Eq{"weapon_class": f.WeaponClass})
 	}
 
-	sql, args, err := sb.GroupBy("metric, weapon_name").ToSql()
+	sql, args, err := sb.
+		GroupBy("metric, weapon_name").
+		OrderBy("weapon_name").
+		ToSql()
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +70,10 @@ func (r *metricRepo) GetWeaponClassMetrics(ctx context.Context, steamID uint64, 
 		sb = sb.Where(sq.Eq{"weapon_class": c})
 	}
 
-	sql, args, err := sb.GroupBy("metric, weapon_class").ToSql()
+	sql, args, err := sb.
+		GroupBy("metric, weapon_class").
+		OrderBy("weapon_class").
+		ToSql()
 	if err != nil {
 		return nil, err
 	}
