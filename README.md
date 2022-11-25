@@ -19,3 +19,4 @@ Codes per domain model:
 `Metric` - >= 700
 `Player` - >= 800
 `Team` - >= 900
+`WeaponStats` - >= 1000

@@ -6,12 +6,6 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-
-	"github.com/ssssargsian/uniplay/internal/pkg/apperror"
-)
-
-var (
-	ErrMatchAlreadyExist = apperror.New(600, "match already exist")
 )
 
 type Match struct {

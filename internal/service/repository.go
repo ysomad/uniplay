@@ -18,3 +18,7 @@ type replayRepository interface {
 type playerRepository interface {
 	FindBySteamID(ctx context.Context, steamID uint64) (domain.Player, error)
 }
+
+type metricRepository interface {
+	GetWeaponMetrics(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]dto.WeaponMetricSum, error)
+}

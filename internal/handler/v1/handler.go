@@ -24,18 +24,26 @@ type playerService interface {
 	Get(ctx context.Context, steamID uint64) (domain.Player, error)
 }
 
-type handler struct {
-	log    *zap.Logger
-	atomic atomicRunner
-	replay replayService
-	player playerService
+// TODO: IMPLEMENT
+type statisticService interface {
+	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) (domain.WeaponStats, error)
+	GetWeaponClassStats(ctx context.Context, steamID uint64) (domain.WeaponClassStats, error)
 }
 
-func NewHandler(l *zap.Logger, a atomicRunner, r replayService, p playerService) *handler {
+type handler struct {
+	log       *zap.Logger
+	atomic    atomicRunner
+	replay    replayService
+	player    playerService
+	statistic statisticService
+}
+
+func NewHandler(l *zap.Logger, a atomicRunner, r replayService, p playerService, s statisticService) *handler {
 	return &handler{
-		log:    l,
-		atomic: a,
-		replay: r,
-		player: p,
+		log:       l,
+		atomic:    a,
+		replay:    r,
+		player:    p,
+		statistic: s,
 	}
 }

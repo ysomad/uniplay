@@ -2,22 +2,48 @@ package domain
 
 import "time"
 
-// PlayerStats is a calculated statistics from PlayerMetrics.
 type PlayerStats struct {
-	KillDeathRatio        float64
-	DamagePerRound        float64
-	GrenadeDamagePerRound float64
-	KillsPerRound         float64
-	AssistsPerRound       float64
-	DeathsPerRound        float64
-	BlindPerRound         float64
-	BlindedPerRound       float64
-	HeadshotPercentage    float64
-	TimeStats             PlayerTimeStats
+	Total    *PlayerTotalStats
+	Basic    PlayerBasicStats
+	PerRound *PlayerPerRoundStats
 }
 
-type PlayerTimeStats struct {
-	RoundsPlayed  uint32
-	TimePlayed    time.Duration
-	MatchesPlayed uint16
+// PlayerTotalStats is a set of total statistics of a player.
+type PlayerTotalStats struct {
+	Deaths            uint32
+	Kills             uint32
+	HSKills           uint32
+	BlindKills        uint32
+	WallbangKills     uint32
+	NoScopeKills      uint32
+	ThroughSmokeKills uint32
+	Assists           uint32
+	FlashbangAssists  uint32
+	DamageTaken       uint32
+	DamageDealt       uint32
+	BombsPlanted      uint32
+	BombsDefused      uint32
+	MVPCount          uint32
+	BlindedPlayers    uint32
+	BlindedTimes      uint32
+}
+
+// PlayerBasicStats is a set of calculated stats from metrics.
+type PlayerBasicStats struct {
+	KillDeathRatio float64
+	HSPercentage   float64
+	RoundsPlayed   uint32
+	TimePlayed     time.Duration
+	MatchesPlayed  uint16
+}
+
+// PlayerPerRoundStats is a set of AVG player stats per round.
+type PlayerPerRoundStats struct {
+	Kills              float64
+	Assists            float64
+	Deaths             float64
+	DamageDealt        float64
+	GrenadeDamageDealt float64
+	BlindedPlayers     float64
+	BlindedTimes       float64
 }
