@@ -2,10 +2,13 @@ package replayparser
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
+
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
+	"github.com/ssssargsian/uniplay/internal/pkg/appstr"
 )
 
 type weaponMetric struct {
@@ -51,16 +54,21 @@ func (p *weaponMetrics) toDTO(matchID domain.MatchID) ([]dto.WeaponMetric, error
 		return nil, errors.New("empty list of weapon metrics")
 	}
 
-	args := []dto.WeaponMetric{}
+	out := []dto.WeaponMetric{}
 
 	for steamID, wmetrics := range p.metrics {
 		for wm, metrics := range wmetrics {
 			for m, v := range metrics {
-				args = append(args, dto.WeaponMetric{
+				// skip unknown weapons
+				if wm.weaponClass == common.EqClassUnknown {
+					continue
+				}
+
+				out = append(out, dto.WeaponMetric{
 					MatchID:       matchID,
 					PlayerSteamID: uint64(steamID),
-					WeaponName:    wm.weaponName,
-					WeaponClass:   domain.EquipmentClass(wm.weaponClass),
+					WeaponName:    strings.ToLower(appstr.StripWhitespace(wm.weaponName)),
+					WeaponClass:   domain.WeaponClass(wm.weaponClass),
 					Metric:        m,
 					Value:         int32(v),
 				})
@@ -68,5 +76,5 @@ func (p *weaponMetrics) toDTO(matchID domain.MatchID) ([]dto.WeaponMetric, error
 		}
 	}
 
-	return args, nil
+	return out, nil
 }

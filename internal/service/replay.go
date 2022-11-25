@@ -90,6 +90,8 @@ func (r *replay) CollectStats(ctx context.Context, filename string) (*dto.Match,
 		return nil, err
 	}
 
+	// r.log.Error("WM", zap.Any("WM", wmetricList))
+
 	if err = r.repo.SaveMetrics(ctx, metricList, wmetricList); err != nil {
 		return nil, err
 	}
