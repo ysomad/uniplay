@@ -46,5 +46,5 @@ type WeaponClassStats map[string]*WeaponStat
 
 type WeaponStatsFilter struct {
 	WeaponName  string
-	WeaponClass WeaponClass
+	WeaponClass WeaponClassID
 }

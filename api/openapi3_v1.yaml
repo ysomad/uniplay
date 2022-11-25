@@ -12,12 +12,14 @@ tags:
   description: Статистика игрока
 - name: replay
   description: Запись матча
+- name: compendium
+  description: Справочники
 paths:
   /players/{steam_id}:
     get:
       tags:
       - player
-      summary: Получения профиля игрока
+      summary: Профиль игрока
       operationId: getPlayerProfile
       parameters:
       - name: steam_id
@@ -54,7 +56,7 @@ paths:
     post:
       tags:
       - player
-      summary: Получение списка матчей игрока
+      summary: Список матчей игрока
       operationId: getPlayerMatches
       parameters:
       - name: steam_id
@@ -126,7 +128,7 @@ paths:
     get:
       tags:
       - stat
-      summary: Получения статистики игрока
+      summary: Статистика игрока
       operationId: getPlayerStats
       parameters:
       - name: steam_id
@@ -163,7 +165,7 @@ paths:
     post:
       tags:
       - stat
-      summary: Получения статистики по оружию
+      summary: Статистика игрока по оружию
       operationId: getWeaponStats
       parameters:
       - name: steam_id
@@ -202,7 +204,7 @@ paths:
     post:
       tags:
       - stat
-      summary: Получения статистики по классу оружия
+      summary: Статистика игрока по классу оружия
       operationId: getWeaponClassStats
       parameters:
       - name: steam_id
@@ -231,6 +233,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /сompendiums/weapons:
+    get:
+      tags:
+      - compendium
+      summary: Справочник оружий
+      operationId: getWeaponCompendium
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeaponList'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /сompendiums/weapon-classes:
+    get:
+      tags:
+      - compendium
+      summary: Справочник классов оружий
+      operationId: getWeaponClassCompendium
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeaponClassList'
         "500":
           description: Internal Server Error
           content:
@@ -642,6 +682,46 @@ components:
         weapon_class:
           type: string
           description: фильтр по классу оружия
+    Weapon:
+      required:
+      - class_id
+      - class_name
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: имя оружия
+        class_id:
+          type: integer
+          description: класс оружия в формате uint8, в котором хранится в базе
+          format: uint8
+          x-go-type: uint8
+          x-go-name: ClassID
+        class_name:
+          type: string
+          description: имя класса оружия
+    WeaponList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Weapon'
+    WeaponClassList:
+      type: array
+      items:
+        $ref: '#/components/schemas/WeaponClass'
+    WeaponClass:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          description: класс оружия в формате uint8, в котором хранится в базе
+          format: uint8
+        name:
+          type: string
+          description: имя класса оружия
   requestBodies:
     ReplayUploadRequestBody:
       content:

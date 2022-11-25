@@ -162,11 +162,38 @@ type TotalStats struct {
 	WallbangKills     uint32 `json:"wallbang_kills"`
 }
 
+// Weapon defines model for Weapon.
+type Weapon struct {
+	// ClassId класс оружия в формате uint8, в котором хранится в базе
+	ClassID uint8 `json:"class_id"`
+
+	// ClassName имя класса оружия
+	ClassName string `json:"class_name"`
+
+	// Name имя оружия
+	Name string `json:"name"`
+}
+
+// WeaponClass defines model for WeaponClass.
+type WeaponClass struct {
+	// Id класс оружия в формате uint8, в котором хранится в базе
+	Id uint8 `json:"id"`
+
+	// Name имя класса оружия
+	Name string `json:"name"`
+}
+
+// WeaponClassList defines model for WeaponClassList.
+type WeaponClassList = []WeaponClass
+
 // WeaponClassStatsRequest defines model for WeaponClassStatsRequest.
 type WeaponClassStatsRequest struct {
 	// WeaponClass фильтр по классу оружия
 	WeaponClass string `json:"weapon_class"`
 }
+
+// WeaponList defines model for WeaponList.
+type WeaponList = []Weapon
 
 // WeaponStat defines model for WeaponStat.
 type WeaponStat struct {
@@ -220,24 +247,30 @@ type GetWeaponStatsJSONRequestBody = WeaponStatsRequest
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
-	// Получения профиля игрока
+	// Профиль игрока
 	// (GET /players/{steam_id})
 	GetPlayerProfile(w http.ResponseWriter, r *http.Request, steamId uint64)
-	// Получение списка матчей игрока
+	// Список матчей игрока
 	// (POST /players/{steam_id}/matches)
 	GetPlayerMatches(w http.ResponseWriter, r *http.Request, steamId uint64)
 	// Загрузить запись матча
 	// (POST /replays)
 	UploadReplay(w http.ResponseWriter, r *http.Request)
-	// Получения статистики игрока
+	// Статистика игрока
 	// (GET /stats/{steam_id})
 	GetPlayerStats(w http.ResponseWriter, r *http.Request, steamId uint64)
-	// Получения статистики по классу оружия
+	// Статистика игрока по классу оружия
 	// (POST /stats/{steam_id}/weapon-classes)
 	GetWeaponClassStats(w http.ResponseWriter, r *http.Request, steamId uint64)
-	// Получения статистики по оружию
+	// Статистика игрока по оружию
 	// (POST /stats/{steam_id}/weapons)
 	GetWeaponStats(w http.ResponseWriter, r *http.Request, steamId uint64)
+	// Справочник классов оружий
+	// (GET /сompendiums/weapon-classes)
+	GetWeaponClassCompendium(w http.ResponseWriter, r *http.Request)
+	// Справочник оружий
+	// (GET /сompendiums/weapons)
+	GetWeaponCompendium(w http.ResponseWriter, r *http.Request)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -394,6 +427,36 @@ func (siw *ServerInterfaceWrapper) GetWeaponStats(w http.ResponseWriter, r *http
 	handler.ServeHTTP(w, r.WithContext(ctx))
 }
 
+// GetWeaponClassCompendium operation middleware
+func (siw *ServerInterfaceWrapper) GetWeaponClassCompendium(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetWeaponClassCompendium(w, r)
+	})
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r.WithContext(ctx))
+}
+
+// GetWeaponCompendium operation middleware
+func (siw *ServerInterfaceWrapper) GetWeaponCompendium(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
+	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetWeaponCompendium(w, r)
+	})
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r.WithContext(ctx))
+}
+
 type UnescapedCookieParamError struct {
 	ParamName string
 	Err       error
@@ -524,6 +587,12 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/stats/{steam_id}/weapons", wrapper.GetWeaponStats)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/сompendiums/weapon-classes", wrapper.GetWeaponClassCompendium)
+	})
+	r.Group(func(r chi.Router) {
+		r.Get(options.BaseURL+"/сompendiums/weapons", wrapper.GetWeaponCompendium)
 	})
 
 	return r

@@ -26,23 +26,30 @@ type playerService interface {
 
 type statisticService interface {
 	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) (domain.WeaponStats, error)
-	GetWeaponClassStats(ctx context.Context, steamID uint64, c domain.WeaponClass) (domain.WeaponClassStats, error)
+	GetWeaponClassStats(ctx context.Context, steamID uint64, c domain.WeaponClassID) (domain.WeaponClassStats, error)
+}
+
+type compendiumService interface {
+	GetWeaponList(context.Context) ([]domain.Weapon, error)
+	GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
 }
 
 type handler struct {
-	log       *zap.Logger
-	atomic    atomicRunner
-	replay    replayService
-	player    playerService
-	statistic statisticService
+	log        *zap.Logger
+	atomic     atomicRunner
+	replay     replayService
+	player     playerService
+	statistic  statisticService
+	compendium compendiumService
 }
 
-func NewHandler(l *zap.Logger, a atomicRunner, r replayService, p playerService, s statisticService) *handler {
+func NewHandler(l *zap.Logger, a atomicRunner, r replayService, p playerService, s statisticService, c compendiumService) *handler {
 	return &handler{
-		log:       l,
-		atomic:    a,
-		replay:    r,
-		player:    p,
-		statistic: s,
+		log:        l,
+		atomic:     a,
+		replay:     r,
+		player:     p,
+		statistic:  s,
+		compendium: c,
 	}
 }

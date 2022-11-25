@@ -1,18 +1,18 @@
 package domain
 
-type WeaponClass uint8
+type WeaponClassID uint8
 
 const (
-	WpClassPistols   WeaponClass = 1
-	WpClassSMG       WeaponClass = 2
-	WpClassHeavy     WeaponClass = 3
-	WpClassRifle     WeaponClass = 4
-	WpClassEquipment WeaponClass = 5
-	WpClassGrenade   WeaponClass = 6
+	WpClassPistols   WeaponClassID = 1
+	WpClassSMG       WeaponClassID = 2
+	WpClassHeavy     WeaponClassID = 3
+	WpClassRifle     WeaponClassID = 4
+	WpClassEquipment WeaponClassID = 5
+	WpClassGrenade   WeaponClassID = 6
 )
 
 var (
-	stringToWeaponClass = map[string]WeaponClass{
+	stringToWeaponClass = map[string]WeaponClassID{
 		"pistol":    WpClassPistols,
 		"smg":       WpClassSMG,
 		"heavy":     WpClassHeavy,
@@ -21,7 +21,7 @@ var (
 		"grenade":   WpClassGrenade,
 	}
 
-	weaponClassToString = map[WeaponClass]string{
+	weaponClassToString = map[WeaponClassID]string{
 		WpClassPistols:   "pistol",
 		WpClassSMG:       "smg",
 		WpClassHeavy:     "heavy",
@@ -31,14 +31,14 @@ var (
 	}
 )
 
-func NewWeaponClass(class string) WeaponClass {
+func NewWeaponClass(class string) WeaponClassID {
 	if c, ok := stringToWeaponClass[class]; ok {
 		return c
 	}
 	return 0
 }
 
-func (c WeaponClass) Valid() bool {
+func (c WeaponClassID) Valid() bool {
 	switch c {
 	case WpClassPistols, WpClassSMG, WpClassHeavy, WpClassRifle, WpClassEquipment, WpClassGrenade:
 		return true
@@ -46,9 +46,14 @@ func (c WeaponClass) Valid() bool {
 	return false
 }
 
-func (c WeaponClass) String() string {
+func (c WeaponClassID) String() string {
 	if s, ok := weaponClassToString[c]; ok {
 		return s
 	}
 	return "unknown"
+}
+
+type WeaponClass struct {
+	ID   WeaponClassID
+	Name string
 }
