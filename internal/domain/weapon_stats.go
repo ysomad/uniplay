@@ -42,7 +42,7 @@ func (s *WeaponStat) SetStat(m Metric, v uint32) {
 }
 
 type WeaponStats map[string]*WeaponStat
-type WeaponClassStats map[WeaponClass]WeaponStat
+type WeaponClassStats map[string]*WeaponStat
 
 type WeaponStatsFilter struct {
 	WeaponName  string

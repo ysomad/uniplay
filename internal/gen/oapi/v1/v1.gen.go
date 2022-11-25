@@ -162,6 +162,12 @@ type TotalStats struct {
 	WallbangKills     uint32 `json:"wallbang_kills"`
 }
 
+// WeaponClassStatsRequest defines model for WeaponClassStatsRequest.
+type WeaponClassStatsRequest struct {
+	// WeaponClass фильтр по классу оружия
+	WeaponClass string `json:"weapon_class"`
+}
+
 // WeaponStat defines model for WeaponStat.
 type WeaponStat struct {
 	Assists           uint32 `json:"assists"`
@@ -188,6 +194,9 @@ type WeaponStatsRequest struct {
 // PlayerMatchListRequestBody defines model for PlayerMatchListRequestBody.
 type PlayerMatchListRequestBody = PlayerMatchListRequest
 
+// WeaponClassStatsRequestBody defines model for WeaponClassStatsRequestBody.
+type WeaponClassStatsRequestBody = WeaponClassStatsRequest
+
 // WeaponStatsRequestBody defines model for WeaponStatsRequestBody.
 type WeaponStatsRequestBody = WeaponStatsRequest
 
@@ -202,6 +211,9 @@ type GetPlayerMatchesJSONRequestBody = PlayerMatchListRequest
 
 // UploadReplayMultipartRequestBody defines body for UploadReplay for multipart/form-data ContentType.
 type UploadReplayMultipartRequestBody UploadReplayMultipartBody
+
+// GetWeaponClassStatsJSONRequestBody defines body for GetWeaponClassStats for application/json ContentType.
+type GetWeaponClassStatsJSONRequestBody = WeaponClassStatsRequest
 
 // GetWeaponStatsJSONRequestBody defines body for GetWeaponStats for application/json ContentType.
 type GetWeaponStatsJSONRequestBody = WeaponStatsRequest
@@ -221,7 +233,7 @@ type ServerInterface interface {
 	// (GET /stats/{steam_id})
 	GetPlayerStats(w http.ResponseWriter, r *http.Request, steamId uint64)
 	// Получения статистики по классу оружия
-	// (GET /stats/{steam_id}/weapon-classes)
+	// (POST /stats/{steam_id}/weapon-classes)
 	GetWeaponClassStats(w http.ResponseWriter, r *http.Request, steamId uint64)
 	// Получения статистики по оружию
 	// (POST /stats/{steam_id}/weapons)
@@ -508,7 +520,7 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/stats/{steam_id}", wrapper.GetPlayerStats)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/stats/{steam_id}/weapon-classes", wrapper.GetWeaponClassStats)
+		r.Post(options.BaseURL+"/stats/{steam_id}/weapon-classes", wrapper.GetWeaponClassStats)
 	})
 	r.Group(func(r chi.Router) {
 		r.Post(options.BaseURL+"/stats/{steam_id}/weapons", wrapper.GetWeaponStats)

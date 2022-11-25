@@ -24,10 +24,9 @@ type playerService interface {
 	Get(ctx context.Context, steamID uint64) (domain.Player, error)
 }
 
-// TODO: IMPLEMENT
 type statisticService interface {
 	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) (domain.WeaponStats, error)
-	GetWeaponClassStats(ctx context.Context, steamID uint64) (domain.WeaponClassStats, error)
+	GetWeaponClassStats(ctx context.Context, steamID uint64, c domain.WeaponClass) (domain.WeaponClassStats, error)
 }
 
 type handler struct {

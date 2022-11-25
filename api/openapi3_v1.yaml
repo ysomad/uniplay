@@ -199,7 +199,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
   /stats/{steam_id}/weapon-classes:
-    get:
+    post:
       tags:
       - stat
       summary: Получения статистики по классу оружия
@@ -216,6 +216,8 @@ paths:
           format: uint64
           x-go-type: uint64
           x-go-name: SteamID
+      requestBody:
+        $ref: '#/components/requestBodies/WeaponClassStatsRequestBody'
       responses:
         "200":
           description: OK
@@ -632,6 +634,14 @@ components:
         weapon_class:
           type: string
           description: фильтр по классу оружия
+    WeaponClassStatsRequest:
+      required:
+      - weapon_class
+      type: object
+      properties:
+        weapon_class:
+          type: string
+          description: фильтр по классу оружия
   requestBodies:
     ReplayUploadRequestBody:
       content:
@@ -655,4 +665,10 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WeaponStatsRequest'
+      required: true
+    WeaponClassStatsRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WeaponClassStatsRequest'
       required: true

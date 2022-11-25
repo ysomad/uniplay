@@ -2,6 +2,7 @@ package replayparser
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
 
@@ -53,7 +54,7 @@ func (p *weaponMetrics) toDTO(matchID domain.MatchID) ([]dto.WeaponMetric, error
 		return nil, errors.New("empty list of weapon metrics")
 	}
 
-	args := []dto.WeaponMetric{}
+	out := []dto.WeaponMetric{}
 
 	for steamID, wmetrics := range p.metrics {
 		for wm, metrics := range wmetrics {
@@ -63,10 +64,10 @@ func (p *weaponMetrics) toDTO(matchID domain.MatchID) ([]dto.WeaponMetric, error
 					continue
 				}
 
-				args = append(args, dto.WeaponMetric{
+				out = append(out, dto.WeaponMetric{
 					MatchID:       matchID,
 					PlayerSteamID: uint64(steamID),
-					WeaponName:    appstr.StripWhitespace(wm.weaponName),
+					WeaponName:    strings.ToLower(appstr.StripWhitespace(wm.weaponName)),
 					WeaponClass:   domain.WeaponClass(wm.weaponClass),
 					Metric:        m,
 					Value:         int32(v),
@@ -75,5 +76,5 @@ func (p *weaponMetrics) toDTO(matchID domain.MatchID) ([]dto.WeaponMetric, error
 		}
 	}
 
-	return args, nil
+	return out, nil
 }

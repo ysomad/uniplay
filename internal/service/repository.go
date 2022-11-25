@@ -21,4 +21,5 @@ type playerRepository interface {
 
 type metricRepository interface {
 	GetWeaponMetrics(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]dto.WeaponMetricSum, error)
+	GetWeaponClassMetrics(ctx context.Context, steamID uint64, c domain.WeaponClass) ([]dto.WeaponClassMetricSum, error)
 }

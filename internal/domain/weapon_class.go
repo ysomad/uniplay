@@ -11,14 +11,25 @@ const (
 	WpClassGrenade   WeaponClass = 6
 )
 
-var stringToWeaponClass = map[string]WeaponClass{
-	"pistol":    WpClassPistols,
-	"smg":       WpClassSMG,
-	"heavy":     WpClassHeavy,
-	"rifle":     WpClassRifle,
-	"equipment": WpClassEquipment,
-	"grenade":   WpClassGrenade,
-}
+var (
+	stringToWeaponClass = map[string]WeaponClass{
+		"pistol":    WpClassPistols,
+		"smg":       WpClassSMG,
+		"heavy":     WpClassHeavy,
+		"rifle":     WpClassRifle,
+		"equipment": WpClassEquipment,
+		"grenade":   WpClassGrenade,
+	}
+
+	weaponClassToString = map[WeaponClass]string{
+		WpClassPistols:   "pistol",
+		WpClassSMG:       "smg",
+		WpClassHeavy:     "heavy",
+		WpClassRifle:     "rifle",
+		WpClassEquipment: "equipment",
+		WpClassGrenade:   "grenade",
+	}
+)
 
 func NewWeaponClass(class string) WeaponClass {
 	if c, ok := stringToWeaponClass[class]; ok {
@@ -33,4 +44,11 @@ func (c WeaponClass) Valid() bool {
 		return true
 	}
 	return false
+}
+
+func (c WeaponClass) String() string {
+	if s, ok := weaponClassToString[c]; ok {
+		return s
+	}
+	return "unknown"
 }

@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"context"
+	"strings"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
@@ -33,7 +34,7 @@ func (r *metricRepo) GetWeaponMetrics(ctx context.Context, steamID uint64, f dom
 
 	switch {
 	case f.WeaponName != "":
-		sb = sb.Where(sq.Eq{"weapon_name": f.WeaponName})
+		sb = sb.Where(sq.Eq{"weapon_name": strings.ToLower(f.WeaponName)})
 	case f.WeaponClass.Valid():
 		sb = sb.Where(sq.Eq{"weapon_class": f.WeaponClass})
 	}
@@ -43,14 +44,40 @@ func (r *metricRepo) GetWeaponMetrics(ctx context.Context, steamID uint64, f dom
 		return nil, err
 	}
 
-	r.log.Error("TEST", zap.String("SQL", sql))
-
 	rows, err := r.pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
 
 	m, err := pgx.CollectRows(rows, pgx.RowToStructByPos[dto.WeaponMetricSum])
+	if err != nil {
+		return nil, err
+	}
+
+	return m, nil
+}
+
+func (r *metricRepo) GetWeaponClassMetrics(ctx context.Context, steamID uint64, c domain.WeaponClass) ([]dto.WeaponClassMetricSum, error) {
+	sb := r.builder.
+		Select("weapon_class, metric, SUM(value)").
+		From("weapon_metric").
+		Where(sq.Eq{"player_steam_id": steamID})
+
+	if c.Valid() {
+		sb = sb.Where(sq.Eq{"weapon_class": c})
+	}
+
+	sql, args, err := sb.GroupBy("metric, weapon_class").ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := r.pool.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	m, err := pgx.CollectRows(rows, pgx.RowToStructByPos[dto.WeaponClassMetricSum])
 	if err != nil {
 		return nil, err
 	}
