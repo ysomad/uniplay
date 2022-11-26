@@ -15,7 +15,6 @@ import (
 
 	"github.com/ssssargsian/uniplay/internal/config"
 	v1 "github.com/ssssargsian/uniplay/internal/handler/v1"
-	"github.com/ssssargsian/uniplay/internal/inmemory"
 	"github.com/ssssargsian/uniplay/internal/pkg/httpserver"
 	"github.com/ssssargsian/uniplay/internal/pkg/logger"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
@@ -53,7 +52,7 @@ func Run(conf *config.Config) {
 	replayRepo := postgres.NewReplayRepo(atomicPool, pgClient.Builder)
 	playerRepo := postgres.NewPlayerRepo(atomicPool, pgClient.Builder)
 	metricRepo := postgres.NewMetricRepo(l, atomicPool, pgClient.Builder)
-	compendiumRepo := postgres.NewCompendiumRepo(l, atomicPool, pgClient.Builder, new(inmemory.WeaponCache), new(inmemory.WeaponClassCache))
+	compendiumRepo := postgres.NewCompendiumRepo(l, atomicPool, pgClient.Builder)
 
 	// services
 	replayService := service.NewReplay(l, replayRepo)

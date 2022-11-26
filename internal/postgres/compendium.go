@@ -1,109 +1,90 @@
 package postgres
 
 import (
+	"context"
+
 	sq "github.com/Masterminds/squirrel"
+	"github.com/jackc/pgx/v5"
+	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ysomad/pgxatomic"
 	"go.uber.org/zap"
-
-	"github.com/ssssargsian/uniplay/internal/inmemory"
 )
 
 type compendiumRepo struct {
 	log     *zap.Logger
 	pool    pgxatomic.Pool
 	builder sq.StatementBuilderType
-
-	weaponCache      *inmemory.WeaponCache
-	weaponClassCache *inmemory.WeaponClassCache
 }
 
-func NewCompendiumRepo(l *zap.Logger, p pgxatomic.Pool, b sq.StatementBuilderType, wc *inmemory.WeaponCache, wcs *inmemory.WeaponClassCache) *compendiumRepo {
+func NewCompendiumRepo(l *zap.Logger, p pgxatomic.Pool, b sq.StatementBuilderType) *compendiumRepo {
 	return &compendiumRepo{
-		log:              l,
-		pool:             p,
-		builder:          b,
-		weaponCache:      wc,
-		weaponClassCache: wcs,
+		log:     l,
+		pool:    p,
+		builder: b,
 	}
 }
 
-// func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
-// 	weapons := r.weaponCache.Get()
-// 	if len(weapons) != 0 {
-// 		return weapons, nil
-// 	}
+func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
+	sql, args, err := r.builder.
+		Select("w.id, w.name, wc.id, wc.name").
+		From("weapon w").
+		InnerJoin("weapon_class wc ON w.class_id = wc.id").
+		OrderBy("w.name").
+		ToSql()
+	if err != nil {
+		return nil, err
+	}
 
-// 	sql, args, err := r.builder.
-// 		Select("DISTINCT weapon_name, weapon_class").
-// 		From("weapon_metric").
-// 		OrderBy("weapon_name").
-// 		ToSql()
-// 	if err != nil {
-// 		return nil, err
-// 	}
+	rows, err := r.pool.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
 
-// 	rows, err := r.pool.Query(ctx, sql, args...)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	defer rows.Close()
+	w, err := pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Weapon])
+	if err != nil {
+		return nil, err
+	}
 
-// 	for rows.Next() {
-// 		var w domain.Weapon
+	return w, nil
+}
 
-// 		if err := rows.Scan(&w.Name, &w.ClassID); err != nil {
-// 			return nil, err
-// 		}
+func (r *compendiumRepo) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
+	// classes := r.weaponClassCache.Get()
+	// if len(classes) != 0 {
+	// 	return classes, nil
+	// }
 
-// 		w.ClassName = w.ClassID.String()
-// 		weapons = append(weapons, w)
-// 	}
+	// sql, args, err := r.builder.
+	// 	Select("weapon_class").
+	// 	From("weapon_metric").
+	// 	GroupBy("weapon_class").
+	// 	OrderBy("weapon_class").
+	// 	ToSql()
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-// 	if err := rows.Err(); err != nil {
-// 		return nil, err
-// 	}
+	// rows, err := r.pool.Query(ctx, sql, args...)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// defer rows.Close()
 
-// 	r.weaponCache.Save(weapons)
-// 	return weapons, nil
-// }
+	// for rows.Next() {
+	// 	var c domain.WeaponClass
 
-// func (r *compendiumRepo) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
-// 	classes := r.weaponClassCache.Get()
-// 	if len(classes) != 0 {
-// 		return classes, nil
-// 	}
+	// 	if err := rows.Scan(&c.ID); err != nil {
+	// 		return nil, err
+	// 	}
 
-// 	sql, args, err := r.builder.
-// 		Select("weapon_class").
-// 		From("weapon_metric").
-// 		GroupBy("weapon_class").
-// 		OrderBy("weapon_class").
-// 		ToSql()
-// 	if err != nil {
-// 		return nil, err
-// 	}
+	// 	c.Name = c.ID.String()
+	// 	classes = append(classes, c)
+	// }
 
-// 	rows, err := r.pool.Query(ctx, sql, args...)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	defer rows.Close()
+	// if err := rows.Err(); err != nil {
+	// 	return nil, err
+	// }
 
-// 	for rows.Next() {
-// 		var c domain.WeaponClass
-
-// 		if err := rows.Scan(&c.ID); err != nil {
-// 			return nil, err
-// 		}
-
-// 		c.Name = c.ID.String()
-// 		classes = append(classes, c)
-// 	}
-
-// 	if err := rows.Err(); err != nil {
-// 		return nil, err
-// 	}
-
-// 	r.weaponClassCache.Save(classes)
-// 	return classes, nil
-// }
+	// r.weaponClassCache.Save(classes)
+	return nil, nil
+}
