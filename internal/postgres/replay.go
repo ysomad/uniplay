@@ -150,7 +150,7 @@ func (r *replayRepo) SaveMetrics(ctx context.Context, metrics []dto.Metric, wmet
 	// weapon metrics
 	sb = r.builder.
 		Insert("weapon_metric").
-		Columns("match_id, player_steam_id, weapon, metric, value")
+		Columns("match_id, player_steam_id, weapon_id, metric, value")
 
 	for _, wm := range wmetrics {
 		sb = sb.Values(wm.MatchID, wm.PlayerSteamID, wm.WeaponID, wm.Metric, wm.Value)

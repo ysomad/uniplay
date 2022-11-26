@@ -24,7 +24,7 @@ paths:
       parameters:
       - name: steam_id
         in: path
-        description: uint64
+        description: steam id игрока
         required: true
         style: simple
         explode: false
@@ -61,7 +61,7 @@ paths:
       parameters:
       - name: steam_id
         in: path
-        description: uint64
+        description: steam id игрока
         required: true
         style: simple
         explode: false
@@ -133,7 +133,7 @@ paths:
       parameters:
       - name: steam_id
         in: path
-        description: uint64
+        description: steam id игрока
         required: true
         style: simple
         explode: false
@@ -162,7 +162,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
   /stats/{steam_id}/weapons:
-    post:
+    get:
       tags:
       - stat
       summary: Статистика игрока по оружию
@@ -170,7 +170,7 @@ paths:
       parameters:
       - name: steam_id
         in: path
-        description: uint64
+        description: steam id игрока
         required: true
         style: simple
         explode: false
@@ -179,8 +179,28 @@ paths:
           format: uint64
           x-go-type: uint64
           x-go-name: SteamID
-      requestBody:
-        $ref: '#/components/requestBodies/WeaponStatsRequestBody'
+      - name: weapon_id
+        in: query
+        description: фильтр по оружию
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: uint16
+          x-go-type: uint16
+          x-go-name: WeaponID
+      - name: class_id
+        in: query
+        description: фильтр по классу оружия
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: uint8
+          x-go-type: uint8
+          x-go-name: ClassID
       responses:
         "200":
           description: OK
@@ -201,7 +221,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
   /stats/{steam_id}/weapon-classes:
-    post:
+    get:
       tags:
       - stat
       summary: Статистика игрока по классу оружия
@@ -209,7 +229,7 @@ paths:
       parameters:
       - name: steam_id
         in: path
-        description: uint64
+        description: steam id игрока
         required: true
         style: simple
         explode: false
@@ -218,8 +238,17 @@ paths:
           format: uint64
           x-go-type: uint64
           x-go-name: SteamID
-      requestBody:
-        $ref: '#/components/requestBodies/WeaponClassStatsRequestBody'
+      - name: class_id
+        in: query
+        description: фильтр по классу оружия
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: uint8
+          x-go-type: uint8
+          x-go-name: ClassID
       responses:
         "200":
           description: OK
@@ -498,7 +527,7 @@ components:
           $ref: '#/components/schemas/TotalStats'
         per_round:
           $ref: '#/components/schemas/PerRoundStats'
-    WeaponStat:
+    WeaponStats:
       required:
       - assists
       - blind_kills
@@ -554,15 +583,13 @@ components:
           format: uint32
           x-go-type: uint32
     PlayerWeaponStats:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/WeaponStat'
-      description: ключ - название оружия "ak-47", "deagle" и т.д.
+      type: array
+      items:
+        $ref: '#/components/schemas/PlayerWeaponStats_inner'
     PlayerWeaponClassStats:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/WeaponStat'
-      description: ключ - название класса оружия "rifle", "pistol" и т.д.
+      type: array
+      items:
+        $ref: '#/components/schemas/PlayerWeaponClassStats_inner'
     MatchTeam:
       required:
       - clan_name
@@ -664,16 +691,22 @@ components:
           example: U3dhZ2dlciByb2Nrcw==
     WeaponStatsRequest:
       required:
-      - weapon_class
-      - weapon_name
+      - weapon_class_id
+      - weapon_id
       type: object
       properties:
-        weapon_name:
-          type: string
+        weapon_id:
+          type: integer
           description: фильтр по имени оружия
-        weapon_class:
-          type: string
+          format: uint16
+          x-go-type: uint16
+          x-go-name: WeaponID
+        weapon_class_id:
+          type: integer
           description: фильтр по классу оружия
+          format: uint8
+          x-go-type: uint8
+          x-go-name: WeaponClassID
     WeaponClassStatsRequest:
       required:
       - weapon_class
@@ -686,9 +719,15 @@ components:
       required:
       - class_id
       - class_name
+      - id
       - name
       type: object
       properties:
+        id:
+          type: integer
+          format: uint16
+          x-go-type: uint16
+          x-go-name: ID
         name:
           type: string
           description: имя оружия
@@ -724,6 +763,47 @@ components:
         name:
           type: string
           description: имя класса оружия
+    PlayerWeaponStats_inner:
+      required:
+      - class
+      - class_id
+      - stats
+      - weapon
+      - weapon_id
+      type: object
+      properties:
+        weapon_id:
+          type: integer
+          format: uint16
+          x-go-type: uint16
+          x-go-name: WeaponID
+        weapon:
+          type: string
+        class_id:
+          type: integer
+          format: uint8
+          x-go-type: uint8
+          x-go-name: WeaponClassID
+        class:
+          type: string
+        stats:
+          $ref: '#/components/schemas/WeaponStats'
+    PlayerWeaponClassStats_inner:
+      required:
+      - class
+      - class_id
+      - stats
+      type: object
+      properties:
+        class_id:
+          type: integer
+          format: uint8
+          x-go-type: uint8
+          x-go-name: ClassID
+        class:
+          type: string
+        stats:
+          $ref: '#/components/schemas/WeaponStats'
   requestBodies:
     ReplayUploadRequestBody:
       content:

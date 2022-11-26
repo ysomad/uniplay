@@ -3,6 +3,6 @@ package domain
 type Weapon struct {
 	ID        uint16
 	Name      string
-	ClassID   WeaponClassID
+	ClassID   uint8
 	ClassName string
 }

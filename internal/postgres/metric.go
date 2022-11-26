@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"context"
-	"strings"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
@@ -28,20 +27,22 @@ func NewMetricRepo(l *zap.Logger, p pgxatomic.Pool, b sq.StatementBuilderType) *
 
 func (r *metricRepo) GetWeaponMetrics(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]dto.WeaponMetricSum, error) {
 	sb := r.builder.
-		Select("weapon_name, metric, SUM(value)").
-		From("weapon_metric").
+		Select("wm.weapon_id, w.name, wc.id, wc.name, wm.metric, SUM(wm.value) as value").
+		From("weapon_metric wm").
+		InnerJoin("weapon w ON w.id = wm.weapon_id").
+		InnerJoin("weapon_class wc ON w.class_id = wc.id").
 		Where(sq.Eq{"player_steam_id": steamID})
 
 	switch {
-	case f.WeaponName != "":
-		sb = sb.Where(sq.Eq{"weapon_name": strings.ToLower(f.WeaponName)})
-	case f.WeaponClass.Valid():
-		sb = sb.Where(sq.Eq{"weapon_class": f.WeaponClass})
+	case f.WeaponID != 0:
+		sb = sb.Where(sq.Eq{"wm.weapon_id": f.WeaponID})
+	case f.WeaponClassID != 0:
+		sb = sb.Where(sq.Eq{"wc.id": f.WeaponClassID})
 	}
 
 	sql, args, err := sb.
-		GroupBy("metric, weapon_name").
-		OrderBy("weapon_name").
+		GroupBy("wm.weapon_id, w.name, wc.id, wc.name, wm.metric").
+		OrderBy("w.name").
 		ToSql()
 	if err != nil {
 		return nil, err
@@ -60,33 +61,33 @@ func (r *metricRepo) GetWeaponMetrics(ctx context.Context, steamID uint64, f dom
 	return m, nil
 }
 
-func (r *metricRepo) GetWeaponClassMetrics(ctx context.Context, steamID uint64, c domain.WeaponClassID) ([]dto.WeaponClassMetricSum, error) {
-	sb := r.builder.
-		Select("weapon_class, metric, SUM(value)").
-		From("weapon_metric").
-		Where(sq.Eq{"player_steam_id": steamID})
+// func (r *metricRepo) GetWeaponClassMetrics(ctx context.Context, steamID uint64, c domain.WeaponClassID) ([]dto.WeaponClassMetricSum, error) {
+// 	sb := r.builder.
+// 		Select("weapon_class, metric, SUM(value)").
+// 		From("weapon_metric").
+// 		Where(sq.Eq{"player_steam_id": steamID})
 
-	if c.Valid() {
-		sb = sb.Where(sq.Eq{"weapon_class": c})
-	}
+// 	if c.Valid() {
+// 		sb = sb.Where(sq.Eq{"weapon_class": c})
+// 	}
 
-	sql, args, err := sb.
-		GroupBy("metric, weapon_class").
-		OrderBy("weapon_class").
-		ToSql()
-	if err != nil {
-		return nil, err
-	}
+// 	sql, args, err := sb.
+// 		GroupBy("metric, weapon_class").
+// 		OrderBy("weapon_class").
+// 		ToSql()
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	rows, err := r.pool.Query(ctx, sql, args...)
-	if err != nil {
-		return nil, err
-	}
+// 	rows, err := r.pool.Query(ctx, sql, args...)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	m, err := pgx.CollectRows(rows, pgx.RowToStructByPos[dto.WeaponClassMetricSum])
-	if err != nil {
-		return nil, err
-	}
+// 	m, err := pgx.CollectRows(rows, pgx.RowToStructByPos[dto.WeaponClassMetricSum])
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	return m, nil
-}
+// 	return m, nil
+// }

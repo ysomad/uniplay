@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS weapon (
 CREATE TABLE IF NOT EXISTS weapon_metric (
     match_id uuid NOT NULL REFERENCES match (id),
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
-    weapon smallint NOT NULL REFERENCES weapon (id),
+    weapon_id smallint NOT NULL REFERENCES weapon (id),
     metric smallint NOT NULL,
     value integer NOT NULL
 );
