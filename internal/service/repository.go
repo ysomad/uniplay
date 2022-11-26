@@ -25,6 +25,6 @@ type metricRepository interface {
 }
 
 type compendiumRepository interface {
-	// GetWeaponList(ctx context.Context) ([]domain.Weapon, error)
-	// GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
+	GetWeaponList(context.Context) ([]domain.Weapon, error)
+	GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
 }

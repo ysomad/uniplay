@@ -4,8 +4,6 @@ import (
 	"net/http"
 
 	"go.uber.org/zap"
-
-	v1 "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
 )
 
 func (h *handler) GetWeaponClassCompendium(w http.ResponseWriter, r *http.Request) {
@@ -16,13 +14,5 @@ func (h *handler) GetWeaponClassCompendium(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	res := make(v1.WeaponClassList, len(wc))
-	for i, c := range wc {
-		res[i] = v1.WeaponClass{
-			ID:   uint8(c.ID),
-			Name: c.Name,
-		}
-	}
-
-	writeBody(w, http.StatusOK, res)
+	writeBody(w, http.StatusOK, wc)
 }

@@ -181,7 +181,7 @@ paths:
           x-go-name: SteamID
       - name: weapon_id
         in: query
-        description: фильтр по оружию
+        description: фильтр по оружию, по умолчанию передавать 0
         required: true
         style: form
         explode: true
@@ -192,7 +192,7 @@ paths:
           x-go-name: WeaponID
       - name: class_id
         in: query
-        description: фильтр по классу оружия
+        description: фильтр по классу оружия, по умолчанию передавать 0
         required: true
         style: form
         explode: true
@@ -240,7 +240,7 @@ paths:
           x-go-name: SteamID
       - name: class_id
         in: query
-        description: фильтр по классу оружия
+        description: фильтр по классу оружия, по умолчанию передавать 0
         required: true
         style: form
         explode: true
@@ -717,18 +717,18 @@ components:
           description: фильтр по классу оружия
     Weapon:
       required:
+      - class
       - class_id
-      - class_name
-      - id
-      - name
+      - weapon
+      - weapon_id
       type: object
       properties:
-        id:
+        weapon_id:
           type: integer
           format: uint16
           x-go-type: uint16
-          x-go-name: ID
-        name:
+          x-go-name: WeaponID
+        weapon:
           type: string
           description: имя оружия
         class_id:
@@ -737,7 +737,7 @@ components:
           format: uint8
           x-go-type: uint8
           x-go-name: ClassID
-        class_name:
+        class:
           type: string
           description: имя класса оружия
     WeaponList:
@@ -750,8 +750,8 @@ components:
         $ref: '#/components/schemas/WeaponClass'
     WeaponClass:
       required:
+      - class
       - id
-      - name
       type: object
       properties:
         id:
@@ -760,7 +760,7 @@ components:
           format: uint8
           x-go-type: uint8
           x-go-name: ID
-        name:
+        class:
           type: string
           description: имя класса оружия
     PlayerWeaponStats_inner:
