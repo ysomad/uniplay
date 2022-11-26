@@ -10,8 +10,8 @@ import (
 )
 
 type weaponMetric struct {
-	weaponName  string
-	weaponClass common.EquipmentClass
+	eqType  common.EquipmentType
+	eqClass common.EquipmentClass
 }
 
 type weaponMetrics struct {
@@ -57,15 +57,14 @@ func (p *weaponMetrics) toDTO(matchID domain.MatchID) ([]dto.WeaponMetric, error
 	for steamID, wmetrics := range p.metrics {
 		for wm, metrics := range wmetrics {
 			for m, v := range metrics {
-				if wm.weaponClass == common.EqClassUnknown {
+				if wm.eqClass == common.EqClassUnknown {
 					continue
 				}
 
 				out = append(out, dto.WeaponMetric{
 					MatchID:       matchID,
 					PlayerSteamID: uint64(steamID),
-					WeaponName:    wm.weaponName,
-					WeaponClass:   domain.WeaponClassID(wm.weaponClass),
+					WeaponID:      uint16(wm.eqType),
 					Metric:        m,
 					Value:         int32(v),
 				})

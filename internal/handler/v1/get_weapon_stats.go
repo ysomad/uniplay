@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -9,16 +8,10 @@ import (
 	v1 "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
 )
 
-func (h *handler) GetWeaponStats(w http.ResponseWriter, r *http.Request, steamID uint64) {
-	var rbody v1.WeaponStatsRequest
-	if err := json.NewDecoder(r.Body).Decode(&rbody); err != nil {
-		writeError(w, http.StatusBadRequest, err)
-		return
-	}
-
+func (h *handler) GetWeaponStats(w http.ResponseWriter, r *http.Request, steamID uint64, params v1.GetWeaponStatsParams) {
 	s, err := h.statistic.GetWeaponStats(r.Context(), steamID, domain.WeaponStatsFilter{
-		WeaponName:  rbody.WeaponName,
-		WeaponClass: domain.NewWeaponClass(rbody.WeaponClass),
+		WeaponID:      params.WeaponId,
+		WeaponClassID: params.ClassId,
 	})
 	if err != nil {
 		h.log.Error("http - v1 - handler.GetWeaponStats")

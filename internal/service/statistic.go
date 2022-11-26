@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"sort"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"go.uber.org/zap"
@@ -19,34 +20,44 @@ func NewStatistic(l *zap.Logger, r metricRepository) *statistic {
 	}
 }
 
-func (s *statistic) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) (domain.WeaponStats, error) {
-	metrics, err := s.metricRepo.GetWeaponMetrics(ctx, steamID, f)
+func (s *statistic) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
+	rawMetrics, err := s.metricRepo.GetWeaponMetrics(ctx, steamID, f)
 	if err != nil {
 		return nil, err
 	}
-
-	if len(metrics) == 0 {
+	if len(rawMetrics) == 0 {
 		return nil, domain.ErrWeaponStatsNotFound
 	}
 
-	// TODO: refactor
-	stats := make(domain.WeaponStats)
-	for _, m := range metrics {
-		if _, ok := stats[m.WeaponName]; !ok {
-			stats[m.WeaponName] = new(domain.WeaponStat)
+	var out []domain.WeaponStats
+
+	for _, m := range rawMetrics {
+		i := sort.Search(len(out), func(i int) bool {
+			return out[i].Weapon == m.Weapon
+		})
+
+		if i < len(out) && out[i].Weapon == m.Weapon {
+			out[i].Stats.SetStat(m.Metric, m.Value)
+			continue
 		}
 
-		ws, ok := stats[m.WeaponName]
-		if ok {
-			ws.SetStat(m.Metric, m.Value)
-		}
+		s := new(domain.WeaponStat)
+		s.SetStat(m.Metric, m.Value)
+
+		out = append(out, domain.WeaponStats{
+			WeaponID: m.WeaponID,
+			Weapon:   m.Weapon,
+			ClassID:  m.ClassID,
+			Class:    m.Class,
+			Stats:    s,
+		})
 	}
 
-	return stats, nil
+	return out, nil
 }
 
-func (s *statistic) GetWeaponClassStats(ctx context.Context, steamID uint64, c domain.WeaponClassID) (domain.WeaponClassStats, error) {
-	metrics, err := s.metricRepo.GetWeaponClassMetrics(ctx, steamID, c)
+func (s *statistic) GetWeaponClassStats(ctx context.Context, steamID uint64, classID uint8) ([]domain.WeaponClassStats, error) {
+	metrics, err := s.metricRepo.GetWeaponClassMetrics(ctx, steamID, classID)
 	if err != nil {
 		return nil, err
 	}
@@ -55,19 +66,28 @@ func (s *statistic) GetWeaponClassStats(ctx context.Context, steamID uint64, c d
 		return nil, domain.ErrWeaponClassStatsNotFound
 	}
 
-	// TODO: refactor
-	stats := make(domain.WeaponClassStats)
+	var out []domain.WeaponClassStats
+
 	for _, m := range metrics {
-		wc := m.WeaponClass.String()
-		if _, ok := stats[wc]; !ok {
-			stats[wc] = new(domain.WeaponStat)
+		i := sort.Search(len(out), func(i int) bool {
+			return out[i].Class == m.Class
+		})
+
+		if i < len(out) && out[i].Class == m.Class {
+			out[i].Stats.SetStat(m.Metric, m.Value)
+			continue
 		}
 
-		ws, ok := stats[wc]
-		if ok {
-			ws.SetStat(m.Metric, m.Value)
-		}
+		s := new(domain.WeaponStat)
+		s.SetStat(m.Metric, m.Value)
+
+		out = append(out, domain.WeaponClassStats{
+			ClassID: m.ClassID,
+			Class:   m.Class,
+			Stats:   s,
+		})
+
 	}
 
-	return stats, nil
+	return out, nil
 }

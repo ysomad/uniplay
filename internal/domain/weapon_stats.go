@@ -1,5 +1,13 @@
 package domain
 
+type WeaponStats struct {
+	WeaponID uint16      `json:"weapon_id"`
+	Weapon   string      `json:"weapon"`
+	ClassID  uint8       `json:"class_id"`
+	Class    string      `json:"class"`
+	Stats    *WeaponStat `json:"stats"`
+}
+
 // WeaponStat is a set of weapon statistics calculated from sum of metrics.
 // Each field corresponds to specific weapon metric.
 type WeaponStat struct {
@@ -41,10 +49,13 @@ func (s *WeaponStat) SetStat(m Metric, v uint32) {
 	}
 }
 
-type WeaponStats map[string]*WeaponStat
-type WeaponClassStats map[string]*WeaponStat
-
 type WeaponStatsFilter struct {
-	WeaponName  string
-	WeaponClass WeaponClassID
+	WeaponID      uint16
+	WeaponClassID uint8
+}
+
+type WeaponClassStats struct {
+	ClassID uint8       `json:"class_id"`
+	Class   string      `json:"class"`
+	Stats   *WeaponStat `json:"stats"`
 }

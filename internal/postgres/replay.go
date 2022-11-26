@@ -83,8 +83,6 @@ func (r *replayRepo) SaveTeams(ctx context.Context, t dto.Teams) error {
 }
 
 func (r *replayRepo) AddPlayersToTeams(ctx context.Context, players []dto.TeamPlayer) error {
-	// TODO: предовратить добавление игрока в одну и ту же команду
-
 	sb := r.builder.
 		Insert("team_player").
 		Columns("team_name, player_steam_id")
@@ -152,10 +150,10 @@ func (r *replayRepo) SaveMetrics(ctx context.Context, metrics []dto.Metric, wmet
 	// weapon metrics
 	sb = r.builder.
 		Insert("weapon_metric").
-		Columns("match_id, player_steam_id, weapon_name, weapon_class, metric, value")
+		Columns("match_id, player_steam_id, weapon_id, metric, value")
 
 	for _, wm := range wmetrics {
-		sb = sb.Values(wm.MatchID, wm.PlayerSteamID, wm.WeaponName, wm.WeaponClass, wm.Metric, wm.Value)
+		sb = sb.Values(wm.MatchID, wm.PlayerSteamID, wm.WeaponID, wm.Metric, wm.Value)
 	}
 
 	sql, args, err = sb.ToSql()

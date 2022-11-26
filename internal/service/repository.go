@@ -21,10 +21,10 @@ type playerRepository interface {
 
 type metricRepository interface {
 	GetWeaponMetrics(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]dto.WeaponMetricSum, error)
-	GetWeaponClassMetrics(ctx context.Context, steamID uint64, c domain.WeaponClassID) ([]dto.WeaponClassMetricSum, error)
+	GetWeaponClassMetrics(ctx context.Context, steamID uint64, classID uint8) ([]dto.WeaponClassMetricSum, error)
 }
 
 type compendiumRepository interface {
-	GetWeaponList(ctx context.Context) ([]domain.Weapon, error)
-	GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
+	// GetWeaponList(ctx context.Context) ([]domain.Weapon, error)
+	// GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
 }

@@ -129,11 +129,27 @@ type PlayerStats struct {
 	Total TotalStats `json:"total"`
 }
 
-// PlayerWeaponClassStats ключ - название класса оружия "rifle", "pistol" и т.д.
-type PlayerWeaponClassStats map[string]WeaponStat
+// PlayerWeaponClassStats defines model for PlayerWeaponClassStats.
+type PlayerWeaponClassStats = []PlayerWeaponClassStatsInner
 
-// PlayerWeaponStats ключ - название оружия "ak-47", "deagle" и т.д.
-type PlayerWeaponStats map[string]WeaponStat
+// PlayerWeaponClassStatsInner defines model for PlayerWeaponClassStats_inner.
+type PlayerWeaponClassStatsInner struct {
+	Class   string      `json:"class"`
+	ClassID uint8       `json:"class_id"`
+	Stats   WeaponStats `json:"stats"`
+}
+
+// PlayerWeaponStats defines model for PlayerWeaponStats.
+type PlayerWeaponStats = []PlayerWeaponStatsInner
+
+// PlayerWeaponStatsInner defines model for PlayerWeaponStats_inner.
+type PlayerWeaponStatsInner struct {
+	Class         string      `json:"class"`
+	WeaponClassID uint8       `json:"class_id"`
+	Stats         WeaponStats `json:"stats"`
+	Weapon        string      `json:"weapon"`
+	WeaponID      uint16      `json:"weapon_id"`
+}
 
 // SortOrder defines model for SortOrder.
 type SortOrder string
@@ -169,6 +185,7 @@ type Weapon struct {
 
 	// ClassName имя класса оружия
 	ClassName string `json:"class_name"`
+	ID        uint16 `json:"id"`
 
 	// Name имя оружия
 	Name string `json:"name"`
@@ -186,17 +203,11 @@ type WeaponClass struct {
 // WeaponClassList defines model for WeaponClassList.
 type WeaponClassList = []WeaponClass
 
-// WeaponClassStatsRequest defines model for WeaponClassStatsRequest.
-type WeaponClassStatsRequest struct {
-	// WeaponClass фильтр по классу оружия
-	WeaponClass string `json:"weapon_class"`
-}
-
 // WeaponList defines model for WeaponList.
 type WeaponList = []Weapon
 
-// WeaponStat defines model for WeaponStat.
-type WeaponStat struct {
+// WeaponStats defines model for WeaponStats.
+type WeaponStats struct {
 	Assists           uint32 `json:"assists"`
 	BlindKills        uint32 `json:"blind_kills"`
 	DamageDealt       uint32 `json:"damage_dealt"`
@@ -209,23 +220,8 @@ type WeaponStat struct {
 	WallbangKills     uint32 `json:"wallbang_kills"`
 }
 
-// WeaponStatsRequest defines model for WeaponStatsRequest.
-type WeaponStatsRequest struct {
-	// WeaponClass фильтр по классу оружия
-	WeaponClass string `json:"weapon_class"`
-
-	// WeaponName фильтр по имени оружия
-	WeaponName string `json:"weapon_name"`
-}
-
 // PlayerMatchListRequestBody defines model for PlayerMatchListRequestBody.
 type PlayerMatchListRequestBody = PlayerMatchListRequest
-
-// WeaponClassStatsRequestBody defines model for WeaponClassStatsRequestBody.
-type WeaponClassStatsRequestBody = WeaponClassStatsRequest
-
-// WeaponStatsRequestBody defines model for WeaponStatsRequestBody.
-type WeaponStatsRequestBody = WeaponStatsRequest
 
 // UploadReplayMultipartBody defines parameters for UploadReplay.
 type UploadReplayMultipartBody struct {
@@ -233,17 +229,26 @@ type UploadReplayMultipartBody struct {
 	Replay *openapi_types.File `json:"replay,omitempty"`
 }
 
+// GetWeaponClassStatsParams defines parameters for GetWeaponClassStats.
+type GetWeaponClassStatsParams struct {
+	// ClassId фильтр по классу оружия
+	ClassId uint8 `form:"class_id" json:"class_id"`
+}
+
+// GetWeaponStatsParams defines parameters for GetWeaponStats.
+type GetWeaponStatsParams struct {
+	// WeaponId фильтр по оружию
+	WeaponId uint16 `form:"weapon_id" json:"weapon_id"`
+
+	// ClassId фильтр по классу оружия
+	ClassId uint8 `form:"class_id" json:"class_id"`
+}
+
 // GetPlayerMatchesJSONRequestBody defines body for GetPlayerMatches for application/json ContentType.
 type GetPlayerMatchesJSONRequestBody = PlayerMatchListRequest
 
 // UploadReplayMultipartRequestBody defines body for UploadReplay for multipart/form-data ContentType.
 type UploadReplayMultipartRequestBody UploadReplayMultipartBody
-
-// GetWeaponClassStatsJSONRequestBody defines body for GetWeaponClassStats for application/json ContentType.
-type GetWeaponClassStatsJSONRequestBody = WeaponClassStatsRequest
-
-// GetWeaponStatsJSONRequestBody defines body for GetWeaponStats for application/json ContentType.
-type GetWeaponStatsJSONRequestBody = WeaponStatsRequest
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
@@ -260,11 +265,11 @@ type ServerInterface interface {
 	// (GET /stats/{steam_id})
 	GetPlayerStats(w http.ResponseWriter, r *http.Request, steamId uint64)
 	// Статистика игрока по классу оружия
-	// (POST /stats/{steam_id}/weapon-classes)
-	GetWeaponClassStats(w http.ResponseWriter, r *http.Request, steamId uint64)
+	// (GET /stats/{steam_id}/weapon-classes)
+	GetWeaponClassStats(w http.ResponseWriter, r *http.Request, steamId uint64, params GetWeaponClassStatsParams)
 	// Статистика игрока по оружию
-	// (POST /stats/{steam_id}/weapons)
-	GetWeaponStats(w http.ResponseWriter, r *http.Request, steamId uint64)
+	// (GET /stats/{steam_id}/weapons)
+	GetWeaponStats(w http.ResponseWriter, r *http.Request, steamId uint64, params GetWeaponStatsParams)
 	// Справочник классов оружий
 	// (GET /сompendiums/weapon-classes)
 	GetWeaponClassCompendium(w http.ResponseWriter, r *http.Request)
@@ -390,8 +395,26 @@ func (siw *ServerInterfaceWrapper) GetWeaponClassStats(w http.ResponseWriter, r 
 		return
 	}
 
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetWeaponClassStatsParams
+
+	// ------------- Required query parameter "class_id" -------------
+
+	if paramValue := r.URL.Query().Get("class_id"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "class_id"})
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "class_id", r.URL.Query(), &params.ClassId)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "class_id", Err: err})
+		return
+	}
+
 	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetWeaponClassStats(w, r, steamId)
+		siw.Handler.GetWeaponClassStats(w, r, steamId, params)
 	})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -416,8 +439,41 @@ func (siw *ServerInterfaceWrapper) GetWeaponStats(w http.ResponseWriter, r *http
 		return
 	}
 
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetWeaponStatsParams
+
+	// ------------- Required query parameter "weapon_id" -------------
+
+	if paramValue := r.URL.Query().Get("weapon_id"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "weapon_id"})
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "weapon_id", r.URL.Query(), &params.WeaponId)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "weapon_id", Err: err})
+		return
+	}
+
+	// ------------- Required query parameter "class_id" -------------
+
+	if paramValue := r.URL.Query().Get("class_id"); paramValue != "" {
+
+	} else {
+		siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "class_id"})
+		return
+	}
+
+	err = runtime.BindQueryParameter("form", true, true, "class_id", r.URL.Query(), &params.ClassId)
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "class_id", Err: err})
+		return
+	}
+
 	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetWeaponStats(w, r, steamId)
+		siw.Handler.GetWeaponStats(w, r, steamId, params)
 	})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -583,10 +639,10 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/stats/{steam_id}", wrapper.GetPlayerStats)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/stats/{steam_id}/weapon-classes", wrapper.GetWeaponClassStats)
+		r.Get(options.BaseURL+"/stats/{steam_id}/weapon-classes", wrapper.GetWeaponClassStats)
 	})
 	r.Group(func(r chi.Router) {
-		r.Post(options.BaseURL+"/stats/{steam_id}/weapons", wrapper.GetWeaponStats)
+		r.Get(options.BaseURL+"/stats/{steam_id}/weapons", wrapper.GetWeaponStats)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/сompendiums/weapon-classes", wrapper.GetWeaponClassCompendium)
