@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS team (
     name varchar(64) PRIMARY KEY NOT NULL,
     flag_code char(2) NOT NULL,
@@ -44,11 +46,23 @@ CREATE TABLE IF NOT EXISTS metric (
     value integer NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS weapon_class (
+    id smallint PRIMARY KEY NOT NULL,
+    name varchar(16) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS weapon (
+    id smallint PRIMARY KEY NOT NULL,
+    name varchar(32) UNIQUE NOT NULL,
+    class_id smallint NOT NULL REFERENCES weapon_class (id)
+);
+
 CREATE TABLE IF NOT EXISTS weapon_metric (
     match_id uuid NOT NULL REFERENCES match (id),
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
-    weapon_name varchar(64) NOT NULL,
-    weapon_class smallint NOT NULL,
+    weapon smallint NOT NULL REFERENCES weapon (id),
     metric smallint NOT NULL,
     value integer NOT NULL
 );
+
+COMMIT;

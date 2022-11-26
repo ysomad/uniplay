@@ -23,6 +23,7 @@ func NewReplay(l *zap.Logger, r replayRepository) *replay {
 	}
 }
 
+// TODO: refactor with goroutines
 func (r *replay) CollectStats(ctx context.Context, filename string) (*dto.Match, error) {
 	replay, err := os.Open(filename)
 	if err != nil {
@@ -89,8 +90,6 @@ func (r *replay) CollectStats(ctx context.Context, filename string) (*dto.Match,
 	if err != nil {
 		return nil, err
 	}
-
-	// r.log.Error("WM", zap.Any("WM", wmetricList))
 
 	if err = r.repo.SaveMetrics(ctx, metricList, wmetricList); err != nil {
 		return nil, err

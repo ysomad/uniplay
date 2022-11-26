@@ -18,7 +18,7 @@ func (h *handler) GetWeaponStats(w http.ResponseWriter, r *http.Request, steamID
 
 	s, err := h.statistic.GetWeaponStats(r.Context(), steamID, domain.WeaponStatsFilter{
 		WeaponName:  rbody.WeaponName,
-		WeaponClass: domain.NewWeaponClass(rbody.WeaponClass),
+		WeaponClass: domain.NewWeaponClassID(rbody.WeaponClass),
 	})
 	if err != nil {
 		h.log.Error("http - v1 - handler.GetWeaponStats")
