@@ -259,6 +259,14 @@ func (p *parser) handleKills(e events.Kill) {
 		if e.AssistedFlash {
 			p.metrics.incr(e.Assister.SteamID64, domain.MetricFlashbangAssist)
 		}
+
+		// assist with weapon
+		if e.Weapon != nil {
+			p.weaponMetrics.incr(e.Assister.SteamID64, weaponMetric{
+				eqType:  e.Weapon.Type,
+				eqClass: e.Weapon.Class(),
+			}, domain.MetricAssist)
+		}
 	}
 }
 
