@@ -53,3 +53,9 @@ type WeaponStatsFilter struct {
 	WeaponID      uint16
 	WeaponClassID uint8
 }
+
+type WeaponClassStats struct {
+	ClassID uint8       `json:"class_id"`
+	Class   string      `json:"class"`
+	Stats   *WeaponStat `json:"stats"`
+}

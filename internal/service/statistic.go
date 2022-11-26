@@ -56,29 +56,38 @@ func (s *statistic) GetWeaponStats(ctx context.Context, steamID uint64, f domain
 	return out, nil
 }
 
-// func (s *statistic) GetWeaponClassStats(ctx context.Context, steamID uint64, c domain.WeaponClassID) (domain.WeaponClassStats, error) {
-// metrics, err := s.metricRepo.GetWeaponClassMetrics(ctx, steamID, c)
-// if err != nil {
-// 	return nil, err
-// }
+func (s *statistic) GetWeaponClassStats(ctx context.Context, steamID uint64, classID uint8) ([]domain.WeaponClassStats, error) {
+	metrics, err := s.metricRepo.GetWeaponClassMetrics(ctx, steamID, classID)
+	if err != nil {
+		return nil, err
+	}
 
-// if len(metrics) == 0 {
-// 	return nil, domain.ErrWeaponClassStatsNotFound
-// }
+	if len(metrics) == 0 {
+		return nil, domain.ErrWeaponClassStatsNotFound
+	}
 
-// // TODO: refactor
-// stats := make(domain.WeaponClassStats)
-// for _, m := range metrics {
-// 	wc := m.WeaponClassID.String()
-// 	if _, ok := stats[wc]; !ok {
-// 		stats[wc] = new(domain.WeaponStat)
-// 	}
+	var out []domain.WeaponClassStats
 
-// 	ws, ok := stats[wc]
-// 	if ok {
-// 		ws.SetStat(m.Metric, m.Value)
-// 	}
-// }
+	for _, m := range metrics {
+		i := sort.Search(len(out), func(i int) bool {
+			return out[i].Class == m.Class
+		})
 
-// return stats, nil
-// }
+		if i < len(out) && out[i].Class == m.Class {
+			out[i].Stats.SetStat(m.Metric, m.Value)
+			continue
+		}
+
+		s := new(domain.WeaponStat)
+		s.SetStat(m.Metric, m.Value)
+
+		out = append(out, domain.WeaponClassStats{
+			ClassID: m.ClassID,
+			Class:   m.Class,
+			Stats:   s,
+		})
+
+	}
+
+	return out, nil
+}
