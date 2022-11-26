@@ -11,7 +11,7 @@ type WeaponCache struct {
 	weapons []domain.Weapon
 }
 
-func (c *WeaponCache) Set(l []domain.Weapon) {
+func (c *WeaponCache) Save(l []domain.Weapon) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	c.weapons = l

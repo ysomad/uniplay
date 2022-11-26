@@ -177,7 +177,7 @@ type Weapon struct {
 // WeaponClass defines model for WeaponClass.
 type WeaponClass struct {
 	// Id класс оружия в формате uint8, в котором хранится в базе
-	Id uint8 `json:"id"`
+	ID uint8 `json:"id"`
 
 	// Name имя класса оружия
 	Name string `json:"name"`

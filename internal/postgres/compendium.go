@@ -66,10 +66,47 @@ func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, er
 		return nil, err
 	}
 
-	r.weaponCache.Set(weapons)
+	r.weaponCache.Save(weapons)
 	return weapons, nil
 }
 
-func (r *compendiumRepo) GetWeaponClassList(context.Context) ([]domain.WeaponClass, error) {
-	return nil, nil
+func (r *compendiumRepo) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
+	classes := r.weaponClassCache.Get()
+	if len(classes) != 0 {
+		return classes, nil
+	}
+
+	sql, args, err := r.builder.
+		Select("weapon_class").
+		From("weapon_metric").
+		GroupBy("weapon_class").
+		OrderBy("weapon_class").
+		ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := r.pool.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var c domain.WeaponClass
+
+		if err := rows.Scan(&c.ID); err != nil {
+			return nil, err
+		}
+
+		c.Name = c.ID.String()
+		classes = append(classes, c)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	r.weaponClassCache.Save(classes)
+	return classes, nil
 }
