@@ -15,6 +15,7 @@ import (
 
 	"github.com/ssssargsian/uniplay/internal/config"
 	v1 "github.com/ssssargsian/uniplay/internal/handler/v1"
+	"github.com/ssssargsian/uniplay/internal/inmemory"
 	"github.com/ssssargsian/uniplay/internal/pkg/httpserver"
 	"github.com/ssssargsian/uniplay/internal/pkg/logger"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
@@ -52,43 +53,19 @@ func Run(conf *config.Config) {
 	replayRepo := postgres.NewReplayRepo(atomicPool, pgClient.Builder)
 	playerRepo := postgres.NewPlayerRepo(atomicPool, pgClient.Builder)
 	metricRepo := postgres.NewMetricRepo(l, atomicPool, pgClient.Builder)
+	compendiumRepo := postgres.NewCompendiumRepo(l, atomicPool, pgClient.Builder, new(inmemory.WeaponCache), new(inmemory.WeaponClassCache))
 
 	// services
 	replayService := service.NewReplay(l, replayRepo)
 	playerService := service.NewPlayer(playerRepo)
 	statisticService := service.NewStatistic(l, metricRepo)
-
-	// test all
-	// replayFiles, err := os.ReadDir("./test-data/")
-	// if err != nil {
-	// 	l.Fatal("os.ReadDir", zap.Error(err))
-	// }
-
-	// for _, file := range replayFiles {
-	// 	if file.Name() == ".DS_Store" {
-	// 		continue
-	// 	}
-
-	// 	replayFile, err := os.Open("./test-data/" + file.Name())
-	// 	if err != nil {
-	// 		l.Fatal("open file error", zap.Error(err))
-	// 	}
-	// 	defer replayFile.Close()
-
-	// 	err = atomicRunner.Run(context.Background(), func(txCtx context.Context) error {
-	// 		_, err = replayService.CollectStats(txCtx, replayFile)
-	// 		return err
-	// 	})
-	// 	if err != nil {
-	// 		l.Fatal("demo collect error", zap.Error(err), zap.String("filename", file.Name()))
-	// 	}
-	// }
+	compendiumService := service.NewCompendium(compendiumRepo)
 
 	// init handlers
 	mux := chi.NewMux()
 	mux.Use(middleware.Logger, middleware.Recoverer)
 
-	handlerV1 := v1.NewHandler(l, atomicRunner, replayService, playerService, statisticService)
+	handlerV1 := v1.NewHandler(l, atomicRunner, replayService, playerService, statisticService, compendiumService)
 	v1gen.HandlerFromMuxWithBaseURL(handlerV1, mux, "/v1")
 
 	runHTTPServer(mux, l, conf.HTTP.Port)

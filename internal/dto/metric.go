@@ -9,7 +9,7 @@ type WeaponMetricSum struct {
 }
 
 type WeaponClassMetricSum struct {
-	WeaponClass domain.WeaponClass
+	WeaponClass domain.WeaponClassID
 	Metric      domain.Metric
 	Value       uint32
 }

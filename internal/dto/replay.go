@@ -52,7 +52,7 @@ type WeaponMetric struct {
 	MatchID       domain.MatchID
 	PlayerSteamID uint64
 	WeaponName    string
-	WeaponClass   domain.WeaponClass
+	WeaponClass   domain.WeaponClassID
 	Metric        domain.Metric
 	Value         int32
 }

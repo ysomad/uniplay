@@ -60,7 +60,7 @@ func (r *metricRepo) GetWeaponMetrics(ctx context.Context, steamID uint64, f dom
 	return m, nil
 }
 
-func (r *metricRepo) GetWeaponClassMetrics(ctx context.Context, steamID uint64, c domain.WeaponClass) ([]dto.WeaponClassMetricSum, error) {
+func (r *metricRepo) GetWeaponClassMetrics(ctx context.Context, steamID uint64, c domain.WeaponClassID) ([]dto.WeaponClassMetricSum, error) {
 	sb := r.builder.
 		Select("weapon_class, metric, SUM(value)").
 		From("weapon_metric").

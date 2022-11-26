@@ -45,7 +45,7 @@ func (s *statistic) GetWeaponStats(ctx context.Context, steamID uint64, f domain
 	return stats, nil
 }
 
-func (s *statistic) GetWeaponClassStats(ctx context.Context, steamID uint64, c domain.WeaponClass) (domain.WeaponClassStats, error) {
+func (s *statistic) GetWeaponClassStats(ctx context.Context, steamID uint64, c domain.WeaponClassID) (domain.WeaponClassStats, error) {
 	metrics, err := s.metricRepo.GetWeaponClassMetrics(ctx, steamID, c)
 	if err != nil {
 		return nil, err
