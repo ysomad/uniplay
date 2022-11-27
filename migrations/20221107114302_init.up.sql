@@ -50,8 +50,8 @@ CREATE TABLE IF NOT EXISTS match_player(
     match_state match_player_state NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS metric (
-    match_id uuid NOT NULL REFERENCES match (id),
+CREATE TABLE IF NOT EXISTS player_statistic (
+    id uuid PRIMARY KEY NOT NULL,
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
     metric smallint NOT NULL,
     value integer NOT NULL
@@ -59,17 +59,17 @@ CREATE TABLE IF NOT EXISTS metric (
 
 CREATE TABLE IF NOT EXISTS weapon_class (
     id smallint PRIMARY KEY NOT NULL,
-    name varchar(32) UNIQUE NOT NULL
+    class varchar(32) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS weapon (
     id smallint PRIMARY KEY NOT NULL,
-    name varchar(32) UNIQUE NOT NULL,
+    weapon varchar(32) UNIQUE NOT NULL,
     class_id smallint NOT NULL REFERENCES weapon_class (id)
 );
 
-CREATE TABLE IF NOT EXISTS weapon_metric (
-    match_id uuid NOT NULL REFERENCES match (id),
+CREATE TABLE IF NOT EXISTS weapon_statistic (
+    id uuid PRIMARY KEY NOT NULL,
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
     weapon_id smallint NOT NULL REFERENCES weapon (id),
     metric smallint NOT NULL,

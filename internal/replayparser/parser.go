@@ -19,8 +19,8 @@ type parser struct {
 
 	log *zap.Logger
 
-	metrics       *playerMetrics
-	weaponMetrics *weaponMetrics
+	metrics       *playerStats
+	weaponMetrics *weaponStats
 	match         *match
 }
 
@@ -28,13 +28,13 @@ func New(r io.Reader, l *zap.Logger) *parser {
 	return &parser{
 		demoinfocs.NewParser(r),
 		l,
-		newPlayerMetrics(),
-		newWeaponMetrics(),
+		newPlayerStats(),
+		newWeaponStats(),
 		&match{},
 	}
 }
 
-func (p *parser) Parse() (parseResult, error) {
+func (p *parser) Parse() (replayStats, error) {
 	p.RegisterEventHandler(func(_ events.RoundFreezetimeEnd) {
 		p.detectKnifeRound()
 	})
@@ -126,13 +126,13 @@ func (p *parser) Parse() (parseResult, error) {
 	})
 
 	if err := p.ParseToEnd(); err != nil {
-		return parseResult{}, err
+		return replayStats{}, err
 	}
 
-	return parseResult{
-		metrics:       p.metrics,
-		weaponMetrics: p.weaponMetrics,
-		match:         p.match,
+	return replayStats{
+		ps: p.metrics,
+		ws: p.weaponMetrics,
+		m:  p.match,
 	}, nil
 }
 

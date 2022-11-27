@@ -1,6 +1,6 @@
 BEGIN;
 
-INSERT INTO weapon_class(id, name)
+INSERT INTO weapon_class(id, class)
 VALUES 
     (1, 'Пистолеты'),
     (2, 'Пистолеты-пулеметы'),
@@ -12,7 +12,7 @@ VALUES
     (8, 'Другое'),
     (9, 'Гранаты');
 
-INSERT INTO weapon(id, name, class_id)
+INSERT INTO weapon(id, weapon, class_id)
 VALUES
     (1, 'P2000', 1),
     (2, 'Glock', 1),

@@ -9,19 +9,19 @@ import (
 )
 
 type statistic struct {
-	log        *zap.Logger
-	metricRepo metricRepository
+	log  *zap.Logger
+	repo statisticRepository
 }
 
-func NewStatistic(l *zap.Logger, r metricRepository) *statistic {
+func NewStatistic(l *zap.Logger, r statisticRepository) *statistic {
 	return &statistic{
-		log:        l,
-		metricRepo: r,
+		log:  l,
+		repo: r,
 	}
 }
 
 func (s *statistic) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
-	rawMetrics, err := s.metricRepo.GetWeaponMetrics(ctx, steamID, f)
+	rawMetrics, err := s.repo.GetWeaponStats(ctx, steamID, f)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (s *statistic) GetWeaponStats(ctx context.Context, steamID uint64, f domain
 }
 
 func (s *statistic) GetWeaponClassStats(ctx context.Context, steamID uint64, classID uint8) ([]domain.WeaponClassStats, error) {
-	metrics, err := s.metricRepo.GetWeaponClassMetrics(ctx, steamID, classID)
+	metrics, err := s.repo.GetWeaponClassStats(ctx, steamID, classID)
 	if err != nil {
 		return nil, err
 	}

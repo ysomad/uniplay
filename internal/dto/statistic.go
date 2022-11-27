@@ -2,7 +2,7 @@ package dto
 
 import "github.com/ssssargsian/uniplay/internal/domain"
 
-type WeaponMetricSum struct {
+type WeaponStatWithClass struct {
 	WeaponID uint16
 	Weapon   string
 	ClassID  uint8
@@ -11,7 +11,7 @@ type WeaponMetricSum struct {
 	Value    uint32
 }
 
-type WeaponClassMetricSum struct {
+type WeaponClassStat struct {
 	ClassID uint8
 	Class   string
 	Metric  domain.Metric
