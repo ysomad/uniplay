@@ -352,11 +352,14 @@ components:
           x-go-type: time.Time
     BasicStats:
       required:
+      - draws
       - headshot_percentage
       - kill_death_ratio
+      - loses
       - matches_played
       - rounds_played
       - time_played
+      - wins
       type: object
       properties:
         kill_death_ratio:
@@ -379,6 +382,18 @@ components:
           type: integer
           format: int64
           x-go-type: time.Duration
+        wins:
+          type: integer
+          format: uint16
+          x-go-type: uint16
+        loses:
+          type: integer
+          format: uint16
+          x-go-type: uint16
+        draws:
+          type: integer
+          format: uint16
+          x-go-type: uint16
       description: набор высчитываемой статистики на основе метрик
     TotalStats:
       required:
