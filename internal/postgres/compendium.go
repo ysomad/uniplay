@@ -26,10 +26,10 @@ func NewCompendiumRepo(l *zap.Logger, p pgxatomic.Pool, b sq.StatementBuilderTyp
 
 func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
 	sql, args, err := r.builder.
-		Select("w.id, w.name, wc.id, wc.name").
+		Select("w.id, w.weapon, wc.id, wc.class").
 		From("weapon w").
 		InnerJoin("weapon_class wc ON w.class_id = wc.id").
-		OrderBy("w.name").
+		OrderBy("w.weapon").
 		ToSql()
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, er
 
 func (r *compendiumRepo) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
 	sql, args, err := r.builder.
-		Select("id, name").
+		Select("id, class").
 		From("weapon_class").
 		ToSql()
 	if err != nil {

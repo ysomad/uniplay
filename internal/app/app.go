@@ -51,7 +51,7 @@ func Run(conf *config.Config) {
 	// repos
 	replayRepo := postgres.NewReplayRepo(atomicPool, pgClient.Builder)
 	playerRepo := postgres.NewPlayerRepo(atomicPool, pgClient.Builder)
-	metricRepo := postgres.NewMetricRepo(l, atomicPool, pgClient.Builder)
+	metricRepo := postgres.NewStatisticRepo(l, atomicPool, pgClient.Builder)
 	compendiumRepo := postgres.NewCompendiumRepo(l, atomicPool, pgClient.Builder)
 
 	// services

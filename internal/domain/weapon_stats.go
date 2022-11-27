@@ -1,5 +1,11 @@
 package domain
 
+import (
+	"fmt"
+
+	"github.com/google/uuid"
+)
+
 type WeaponStats struct {
 	WeaponID uint16      `json:"weapon_id"`
 	Weapon   string      `json:"weapon"`
@@ -58,4 +64,12 @@ type WeaponClassStats struct {
 	ClassID uint8       `json:"class_id"`
 	Class   string      `json:"class"`
 	Stats   *WeaponStat `json:"stats"`
+}
+
+type WeaponStatID struct {
+	uuid.UUID
+}
+
+func NewWeaponStatID(steamID uint64, weaponID uint16, m Metric) WeaponStatID {
+	return WeaponStatID{uuid.NewMD5(uuid.UUID{}, []byte(fmt.Sprintf("%d,%d,%d", steamID, weaponID, m)))}
 }

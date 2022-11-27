@@ -128,17 +128,21 @@ func (r *replayRepo) SaveMatch(ctx context.Context, m *dto.Match) error {
 	return nil
 }
 
-func (r *replayRepo) SaveMetrics(ctx context.Context, metrics []dto.Metric, wmetrics []dto.WeaponMetric) error {
-	// metrics
+func (r *replayRepo) UpsertStats(ctx context.Context, ps []dto.PlayerStat, ws []dto.WeaponStat) error {
+	// player stats
 	sb := r.builder.
-		Insert("metric").
-		Columns("match_id, player_steam_id, metric, value")
+		Insert("player_statistic AS s").
+		Columns("id, player_steam_id, metric, value")
 
-	for _, m := range metrics {
-		sb = sb.Values(m.MatchID, m.PlayerSteamID, m.Metric, m.Value)
+	for _, s := range ps {
+		sb = sb.Values(s.ID, s.SteamID, s.Metric, s.Value)
 	}
 
-	sql, args, err := sb.ToSql()
+	sql, args, err := sb.
+		Suffix("ON CONFLICT (id) DO UPDATE").
+		Suffix("SET value = s.value + EXCLUDED.value").
+		Suffix("WHERE s.id = EXCLUDED.id").
+		ToSql()
 	if err != nil {
 		return err
 	}
@@ -147,16 +151,20 @@ func (r *replayRepo) SaveMetrics(ctx context.Context, metrics []dto.Metric, wmet
 		return err
 	}
 
-	// weapon metrics
+	// weapon stats
 	sb = r.builder.
-		Insert("weapon_metric").
-		Columns("match_id, player_steam_id, weapon_id, metric, value")
+		Insert("weapon_statistic AS s").
+		Columns("id, player_steam_id, weapon_id, metric, value")
 
-	for _, wm := range wmetrics {
-		sb = sb.Values(wm.MatchID, wm.PlayerSteamID, wm.WeaponID, wm.Metric, wm.Value)
+	for _, s := range ws {
+		sb = sb.Values(s.ID, s.SteamID, s.WeaponID, s.Metric, s.Value)
 	}
 
-	sql, args, err = sb.ToSql()
+	sql, args, err = sb.
+		Suffix("ON CONFLICT (id) DO UPDATE").
+		Suffix("SET value = s.value + EXCLUDED.value").
+		Suffix("WHERE s.id = EXCLUDED.id").
+		ToSql()
 	if err != nil {
 		return err
 	}

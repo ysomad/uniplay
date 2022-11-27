@@ -1,6 +1,11 @@
 package domain
 
-import "time"
+import (
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type PlayerStats struct {
 	Total    *PlayerTotalStats
@@ -50,4 +55,12 @@ type PlayerPerRoundStats struct {
 	GrenadeDamageDealt float64
 	BlindedPlayers     float64
 	BlindedTimes       float64
+}
+
+type PlayerStatID struct {
+	uuid.UUID
+}
+
+func NewPlayerStatID(steamID uint64, m Metric) PlayerStatID {
+	return PlayerStatID{uuid.NewMD5(uuid.UUID{}, []byte(fmt.Sprintf("%d,%d", steamID, m)))}
 }
