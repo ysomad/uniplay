@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS match (
 );
 
 CREATE TYPE match_player_state AS enum (
-    -1,
-    0,
-    1
+    'WIN',
+    'LOSE',
+    'DRAW'
 );
 
 CREATE TABLE IF NOT EXISTS match_player(

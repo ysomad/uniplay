@@ -2,13 +2,25 @@ package domain
 
 import "github.com/google/uuid"
 
-type PlayerMatchState int8
+type PlayerMatchState string
 
 const (
-	PlayerMatchLose = -1
-	PlayerMatchDraw = 0
-	PlayerMatchWin  = 1
+	PlayerMatchWin  = "WIN"
+	PlayerMatchLose = "LOSE"
+	PlayerMatchDraw = "DRAW"
 )
+
+func NewPlayerMatchState(teamScore, opponentScore uint8) PlayerMatchState {
+	if teamScore > opponentScore {
+		return PlayerMatchWin
+	}
+
+	if teamScore < opponentScore {
+		return PlayerMatchLose
+	}
+
+	return PlayerMatchDraw
+}
 
 type PlayerMatch struct {
 	MatchID uuid.UUID
