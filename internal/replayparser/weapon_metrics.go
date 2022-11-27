@@ -46,6 +46,61 @@ func (p *weaponMetrics) addv(sid steamID, wm weaponMetric, m domain.Metric, v in
 	p.metrics[sid][wm][m] += v
 }
 
+// weaponClass returns domain weapon class separated by shotguns, machine guns and others.
+func (p *weaponMetrics) weaponClass(t common.EquipmentType) domain.WeaponClassID {
+	switch t {
+	case common.EqP2000,
+		common.EqGlock,
+		common.EqP250,
+		common.EqDeagle,
+		common.EqFiveSeven,
+		common.EqDualBerettas,
+		common.EqTec9,
+		common.EqCZ,
+		common.EqUSP,
+		common.EqRevolver:
+		return domain.ClassPistol
+	case common.EqMP7,
+		common.EqMP9,
+		common.EqBizon,
+		common.EqMac10,
+		common.EqUMP,
+		common.EqP90,
+		common.EqMP5:
+		return domain.ClassSMG
+	case common.EqSawedOff,
+		common.EqNova,
+		common.EqSwag7,
+		common.EqXM1014:
+		return domain.ClassShotgun
+	case common.EqM249, common.EqNegev:
+		return domain.ClassMachineGun
+	case common.EqGalil,
+		common.EqFamas,
+		common.EqAK47,
+		common.EqM4A4,
+		common.EqM4A1,
+		common.EqSG553,
+		common.EqAUG:
+		return domain.ClassAssaultRifle
+	case common.EqAWP, common.EqScar20, common.EqG3SG1, common.EqSSG08:
+		return domain.ClassSniperRifle
+	case common.EqZeus, common.EqBomb, common.EqKnife:
+		return domain.ClassEquipment
+	case common.EqWorld:
+		return domain.ClassOther
+	case common.EqDecoy,
+		common.EqMolotov,
+		common.EqIncendiary,
+		common.EqFlash,
+		common.EqSmoke,
+		common.EqHE:
+		return domain.ClassGrenade
+	}
+
+	return 0
+}
+
 // TODO: refactor with goroutines
 func (p *weaponMetrics) toDTO(matchID domain.MatchID) ([]dto.WeaponMetric, error) {
 	if len(p.metrics) == 0 {
