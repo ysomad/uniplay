@@ -33,10 +33,17 @@ CREATE TABLE IF NOT EXISTS match (
     upload_time timestamptz NOT NULL
 );
 
+CREATE TYPE match_player_state AS enum (
+    -1,
+    0,
+    1
+);
+
 CREATE TABLE IF NOT EXISTS match_player(
     match_id uuid NOT NULL REFERENCES match (id),
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
-    team_name varchar(64) NOT NULL REFERENCES team (name)
+    team_name varchar(64) NOT NULL REFERENCES team (name),
+    match_state match_player_state NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS metric (
