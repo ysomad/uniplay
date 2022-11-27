@@ -35,21 +35,24 @@ func (r *parseResult) PlayerSteamIDs() ([]uint64, error) {
 }
 
 func (r *parseResult) TeamPlayers() []dto.TeamPlayer {
-	team1len := len(r.match.team1.playerSteamIDs)
-	tp := make([]dto.TeamPlayer, team1len+len(r.match.team2.playerSteamIDs))
+	team1PlayersAmount := len(r.match.team1.playerSteamIDs)
+	players := make([]dto.TeamPlayer, team1PlayersAmount+len(r.match.team2.playerSteamIDs))
 
 	for i, steamID := range r.match.team1.playerSteamIDs {
-		tp[i] = dto.TeamPlayer{
-			TeamName: r.match.team1.clanName,
-			SteamID:  steamID,
-		}
-	}
-	for i, steamID := range r.match.team2.playerSteamIDs {
-		tp[team1len+i] = dto.TeamPlayer{
-			TeamName: r.match.team2.clanName,
-			SteamID:  steamID,
+		players[i] = dto.TeamPlayer{
+			TeamName:   r.match.team1.clanName,
+			SteamID:    steamID,
+			MatchState: domain.NewPlayerMatchState(uint8(r.match.team1.score), uint8(r.match.team2.score)),
 		}
 	}
 
-	return tp
+	for i, steamID := range r.match.team2.playerSteamIDs {
+		players[team1PlayersAmount+i] = dto.TeamPlayer{
+			TeamName:   r.match.team2.clanName,
+			SteamID:    steamID,
+			MatchState: domain.NewPlayerMatchState(uint8(r.match.team2.score), uint8(r.match.team1.score)),
+		}
+	}
+
+	return players
 }

@@ -25,7 +25,7 @@ func NewReplayRepo(p pgxatomic.Pool, b sq.StatementBuilderType) *replayRepo {
 	}
 }
 
-func (r *replayRepo) SavePlayers(ctx context.Context, params dto.MatchPlayers) error {
+func (r *replayRepo) SavePlayers(ctx context.Context, mp dto.MatchPlayers) error {
 	// build queries
 	playerSB := r.builder.
 		Insert("player").
@@ -33,11 +33,11 @@ func (r *replayRepo) SavePlayers(ctx context.Context, params dto.MatchPlayers) e
 
 	matchPlayerSB := r.builder.
 		Insert("match_player").
-		Columns("match_id, player_steam_id, team_name")
+		Columns("match_id, player_steam_id, team_name, match_state")
 
-	for _, player := range params.Players {
-		playerSB = playerSB.Values(player.SteamID, params.CreateTime, params.CreateTime)
-		matchPlayerSB = matchPlayerSB.Values(params.MatchID, player.SteamID, player.TeamName)
+	for _, player := range mp.Players {
+		playerSB = playerSB.Values(player.SteamID, mp.CreateTime, mp.CreateTime)
+		matchPlayerSB = matchPlayerSB.Values(mp.MatchID, player.SteamID, player.TeamName, player.MatchState)
 	}
 
 	// save player

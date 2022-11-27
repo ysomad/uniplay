@@ -37,8 +37,9 @@ type Teams struct {
 }
 
 type TeamPlayer struct {
-	TeamName string
-	SteamID  uint64
+	TeamName   string
+	SteamID    uint64
+	MatchState domain.PlayerMatchState
 }
 
 type Metric struct {

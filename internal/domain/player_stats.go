@@ -35,6 +35,9 @@ type PlayerBasicStats struct {
 	RoundsPlayed   uint32
 	TimePlayed     time.Duration
 	MatchesPlayed  uint16
+	Wins           uint16
+	Loses          uint16
+	Draws          uint16
 }
 
 // PlayerPerRoundStats is a set of AVG player stats per round.
