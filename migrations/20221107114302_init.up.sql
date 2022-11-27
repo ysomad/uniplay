@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS metric (
 
 CREATE TABLE IF NOT EXISTS weapon_class (
     id smallint PRIMARY KEY NOT NULL,
-    name varchar(16) UNIQUE NOT NULL
+    name varchar(32) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS weapon (
