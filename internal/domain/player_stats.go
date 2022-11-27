@@ -38,6 +38,7 @@ type PlayerBasicStats struct {
 	Wins           uint16
 	Loses          uint16
 	Draws          uint16
+	WinRate        float64
 }
 
 // PlayerPerRoundStats is a set of AVG player stats per round.

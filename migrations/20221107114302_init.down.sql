@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS metric CASCADE;
 
 DROP TABLE IF EXISTS match_player CASCADE;
 
-DROP TYPE IF EXISTS match_player_state CASCADE;
+DROP TYPE IF EXISTS match_player_state;
 
 DROP TABLE IF EXISTS match CASCADE;
 

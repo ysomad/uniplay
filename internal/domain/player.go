@@ -2,12 +2,6 @@ package domain
 
 import (
 	"time"
-
-	"github.com/ssssargsian/uniplay/internal/pkg/apperror"
-)
-
-var (
-	ErrPlayerNotFound = apperror.New(800, "player not found")
 )
 
 type Player struct {

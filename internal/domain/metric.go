@@ -25,4 +25,13 @@ const (
 
 	MetricBlind   Metric = 15 // сколько раз ослепил
 	MetricBlinded Metric = 16 // был ослеплен
+
+	MetricShot        Metric = 17
+	MetricHitHead     Metric = 18
+	MetricHitChest    Metric = 19
+	MetricHitStomach  Metric = 20
+	MetricHitLeftArm  Metric = 21
+	MetricHitRightArm Metric = 22
+	MetricHitLeftLeg  Metric = 23
+	MetricHitRightLeg Metric = 24
 )

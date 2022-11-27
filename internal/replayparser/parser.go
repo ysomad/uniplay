@@ -60,6 +60,19 @@ func (p *parser) Parse() (parseResult, error) {
 		p.handleKills(e)
 	})
 
+	p.RegisterEventHandler(func(e events.WeaponFire) {
+		if !p.collectStats(p.GameState()) || !p.playerConnected(e.Shooter) {
+			return
+		}
+
+		if e.Weapon != nil {
+			p.weaponMetrics.incr(e.Shooter.SteamID64, weaponMetric{
+				eqType:  e.Weapon.Type,
+				eqClass: e.Weapon.Class(),
+			}, domain.MetricShot)
+		}
+	})
+
 	p.RegisterEventHandler(func(e events.PlayerHurt) {
 		p.handlePlayerHurt(e)
 	})
@@ -162,6 +175,26 @@ func (p *parser) setTeams(gs demoinfocs.GameState) {
 
 	ct := gs.TeamCounterTerrorists()
 	p.match.team2 = newMatchTeam(ct.ClanName(), ct.Flag(), ct.Team(), ct.Members())
+}
+
+func (p *parser) hitgroupToMetric(g events.HitGroup) domain.Metric {
+	switch g {
+	case events.HitGroupHead:
+		return domain.MetricHitHead
+	case events.HitGroupChest:
+		return domain.MetricHitChest
+	case events.HitGroupStomach:
+		return domain.MetricHitStomach
+	case events.HitGroupLeftArm:
+		return domain.MetricHitLeftArm
+	case events.HitGroupRightArm:
+		return domain.MetricHitRightArm
+	case events.HitGroupLeftLeg:
+		return domain.MetricHitLeftLeg
+	case events.HitGroupRightLeg:
+		return domain.MetricHitRightLeg
+	}
+	return 0
 }
 
 // handleKills collects metrics and weapon metrics on kill event.
@@ -285,6 +318,15 @@ func (p *parser) handlePlayerHurt(e events.PlayerHurt) {
 				eqType:  e.Weapon.Type,
 				eqClass: e.Weapon.Class(),
 			}, domain.MetricDamageDealt, e.HealthDamage)
+
+			// hitgroup shot
+			m := p.hitgroupToMetric(e.HitGroup)
+			if m != 0 {
+				p.weaponMetrics.incr(e.Attacker.SteamID64, weaponMetric{
+					eqType:  e.Weapon.Type,
+					eqClass: e.Weapon.Class(),
+				}, m)
+			}
 		}
 	}
 
