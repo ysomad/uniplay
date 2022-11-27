@@ -33,11 +33,15 @@ CREATE TABLE IF NOT EXISTS match (
     upload_time timestamptz NOT NULL
 );
 
-CREATE TYPE match_player_state AS enum (
-    'WIN',
-    'LOSE',
-    'DRAW'
-);
+DO $$ BEGIN
+    CREATE TYPE match_player_state AS enum (
+        'WIN',
+        'LOSE',
+        'DRAW'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 CREATE TABLE IF NOT EXISTS match_player(
     match_id uuid NOT NULL REFERENCES match (id),

@@ -7,6 +7,10 @@ var (
 )
 
 var (
+	ErrPlayerNotFound = apperror.New(800, "player not found")
+)
+
+var (
 	ErrWeaponStatsNotFound      = apperror.New(1000, "player has no weapon stats")
 	ErrWeaponClassStatsNotFound = apperror.New(1001, "player has no weapon class stats")
 )
