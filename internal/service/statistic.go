@@ -20,40 +20,67 @@ func NewStatistic(l *zap.Logger, r statisticRepository) *statistic {
 	}
 }
 
-func (s *statistic) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
+func (s *statistic) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) (map[uint16]domain.WeaponStats, error) {
 	rawMetrics, err := s.repo.GetWeaponStats(ctx, steamID, f)
 	if err != nil {
 		return nil, err
 	}
+
 	if len(rawMetrics) == 0 {
 		return nil, domain.ErrWeaponStatsNotFound
 	}
 
-	var out []domain.WeaponStats
+	var (
+		weaponStats = make(map[uint16]domain.WeaponStats)
+		// out         []domain.WeaponStats
+	)
 
 	for _, m := range rawMetrics {
-		i := sort.Search(len(out), func(i int) bool {
-			return out[i].Weapon == m.Weapon
-		})
-
-		if i < len(out) && out[i].Weapon == m.Weapon {
-			out[i].Stats.SetStat(m.Metric, m.Value)
+		if s, ok := weaponStats[m.WeaponID]; ok {
+			s.SetStats(m.Metric, m.Value)
 			continue
 		}
 
-		s := new(domain.WeaponStat)
-		s.SetStat(m.Metric, m.Value)
+		stats := domain.WeaponStats{
+			WeaponID:      m.WeaponID,
+			Weapon:        m.Weapon,
+			Stats:         new(domain.WeaponStat),
+			AccuracyStats: new(domain.WeaponAccuracyStat),
+		}
+		stats.SetStats(m.Metric, m.Value)
 
-		out = append(out, domain.WeaponStats{
-			WeaponID: m.WeaponID,
-			Weapon:   m.Weapon,
-			ClassID:  m.ClassID,
-			Class:    m.Class,
-			Stats:    s,
-		})
+		weaponStats[m.WeaponID] = stats
 	}
 
-	return out, nil
+	s.log.Error("YEET", zap.Any("YEET", weaponStats))
+
+	// for _, m := range rawMetrics {
+	// 	i := sort.Search(len(out), func(i int) bool {
+	// 		return out[i].Weapon == m.Weapon
+	// 	})
+
+	// 	if i < len(out) && out[i].Weapon == m.Weapon {
+	// 		out[i].SetStat(m.Metric, m.Value)
+	// 		continue
+	// 	}
+
+	// 	weaponStat := new(domain.WeaponStat)
+	// 	weaponStat.SetStat(m.Metric, m.Value)
+
+	// 	accuracyStat := new(domain.WeaponAccuracyStat)
+	// 	accuracyStat.SetStat(m.Metric, m.Value)
+
+	// 	s.log.Error("yeet", zap.Any("m", m.Metric), zap.Any("v", m.Value))
+
+	// 	out = append(out, domain.WeaponStats{
+	// 		WeaponID:      m.WeaponID,
+	// 		Weapon:        m.Weapon,
+	// 		Stats:         weaponStat,
+	// 		AccuracyStats: accuracyStat,
+	// 	})
+	// }
+
+	return weaponStats, nil
 }
 
 func (s *statistic) GetWeaponClassStats(ctx context.Context, steamID uint64, classID uint8) ([]domain.WeaponClassStats, error) {

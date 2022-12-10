@@ -16,7 +16,7 @@ type playerService interface {
 }
 
 type statisticService interface {
-	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error)
+	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) (map[uint16]domain.WeaponStats, error)
 	GetWeaponClassStats(ctx context.Context, steamID uint64, classID uint8) ([]domain.WeaponClassStats, error)
 }
 
