@@ -20,7 +20,7 @@ type playerRepository interface {
 }
 
 type statisticRepository interface {
-	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]dto.WeaponStatWithClass, error)
+	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]dto.StorageWeaponStat, error)
 	GetWeaponClassStats(ctx context.Context, steamID uint64, classID uint8) ([]dto.WeaponClassStat, error)
 }
 

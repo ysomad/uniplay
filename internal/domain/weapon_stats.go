@@ -7,11 +7,15 @@ import (
 )
 
 type WeaponStats struct {
-	WeaponID uint16      `json:"weapon_id"`
-	Weapon   string      `json:"weapon"`
-	ClassID  uint8       `json:"class_id"`
-	Class    string      `json:"class"`
-	Stats    *WeaponStat `json:"stats"`
+	WeaponID      uint16              `json:"weapon_id"`
+	Weapon        string              `json:"weapon"`
+	Stats         *WeaponStat         `json:"stats"`
+	AccuracyStats *WeaponAccuracyStat `json:"accuracy_stats"`
+}
+
+func (s *WeaponStats) SetStats(m Metric, v uint32) {
+	s.Stats.SetStat(m, v)
+	s.AccuracyStats.SetStat(m, v)
 }
 
 // WeaponStat is a set of weapon statistics calculated from sum of metrics.
@@ -52,6 +56,53 @@ func (s *WeaponStat) SetStat(m Metric, v uint32) {
 		s.DamageTaken = v
 	case MetricDamageDealt:
 		s.DamageDealt = v
+	}
+}
+
+type WeaponAccuracyStat struct {
+	Shots    uint32  `json:"shots"`
+	Accuracy float64 `json:"accuracy"`
+
+	Head     float64 `json:"head"`
+	HeadHits uint32  `json:"head_hits"`
+
+	Chest     float64 `json:"chest"`
+	ChestHits uint32  `json:"chest_hits"`
+
+	Stomach     float64 `json:"stomach"`
+	StomachHits uint32  `json:"stomach_hits"`
+
+	LeftArm     float64 `json:"left_arm"`
+	LeftArmHits uint32  `json:"left_arm_hits"`
+
+	RightArm      float64 `json:"right_arm"`
+	RightArmsHits uint32  `json:"right_arms_hits"`
+
+	LeftLeg     float64 `json:"left_leg"`
+	LeftLegHits uint32  `json:"left_leg_hits"`
+
+	RightLeg     float64 `json:"right_leg"`
+	RightLegHits uint32  `json:"right_leg_hits"`
+}
+
+func (s *WeaponAccuracyStat) SetStat(m Metric, v uint32) {
+	switch m {
+	case MetricShot:
+		s.Shots = v
+	case MetricHitHead:
+		s.HeadHits = v
+	case MetricHitChest:
+		s.ChestHits = v
+	case MetricHitStomach:
+		s.StomachHits = v
+	case MetricHitLeftArm:
+		s.LeftArmHits = v
+	case MetricHitRightArm:
+		s.RightArmsHits = v
+	case MetricHitLeftLeg:
+		s.LeftLegHits = v
+	case MetricHitRightLeg:
+		s.RightLegHits = v
 	}
 }
 
