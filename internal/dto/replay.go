@@ -22,8 +22,9 @@ type MatchTeam struct {
 	PlayerSteamIDs []uint64
 }
 
-type PlayerSteamIDs struct {
-	SteamIDs   []uint64
+type MatchPlayers struct {
+	MatchID    domain.MatchID
+	Players    []TeamPlayer
 	CreateTime time.Time
 }
 
@@ -36,22 +37,41 @@ type Teams struct {
 }
 
 type TeamPlayer struct {
-	TeamName      string
-	PlayerSteamID uint64
+	TeamName   string
+	SteamID    uint64
+	MatchState domain.PlayerMatchState
 }
 
-type Metric struct {
-	MatchID       domain.MatchID
-	PlayerSteamID uint64
-	Metric        domain.Metric
-	Value         int32
+type PlayerStat struct {
+	ID      domain.PlayerStatID
+	SteamID uint64
+	Metric  domain.Metric
+	Value   uint32
 }
 
-type WeaponMetric struct {
-	MatchID       domain.MatchID
-	PlayerSteamID uint64
-	WeaponName    string
-	WeaponClass   domain.EquipmentClass
-	Metric        domain.Metric
-	Value         int32
+func NewPlayerStat(steamID uint64, m domain.Metric, v uint32) PlayerStat {
+	return PlayerStat{
+		ID:      domain.NewPlayerStatID(steamID, m),
+		SteamID: steamID,
+		Metric:  m,
+		Value:   v,
+	}
+}
+
+type WeaponStat struct {
+	ID       domain.WeaponStatID
+	SteamID  uint64
+	WeaponID uint16
+	Metric   domain.Metric
+	Value    uint32
+}
+
+func NewWeaponStat(steamID uint64, weaponID uint16, m domain.Metric, v uint32) WeaponStat {
+	return WeaponStat{
+		ID:       domain.NewWeaponStatID(steamID, weaponID, m),
+		SteamID:  steamID,
+		WeaponID: weaponID,
+		Metric:   m,
+		Value:    v,
+	}
 }

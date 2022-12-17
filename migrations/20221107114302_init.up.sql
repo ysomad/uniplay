@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS team (
     name varchar(64) PRIMARY KEY NOT NULL,
     flag_code char(2) NOT NULL,
@@ -7,7 +9,7 @@ CREATE TABLE IF NOT EXISTS team (
 
 CREATE TABLE IF NOT EXISTS player (
     steam_id bigint PRIMARY KEY NOT NULL,
-    main_team_name varchar(64) REFERENCES team(name),
+    team_name varchar(64) REFERENCES team(name),
     create_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
     update_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -31,18 +33,47 @@ CREATE TABLE IF NOT EXISTS match (
     upload_time timestamptz NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS metric (
+DO $$ BEGIN
+    CREATE TYPE match_player_state AS enum (
+        'WIN',
+        'LOSE',
+        'DRAW'
+    );
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+CREATE TABLE IF NOT EXISTS match_player(
     match_id uuid NOT NULL REFERENCES match (id),
+    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    team_name varchar(64) NOT NULL REFERENCES team (name),
+    match_state match_player_state NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS player_statistic (
+    id uuid PRIMARY KEY NOT NULL,
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
     metric smallint NOT NULL,
     value integer NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS weapon_metric (
-    match_id uuid NOT NULL REFERENCES match (id),
+CREATE TABLE IF NOT EXISTS weapon_class (
+    id smallint PRIMARY KEY NOT NULL,
+    class varchar(32) UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS weapon (
+    id smallint PRIMARY KEY NOT NULL,
+    weapon varchar(32) UNIQUE NOT NULL,
+    class_id smallint NOT NULL REFERENCES weapon_class (id)
+);
+
+CREATE TABLE IF NOT EXISTS weapon_statistic (
+    id uuid PRIMARY KEY NOT NULL,
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
-    weapon_name varchar(64) NOT NULL,
-    weapon_class smallint NOT NULL,
+    weapon_id smallint NOT NULL REFERENCES weapon (id),
     metric smallint NOT NULL,
     value integer NOT NULL
 );
+
+COMMIT;

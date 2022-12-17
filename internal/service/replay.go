@@ -2,12 +2,13 @@ package service
 
 import (
 	"context"
-	"io"
+	"os"
+
+	"go.uber.org/zap"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 	"github.com/ssssargsian/uniplay/internal/replayparser"
-	"go.uber.org/zap"
 )
 
 type replay struct {
@@ -22,7 +23,13 @@ func NewReplay(l *zap.Logger, r replayRepository) *replay {
 	}
 }
 
-func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*dto.Match, error) {
+// TODO: refactor with goroutines
+func (r *replay) CollectStats(ctx context.Context, filename string) (*dto.Match, error) {
+	replay, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+
 	p := replayparser.New(replay, r.log)
 	defer p.Close()
 
@@ -32,35 +39,6 @@ func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*dto.Match
 	}
 
 	match := res.Match()
-
-	err = r.repo.SaveTeams(ctx, dto.Teams{
-		Team1Name:  match.Team1.ClanName,
-		Team1Flag:  match.Team1.FlagCode,
-		Team2Name:  match.Team2.ClanName,
-		Team2Flag:  match.Team2.FlagCode,
-		CreateTime: match.UploadTime,
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	playerSteamIDs, err := res.PlayerSteamIDs()
-	if err != nil {
-		return nil, err
-	}
-
-	err = r.repo.SavePlayers(ctx, dto.PlayerSteamIDs{
-		SteamIDs:   playerSteamIDs,
-		CreateTime: match.UploadTime,
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	if err = r.repo.AddPlayersToTeams(ctx, res.TeamPlayers()); err != nil {
-		return nil, err
-	}
-
 	match.ID, err = domain.NewMatchID(&domain.MatchIDArgs{
 		MapName:       match.MapName,
 		Team1Name:     match.Team1.ClanName,
@@ -73,21 +51,47 @@ func (r *replay) CollectStats(ctx context.Context, replay io.Reader) (*dto.Match
 		return nil, err
 	}
 
+	err = r.repo.SaveTeams(ctx, dto.Teams{
+		Team1Name:  match.Team1.ClanName,
+		Team1Flag:  match.Team1.FlagCode,
+		Team2Name:  match.Team2.ClanName,
+		Team2Flag:  match.Team2.FlagCode,
+		CreateTime: match.UploadTime,
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	if err = r.repo.SaveMatch(ctx, match); err != nil {
 		return nil, err
 	}
 
-	metricList, err := res.MetricList(match.ID)
+	teamPlayers := res.TeamPlayers()
+
+	err = r.repo.SavePlayers(ctx, dto.MatchPlayers{
+		MatchID:    match.ID,
+		Players:    teamPlayers,
+		CreateTime: match.UploadTime,
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	wmetricList, err := res.WeaponMetricList(match.ID)
+	if err = r.repo.AddPlayersToTeams(ctx, teamPlayers); err != nil {
+		return nil, err
+	}
+
+	playerStats, err := res.PlayerStats()
 	if err != nil {
 		return nil, err
 	}
 
-	if err = r.repo.SaveMetrics(ctx, metricList, wmetricList); err != nil {
+	weaponStats, err := res.WeaponStats()
+	if err != nil {
+		return nil, err
+	}
+
+	if err = r.repo.UpsertStats(ctx, playerStats, weaponStats); err != nil {
 		return nil, err
 	}
 

@@ -8,10 +8,6 @@ import (
 	"github.com/google/uuid"
 )
 
-var (
-	ErrMatchAlreadyExist = errors.New("match from the replay already exist")
-)
-
 type Match struct {
 	ID         MatchID
 	MapName    string
@@ -31,6 +27,7 @@ type MatchTeam struct {
 type MatchID struct {
 	uuid.UUID
 }
+
 type MatchIDArgs struct {
 	MapName       string
 	Team1Name     string
