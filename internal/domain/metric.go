@@ -21,7 +21,7 @@ const (
 	MetricBombPlanted Metric = 12
 	MetricBombDefused Metric = 13
 
-	MetricRoundMVPCount Metric = 14
+	MetricRoundMVP Metric = 14
 
 	MetricBlind   Metric = 15 // сколько раз ослепил
 	MetricBlinded Metric = 16 // был ослеплен

@@ -1,53 +1,87 @@
 package domain
 
 import (
-	"fmt"
 	"time"
-
-	"github.com/google/uuid"
 )
 
 type PlayerStats struct {
-	Total    *PlayerTotalStats
-	Basic    PlayerBasicStats
-	PerRound *PlayerPerRoundStats
+	Total *PlayerTotalStats
+	Calc  *PlayerCalcStats
+	Round *PlayerRoundStats
 }
 
 // PlayerTotalStats is a set of total statistics of a player.
 type PlayerTotalStats struct {
-	Deaths            uint32
-	Kills             uint32
-	HSKills           uint32
-	BlindKills        uint32
-	WallbangKills     uint32
-	NoScopeKills      uint32
-	ThroughSmokeKills uint32
-	Assists           uint32
-	FlashbangAssists  uint32
-	DamageTaken       uint32
-	DamageDealt       uint32
-	BombsPlanted      uint32
-	BombsDefused      uint32
-	MVPCount          uint32
-	BlindedPlayers    uint32
-	BlindedTimes      uint32
+	Kills             int32
+	HSKills           int16
+	BlindKills        int16
+	WallbangKills     int16
+	NoScopeKills      int16
+	ThroughSmokeKills int16
+	Deaths            int32
+	Assists           int16
+	FlashbangAssists  int16
+	MVPCount          int16
+	DamageTaken       int32
+	DamageDealt       int32
+	BlindedPlayers    int16
+	BlindedTimes      int16
+	BombsPlanted      int16
+	BombsDefused      int16
 }
 
-// PlayerBasicStats is a set of calculated stats from metrics.
-type PlayerBasicStats struct {
+func (ts *PlayerTotalStats) Add(m Metric, v int) {
+	switch m {
+	case MetricKill:
+		ts.Kills += int32(v)
+	case MetricHSKill:
+		ts.HSKills += int16(v)
+	case MetricBlindKill:
+		ts.BlindKills += int16(v)
+	case MetricWallbangKill:
+		ts.WallbangKills += int16(v)
+	case MetricNoScopeKill:
+		ts.NoScopeKills += int16(v)
+	case MetricThroughSmokeKill:
+		ts.ThroughSmokeKills += int16(v)
+	case MetricDeath:
+		ts.Deaths += int32(v)
+	case MetricAssist:
+		ts.Assists += int16(v)
+	case MetricFlashbangAssist:
+		ts.FlashbangAssists += int16(v)
+	case MetricRoundMVP:
+		ts.MVPCount += int16(v)
+	case MetricDamageTaken:
+		ts.DamageTaken += int32(v)
+	case MetricDamageDealt:
+		ts.DamageDealt += int32(v)
+	case MetricBlind:
+		ts.BlindedPlayers += int16(v)
+	case MetricBlinded:
+		ts.BlindedTimes += int16(v)
+	case MetricBombPlanted:
+		ts.BombsPlanted += int16(v)
+	case MetricBombDefused:
+		ts.BombsDefused += int16(v)
+	}
+}
+
+// PlayerCalcStats is a set of calculated stats from player total stats and match history.
+type PlayerCalcStats struct {
 	KillDeathRatio float64
 	HSPercentage   float64
-	RoundsPlayed   uint32
-	TimePlayed     time.Duration
-	MatchesPlayed  uint16
-	Wins           uint16
-	Loses          uint16
-	Draws          uint16
 	WinRate        float64
+	TimePlayed     time.Duration
+	Wins           int16
+	Loses          int16
+	Draws          int16
+	RoundsPlayed   int16
+	MatchesPlayed  int16
 }
 
-// PlayerPerRoundStats is a set of AVG player stats per round.
-type PlayerPerRoundStats struct {
+// PlayerRoundStats is a set of AVG player stats per round.
+type PlayerRoundStats struct {
 	Kills              float64
 	Assists            float64
 	Deaths             float64
@@ -55,12 +89,4 @@ type PlayerPerRoundStats struct {
 	GrenadeDamageDealt float64
 	BlindedPlayers     float64
 	BlindedTimes       float64
-}
-
-type PlayerStatID struct {
-	uuid.UUID
-}
-
-func NewPlayerStatID(steamID uint64, m Metric) PlayerStatID {
-	return PlayerStatID{uuid.NewMD5(uuid.UUID{}, []byte(fmt.Sprintf("%d,%d", steamID, m)))}
 }

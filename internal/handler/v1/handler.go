@@ -6,6 +6,7 @@ import (
 	"go.uber.org/zap"
 
 	v1 "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
+	"github.com/ssssargsian/uniplay/internal/service"
 )
 
 var _ v1.ServerInterface = &handler{}
@@ -17,13 +18,13 @@ type atomicRunner interface {
 type handler struct {
 	log        *zap.Logger
 	atomic     atomicRunner
-	replay     replayService
-	player     playerService
-	statistic  statisticService
-	compendium compendiumService
+	replay     *service.Replay
+	player     *service.Player
+	statistic  *service.Statistic
+	compendium *service.Compendium
 }
 
-func NewHandler(l *zap.Logger, a atomicRunner, r replayService, p playerService, s statisticService, c compendiumService) *handler {
+func NewHandler(l *zap.Logger, a atomicRunner, r *service.Replay, p *service.Player, s *service.Statistic, c *service.Compendium) *handler {
 	return &handler{
 		log:        l,
 		atomic:     a,

@@ -1,60 +1,58 @@
-BEGIN;
+BEGIN
+;
 
 CREATE TABLE IF NOT EXISTS team (
-    name varchar(64) PRIMARY KEY NOT NULL,
-    flag_code char(2) NOT NULL,
-    create_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    update_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL
+    id smallserial PRIMARY KEY NOT NULL,
+    clan_name varchar(64) UNIQUE NOT NULL,
+    flag_code char(2) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS player (
-    steam_id bigint PRIMARY KEY NOT NULL,
-    team_name varchar(64) REFERENCES team(name),
-    create_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    update_time timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL
-);
+CREATE TABLE IF NOT EXISTS player (steam_id bigint PRIMARY KEY NOT NULL);
 
 CREATE TABLE IF NOT EXISTS team_player (
-    team_name varchar(64) NOT NULL REFERENCES team (name),
+    team_id smallint NOT NULL REFERENCES team (id),
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
-    is_active boolean DEFAULT FALSE NOT NULL,
-
-    PRIMARY KEY (team_name, player_steam_id)
+    is_active boolean NOT NULL DEFAULT false,
+    PRIMARY KEY (team_id, player_steam_id)
 );
 
 CREATE TABLE IF NOT EXISTS match (
     id uuid PRIMARY KEY NOT NULL,
     map_name varchar(64) NOT NULL,
-    team1_name varchar(64) NOT NULL REFERENCES team (name),
+    team1_id smallint NOT NULL REFERENCES team (id),
     team1_score smallint NOT NULL,
-    team2_name varchar(64) NOT NULL REFERENCES team (name),
+    team2_id smallint NOT NULL REFERENCES team (id),
     team2_score smallint NOT NULL,
     duration interval NOT NULL,
-    upload_time timestamptz NOT NULL
+    uploaded_at timestamptz NOT NULL
 );
 
-DO $$ BEGIN
-    CREATE TYPE match_player_state AS enum (
-        'WIN',
-        'LOSE',
-        'DRAW'
-    );
-EXCEPTION
-    WHEN duplicate_object THEN null;
-END $$;
-
-CREATE TABLE IF NOT EXISTS match_player(
+CREATE TABLE IF NOT EXISTS player_match_stat (
+    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
     match_id uuid NOT NULL REFERENCES match (id),
-    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
-    team_name varchar(64) NOT NULL REFERENCES team (name),
-    match_state match_player_state NOT NULL
+    kills integer NOT NULL,
+    hs_kills smallint NOT NULL,
+    blind_kills smallint NOT NULL,
+    wallbang_kills smallint NOT NULL,
+    noscope_kills smallint NOT NULL,
+    through_smoke_kills smallint NOT NULL,
+    deaths integer NOT NULL,
+    assists smallint NOT NULL,
+    flashbang_assists smallint NOT NULL,
+    mvp_count smallint NOT NULL,
+    damage_taken integer NOT NULL,
+    damage_dealt integer NOT NULL,
+    blinded_players smallint NOT NULL,
+    blinded_times smallint NOT NULL,
+    bombs_planted smallint NOT NULL,
+    bombs_defused smallint NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS player_statistic (
-    id uuid PRIMARY KEY NOT NULL,
+CREATE TABLE IF NOT EXISTS player_match (
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
-    metric smallint NOT NULL,
-    value integer NOT NULL
+    match_id uuid NOT NULL REFERENCES match (id),
+    team_id smallint NOT NULL REFERENCES team (id),
+    match_state smallint NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS weapon_class (
@@ -68,12 +66,28 @@ CREATE TABLE IF NOT EXISTS weapon (
     class_id smallint NOT NULL REFERENCES weapon_class (id)
 );
 
-CREATE TABLE IF NOT EXISTS weapon_statistic (
-    id uuid PRIMARY KEY NOT NULL,
+CREATE TABLE IF NOT EXISTS player_match_weapon_stat (
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    match_id uuid NOT NULL REFERENCES match (id),
     weapon_id smallint NOT NULL REFERENCES weapon (id),
-    metric smallint NOT NULL,
-    value integer NOT NULL
+    kills smallint NOT NULL,
+    hs_kills smallint NOT NULL,
+    blind_kills smallint NOT NULL,
+    wallbang_kills smallint NOT NULL,
+    noscope_kills smallint NOT NULL,
+    through_smoke_kills smallint NOT NULL,
+    deaths smallint NOT NULL,
+    assists smallint NOT NULL,
+    damage_taken integer NOT NULL,
+    damage_dealt integer NOT NULL,
+    shots integer NOT NULL,
+    head_hits integer NOT NULL,
+    chest_hits integer NOT NULL,
+    stomach_hits integer NOT NULL,
+    left_arm_hits integer NOT NULL,
+    right_arm_hits integer NOT NULL,
+    left_leg_hits integer NOT NULL,
+    right_leg_hits integer NOT NULL
 );
 
 COMMIT;

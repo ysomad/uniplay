@@ -8,63 +8,69 @@ import (
 	"github.com/google/uuid"
 )
 
+type MatchState int8
+
+const (
+	MatchStateLose MatchState = -1
+	MatchStateDraw MatchState = 0
+	MatchStateWin  MatchState = 1
+)
+
+const (
+	minMatchDuration = time.Minute * 5
+)
+
+func NewMatchState(teamScore, opponentScore int8) MatchState {
+	if teamScore > opponentScore {
+		return MatchStateWin
+	}
+	if teamScore < opponentScore {
+		return MatchStateLose
+	}
+	if teamScore == opponentScore {
+		return MatchStateDraw
+	}
+	return 0
+}
+
 type Match struct {
-	ID         MatchID
+	ID         uuid.UUID
 	MapName    string
 	Duration   time.Duration
 	Team1      MatchTeam
 	Team2      MatchTeam
-	UploadTime time.Time
+	UploadedAt time.Time
+}
+
+// NewMatchID returns match id generated from meta data which was parsed from replay.
+func NewMatchID(server, client, mapName string, duration time.Duration, ticks, frames, signonLen int) (uuid.UUID, error) {
+	if server == "" {
+		return uuid.UUID{}, errors.New("server name cannot be empty string")
+	}
+	if client == "" {
+		return uuid.UUID{}, errors.New("client name cannot be empty string")
+	}
+	if duration < minMatchDuration {
+		return uuid.UUID{}, errors.New("match duration cannot last less than 5 minutes")
+	}
+	if ticks <= 0 {
+		return uuid.UUID{}, errors.New("got invalid amount of playback ticks")
+	}
+	if frames <= 0 {
+		return uuid.UUID{}, errors.New("got invalid amount of playback frames")
+	}
+	if signonLen <= 0 {
+		return uuid.UUID{}, errors.New("got invalid amount of signon length")
+	}
+
+	format := fmt.Sprintf("%s,%s,%s,%d,%d,%d,%d", server, client, mapName, duration, ticks, frames, signonLen)
+	return uuid.NewMD5(uuid.UUID{}, []byte(format)), nil
 }
 
 type MatchTeam struct {
+	ID             int16
 	ClanName       string
 	FlagCode       string
-	Score          uint8
+	Score          int8
 	PlayerSteamIDs []uint64
-}
-
-type MatchID struct {
-	uuid.UUID
-}
-
-type MatchIDArgs struct {
-	MapName       string
-	Team1Name     string
-	Team1Score    uint8
-	Team2Name     string
-	Team2Score    uint8
-	MatchDuration time.Duration
-}
-
-func NewMatchID(a *MatchIDArgs) (MatchID, error) {
-	if err := a.validate(); err != nil {
-		return MatchID{}, err
-	}
-
-	s := fmt.Sprintf(
-		"%s,%s,%d,%s,%d,%d",
-		a.MapName,
-		a.Team1Name,
-		a.Team1Score,
-		a.Team2Name,
-		a.Team2Score,
-		a.MatchDuration)
-	return MatchID{uuid.NewMD5(uuid.UUID{}, []byte(s))}, nil
-}
-
-func (a *MatchIDArgs) validate() error {
-	if a.MapName == "" {
-		return errors.New("empty map name")
-	}
-	if a.Team1Name == "" {
-		return errors.New("empty team 1 name")
-	}
-	if a.Team2Name == "" {
-		return errors.New("empty team 2 name")
-	}
-	if a.MatchDuration <= time.Minute {
-		return errors.New("match cannot last less than a minute")
-	}
-	return nil
 }

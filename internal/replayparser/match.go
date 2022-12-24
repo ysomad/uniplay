@@ -3,17 +3,15 @@ package replayparser
 import (
 	"time"
 
-	"github.com/ssssargsian/uniplay/internal/dto"
-
+	"github.com/google/uuid"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/events"
 )
 
 type match struct {
-	team1        matchTeam
-	team2        matchTeam
-	isKnifeRound bool
-
+	id       uuid.UUID
+	team1    *matchTeam
+	team2    *matchTeam
 	mapName  string
 	duration time.Duration
 }
@@ -32,16 +30,6 @@ func (m *match) updateTeamsScore(e events.ScoreUpdated) {
 	}
 }
 
-func (m *match) toDTO() *dto.Match {
-	return &dto.Match{
-		MapName:    m.mapName,
-		Duration:   m.duration,
-		Team1:      m.team1.toDTO(),
-		Team2:      m.team2.toDTO(),
-		UploadTime: time.Now(),
-	}
-}
-
 type matchTeam struct {
 	clanName       string
 	flagCode       string
@@ -50,7 +38,7 @@ type matchTeam struct {
 	playerSteamIDs []uint64
 }
 
-func newMatchTeam(name, flag string, side common.Team, players []*common.Player) matchTeam {
+func newMatchTeam(name, flag string, side common.Team, players []*common.Player) *matchTeam {
 	var steamIDs []uint64
 
 	for _, p := range players {
@@ -59,7 +47,7 @@ func newMatchTeam(name, flag string, side common.Team, players []*common.Player)
 		}
 	}
 
-	return matchTeam{
+	return &matchTeam{
 		clanName:       name,
 		flagCode:       flag,
 		side:           side,
@@ -73,14 +61,5 @@ func (t *matchTeam) swapSide() {
 		t.side = common.TeamTerrorists
 	case common.TeamTerrorists:
 		t.side = common.TeamCounterTerrorists
-	}
-}
-
-func (t *matchTeam) toDTO() dto.MatchTeam {
-	return dto.MatchTeam{
-		ClanName:       t.clanName,
-		FlagCode:       t.flagCode,
-		Score:          uint8(t.score),
-		PlayerSteamIDs: t.playerSteamIDs,
 	}
 }

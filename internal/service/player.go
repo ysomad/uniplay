@@ -6,16 +6,17 @@ import (
 	"github.com/ssssargsian/uniplay/internal/domain"
 )
 
-type player struct {
+type Player struct {
 	repo playerRepository
 }
 
-func NewPlayer(r playerRepository) *player {
-	return &player{
+func NewPlayer(r playerRepository) *Player {
+	return &Player{
 		repo: r,
 	}
 }
 
-func (p *player) Get(ctx context.Context, steamID uint64) (domain.Player, error) {
-	return p.repo.FindBySteamID(ctx, steamID)
+func (p *Player) Get(ctx context.Context, steamID uint64) (domain.Player, error) {
+	// return p.repo.FindBySteamID(ctx, steamID)
+	return domain.Player{}, nil
 }

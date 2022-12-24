@@ -4,172 +4,317 @@ import (
 	"context"
 	"errors"
 
-	sq "github.com/Masterminds/squirrel"
-	"github.com/jackc/pgerrcode"
-	"github.com/jackc/pgx/v5/pgconn"
-	"github.com/ysomad/pgxatomic"
-
+	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5"
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
+	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
+	"go.uber.org/zap"
 )
 
 type replayRepo struct {
-	pool    pgxatomic.Pool
-	builder sq.StatementBuilderType
+	log    *zap.Logger
+	client *pgclient.Client
 }
 
-func NewReplayRepo(p pgxatomic.Pool, b sq.StatementBuilderType) *replayRepo {
+func NewReplayRepo(l *zap.Logger, c *pgclient.Client) *replayRepo {
 	return &replayRepo{
-		pool:    p,
-		builder: b,
+		log:    l,
+		client: c,
 	}
 }
 
-func (r *replayRepo) SavePlayers(ctx context.Context, mp dto.MatchPlayers) error {
-	// build queries
-	playerSB := r.builder.
-		Insert("player").
-		Columns("steam_id, create_time, update_time")
+func (r *replayRepo) MatchExists(ctx context.Context, matchID uuid.UUID) (found bool, err error) {
+	row := r.client.Pool.QueryRow(ctx, "select exists(select 1 from match where id = $1)", matchID)
 
-	matchPlayerSB := r.builder.
-		Insert("match_player").
-		Columns("match_id, player_steam_id, team_name, match_state")
-
-	for _, player := range mp.Players {
-		playerSB = playerSB.Values(player.SteamID, mp.CreateTime, mp.CreateTime)
-		matchPlayerSB = matchPlayerSB.Values(mp.MatchID, player.SteamID, player.TeamName, player.MatchState)
+	if err = row.Scan(&found); err != nil {
+		return false, err
 	}
 
-	// save player
-	playerSQL, playerArgs, err := playerSB.Suffix("ON CONFLICT(steam_id) DO NOTHING").ToSql()
-	if err != nil {
-		return err
-	}
-
-	if _, err = r.pool.Exec(ctx, playerSQL, playerArgs...); err != nil {
-		return err
-	}
-
-	// save match_player
-	matchPlayerSQL, matchPlayerArgs, err := matchPlayerSB.ToSql()
-	if err != nil {
-		return err
-	}
-
-	if _, err = r.pool.Exec(ctx, matchPlayerSQL, matchPlayerArgs...); err != nil {
-		return err
-	}
-
-	return nil
+	return found, nil
 }
 
-func (r *replayRepo) SaveTeams(ctx context.Context, t dto.Teams) error {
-	sql, args, err := r.builder.
-		Insert("team").
-		Columns("name, flag_code, create_time, update_time").
-		Values(t.Team1Name, t.Team1Flag, t.CreateTime, t.CreateTime).
-		Values(t.Team2Name, t.Team2Flag, t.CreateTime, t.CreateTime).
-		Suffix("ON CONFLICT (name) DO NOTHING").
-		ToSql()
-	if err != nil {
-		return err
-	}
+func (r *replayRepo) SaveStats(ctx context.Context, m *dto.ReplayMatch, ps []*dto.PlayerStat, ws []*dto.PlayerWeaponStat) (res *domain.Match, err error) {
+	txFunc := func(tx pgx.Tx) error {
+		steamIDs := append(m.Team1.PlayerSteamIDs, m.Team2.PlayerSteamIDs...)
 
-	if _, err = r.pool.Exec(ctx, sql, args...); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (r *replayRepo) AddPlayersToTeams(ctx context.Context, players []dto.TeamPlayer) error {
-	sb := r.builder.
-		Insert("team_player").
-		Columns("team_name, player_steam_id")
-
-	for _, p := range players {
-		sb = sb.Values(p.TeamName, p.SteamID)
-	}
-
-	sql, args, err := sb.Suffix("ON CONFLICT (team_name, player_steam_id) DO NOTHING").ToSql()
-	if err != nil {
-		return err
-	}
-
-	if _, err = r.pool.Exec(ctx, sql, args...); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (r *replayRepo) SaveMatch(ctx context.Context, m *dto.Match) error {
-	sql, args, err := r.builder.
-		Insert("match").
-		Columns("id, map_name, team1_name, team1_score, team2_name, team2_score, duration, upload_time").
-		Values(m.ID, m.MapName, m.Team1.ClanName, m.Team1.Score, m.Team2.ClanName, m.Team2.Score, m.Duration, m.UploadTime).
-		ToSql()
-	if err != nil {
-		return err
-	}
-
-	if _, err = r.pool.Exec(ctx, sql, args...); err != nil {
-		var pgErr *pgconn.PgError
-
-		if errors.As(err, &pgErr) {
-			if pgErr.Code == pgerrcode.UniqueViolation {
-				return domain.ErrMatchAlreadyExist
-			}
+		if err = r.savePlayers(ctx, tx, steamIDs); err != nil {
+			return err
 		}
 
+		m, err = r.saveTeams(ctx, tx, m)
+		if err != nil {
+			return err
+		}
+
+		players := m.MatchTeamPlayerList()
+
+		if err = r.addPlayersToTeams(ctx, tx, players); err != nil {
+			return err
+		}
+
+		if err = r.saveMatch(ctx, tx, m); err != nil {
+			return err
+		}
+
+		// TODO: send 3 queries above async via waitgroup. Would it work???
+		if err = r.saveMatchHistory(ctx, tx, players); err != nil {
+			return err
+		}
+
+		if err = r.saveMatchStats(ctx, tx, m.ID, ps); err != nil {
+			return err
+		}
+
+		if err = r.saveMatchWeaponStats(ctx, tx, m.ID, ws); err != nil {
+			return err
+		}
+
+		return nil
+	}
+
+	if err = pgx.BeginTxFunc(ctx, r.client.Pool, pgx.TxOptions{}, txFunc); err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
+func (r *replayRepo) savePlayers(ctx context.Context, tx pgx.Tx, playerSteamIDs []uint64) error {
+	sql, args, err := r.client.Builder.
+		Insert("player").
+		Columns("steam_id").
+		Values(playerSteamIDs).
+		Suffix("ON CONFLICT(steam_id) DO NOTHING").
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	if _, err := tx.Exec(ctx, sql, args); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (r *replayRepo) UpsertStats(ctx context.Context, ps []dto.PlayerStat, ws []dto.WeaponStat) error {
-	// player stats
-	sb := r.builder.
-		Insert("player_statistic AS s").
-		Columns("id, player_steam_id, metric, value")
-
-	for _, s := range ps {
-		sb = sb.Values(s.ID, s.SteamID, s.Metric, s.Value)
+func (r *replayRepo) saveTeams(ctx context.Context, tx pgx.Tx, m *dto.ReplayMatch) (*dto.ReplayMatch, error) {
+	sql, args, err := r.client.Builder.
+		Insert("team").
+		Columns("clan_name, flag_code").
+		Values(m.Team1.ClanName, m.Team2.FlagCode).
+		Values(m.Team2.ClanName, m.Team2.FlagCode).
+		Suffix("ON CONFLICT(clan_name) DO UPDATE").
+		Suffix("SET clan_name = EXCLUDED.clan_name").
+		Suffix("RETURNING id").
+		ToSql()
+	if err != nil {
+		return nil, err
 	}
 
-	sql, args, err := sb.
-		Suffix("ON CONFLICT (id) DO UPDATE").
-		Suffix("SET value = s.value + EXCLUDED.value").
-		Suffix("WHERE s.id = EXCLUDED.id").
+	rows, err := tx.Query(ctx, sql, args)
+	if err != nil {
+		return nil, err
+	}
+
+	type teamID struct {
+		ID int16
+	}
+
+	teamIDs, err := pgx.CollectRows(rows, pgx.RowToStructByPos[teamID])
+	if err != nil {
+		return nil, err
+	}
+
+	if len(teamIDs) != 2 {
+		// TODO: use app error
+		return nil, errors.New("got no team ids")
+	}
+
+	m.Team1.ID = teamIDs[0].ID
+	m.Team2.ID = teamIDs[1].ID
+	return m, nil
+}
+
+func (r *replayRepo) addPlayersToTeams(ctx context.Context, tx pgx.Tx, players []dto.MatchTeamPlayer) error {
+	b := r.client.Builder.
+		Insert("team_player").
+		Columns("team_id, player_steam_id")
+
+	for _, p := range players {
+		b = b.Values(p.TeamID, p.SteamID)
+	}
+
+	sql, args, err := b.
+		Suffix("ON CONFLICT (team_id, player_steam_id) DO NOTHING").
 		ToSql()
 	if err != nil {
 		return err
 	}
 
-	if _, err = r.pool.Exec(ctx, sql, args...); err != nil {
+	if _, err = tx.Exec(ctx, sql, args); err != nil {
 		return err
 	}
 
-	// weapon stats
-	sb = r.builder.
-		Insert("weapon_statistic AS s").
-		Columns("id, player_steam_id, weapon_id, metric, value")
+	return nil
+}
+
+func (r *replayRepo) saveMatch(ctx context.Context, tx pgx.Tx, m *dto.ReplayMatch) error {
+	sql, args, err := r.client.Builder.
+		Insert("match").
+		Columns("id, map_name, team1_id, team1_score, team2_id, team2_score, duration, uploaded_at").
+		Values(m.ID, m.MapName, m.Team1.ID, m.Team1.Score, m.Team2.ID, m.Team2.Score, m.Duration, m.UploadedAt).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	if _, err = tx.Exec(ctx, sql, args); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *replayRepo) saveMatchHistory(ctx context.Context, tx pgx.Tx, mp []dto.MatchTeamPlayer) error {
+	b := r.client.Builder.
+		Insert("player_match").
+		Columns("player_steam_id, match_id, team_id, match_state")
+
+	for _, p := range mp {
+		b = b.Values(p.SteamID, p.MatchID, p.TeamID, p.MatchState)
+	}
+
+	sql, args, err := b.ToSql()
+	if err != nil {
+		return err
+	}
+
+	if _, err = tx.Exec(ctx, sql, args); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *replayRepo) saveMatchStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []*dto.PlayerStat) error {
+	b := r.client.Builder.
+		Insert("player_match_stat").
+		Columns(
+			"player_steam_id",
+			"match_id",
+			"kills",
+			"hs_kills",
+			"blind_kills",
+			"wallbang_kills",
+			"noscope_kills",
+			"through_smoke_kills",
+			"deaths",
+			"assists",
+			"flashbang_assists",
+			"mvp_count",
+			"damage_taken",
+			"damage_dealt",
+			"blinded_players",
+			"blinded_times",
+			"bombs_planted",
+			"bombs_defused",
+		)
+
+	for _, s := range stats {
+		b = b.Values(
+			s.SteamID,
+			matchID,
+			s.Kills,
+			s.HSKills,
+			s.BlindKills,
+			s.WallbangKills,
+			s.NoScopeKills,
+			s.ThroughSmokeKills,
+			s.Deaths,
+			s.Assists,
+			s.FlashbangAssists,
+			s.MVPCount,
+			s.DamageTaken,
+			s.DamageDealt,
+			s.BlindedPlayers,
+			s.BlindedTimes,
+			s.BombsPlanted,
+			s.BombsDefused,
+		)
+	}
+
+	sql, args, err := b.ToSql()
+	if err != nil {
+		return err
+	}
+
+	if _, err = tx.Exec(ctx, sql, args); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *replayRepo) saveMatchWeaponStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []*dto.PlayerWeaponStat) error {
+	b := r.client.Builder.
+		Insert("player_match_weapon_stat").
+		Columns(
+			"player_steam_id",
+			"match_id",
+			"weapon_id",
+			"kills",
+			"hs_kills",
+			"blind_kills",
+			"wallbang_kills",
+			"noscope_kills",
+			"through_smoke_kills",
+			"deaths",
+			"assists",
+			"damage_taken",
+			"damage_dealt",
+			"shots",
+			"head_hits",
+			"chest_hits",
+			"stomach_hits",
+			"left_arm_hits",
+			"right_arm_hits",
+			"left_leg_hits",
+			"right_leg_hits",
+		)
 
 	for _, s := range ws {
-		sb = sb.Values(s.ID, s.SteamID, s.WeaponID, s.Metric, s.Value)
+		b = b.Values(
+			s.SteamID,
+			matchID,
+			s.WeaponID,
+			s.Kills,
+			s.HSKills,
+			s.BlindKills,
+			s.WallbangKills,
+			s.NoScopeKills,
+			s.ThroughSmokeKills,
+			s.Deaths,
+			s.Assists,
+			s.DamageTaken,
+			s.DamageDealt,
+			s.Shots,
+			s.HeadHits,
+			s.ChestHits,
+			s.StomachHits,
+			s.LeftArmHits,
+			s.RightArmHits,
+			s.LeftLegHits,
+			s.RightLegHits,
+		)
 	}
 
-	sql, args, err = sb.
-		Suffix("ON CONFLICT (id) DO UPDATE").
-		Suffix("SET value = s.value + EXCLUDED.value").
-		Suffix("WHERE s.id = EXCLUDED.id").
-		ToSql()
+	sql, args, err := b.ToSql()
 	if err != nil {
 		return err
 	}
 
-	if _, err = r.pool.Exec(ctx, sql, args...); err != nil {
+	if _, err = tx.Exec(ctx, sql, args); err != nil {
 		return err
 	}
 
