@@ -64,6 +64,7 @@ func (h *handler) UploadReplay(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// TODO: REWRITE FIX FIX FIX
 	var match *dto.Match
 	err = h.atomic.Run(r.Context(), func(txCtx context.Context) error {
 		match, err = h.replay.CollectStats(txCtx, replayFilename)
