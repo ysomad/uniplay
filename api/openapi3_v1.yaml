@@ -8,8 +8,6 @@ servers:
 tags:
 - name: player
   description: Профиль игрока
-- name: stat
-  description: Статистика игрока
 - name: replay
   description: Запись матча
 - name: compendium
