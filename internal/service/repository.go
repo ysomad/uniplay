@@ -9,7 +9,7 @@ import (
 )
 
 type replayRepository interface {
-	SaveStats(context.Context, *dto.ReplayMatch, []*dto.PlayerStat, []*dto.PlayerWeaponStat) (*domain.Match, error)
+	SaveStats(context.Context, *dto.ReplayMatch, []dto.PlayerStat, []dto.PlayerWeaponStat) (*domain.Match, error)
 	MatchExists(ctx context.Context, matchID uuid.UUID) (found bool, err error)
 }
 

@@ -36,18 +36,18 @@ func (r *parseResult) Match() *dto.ReplayMatch {
 	}
 }
 
-func (r *parseResult) Stats() ([]*dto.PlayerStat, []*dto.PlayerWeaponStat) {
+func (r *parseResult) Stats() ([]dto.PlayerStat, []dto.PlayerWeaponStat) {
 	var (
 		wg          sync.WaitGroup
-		playerStats []*dto.PlayerStat
-		weaponStats []*dto.PlayerWeaponStat
+		playerStats []dto.PlayerStat
+		weaponStats []dto.PlayerWeaponStat
 	)
 
 	wg.Add(2)
 
 	go func() {
 		for _, ps := range r.stats.playerStats {
-			playerStats = append(playerStats, ps)
+			playerStats = append(playerStats, *ps)
 		}
 
 		wg.Done()
@@ -56,7 +56,7 @@ func (r *parseResult) Stats() ([]*dto.PlayerStat, []*dto.PlayerWeaponStat) {
 	go func() {
 		for _, weapons := range r.stats.weaponStats {
 			for _, ws := range weapons {
-				weaponStats = append(weaponStats, ws)
+				weaponStats = append(weaponStats, *ws)
 			}
 		}
 

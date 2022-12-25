@@ -10,8 +10,8 @@ import (
 
 type match struct {
 	id       uuid.UUID
-	team1    *matchTeam
-	team2    *matchTeam
+	team1    matchTeam
+	team2    matchTeam
 	mapName  string
 	duration time.Duration
 }
@@ -38,7 +38,7 @@ type matchTeam struct {
 	playerSteamIDs []uint64
 }
 
-func newMatchTeam(name, flag string, side common.Team, players []*common.Player) *matchTeam {
+func newMatchTeam(name, flag string, side common.Team, players []*common.Player) matchTeam {
 	var steamIDs []uint64
 
 	for _, p := range players {
@@ -47,7 +47,7 @@ func newMatchTeam(name, flag string, side common.Team, players []*common.Player)
 		}
 	}
 
-	return &matchTeam{
+	return matchTeam{
 		clanName:       name,
 		flagCode:       flag,
 		side:           side,

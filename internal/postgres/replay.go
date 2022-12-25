@@ -6,10 +6,11 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	"go.uber.org/zap"
+
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
-	"go.uber.org/zap"
 )
 
 type replayRepo struct {
@@ -34,15 +35,15 @@ func (r *replayRepo) MatchExists(ctx context.Context, matchID uuid.UUID) (found 
 	return found, nil
 }
 
-func (r *replayRepo) SaveStats(ctx context.Context, m *dto.ReplayMatch, ps []*dto.PlayerStat, ws []*dto.PlayerWeaponStat) (res *domain.Match, err error) {
+func (r *replayRepo) SaveStats(ctx context.Context, m *dto.ReplayMatch, ps []dto.PlayerStat, ws []dto.PlayerWeaponStat) (*domain.Match, error) {
 	txFunc := func(tx pgx.Tx) error {
 		steamIDs := append(m.Team1.PlayerSteamIDs, m.Team2.PlayerSteamIDs...)
 
-		if err = r.savePlayers(ctx, tx, steamIDs); err != nil {
+		if err := r.savePlayers(ctx, tx, steamIDs); err != nil {
 			return err
 		}
 
-		m, err = r.saveTeams(ctx, tx, m)
+		m, err := r.saveTeams(ctx, tx, m)
 		if err != nil {
 			return err
 		}
@@ -57,7 +58,6 @@ func (r *replayRepo) SaveStats(ctx context.Context, m *dto.ReplayMatch, ps []*dt
 			return err
 		}
 
-		// TODO: send 3 queries above async via waitgroup. Would it work???
 		if err = r.saveMatchHistory(ctx, tx, players); err != nil {
 			return err
 		}
@@ -73,25 +73,49 @@ func (r *replayRepo) SaveStats(ctx context.Context, m *dto.ReplayMatch, ps []*dt
 		return nil
 	}
 
-	if err = pgx.BeginTxFunc(ctx, r.client.Pool, pgx.TxOptions{}, txFunc); err != nil {
+	if err := pgx.BeginTxFunc(ctx, r.client.Pool, pgx.TxOptions{}, txFunc); err != nil {
 		return nil, err
 	}
 
-	return res, nil
+	return &domain.Match{
+		ID:       m.ID,
+		MapName:  m.MapName,
+		Duration: m.Duration,
+		Team1: domain.MatchTeam{
+			ID:             m.Team1.ID,
+			ClanName:       m.Team1.ClanName,
+			FlagCode:       m.Team1.FlagCode,
+			Score:          m.Team1.Score,
+			PlayerSteamIDs: m.Team1.PlayerSteamIDs,
+		},
+		Team2: domain.MatchTeam{
+			ID:             m.Team2.ID,
+			ClanName:       m.Team2.ClanName,
+			FlagCode:       m.Team2.FlagCode,
+			Score:          m.Team2.Score,
+			PlayerSteamIDs: m.Team2.PlayerSteamIDs,
+		},
+		UploadedAt: m.UploadedAt,
+	}, nil
 }
 
-func (r *replayRepo) savePlayers(ctx context.Context, tx pgx.Tx, playerSteamIDs []uint64) error {
-	sql, args, err := r.client.Builder.
+func (r *replayRepo) savePlayers(ctx context.Context, tx pgx.Tx, steamIDs []uint64) error {
+	b := r.client.Builder.
 		Insert("player").
-		Columns("steam_id").
-		Values(playerSteamIDs).
-		Suffix("ON CONFLICT(steam_id) DO NOTHING").
-		ToSql()
+		Columns("steam_id")
+
+	for _, steamID := range steamIDs {
+		b = b.Values(steamID)
+	}
+
+	sql, args, err := b.Suffix("ON CONFLICT(steam_id) DO NOTHING").ToSql()
 	if err != nil {
 		return err
 	}
 
-	if _, err := tx.Exec(ctx, sql, args); err != nil {
+	r.log.Debug("replayRepo", zap.String("query", sql))
+
+	if _, err := tx.Exec(ctx, sql, args...); err != nil {
 		return err
 	}
 
@@ -112,7 +136,9 @@ func (r *replayRepo) saveTeams(ctx context.Context, tx pgx.Tx, m *dto.ReplayMatc
 		return nil, err
 	}
 
-	rows, err := tx.Query(ctx, sql, args)
+	r.log.Debug("replayRepo", zap.String("query", sql))
+
+	rows, err := tx.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +178,9 @@ func (r *replayRepo) addPlayersToTeams(ctx context.Context, tx pgx.Tx, players [
 		return err
 	}
 
-	if _, err = tx.Exec(ctx, sql, args); err != nil {
+	r.log.Debug("replayRepo", zap.String("query", sql))
+
+	if _, err = tx.Exec(ctx, sql, args...); err != nil {
 		return err
 	}
 
@@ -169,7 +197,9 @@ func (r *replayRepo) saveMatch(ctx context.Context, tx pgx.Tx, m *dto.ReplayMatc
 		return err
 	}
 
-	if _, err = tx.Exec(ctx, sql, args); err != nil {
+	r.log.Debug("replayRepo", zap.String("query", sql))
+
+	if _, err = tx.Exec(ctx, sql, args...); err != nil {
 		return err
 	}
 
@@ -190,14 +220,16 @@ func (r *replayRepo) saveMatchHistory(ctx context.Context, tx pgx.Tx, mp []dto.M
 		return err
 	}
 
-	if _, err = tx.Exec(ctx, sql, args); err != nil {
+	r.log.Debug("replayRepo", zap.String("query", sql))
+
+	if _, err = tx.Exec(ctx, sql, args...); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (r *replayRepo) saveMatchStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []*dto.PlayerStat) error {
+func (r *replayRepo) saveMatchStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []dto.PlayerStat) error {
 	b := r.client.Builder.
 		Insert("player_match_stat").
 		Columns(
@@ -249,14 +281,16 @@ func (r *replayRepo) saveMatchStats(ctx context.Context, tx pgx.Tx, matchID uuid
 		return err
 	}
 
-	if _, err = tx.Exec(ctx, sql, args); err != nil {
+	r.log.Debug("replayRepo", zap.String("query", sql))
+
+	if _, err = tx.Exec(ctx, sql, args...); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (r *replayRepo) saveMatchWeaponStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []*dto.PlayerWeaponStat) error {
+func (r *replayRepo) saveMatchWeaponStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []dto.PlayerWeaponStat) error {
 	b := r.client.Builder.
 		Insert("player_match_weapon_stat").
 		Columns(
@@ -314,7 +348,9 @@ func (r *replayRepo) saveMatchWeaponStats(ctx context.Context, tx pgx.Tx, matchI
 		return err
 	}
 
-	if _, err = tx.Exec(ctx, sql, args); err != nil {
+	r.log.Debug("replayRepo", zap.String("query", sql))
+
+	if _, err = tx.Exec(ctx, sql, args...); err != nil {
 		return err
 	}
 

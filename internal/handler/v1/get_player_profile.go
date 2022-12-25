@@ -6,6 +6,7 @@ import (
 
 	"github.com/ssssargsian/uniplay/internal/domain"
 	v1 "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
+	"github.com/ssssargsian/uniplay/internal/pkg/apperror"
 	"go.uber.org/zap"
 )
 
@@ -15,11 +16,11 @@ func (h *handler) GetPlayerProfile(w http.ResponseWriter, r *http.Request, steam
 		h.log.Error("http - v1 - handler.GetPlayerProfile", zap.Error(err))
 
 		if errors.Is(err, domain.ErrPlayerNotFound) {
-			writeError(w, http.StatusBadRequest, err)
+			apperror.Write(w, http.StatusBadRequest, err)
 			return
 		}
 
-		writeError(w, http.StatusInternalServerError, err)
+		apperror.Write(w, http.StatusInternalServerError, err)
 		return
 	}
 

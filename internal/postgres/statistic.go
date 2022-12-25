@@ -1,22 +1,20 @@
 package postgres
 
 import (
-	sq "github.com/Masterminds/squirrel"
-	"github.com/ysomad/pgxatomic"
 	"go.uber.org/zap"
+
+	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
 )
 
 type statisticRepo struct {
-	log     *zap.Logger
-	pool    pgxatomic.Pool
-	builder sq.StatementBuilderType
+	log    *zap.Logger
+	client *pgclient.Client
 }
 
-func NewStatisticRepo(l *zap.Logger, p pgxatomic.Pool, b sq.StatementBuilderType) *statisticRepo {
+func NewStatisticRepo(l *zap.Logger, c *pgclient.Client) *statisticRepo {
 	return &statisticRepo{
-		log:     l,
-		pool:    p,
-		builder: b,
+		log:    l,
+		client: c,
 	}
 }
 

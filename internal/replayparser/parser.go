@@ -64,11 +64,10 @@ func (p *parser) ParseMatchID() (uuid.UUID, error) {
 	return p.match.id, nil
 }
 
-func (p *parser) Close() error {
+func (p *parser) Close() {
 	if p != nil {
-		return p.p.Close()
+		p.p.Close()
 	}
-	return nil
 }
 
 // Parse collect player stats from demo.

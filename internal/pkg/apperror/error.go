@@ -3,11 +3,11 @@ package apperror
 var _ error = &Err{}
 
 type Err struct {
-	Code uint16
+	Code int
 	Msg  string
 }
 
-func New(code uint16, msg string) Err {
+func New(code int, msg string) Err {
 	return Err{
 		Code: code,
 		Msg:  msg,
