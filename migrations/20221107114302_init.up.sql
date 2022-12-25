@@ -81,13 +81,13 @@ CREATE TABLE IF NOT EXISTS player_match_weapon_stat (
     damage_taken integer NOT NULL,
     damage_dealt integer NOT NULL,
     shots integer NOT NULL,
-    head_hits integer NOT NULL,
-    chest_hits integer NOT NULL,
-    stomach_hits integer NOT NULL,
-    left_arm_hits integer NOT NULL,
-    right_arm_hits integer NOT NULL,
-    left_leg_hits integer NOT NULL,
-    right_leg_hits integer NOT NULL
+    head_hits smallint NOT NULL,
+    chest_hits smallint NOT NULL,
+    stomach_hits smallint NOT NULL,
+    left_arm_hits smallint NOT NULL,
+    right_arm_hits smallint NOT NULL,
+    left_leg_hits smallint NOT NULL,
+    right_leg_hits smallint NOT NULL
 );
 
 COMMIT;
