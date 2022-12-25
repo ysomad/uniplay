@@ -112,7 +112,7 @@ type PlayerMatchListSort struct {
 // PlayerStats defines model for PlayerStats.
 type PlayerStats struct {
 	// CalculatedStats высчитываемая статистика
-	CalculatedStats *CalculatedStats `json:"calculated_stats,omitempty"`
+	CalculatedStats CalculatedStats `json:"calculated_stats"`
 
 	// RoundStats набор средних показателей за раунд
 	RoundStats RoundStats `json:"round_stats"`
