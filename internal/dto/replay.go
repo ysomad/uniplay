@@ -59,23 +59,24 @@ type MatchTeamPlayer struct {
 }
 
 type PlayerStat struct {
-	SteamID           uint64
-	Kills             int
-	HSKills           int
-	BlindKills        int
-	WallbangKills     int
-	NoScopeKills      int
-	ThroughSmokeKills int
-	Deaths            int
-	Assists           int
-	FlashbangAssists  int
-	MVPCount          int
-	DamageTaken       int
-	DamageDealt       int
-	BlindedPlayers    int
-	BlindedTimes      int
-	BombsPlanted      int
-	BombsDefused      int
+	SteamID            uint64
+	Kills              int
+	HSKills            int
+	BlindKills         int
+	WallbangKills      int
+	NoScopeKills       int
+	ThroughSmokeKills  int
+	Deaths             int
+	Assists            int
+	FlashbangAssists   int
+	MVPCount           int
+	DamageTaken        int
+	DamageDealt        int
+	GrenadeDamageDealt int
+	BlindedPlayers     int
+	BlindedTimes       int
+	BombsPlanted       int
+	BombsDefused       int
 }
 
 func (ts *PlayerStat) Add(m domain.Metric, v int) {

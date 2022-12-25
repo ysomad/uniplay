@@ -34,4 +34,6 @@ const (
 	MetricHitRightArm Metric = 22
 	MetricHitLeftLeg  Metric = 23
 	MetricHitRightLeg Metric = 24
+
+	MetricGrenadeDamageDealt Metric = 25
 )

@@ -15,6 +15,7 @@ type replayRepository interface {
 
 type playerRepository interface {
 	// FindBySteamID(ctx context.Context, steamID uint64) (domain.Player, error)
+	GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error)
 }
 
 type statisticRepository interface {

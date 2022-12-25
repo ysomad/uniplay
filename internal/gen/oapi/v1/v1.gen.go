@@ -32,17 +32,9 @@ type AccuracyWeaponStats struct {
 
 // CalculatedStats высчитываемая статистика
 type CalculatedStats struct {
-	HeadshotPercentage float64       `json:"headshot_percentage"`
-	KillDeathRatio     float64       `json:"kill_death_ratio"`
-	MatchesDraw        int16         `json:"matches_draw"`
-	MatchesLost        int16         `json:"matches_lost"`
-	MatchesPlayed      int16         `json:"matches_played"`
-	MatchesWon         int16         `json:"matches_won"`
-	RoundsLost         int16         `json:"rounds_lost"`
-	RoundsPlayed       int16         `json:"rounds_played"`
-	RoundsWon          int16         `json:"rounds_won"`
-	TimePlayed         time.Duration `json:"time_played"`
-	Winrate            float64       `json:"winrate"`
+	HeadshotPercentage float64 `json:"headshot_percentage"`
+	KillDeathRatio     float64 `json:"kill_death_ratio"`
+	WinRate            float64 `json:"winrate"`
 }
 
 // Error defines model for Error.
@@ -150,26 +142,29 @@ type SortOrder string
 
 // TotalStats общая статистика по сумме метрик игрока
 type TotalStats struct {
-	Assists    int16 `json:"assists"`
-	BlindKills int16 `json:"blind_kills"`
-
-	// BlindedPlayers кол-во ослепленных игроков
-	BlindedPlayers int16 `json:"blinded_players"`
-
-	// BlindedTimes кол-во раз ослеплен
-	BlindedTimes      int16 `json:"blinded_times"`
-	BombsDefused      int16 `json:"bombs_defused"`
-	BombsPlanted      int16 `json:"bombs_planted"`
-	DamageDealt       int32 `json:"damage_dealt"`
-	DamageTaken       int32 `json:"damage_taken"`
-	Deaths            int32 `json:"deaths"`
-	FlashbangAssists  int16 `json:"flashbang_assists"`
-	HeadshotKills     int32 `json:"headshot_kills"`
-	Kills             int32 `json:"kills"`
-	MvpCount          int16 `json:"mvp_count"`
-	NoscopeKills      int16 `json:"noscope_kills"`
-	ThroughSmokeKills int16 `json:"through_smoke_kills"`
-	WallbangKills     int16 `json:"wallbang_kills"`
+	Assists            int16         `json:"assists"`
+	BlindKills         int16         `json:"blind_kills"`
+	BlindedPlayers     int16         `json:"blinded_players"`
+	BlindedTimes       int16         `json:"blinded_times"`
+	BombsDefused       int16         `json:"bombs_defused"`
+	BombsPlanted       int16         `json:"bombs_planted"`
+	DamageDealt        int32         `json:"damage_dealt"`
+	DamageTaken        int32         `json:"damage_taken"`
+	Deaths             int32         `json:"deaths"`
+	Draws              int16         `json:"draws"`
+	FlashbangAssists   int16         `json:"flashbang_assists"`
+	GrenadeDamageDealt int16         `json:"grenade_damage_dealt"`
+	HeadshotKills      int16         `json:"headshot_kills"`
+	Kills              int32         `json:"kills"`
+	Loses              int16         `json:"loses"`
+	MatchesPlayed      int16         `json:"matches_played"`
+	MVPCount           int16         `json:"mvp_count"`
+	NoScopeKills       int16         `json:"noscope_kills"`
+	RoundsPlayed       int16         `json:"rounds_played"`
+	ThroughSmokeKills  int16         `json:"through_smoke_kills"`
+	TimePlayed         time.Duration `json:"time_played"`
+	WallbangKills      int16         `json:"wallbang_kills"`
+	Wins               int16         `json:"wins"`
 }
 
 // TotalWeaponStats defines model for TotalWeaponStats.

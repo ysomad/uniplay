@@ -332,9 +332,13 @@ func (p *parser) handlePlayerHurt(e events.PlayerHurt) {
 			// dealth damage with weapon
 			p.stats.addWeaponStat(e.Attacker.SteamID64, domain.MetricDamageDealt, e.Weapon.Type, e.HealthDamage)
 
-			// hitgroup shot
-			metric := p.hitgroupToMetric(e.HitGroup)
-			p.stats.incrWeaponStat(e.Attacker.SteamID64, metric, e.Weapon.Type)
+			// collect grenade damage or hit to a specific part of the body
+			if e.Weapon.Class() == common.EqClassGrenade {
+				p.stats.addPlayerStat(e.Attacker.SteamID64, domain.MetricGrenadeDamageDealt, e.HealthDamage)
+			} else {
+				// hitgroup shot
+				p.stats.incrWeaponStat(e.Attacker.SteamID64, p.hitgroupToMetric(e.HitGroup), e.Weapon.Type)
+			}
 		}
 	}
 

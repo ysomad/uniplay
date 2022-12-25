@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS player_match_stat (
     mvp_count smallint NOT NULL,
     damage_taken integer NOT NULL,
     damage_dealt integer NOT NULL,
+    grenade_damage_dealt smallint NOT NULL,
     blinded_players smallint NOT NULL,
     blinded_times smallint NOT NULL,
     bombs_planted smallint NOT NULL,
