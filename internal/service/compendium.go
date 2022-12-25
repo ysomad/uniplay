@@ -17,11 +17,9 @@ func NewCompendium(r compendiumRepository) *Compendium {
 }
 
 func (c *Compendium) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
-	// return c.repo.GetWeaponList(ctx)
-	return nil, nil
+	return c.repo.GetWeaponList(ctx)
 }
 
 func (c *Compendium) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
-	// return c.repo.GetWeaponClassList(ctx)
-	return nil, nil
+	return c.repo.GetWeaponClassList(ctx)
 }

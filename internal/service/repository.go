@@ -24,6 +24,6 @@ type statisticRepository interface {
 }
 
 type compendiumRepository interface {
-	// GetWeaponList(context.Context) ([]domain.Weapon, error)
-	// GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
+	GetWeaponList(context.Context) ([]domain.Weapon, error)
+	GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
 }
