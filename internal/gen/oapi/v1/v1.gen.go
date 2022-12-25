@@ -34,7 +34,7 @@ type AccuracyWeaponStats struct {
 type CalculatedStats struct {
 	HeadshotPercentage float64 `json:"headshot_percentage"`
 	KillDeathRatio     float64 `json:"kill_death_ratio"`
-	WinRate            float64 `json:"winrate"`
+	WinRate            float64 `json:"win_rate"`
 }
 
 // Error defines model for Error.

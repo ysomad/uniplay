@@ -312,7 +312,7 @@ components:
       - rounds_played
       - rounds_won
       - time_played
-      - winrate
+      - win_rate
       type: object
       properties:
         kill_death_ratio:
@@ -323,11 +323,10 @@ components:
           type: number
           format: double
           x-go-type: float64
-        winrate:
+        win_rate:
           type: number
           format: double
           x-go-type: float64
-          x-go-name: WinRate
       description: высчитываемая статистика
     TotalStats:
       required:
