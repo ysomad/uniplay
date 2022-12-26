@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"math"
 	"time"
 )
 
@@ -44,6 +45,9 @@ type PlayerCalcStats struct {
 	WinRate            float64
 }
 
+// round returns rounded float64 to 2 decimal places.
+func round(n float64) float64 { return math.Round(n*100) / 100 }
+
 type PlayerCalcStatsParams struct {
 	MatchesPlayed int16
 	Kills         int32
@@ -55,9 +59,9 @@ type PlayerCalcStatsParams struct {
 
 func NewPlayerCalcStats(p PlayerCalcStatsParams) PlayerCalcStats {
 	return PlayerCalcStats{
-		KillDeathRatio:     float64(p.Deaths) / float64(p.Kills) * 100,
-		HeadshotPercentage: float64(p.HeadshotKills) / float64(p.Kills) * 100,
-		WinRate:            float64(p.Wins) / float64(p.MatchesPlayed) * 100,
+		KillDeathRatio:     round(float64(p.Kills) / float64(p.Deaths)),
+		HeadshotPercentage: round(float64(p.HeadshotKills) / float64(p.Kills) * 100),
+		WinRate:            round(float64(p.Wins) / float64(p.MatchesPlayed) * 100),
 	}
 }
 
@@ -86,12 +90,12 @@ type PlayerRoundStatsParams struct {
 func NewPlayerRoundStats(p PlayerRoundStatsParams) PlayerRoundStats {
 	floatRoundsPlayed := float64(p.RoundsPlayed)
 	return PlayerRoundStats{
-		Kills:              float64(p.Kills) / floatRoundsPlayed,
-		Assists:            float64(p.Assists) / floatRoundsPlayed,
-		Deaths:             float64(p.Deaths) / floatRoundsPlayed,
-		DamageDealt:        float64(p.DamageDealt) / floatRoundsPlayed,
-		GrenadeDamageDealt: float64(p.GrenadeDamageDealt) / floatRoundsPlayed,
-		BlindedPlayers:     float64(p.BlindedPlayers) / floatRoundsPlayed,
-		BlindedTimes:       float64(p.BlindedTimes) / floatRoundsPlayed,
+		Kills:              round(float64(p.Kills) / floatRoundsPlayed),
+		Assists:            round(float64(p.Assists) / floatRoundsPlayed),
+		Deaths:             round(float64(p.Deaths) / floatRoundsPlayed),
+		DamageDealt:        round(float64(p.DamageDealt) / floatRoundsPlayed),
+		GrenadeDamageDealt: round(float64(p.GrenadeDamageDealt) / floatRoundsPlayed),
+		BlindedPlayers:     round(float64(p.BlindedPlayers) / floatRoundsPlayed),
+		BlindedTimes:       round(float64(p.BlindedTimes) / floatRoundsPlayed),
 	}
 }
