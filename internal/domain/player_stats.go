@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"math"
 	"time"
 )
 
@@ -45,9 +44,6 @@ type PlayerCalcStats struct {
 	WinRate            float64
 }
 
-// round returns rounded float64 to 2 decimal places.
-func round(n float64) float64 { return math.Round(n*100) / 100 }
-
 type PlayerCalcStatsParams struct {
 	MatchesPlayed int16
 	Kills         int32
@@ -55,14 +51,6 @@ type PlayerCalcStatsParams struct {
 	HeadshotKills int16
 	Wins          int16
 	Loses         int16
-}
-
-func NewPlayerCalcStats(p PlayerCalcStatsParams) PlayerCalcStats {
-	return PlayerCalcStats{
-		KillDeathRatio:     round(float64(p.Kills) / float64(p.Deaths)),
-		HeadshotPercentage: round(float64(p.HeadshotKills) / float64(p.Kills) * 100),
-		WinRate:            round(float64(p.Wins) / float64(p.MatchesPlayed) * 100),
-	}
 }
 
 // PlayerRoundStats is a set of AVG player stats per round.
@@ -87,15 +75,19 @@ type PlayerRoundStatsParams struct {
 	BlindedTimes       int16
 }
 
-func NewPlayerRoundStats(p PlayerRoundStatsParams) PlayerRoundStats {
-	floatRoundsPlayed := float64(p.RoundsPlayed)
-	return PlayerRoundStats{
-		Kills:              round(float64(p.Kills) / floatRoundsPlayed),
-		Assists:            round(float64(p.Assists) / floatRoundsPlayed),
-		Deaths:             round(float64(p.Deaths) / floatRoundsPlayed),
-		DamageDealt:        round(float64(p.DamageDealt) / floatRoundsPlayed),
-		GrenadeDamageDealt: round(float64(p.GrenadeDamageDealt) / floatRoundsPlayed),
-		BlindedPlayers:     round(float64(p.BlindedPlayers) / floatRoundsPlayed),
-		BlindedTimes:       round(float64(p.BlindedTimes) / floatRoundsPlayed),
-	}
-}
+// func NewPlayerRoundStats(p PlayerRoundStatsParams) PlayerRoundStats {
+// 	if p.RoundsPlayed <= 0 {
+// 		return PlayerRoundStats{}
+// 	}
+
+// 	floatRoundsPlayed := float64(p.RoundsPlayed)
+// 	return PlayerRoundStats{
+// 		Kills:              round(float64(p.Kills) / floatRoundsPlayed),
+// 		Assists:            round(float64(p.Assists) / floatRoundsPlayed),
+// 		Deaths:             round(float64(p.Deaths) / floatRoundsPlayed),
+// 		DamageDealt:        round(float64(p.DamageDealt) / floatRoundsPlayed),
+// 		GrenadeDamageDealt: round(float64(p.GrenadeDamageDealt) / floatRoundsPlayed),
+// 		BlindedPlayers:     round(float64(p.BlindedPlayers) / floatRoundsPlayed),
+// 		BlindedTimes:       round(float64(p.BlindedTimes) / floatRoundsPlayed),
+// 	}
+// }

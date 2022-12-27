@@ -37,20 +37,18 @@ func Run(conf *config.Config) {
 	// repos
 	replayRepo := postgres.NewReplayRepo(l, pgClient)
 	playerRepo := postgres.NewPlayerRepo(l, pgClient)
-	metricRepo := postgres.NewStatisticRepo(l, pgClient)
 	compendiumRepo := postgres.NewCompendiumRepo(l, pgClient)
 
 	// services
 	replayService := service.NewReplay(l, replayRepo)
 	playerService := service.NewPlayer(playerRepo)
-	statisticService := service.NewStatistic(l, metricRepo)
 	compendiumService := service.NewCompendium(compendiumRepo)
 
 	// init handlers
 	mux := chi.NewMux()
 	mux.Use(middleware.Logger, middleware.Recoverer)
 
-	handlerV1 := v1.NewHandler(l, replayService, playerService, statisticService, compendiumService)
+	handlerV1 := v1.NewHandler(l, replayService, playerService, compendiumService)
 	v1gen.HandlerFromMuxWithBaseURL(handlerV1, mux, "/v1")
 
 	runHTTPServer(mux, l, conf.HTTP.Port)

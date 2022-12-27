@@ -24,7 +24,7 @@ func (h *handler) GetPlayerStats(w http.ResponseWriter, r *http.Request, steamID
 		return
 	}
 
-	writeBody(w, http.StatusOK, v1.PlayerStats{
+	err = writeBody(w, http.StatusOK, v1.PlayerStats{
 		TotalStats: v1.TotalStats{
 			Assists:            stats.Total.Assists,
 			BlindKills:         stats.Total.BlindKills,
@@ -65,4 +65,7 @@ func (h *handler) GetPlayerStats(w http.ResponseWriter, r *http.Request, steamID
 			Kills:              stats.Round.Kills,
 		},
 	})
+	if err != nil {
+		apperror.Write(w, http.StatusInternalServerError, err)
+	}
 }

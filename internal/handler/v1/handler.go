@@ -13,16 +13,14 @@ type handler struct {
 	log        *zap.Logger
 	replay     *service.Replay
 	player     *service.Player
-	statistic  *service.Statistic
 	compendium *service.Compendium
 }
 
-func NewHandler(l *zap.Logger, r *service.Replay, p *service.Player, s *service.Statistic, c *service.Compendium) *handler {
+func NewHandler(l *zap.Logger, r *service.Replay, p *service.Player, c *service.Compendium) *handler {
 	return &handler{
 		log:        l,
 		replay:     r,
 		player:     p,
-		statistic:  s,
 		compendium: c,
 	}
 }

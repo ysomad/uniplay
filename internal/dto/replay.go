@@ -130,7 +130,6 @@ type PlayerWeaponStat struct {
 	DamageTaken       int
 	DamageDealt       int
 	Shots             int
-	Hits              int
 	HeadHits          int
 	ChestHits         int
 	StomachHits       int

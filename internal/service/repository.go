@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 )
@@ -14,13 +15,8 @@ type replayRepository interface {
 }
 
 type playerRepository interface {
-	// FindBySteamID(ctx context.Context, steamID uint64) (domain.Player, error)
-	GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error)
-}
-
-type statisticRepository interface {
-	// GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]dto.StorageWeaponStat, error)
-	// GetWeaponClassStats(ctx context.Context, steamID uint64, classID uint8) ([]dto.WeaponClassStat, error)
+	GetTotalStats(ctx context.Context, steamID uint64) (domain.PlayerTotalStats, error)
+	GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponTotalStats, error)
 }
 
 type compendiumRepository interface {

@@ -1,11 +1,13 @@
 package domain
 
-type PlayerWeaponStats struct {
-	TotalStats    *PlayerWeaponTotalStats    `json:"total_stats"`
-	AccuracyStats *PlayerWeaponAccuracyStats `json:"accuracy_stats"`
+import "math"
+
+type WeaponStats struct {
+	TotalStats    WeaponTotalStats    `json:"total_stats"`
+	AccuracyStats WeaponAccuracyStats `json:"accuracy_stats"`
 }
 
-type PlayerWeaponTotalStats struct {
+type WeaponTotalStats struct {
 	WeaponID          int16  `json:"weapon_id"`
 	Weapon            string `json:"weapon"`
 	Kills             int32  `json:"kills"`
@@ -19,7 +21,6 @@ type PlayerWeaponTotalStats struct {
 	DamageTaken       int32  `json:"damage_taken"`
 	DamageDealt       int32  `json:"damage_dealt"`
 	Shots             int32  `json:"shots"`
-	Hits              int32  `json:"hits"`
 	HeadHits          int16  `json:"head_hits"`
 	ChestHits         int16  `json:"chest_hits"`
 	StomachHits       int16  `json:"stomach_hits"`
@@ -29,7 +30,7 @@ type PlayerWeaponTotalStats struct {
 	RightLegHits      int16  `json:"right_leg_hits"`
 }
 
-type PlayerWeaponAccuracyStats struct {
+type WeaponAccuracyStats struct {
 	Total   float64 `json:"total"`
 	Head    float64 `json:"head"`
 	Chest   float64 `json:"chest"`
@@ -38,23 +39,33 @@ type PlayerWeaponAccuracyStats struct {
 	Legs    float64 `json:"legs"`
 }
 
-func NewPlayerWeaponAccuracyStats(
-	shots,
-	hits,
-	headHits,
-	chestHits,
-	stomachHits,
-	lArmHits,
-	rArmHits,
-	lLegHits,
-	rLegHits float64,
-) PlayerWeaponAccuracyStats {
-	return PlayerWeaponAccuracyStats{
-		Total:   shots / hits,
-		Head:    shots / headHits,
-		Chest:   shots / chestHits,
-		Stomach: shots / stomachHits,
-		Arms:    shots / (lArmHits + rArmHits),
-		Legs:    shots / (lLegHits + rLegHits),
+func round(n float64) float64 { return math.Round(n*100) / 100 }
+
+func calcAccuracy(a, b float64) float64 {
+	if a <= 0 || b <= 0 {
+		return 0
 	}
+	return round(a * 100 / b)
+}
+
+func NewWeaponAccuracyStats(shots int32, headHits, chestHits, stomachHits, larmHits, rarmHits, llegHits, rlegHits int16) WeaponAccuracyStats {
+	hits := float64(headHits + chestHits + stomachHits + larmHits + rarmHits + llegHits + rlegHits)
+
+	if hits <= 0 {
+		return WeaponAccuracyStats{}
+	}
+
+	return WeaponAccuracyStats{
+		Total:   calcAccuracy(hits, float64(shots)),
+		Head:    calcAccuracy(float64(headHits), hits),
+		Chest:   calcAccuracy(float64(chestHits), hits),
+		Stomach: calcAccuracy(float64(stomachHits), hits),
+		Arms:    calcAccuracy(float64(larmHits+rarmHits), hits),
+		Legs:    calcAccuracy(float64(llegHits+rlegHits), hits),
+	}
+}
+
+type WeaponStatsFilter struct {
+	WeaponID int16
+	ClassID  int8
 }
