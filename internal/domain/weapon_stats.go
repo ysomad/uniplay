@@ -7,6 +7,28 @@ type WeaponStats struct {
 	AccuracyStats WeaponAccuracyStats `json:"accuracy_stats"`
 }
 
+func NewWeaponStatsList(total []WeaponTotalStats) []WeaponStats {
+	res := make([]WeaponStats, len(total))
+
+	for i, s := range total {
+		res[i] = WeaponStats{
+			TotalStats: s,
+			AccuracyStats: newWeaponAccuracyStats(
+				s.Shots,
+				s.HeadHits,
+				s.ChestHits,
+				s.StomachHits,
+				s.LeftArmHits,
+				s.RightArmHits,
+				s.LeftLegHits,
+				s.RightLegHits,
+			),
+		}
+	}
+
+	return res
+}
+
 type WeaponTotalStats struct {
 	WeaponID          int16  `json:"weapon_id"`
 	Weapon            string `json:"weapon"`
@@ -39,8 +61,10 @@ type WeaponAccuracyStats struct {
 	Legs    float64 `json:"legs"`
 }
 
+// round rounds float64 to 2 decimal places.
 func round(n float64) float64 { return math.Round(n*100) / 100 }
 
+// calcAccuracy returns accuracy in percentage.
 func calcAccuracy(a, b float64) float64 {
 	if a <= 0 || b <= 0 {
 		return 0
@@ -48,7 +72,7 @@ func calcAccuracy(a, b float64) float64 {
 	return round(a * 100 / b)
 }
 
-func NewWeaponAccuracyStats(shots int32, headHits, chestHits, stomachHits, larmHits, rarmHits, llegHits, rlegHits int16) WeaponAccuracyStats {
+func newWeaponAccuracyStats(shots int32, headHits, chestHits, stomachHits, larmHits, rarmHits, llegHits, rlegHits int16) WeaponAccuracyStats {
 	hits := float64(headHits + chestHits + stomachHits + larmHits + rarmHits + llegHits + rlegHits)
 
 	if hits <= 0 {

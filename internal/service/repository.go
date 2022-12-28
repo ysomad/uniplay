@@ -15,7 +15,7 @@ type replayRepository interface {
 }
 
 type playerRepository interface {
-	GetTotalStats(ctx context.Context, steamID uint64) (domain.PlayerTotalStats, error)
+	GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error)
 	GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponTotalStats, error)
 }
 

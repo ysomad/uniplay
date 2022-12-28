@@ -3,15 +3,15 @@ package apperror
 var _ error = &Err{}
 
 type Err struct {
-	Code int
-	Msg  string
+	Code    int    `json:"code"`
+	Message string `json:"message"`
 }
 
 func New(code int, msg string) Err {
 	return Err{
-		Code: code,
-		Msg:  msg,
+		Code:    code,
+		Message: msg,
 	}
 }
 
-func (e Err) Error() string { return e.Msg }
+func (e Err) Error() string { return e.Message }

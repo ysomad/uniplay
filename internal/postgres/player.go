@@ -24,7 +24,7 @@ func NewPlayerRepo(l *zap.Logger, c *pgclient.Client) *playerRepo {
 	}
 }
 
-func (r *playerRepo) GetTotalStats(ctx context.Context, steamID uint64) (domain.PlayerTotalStats, error) {
+func (r *playerRepo) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
 	sql, args, err := r.client.Builder.
 		Select(
 			"sum(ps.kills) as total_kills",
@@ -51,30 +51,30 @@ func (r *playerRepo) GetTotalStats(ctx context.Context, steamID uint64) (domain.
 			"coalesce((case when pm.match_state = 0 then count(pm.*) end), 0) as total_draws",
 			"sum(m.duration) as total_time_played").
 		From("player_match_stat ps").
-		LeftJoin("player_match pm ON ps.player_steam_id = pm.player_steam_id").
-		LeftJoin("match m ON pm.match_id = m.id").
+		InnerJoin("player_match pm ON ps.player_steam_id = pm.player_steam_id").
+		InnerJoin("match m ON pm.match_id = m.id").
 		Where(sq.Eq{"ps.player_steam_id": steamID}).
 		GroupBy("pm.match_state").
 		ToSql()
 	if err != nil {
-		return domain.PlayerTotalStats{}, err
+		return nil, err
 	}
 
 	r.log.Debug("playerRepo", zap.String("query", sql))
 
 	rows, err := r.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
-		return domain.PlayerTotalStats{}, err
+		return nil, err
 	}
 
-	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByPos[domain.PlayerTotalStats])
+	stats, err := pgx.CollectOneRow(rows, pgx.RowToAddrOfStructByPos[domain.PlayerTotalStats])
 	if err != nil {
 
 		if errors.Is(err, pgx.ErrNoRows) {
-			return domain.PlayerTotalStats{}, domain.ErrPlayerNotFound
+			return nil, domain.ErrPlayerNotFound
 		}
 
-		return domain.PlayerTotalStats{}, err
+		return nil, err
 	}
 
 	return stats, nil

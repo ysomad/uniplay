@@ -3,8 +3,6 @@ package apperror
 import (
 	"encoding/json"
 	"net/http"
-
-	v1 "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
 )
 
 // Write writes error to response body with code equals to status.
@@ -17,7 +15,7 @@ func Write(w http.ResponseWriter, status int, err error) error {
 		code = apperr.Code
 	}
 
-	return json.NewEncoder(w).Encode(v1.Error{
+	return json.NewEncoder(w).Encode(Err{
 		Code:    code,
 		Message: err.Error(),
 	})
