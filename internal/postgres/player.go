@@ -139,5 +139,9 @@ func (r *playerRepo) GetTotalWeaponStats(ctx context.Context, steamID uint64, f 
 		return nil, err
 	}
 
+	if len(weaponStats) <= 0 {
+		return nil, domain.ErrPlayerNotFound
+	}
+
 	return weaponStats, nil
 }
