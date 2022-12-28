@@ -7,27 +7,28 @@ servers:
 - url: http://localhost:8080/v1
 tags:
 - name: player
-  description: player profile operations
+  description: Профиль игрока
 - name: replay
-  description: replay operations
+  description: Запись матча
+- name: compendium
+  description: Справочники
 paths:
   /players/{steam_id}:
     get:
       tags:
       - player
-      summary: Get player profile
+      summary: Профиль игрока
       operationId: getPlayerProfile
       parameters:
       - name: steam_id
         in: path
-        description: 64 bit UInt64 steam id
+        description: steam id игрока
         required: true
         style: simple
         explode: false
         schema:
-          maximum: 18446744073709551615
-          minimum: 1
           type: integer
+          format: uint64
           x-go-type: uint64
           x-go-name: SteamID
       responses:
@@ -36,9 +37,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlayerProfile'
+                $ref: '#/components/schemas/Player'
         "404":
-          description: Player Not Found
+          description: Not Found
           content:
             application/json:
               schema:
@@ -48,12 +49,51 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalError'
+                $ref: '#/components/schemas/Error'
+  /players/{steam_id}/matches:
+    post:
+      tags:
+      - player
+      summary: Список матчей игрока
+      operationId: getPlayerMatches
+      parameters:
+      - name: steam_id
+        in: path
+        description: steam id игрока
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: uint64
+          x-go-type: uint64
+          x-go-name: SteamID
+      requestBody:
+        $ref: '#/components/requestBodies/PlayerMatchListRequestBody'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchList'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /replays:
     post:
       tags:
       - replay
-      summary: Upload replay
+      summary: Загрузить запись матча
       operationId: uploadReplay
       requestBody:
         $ref: '#/components/requestBodies/ReplayUploadRequestBody'
@@ -63,7 +103,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReplayUploadResponse'
+                $ref: '#/components/schemas/Match'
         "400":
           description: Bad request
           content:
@@ -71,7 +111,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         "409":
-          description: Replay already exist
+          description: Conflict
           content:
             application/json:
               schema:
@@ -81,7 +121,141 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InternalError'
+                $ref: '#/components/schemas/Error'
+  /players/{steam_id}/stats:
+    get:
+      tags:
+      - player
+      summary: Получение статистики игрока
+      operationId: getPlayerStats
+      parameters:
+      - name: steam_id
+        in: path
+        description: steam id игрока
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: uint64
+          x-go-type: uint64
+          x-go-name: SteamID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerStats'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /players/{steam_id}/weapons:
+    get:
+      tags:
+      - player
+      summary: Получение статистики игрока по оружию
+      operationId: getWeaponStats
+      parameters:
+      - name: steam_id
+        in: path
+        description: steam id игрока
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: uint64
+          x-go-type: uint64
+          x-go-name: SteamID
+      - name: weapon_id
+        in: query
+        description: фильтр по оружию, по умолчанию передавать 0
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int16
+          x-go-type: int16
+          x-go-name: WeaponID
+      - name: class_id
+        in: query
+        description: фильтр по классу оружия, по умолчанию передавать 0
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int8
+          x-go-type: int8
+          x-go-name: ClassID
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeaponStatsList'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /сompendiums/weapons:
+    get:
+      tags:
+      - compendium
+      summary: Справочник оружий
+      operationId: getWeaponCompendium
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeaponList'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /сompendiums/weapon-classes:
+    get:
+      tags:
+      - compendium
+      summary: Справочник классов оружий
+      operationId: getWeaponClassCompendium
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeaponClassList'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Error:
@@ -91,43 +265,29 @@ components:
       type: object
       properties:
         code:
-          type: string
-          description: error code, unique per error
+          type: integer
+          description: статус ответа или код ошибки >= 600
         message:
           type: string
-          description: error message
-    InternalError:
-      required:
-      - message
-      type: object
-      properties:
-        message:
-          type: string
-    PlayerProfile:
+          description: сообщение ошибки
+    Player:
       required:
       - create_time
-      - main_team_name
-      - stats
       - steam_id
+      - team_flag_code
+      - team_name
       - update_time
-      - weapon_class_stats
-      - weapon_stats
       type: object
       properties:
         steam_id:
-          maximum: 18446744073709551615
-          minimum: 1
           type: integer
+          format: uint64
           x-go-name: SteamID
           x-go-type: uint64
-        main_team_name:
+        team_name:
           type: string
-        stats:
-          $ref: '#/components/schemas/PlayerStats'
-        weapon_stats:
-          $ref: '#/components/schemas/WeaponStats'
-        weapon_class_stats:
-          $ref: '#/components/schemas/WeaponClassStats'
+        team_flag_code:
+          type: string
         create_time:
           type: string
           description: RFC3339 datetime string
@@ -138,113 +298,336 @@ components:
           description: RFC3339 datetime string
           format: date-time
           x-go-type: time.Time
-    PlayerStats:
+    CalculatedStats:
       required:
-      - assists_per_round
-      - blind_per_round
-      - blinded_per_round
-      - damage_per_round
-      - deaths_per_round
-      - grenade_damage_per_round
       - headshot_percentage
       - kill_death_ratio
-      - kills_per_round
+      - matches_draw
+      - matches_lost
       - matches_played
+      - matches_won
+      - rounds_lost
       - rounds_played
-      - total_deaths
-      - total_kills
+      - rounds_won
+      - time_played
+      - win_rate
       type: object
       properties:
-        total_kills:
-          maximum: 4294967295
-          minimum: 0
-          type: integer
-          x-go-type: uint32
-        total_deaths:
-          maximum: 4294967295
-          minimum: 0
-          type: integer
-          x-go-type: uint32
         kill_death_ratio:
           type: number
-          format: float
-          x-go-type: float32
-        damage_per_round:
-          type: number
-          format: float
-          x-go-type: float32
-        grenade_damage_per_round:
-          type: number
-          format: float
-          x-go-type: float32
-        kills_per_round:
-          type: number
-          format: float
-          x-go-type: float32
-        assists_per_round:
-          type: number
-          format: float
-          x-go-type: float32
-        deaths_per_round:
-          type: number
-          format: float
-          x-go-type: float32
-        blind_per_round:
-          type: number
-          format: float
-          x-go-type: float32
-        blinded_per_round:
-          type: number
-          format: float
-          x-go-type: float32
+          format: double
+          x-go-type: float64
         headshot_percentage:
           type: number
-          format: float
-          x-go-type: float32
-        matches_played:
-          maximum: 65535
-          minimum: 0
+          format: double
+          x-go-type: float64
+        win_rate:
+          type: number
+          format: double
+          x-go-type: float64
+      description: высчитываемая статистика
+    TotalStats:
+      required:
+      - assists
+      - blind_kills
+      - blinded_players
+      - blinded_times
+      - bombs_defused
+      - bombs_planted
+      - damage_dealt
+      - damage_taken
+      - deaths
+      - draws
+      - flashbang_assists
+      - grenade_damage_dealt
+      - headshot_kills
+      - kills
+      - loses
+      - matches_played
+      - mvp_count
+      - noscope_kills
+      - rounds_played
+      - through_smoke_kills
+      - time_played
+      - wallbang_kills
+      - wins
+      type: object
+      properties:
+        kills:
           type: integer
-          x-go-type: uint16
+          format: int32
+          x-go-type: int32
+        headshot_kills:
+          type: integer
+          format: int16
+          x-go-type: int16
+        blind_kills:
+          type: integer
+          format: int16
+          x-go-type: int16
+        wallbang_kills:
+          type: integer
+          format: int16
+          x-go-type: int16
+        noscope_kills:
+          type: integer
+          format: int16
+          x-go-type: int16
+          x-go-name: NoScopeKills
+        through_smoke_kills:
+          type: integer
+          format: int16
+          x-go-type: int16
+        deaths:
+          type: integer
+          format: int32
+          x-go-type: int32
+        assists:
+          type: integer
+          format: int16
+          x-go-type: int16
+        flashbang_assists:
+          type: integer
+          format: int16
+          x-go-type: int16
+        mvp_count:
+          type: integer
+          format: int16
+          x-go-type: int16
+          x-go-name: MVPCount
+        damage_taken:
+          type: integer
+          format: int32
+          x-go-type: int32
+        damage_dealt:
+          type: integer
+          format: int32
+          x-go-type: int32
+        grenade_damage_dealt:
+          type: integer
+          format: int16
+          x-go-type: int16
+        blinded_players:
+          type: integer
+          format: int16
+          x-go-type: int16
+        blinded_times:
+          type: integer
+          format: int16
+          x-go-type: int16
+        bombs_planted:
+          type: integer
+          format: int16
+          x-go-type: int16
+        bombs_defused:
+          type: integer
+          format: int16
+          x-go-type: int16
         rounds_played:
-          maximum: 4294967295
-          minimum: 0
           type: integer
-          x-go-type: uint32
-    WeaponStat:
+          format: int16
+          x-go-type: int16
+        matches_played:
+          type: integer
+          format: int16
+          x-go-type: int16
+        wins:
+          type: integer
+          format: int16
+          x-go-type: int16
+        loses:
+          type: integer
+          format: int16
+          x-go-type: int16
+        draws:
+          type: integer
+          format: int16
+          x-go-type: int16
+        time_played:
+          type: integer
+          format: int64
+          x-go-type: time.Duration
+      description: общая статистика по сумме метрик игрока
+    RoundStats:
       required:
-      - total_kills
-      - weapon_name
+      - assists
+      - blinded_players
+      - blinded_times
+      - damage_dealt
+      - deaths
+      - grenade_damage_dealt
+      - kills
       type: object
       properties:
-        weapon_name:
-          type: string
-        total_kills:
-          maximum: 4294967295
-          minimum: 0
-          type: integer
-          x-go-type: uint32
-    WeaponClassStat:
+        damage_dealt:
+          type: number
+          description: средний урон за раунд
+          format: double
+          x-go-type: float64
+        grenade_damage_dealt:
+          type: number
+          description: средний урон гранатами за раунд
+          format: double
+          x-go-type: float64
+        kills:
+          type: number
+          description: среднее кол-во убийств за раунд
+          format: double
+          x-go-type: float64
+        assists:
+          type: number
+          description: среднее кол-во ассистов за раунд
+          format: double
+          x-go-type: float64
+        deaths:
+          type: number
+          description: среднее кол-во смертей за раунд
+          format: double
+          x-go-type: float64
+        blinded_times:
+          type: number
+          description: среднее кол-во раз ослеплен за раунд
+          format: double
+          x-go-type: float64
+        blinded_players:
+          type: number
+          description: средне кол-во ослепленных игроков за раунд
+          format: double
+          x-go-type: float64
+      description: набор средних показателей за раунд
+    PlayerStats:
       required:
-      - total_kills
-      - weapon_class
+      - calculated_stats
+      - round_stats
+      - total_stats
       type: object
       properties:
-        weapon_class:
-          type: string
-        total_kills:
-          maximum: 4294967295
-          minimum: 0
+        total_stats:
+          $ref: '#/components/schemas/TotalStats'
+        calculated_stats:
+          $ref: '#/components/schemas/CalculatedStats'
+        round_stats:
+          $ref: '#/components/schemas/RoundStats'
+    TotalWeaponStats:
+      required:
+      - assists
+      - blind_kills
+      - chest_hits
+      - damage_dealt
+      - damage_taken
+      - deaths
+      - flashbang_assists
+      - head_hits
+      - headshot_kills
+      - hits
+      - kills
+      - left_arm_hits
+      - left_leg_hits
+      - noscope_kills
+      - right_arm_hits
+      - right_leg_hits
+      - shots
+      - stomach_hits
+      - through_smoke_kills
+      - wallbang_kills
+      - weapon
+      - weapon_id
+      type: object
+      properties:
+        weapon_id:
           type: integer
-          x-go-type: uint32
-    WeaponStats:
+          format: int16
+        weapon:
+          type: string
+        kills:
+          type: integer
+          format: int32
+        deaths:
+          type: integer
+          format: int32
+        headshot_kills:
+          type: integer
+          format: int16
+        blind_kills:
+          type: integer
+          format: int16
+        wallbang_kills:
+          type: integer
+          format: int16
+        noscope_kills:
+          type: integer
+          format: int16
+        through_smoke_kills:
+          type: integer
+          format: int16
+        assists:
+          type: integer
+          format: int16
+        damage_taken:
+          type: integer
+          format: int32
+        damage_dealt:
+          type: integer
+          format: int32
+        shots:
+          type: integer
+          format: int32
+        hits:
+          type: integer
+          format: int32
+        head_hits:
+          type: integer
+          format: int32
+        chest_hits:
+          type: integer
+          format: int32
+        stomach_hits:
+          type: integer
+          format: int32
+        left_arm_hits:
+          type: integer
+          format: int32
+        right_arm_hits:
+          type: integer
+          format: int32
+        left_leg_hits:
+          type: integer
+          format: int32
+        right_leg_hits:
+          type: integer
+          format: int32
+    AccuracyWeaponStats:
+      required:
+      - arms
+      - chest
+      - head
+      - legs
+      - stomach
+      - total
+      type: object
+      properties:
+        total:
+          type: number
+          format: double
+        head:
+          type: number
+          format: double
+        chest:
+          type: number
+          format: double
+        stomach:
+          type: number
+          format: double
+        arms:
+          type: number
+          format: double
+        legs:
+          type: number
+          format: double
+    WeaponStatsList:
       type: array
       items:
-        $ref: '#/components/schemas/WeaponStat'
-    WeaponClassStats:
-      type: array
-      items:
-        $ref: '#/components/schemas/WeaponClassStat'
+        $ref: '#/components/schemas/WeaponStatsList_inner'
     MatchTeam:
       required:
       - clan_name
@@ -255,28 +638,28 @@ components:
       properties:
         clan_name:
           type: string
+          description: название команды, берется из загруженной записи матча
         flag_code:
           type: string
-          description: ISO 3166 flag code
+          description: ISO 3166 код флага
         score:
-          maximum: 255
-          minimum: 0
           type: integer
-          x-go-type: uint8
+          format: int8
+          x-go-type: int8
         player_steam_ids:
           type: array
           items:
-            maximum: 18446744073709551615
-            minimum: 1
             type: integer
-    ReplayUploadResponse:
+            format: uint64
+            x-go-type: uint64
+    Match:
       required:
       - map_name
       - match_duration
       - match_id
       - team1
       - team2
-      - upload_time
+      - uploaded_at
       type: object
       properties:
         match_id:
@@ -297,11 +680,137 @@ components:
           $ref: '#/components/schemas/MatchTeam'
         team2:
           $ref: '#/components/schemas/MatchTeam'
-        upload_time:
+        uploaded_at:
           type: string
-          description: RFC3339 datetime string
+          description: datetime RFC3339
           format: date-time
           x-go-type: time.Time
+    MatchList:
+      required:
+      - matches
+      - next_page_token
+      type: object
+      properties:
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/Match'
+        next_page_token:
+          type: string
+          example: U3dhZ2dlciByb2Nrcw==
+    SortOrder:
+      type: string
+      enum:
+      - ASC
+      - DESC
+    PlayerMatchListSort:
+      required:
+      - upload_time
+      type: object
+      properties:
+        upload_time:
+          $ref: '#/components/schemas/SortOrder'
+    PlayerMatchListRequest:
+      required:
+      - page_size
+      - page_token
+      - sort
+      type: object
+      properties:
+        sort:
+          $ref: '#/components/schemas/PlayerMatchListSort'
+        page_size:
+          type: integer
+          format: uint16
+          x-go-type: uint16
+        page_token:
+          type: string
+          description: base64 string
+          example: U3dhZ2dlciByb2Nrcw==
+    WeaponStatsRequest:
+      required:
+      - weapon_class_id
+      - weapon_id
+      type: object
+      properties:
+        weapon_id:
+          type: integer
+          description: фильтр по имени оружия
+          format: uint16
+          x-go-type: uint16
+          x-go-name: WeaponID
+        weapon_class_id:
+          type: integer
+          description: фильтр по классу оружия
+          format: uint8
+          x-go-type: uint8
+          x-go-name: WeaponClassID
+    WeaponClassStatsRequest:
+      required:
+      - weapon_class
+      type: object
+      properties:
+        weapon_class:
+          type: string
+          description: фильтр по классу оружия
+    Weapon:
+      required:
+      - class
+      - class_id
+      - weapon
+      - weapon_id
+      type: object
+      properties:
+        weapon_id:
+          type: integer
+          format: uint16
+          x-go-type: uint16
+          x-go-name: WeaponID
+        weapon:
+          type: string
+          description: имя оружия
+        class_id:
+          type: integer
+          description: класс оружия в формате uint8, в котором хранится в базе
+          format: uint8
+          x-go-type: uint8
+          x-go-name: ClassID
+        class:
+          type: string
+          description: имя класса оружия
+    WeaponList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Weapon'
+    WeaponClassList:
+      type: array
+      items:
+        $ref: '#/components/schemas/WeaponClass'
+    WeaponClass:
+      required:
+      - class
+      - id
+      type: object
+      properties:
+        id:
+          type: integer
+          description: класс оружия в формате uint8, в котором хранится в базе
+          format: uint8
+          x-go-type: uint8
+          x-go-name: ID
+        class:
+          type: string
+          description: имя класса оружия
+    WeaponStatsList_inner:
+      required:
+      - accuracy_stats
+      - total_stats
+      type: object
+      properties:
+        total_stats:
+          $ref: '#/components/schemas/TotalWeaponStats'
+        accuracy_stats:
+          $ref: '#/components/schemas/AccuracyWeaponStats'
   requestBodies:
     ReplayUploadRequestBody:
       content:
@@ -309,8 +818,26 @@ components:
           schema:
             type: object
             properties:
-              replay_archive:
+              replay:
                 type: string
-                description: архив с демкой, только 1 демка из архива будет загружена, макс. размер архива - 500 мб
+                description: запись матча в формате .dem, макс. размер 300 мб
                 format: binary
+      required: true
+    PlayerMatchListRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PlayerMatchListRequest'
+      required: true
+    WeaponStatsRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WeaponStatsRequest'
+      required: true
+    WeaponClassStatsRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WeaponClassStatsRequest'
       required: true
