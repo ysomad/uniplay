@@ -21,17 +21,19 @@ const (
 	MetricBombPlanted Metric = 12
 	MetricBombDefused Metric = 13
 
-	MetricRoundMVPCount Metric = 14
+	MetricRoundMVP Metric = 14
 
 	MetricBlind   Metric = 15 // сколько раз ослепил
 	MetricBlinded Metric = 16 // был ослеплен
 
 	MetricShot        Metric = 17
-	MetricHitHead     Metric = 18
-	MetricHitChest    Metric = 19
-	MetricHitStomach  Metric = 20
-	MetricHitLeftArm  Metric = 21
-	MetricHitRightArm Metric = 22
-	MetricHitLeftLeg  Metric = 23
-	MetricHitRightLeg Metric = 24
+	MetricHitHead     Metric = 19
+	MetricHitChest    Metric = 20
+	MetricHitStomach  Metric = 21
+	MetricHitLeftArm  Metric = 22
+	MetricHitRightArm Metric = 23
+	MetricHitLeftLeg  Metric = 24
+	MetricHitRightLeg Metric = 25
+
+	MetricGrenadeDamageDealt Metric = 26
 )

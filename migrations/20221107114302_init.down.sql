@@ -1,16 +1,15 @@
-BEGIN;
+BEGIN
+;
 
-DROP TABLE IF EXISTS weapon_statistic CASCADE;
+DROP TABLE IF EXISTS player_match_weapon_stat CASCADE;
+
+DROP TABLE IF EXISTS player_match CASCADE;
 
 DROP TABLE IF EXISTS weapon CASCADE;
 
 DROP TABLE IF EXISTS weapon_class CASCADE;
 
-DROP TABLE IF EXISTS player_statistic CASCADE;
-
-DROP TABLE IF EXISTS match_player CASCADE;
-
-DROP TYPE IF EXISTS match_player_state;
+DROP TABLE IF EXISTS player_match_stat CASCADE;
 
 DROP TABLE IF EXISTS match CASCADE;
 

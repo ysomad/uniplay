@@ -8,8 +8,6 @@ servers:
 tags:
 - name: player
   description: Профиль игрока
-- name: stat
-  description: Статистика игрока
 - name: replay
   description: Запись матча
 - name: compendium
@@ -124,11 +122,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /stats/{steam_id}:
+  /players/{steam_id}/stats:
     get:
       tags:
-      - stat
-      summary: Статистика игрока
+      - player
+      summary: Получение статистики игрока
       operationId: getPlayerStats
       parameters:
       - name: steam_id
@@ -161,11 +159,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /stats/{steam_id}/weapons:
+  /players/{steam_id}/weapons:
     get:
       tags:
-      - stat
-      summary: Статистика игрока по оружию
+      - player
+      summary: Получение статистики игрока по оружию
       operationId: getWeaponStats
       parameters:
       - name: steam_id
@@ -187,8 +185,8 @@ paths:
         explode: true
         schema:
           type: integer
-          format: uint16
-          x-go-type: uint16
+          format: int16
+          x-go-type: int16
           x-go-name: WeaponID
       - name: class_id
         in: query
@@ -198,8 +196,8 @@ paths:
         explode: true
         schema:
           type: integer
-          format: uint8
-          x-go-type: uint8
+          format: int8
+          x-go-type: int8
           x-go-name: ClassID
       responses:
         "200":
@@ -207,55 +205,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlayerWeaponStats'
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /stats/{steam_id}/weapon-classes:
-    get:
-      tags:
-      - stat
-      summary: Статистика игрока по классу оружия
-      operationId: getWeaponClassStats
-      parameters:
-      - name: steam_id
-        in: path
-        description: steam id игрока
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: uint64
-          x-go-type: uint64
-          x-go-name: SteamID
-      - name: class_id
-        in: query
-        description: фильтр по классу оружия, по умолчанию передавать 0
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: uint8
-          x-go-type: uint8
-          x-go-name: ClassID
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PlayerWeaponClassStats'
+                $ref: '#/components/schemas/WeaponStatsList'
         "404":
           description: Not Found
           content:
@@ -317,8 +267,6 @@ components:
         code:
           type: integer
           description: статус ответа или код ошибки >= 600
-          format: uint16
-          x-go-type: uint16
         message:
           type: string
           description: сообщение ошибки
@@ -350,16 +298,19 @@ components:
           description: RFC3339 datetime string
           format: date-time
           x-go-type: time.Time
-    BasicStats:
+    CalculatedStats:
       required:
-      - draws
       - headshot_percentage
       - kill_death_ratio
-      - loses
+      - matches_draw
+      - matches_lost
       - matches_played
+      - matches_won
+      - rounds_lost
       - rounds_played
+      - rounds_won
       - time_played
-      - wins
+      - win_rate
       type: object
       properties:
         kill_death_ratio:
@@ -370,31 +321,11 @@ components:
           type: number
           format: double
           x-go-type: float64
-        matches_played:
-          type: integer
-          format: uint16
-          x-go-type: uint16
-        rounds_played:
-          type: integer
-          format: uint16
-          x-go-type: uint32
-        time_played:
-          type: integer
-          format: int64
-          x-go-type: time.Duration
-        wins:
-          type: integer
-          format: uint16
-          x-go-type: uint16
-        loses:
-          type: integer
-          format: uint16
-          x-go-type: uint16
-        draws:
-          type: integer
-          format: uint16
-          x-go-type: uint16
-      description: набор высчитываемой статистики на основе метрик
+        win_rate:
+          type: number
+          format: double
+          x-go-type: float64
+      description: высчитываемая статистика
     TotalStats:
       required:
       - assists
@@ -406,83 +337,118 @@ components:
       - damage_dealt
       - damage_taken
       - deaths
+      - draws
       - flashbang_assists
+      - grenade_damage_dealt
       - headshot_kills
       - kills
+      - loses
+      - matches_played
       - mvp_count
       - noscope_kills
+      - rounds_played
       - through_smoke_kills
+      - time_played
       - wallbang_kills
+      - wins
       type: object
       properties:
         kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
-        deaths:
-          type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int32
+          x-go-type: int32
         headshot_kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
+          x-go-type: int16
         blind_kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
+          x-go-type: int16
         wallbang_kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
+          x-go-type: int16
         noscope_kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
+          x-go-type: int16
+          x-go-name: NoScopeKills
         through_smoke_kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
+          x-go-type: int16
+        deaths:
+          type: integer
+          format: int32
+          x-go-type: int32
         assists:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
+          x-go-type: int16
         flashbang_assists:
           type: integer
-          format: uint32
-          x-go-type: uint32
-        damage_taken:
-          type: integer
-          format: uint32
-          x-go-type: uint32
-        damage_dealt:
-          type: integer
-          format: uint32
-          x-go-type: uint32
-        bombs_planted:
-          type: integer
-          format: uint32
-          x-go-type: uint32
-        bombs_defused:
-          type: integer
-          format: uint32
-          x-go-type: uint32
-        blinded_players:
-          type: integer
-          description: кол-во ослепленных игроков
-          format: uint32
-          x-go-type: uint32
-        blinded_times:
-          type: integer
-          description: кол-во раз ослеплен
-          format: uint32
-          x-go-type: uint32
+          format: int16
+          x-go-type: int16
         mvp_count:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
+          x-go-type: int16
+          x-go-name: MVPCount
+        damage_taken:
+          type: integer
+          format: int32
+          x-go-type: int32
+        damage_dealt:
+          type: integer
+          format: int32
+          x-go-type: int32
+        grenade_damage_dealt:
+          type: integer
+          format: int16
+          x-go-type: int16
+        blinded_players:
+          type: integer
+          format: int16
+          x-go-type: int16
+        blinded_times:
+          type: integer
+          format: int16
+          x-go-type: int16
+        bombs_planted:
+          type: integer
+          format: int16
+          x-go-type: int16
+        bombs_defused:
+          type: integer
+          format: int16
+          x-go-type: int16
+        rounds_played:
+          type: integer
+          format: int16
+          x-go-type: int16
+        matches_played:
+          type: integer
+          format: int16
+          x-go-type: int16
+        wins:
+          type: integer
+          format: int16
+          x-go-type: int16
+        loses:
+          type: integer
+          format: int16
+          x-go-type: int16
+        draws:
+          type: integer
+          format: int16
+          x-go-type: int16
+        time_played:
+          type: integer
+          format: int64
+          x-go-type: time.Duration
       description: общая статистика по сумме метрик игрока
-    PerRoundStats:
+    RoundStats:
       required:
       - assists
       - blinded_players
@@ -531,80 +497,137 @@ components:
       description: набор средних показателей за раунд
     PlayerStats:
       required:
-      - basic
-      - per_round
-      - total
+      - calculated_stats
+      - round_stats
+      - total_stats
       type: object
       properties:
-        basic:
-          $ref: '#/components/schemas/BasicStats'
-        total:
+        total_stats:
           $ref: '#/components/schemas/TotalStats'
-        per_round:
-          $ref: '#/components/schemas/PerRoundStats'
-    WeaponStats:
+        calculated_stats:
+          $ref: '#/components/schemas/CalculatedStats'
+        round_stats:
+          $ref: '#/components/schemas/RoundStats'
+    TotalWeaponStats:
       required:
       - assists
       - blind_kills
+      - chest_hits
       - damage_dealt
       - damage_taken
       - deaths
       - flashbang_assists
+      - head_hits
       - headshot_kills
+      - hits
       - kills
+      - left_arm_hits
+      - left_leg_hits
       - noscope_kills
+      - right_arm_hits
+      - right_leg_hits
+      - shots
+      - stomach_hits
       - through_smoke_kills
       - wallbang_kills
+      - weapon
+      - weapon_id
       type: object
       properties:
+        weapon_id:
+          type: integer
+          format: int16
+        weapon:
+          type: string
         kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int32
         deaths:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int32
         headshot_kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
         blind_kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
         wallbang_kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
         noscope_kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
         through_smoke_kills:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
         assists:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int16
         damage_taken:
           type: integer
-          format: uint32
-          x-go-type: uint32
+          format: int32
         damage_dealt:
           type: integer
-          format: uint32
-          x-go-type: uint32
-    PlayerWeaponStats:
+          format: int32
+        shots:
+          type: integer
+          format: int32
+        hits:
+          type: integer
+          format: int32
+        head_hits:
+          type: integer
+          format: int32
+        chest_hits:
+          type: integer
+          format: int32
+        stomach_hits:
+          type: integer
+          format: int32
+        left_arm_hits:
+          type: integer
+          format: int32
+        right_arm_hits:
+          type: integer
+          format: int32
+        left_leg_hits:
+          type: integer
+          format: int32
+        right_leg_hits:
+          type: integer
+          format: int32
+    AccuracyWeaponStats:
+      required:
+      - arms
+      - chest
+      - head
+      - legs
+      - stomach
+      - total
+      type: object
+      properties:
+        total:
+          type: number
+          format: double
+        head:
+          type: number
+          format: double
+        chest:
+          type: number
+          format: double
+        stomach:
+          type: number
+          format: double
+        arms:
+          type: number
+          format: double
+        legs:
+          type: number
+          format: double
+    WeaponStatsList:
       type: array
       items:
-        $ref: '#/components/schemas/PlayerWeaponStats_inner'
-    PlayerWeaponClassStats:
-      type: array
-      items:
-        $ref: '#/components/schemas/PlayerWeaponClassStats_inner'
+        $ref: '#/components/schemas/WeaponStatsList_inner'
     MatchTeam:
       required:
       - clan_name
@@ -621,8 +644,8 @@ components:
           description: ISO 3166 код флага
         score:
           type: integer
-          format: uint8
-          x-go-type: uint8
+          format: int8
+          x-go-type: int8
         player_steam_ids:
           type: array
           items:
@@ -636,7 +659,7 @@ components:
       - match_id
       - team1
       - team2
-      - upload_time
+      - uploaded_at
       type: object
       properties:
         match_id:
@@ -657,7 +680,7 @@ components:
           $ref: '#/components/schemas/MatchTeam'
         team2:
           $ref: '#/components/schemas/MatchTeam'
-        upload_time:
+        uploaded_at:
           type: string
           description: datetime RFC3339
           format: date-time
@@ -778,47 +801,16 @@ components:
         class:
           type: string
           description: имя класса оружия
-    PlayerWeaponStats_inner:
+    WeaponStatsList_inner:
       required:
-      - class
-      - class_id
-      - stats
-      - weapon
-      - weapon_id
+      - accuracy_stats
+      - total_stats
       type: object
       properties:
-        weapon_id:
-          type: integer
-          format: uint16
-          x-go-type: uint16
-          x-go-name: WeaponID
-        weapon:
-          type: string
-        class_id:
-          type: integer
-          format: uint8
-          x-go-type: uint8
-          x-go-name: WeaponClassID
-        class:
-          type: string
-        stats:
-          $ref: '#/components/schemas/WeaponStats'
-    PlayerWeaponClassStats_inner:
-      required:
-      - class
-      - class_id
-      - stats
-      type: object
-      properties:
-        class_id:
-          type: integer
-          format: uint8
-          x-go-type: uint8
-          x-go-name: ClassID
-        class:
-          type: string
-        stats:
-          $ref: '#/components/schemas/WeaponStats'
+        total_stats:
+          $ref: '#/components/schemas/TotalWeaponStats'
+        accuracy_stats:
+          $ref: '#/components/schemas/AccuracyWeaponStats'
   requestBodies:
     ReplayUploadRequestBody:
       content:

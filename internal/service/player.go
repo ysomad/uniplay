@@ -6,16 +6,30 @@ import (
 	"github.com/ssssargsian/uniplay/internal/domain"
 )
 
-type player struct {
+type Player struct {
 	repo playerRepository
 }
 
-func NewPlayer(r playerRepository) *player {
-	return &player{
+func NewPlayer(r playerRepository) *Player {
+	return &Player{
 		repo: r,
 	}
 }
 
-func (p *player) Get(ctx context.Context, steamID uint64) (domain.Player, error) {
-	return p.repo.FindBySteamID(ctx, steamID)
+func (p *Player) GetStats(ctx context.Context, steamID uint64) (domain.PlayerStats, error) {
+	total, err := p.repo.GetTotalStats(ctx, steamID)
+	if err != nil {
+		return domain.PlayerStats{}, err
+	}
+
+	return domain.NewPlayerStats(total), nil
+}
+
+func (p *Player) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
+	total, err := p.repo.GetTotalWeaponStats(ctx, steamID, f)
+	if err != nil {
+		return nil, err
+	}
+
+	return domain.NewWeaponStatsList(total), nil
 }

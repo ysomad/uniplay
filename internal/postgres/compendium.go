@@ -3,29 +3,27 @@ package postgres
 import (
 	"context"
 
-	sq "github.com/Masterminds/squirrel"
+	"go.uber.org/zap"
+
 	"github.com/jackc/pgx/v5"
 	"github.com/ssssargsian/uniplay/internal/domain"
-	"github.com/ysomad/pgxatomic"
-	"go.uber.org/zap"
+	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
 )
 
 type compendiumRepo struct {
-	log     *zap.Logger
-	pool    pgxatomic.Pool
-	builder sq.StatementBuilderType
+	log    *zap.Logger
+	client *pgclient.Client
 }
 
-func NewCompendiumRepo(l *zap.Logger, p pgxatomic.Pool, b sq.StatementBuilderType) *compendiumRepo {
+func NewCompendiumRepo(l *zap.Logger, c *pgclient.Client) *compendiumRepo {
 	return &compendiumRepo{
-		log:     l,
-		pool:    p,
-		builder: b,
+		log:    l,
+		client: c,
 	}
 }
 
 func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
-	sql, args, err := r.builder.
+	sql, args, err := r.client.Builder.
 		Select("w.id, w.weapon, wc.id, wc.class").
 		From("weapon w").
 		InnerJoin("weapon_class wc ON w.class_id = wc.id").
@@ -35,7 +33,7 @@ func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, er
 		return nil, err
 	}
 
-	rows, err := r.pool.Query(ctx, sql, args...)
+	rows, err := r.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +47,7 @@ func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, er
 }
 
 func (r *compendiumRepo) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
-	sql, args, err := r.builder.
+	sql, args, err := r.client.Builder.
 		Select("id, class").
 		From("weapon_class").
 		ToSql()
@@ -57,7 +55,7 @@ func (r *compendiumRepo) GetWeaponClassList(ctx context.Context) ([]domain.Weapo
 		return nil, err
 	}
 
-	rows, err := r.pool.Query(ctx, sql, args...)
+	rows, err := r.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}

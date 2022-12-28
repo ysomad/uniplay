@@ -1,126 +1,95 @@
 package domain
 
-import (
-	"fmt"
-
-	"github.com/google/uuid"
-)
+import "math"
 
 type WeaponStats struct {
-	WeaponID      uint16              `json:"weapon_id"`
-	Weapon        string              `json:"weapon"`
-	Stats         *WeaponStat         `json:"stats"`
-	AccuracyStats *WeaponAccuracyStat `json:"accuracy_stats"`
+	TotalStats    WeaponTotalStats    `json:"total_stats"`
+	AccuracyStats WeaponAccuracyStats `json:"accuracy_stats"`
 }
 
-func (s *WeaponStats) SetStats(m Metric, v uint32) {
-	s.Stats.SetStat(m, v)
-	s.AccuracyStats.SetStat(m, v)
-}
+func NewWeaponStatsList(total []WeaponTotalStats) []WeaponStats {
+	res := make([]WeaponStats, len(total))
 
-// WeaponStat is a set of weapon statistics calculated from sum of metrics.
-// Each field corresponds to specific weapon metric.
-type WeaponStat struct {
-	Assists           uint32 `json:"assists"`
-	BlindKills        uint32 `json:"blind_kills"`
-	DamageDealt       uint32 `json:"damage_dealt"`
-	DamageTaken       uint32 `json:"damage_taken"`
-	Deaths            uint32 `json:"deaths"`
-	HSKills           uint32 `json:"headshot_kills"`
-	Kills             uint32 `json:"kills"`
-	NoscopeKills      uint32 `json:"noscope_kills"`
-	ThroughSmokeKills uint32 `json:"through_smoke_kills"`
-	WallbangKills     uint32 `json:"wallbang_kills"`
-}
-
-// SetStat sets v into specific field depends on metric.
-func (s *WeaponStat) SetStat(m Metric, v uint32) {
-	switch m {
-	case MetricDeath:
-		s.Deaths = v
-	case MetricKill:
-		s.Kills = v
-	case MetricHSKill:
-		s.HSKills = v
-	case MetricBlindKill:
-		s.BlindKills = v
-	case MetricWallbangKill:
-		s.WallbangKills = v
-	case MetricNoScopeKill:
-		s.NoscopeKills = v
-	case MetricThroughSmokeKill:
-		s.ThroughSmokeKills = v
-	case MetricAssist:
-		s.Assists = v
-	case MetricDamageTaken:
-		s.DamageTaken = v
-	case MetricDamageDealt:
-		s.DamageDealt = v
+	for i, s := range total {
+		res[i] = WeaponStats{
+			TotalStats: s,
+			AccuracyStats: newWeaponAccuracyStats(
+				s.Shots,
+				s.HeadHits,
+				s.ChestHits,
+				s.StomachHits,
+				s.LeftArmHits,
+				s.RightArmHits,
+				s.LeftLegHits,
+				s.RightLegHits,
+			),
+		}
 	}
+
+	return res
 }
 
-type WeaponAccuracyStat struct {
-	Shots    uint32  `json:"shots"`
-	Accuracy float64 `json:"accuracy"`
-
-	Head     float64 `json:"head"`
-	HeadHits uint32  `json:"head_hits"`
-
-	Chest     float64 `json:"chest"`
-	ChestHits uint32  `json:"chest_hits"`
-
-	Stomach     float64 `json:"stomach"`
-	StomachHits uint32  `json:"stomach_hits"`
-
-	LeftArm     float64 `json:"left_arm"`
-	LeftArmHits uint32  `json:"left_arm_hits"`
-
-	RightArm      float64 `json:"right_arm"`
-	RightArmsHits uint32  `json:"right_arms_hits"`
-
-	LeftLeg     float64 `json:"left_leg"`
-	LeftLegHits uint32  `json:"left_leg_hits"`
-
-	RightLeg     float64 `json:"right_leg"`
-	RightLegHits uint32  `json:"right_leg_hits"`
+type WeaponTotalStats struct {
+	WeaponID          int16  `json:"weapon_id"`
+	Weapon            string `json:"weapon"`
+	Kills             int32  `json:"kills"`
+	HeadshotKills     int16  `json:"headshot_kills"`
+	BlindKills        int16  `json:"blind_kills"`
+	WallbangKills     int16  `json:"wallbang_kills"`
+	NoScopeKills      int16  `json:"no_scope_kills"`
+	ThroughSmokeKills int16  `json:"through_smoke_kills"`
+	Deaths            int32  `json:"deaths"`
+	Assists           int16  `json:"assists"`
+	DamageTaken       int32  `json:"damage_taken"`
+	DamageDealt       int32  `json:"damage_dealt"`
+	Shots             int32  `json:"shots"`
+	HeadHits          int16  `json:"head_hits"`
+	ChestHits         int16  `json:"chest_hits"`
+	StomachHits       int16  `json:"stomach_hits"`
+	LeftArmHits       int16  `json:"left_arm_hits"`
+	RightArmHits      int16  `json:"right_arm_hits"`
+	LeftLegHits       int16  `json:"left_leg_hits"`
+	RightLegHits      int16  `json:"right_leg_hits"`
 }
 
-func (s *WeaponAccuracyStat) SetStat(m Metric, v uint32) {
-	switch m {
-	case MetricShot:
-		s.Shots = v
-	case MetricHitHead:
-		s.HeadHits = v
-	case MetricHitChest:
-		s.ChestHits = v
-	case MetricHitStomach:
-		s.StomachHits = v
-	case MetricHitLeftArm:
-		s.LeftArmHits = v
-	case MetricHitRightArm:
-		s.RightArmsHits = v
-	case MetricHitLeftLeg:
-		s.LeftLegHits = v
-	case MetricHitRightLeg:
-		s.RightLegHits = v
+type WeaponAccuracyStats struct {
+	Total   float64 `json:"total"`
+	Head    float64 `json:"head"`
+	Chest   float64 `json:"chest"`
+	Stomach float64 `json:"stomach"`
+	Arms    float64 `json:"arms"`
+	Legs    float64 `json:"legs"`
+}
+
+// round rounds float64 to 2 decimal places.
+func round(n float64) float64 { return math.Round(n*100) / 100 }
+
+// calcAccuracy returns accuracy in percentage.
+func calcAccuracy(a, b float64) float64 {
+	if a <= 0 || b <= 0 {
+		return 0
+	}
+	return round(a * 100 / b)
+}
+
+func newWeaponAccuracyStats(shots int32, headHits, chestHits, stomachHits, larmHits, rarmHits, llegHits, rlegHits int16) WeaponAccuracyStats {
+	hits := float64(headHits + chestHits + stomachHits + larmHits + rarmHits + llegHits + rlegHits)
+
+	if hits <= 0 {
+		return WeaponAccuracyStats{}
+	}
+
+	return WeaponAccuracyStats{
+		Total:   calcAccuracy(hits, float64(shots)),
+		Head:    calcAccuracy(float64(headHits), hits),
+		Chest:   calcAccuracy(float64(chestHits), hits),
+		Stomach: calcAccuracy(float64(stomachHits), hits),
+		Arms:    calcAccuracy(float64(larmHits+rarmHits), hits),
+		Legs:    calcAccuracy(float64(llegHits+rlegHits), hits),
 	}
 }
 
 type WeaponStatsFilter struct {
-	WeaponID      uint16
-	WeaponClassID uint8
-}
-
-type WeaponClassStats struct {
-	ClassID uint8       `json:"class_id"`
-	Class   string      `json:"class"`
-	Stats   *WeaponStat `json:"stats"`
-}
-
-type WeaponStatID struct {
-	uuid.UUID
-}
-
-func NewWeaponStatID(steamID uint64, weaponID uint16, m Metric) WeaponStatID {
-	return WeaponStatID{uuid.NewMD5(uuid.UUID{}, []byte(fmt.Sprintf("%d,%d,%d", steamID, weaponID, m)))}
+	WeaponID int16
+	ClassID  int8
 }
