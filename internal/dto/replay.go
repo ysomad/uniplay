@@ -113,6 +113,8 @@ func (ts *PlayerStat) Add(m domain.Metric, v int) {
 		ts.BombsPlanted += v
 	case domain.MetricBombDefused:
 		ts.BombsDefused += v
+	case domain.MetricGrenadeDamageDealt:
+		ts.GrenadeDamageDealt += v
 	}
 }
 
