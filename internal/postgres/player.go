@@ -108,6 +108,29 @@ func (r *playerRepo) GetTotalStats(ctx context.Context, steamID uint64) (*domain
 	return &res, nil
 }
 
+type weaponTotalStats struct {
+	WeaponID          int16  `db:"weapon_id"`
+	Weapon            string `db:"weapon"`
+	Kills             int32  `db:"total_kills"`
+	HeadshotKills     int16  `db:"total_hs_kills"`
+	BlindKills        int16  `db:"total_blind_kills"`
+	WallbangKills     int16  `db:"total_wb_kills"`
+	NoScopeKills      int16  `db:"total_noscope_kills"`
+	ThroughSmokeKills int16  `db:"total_smoke_kills"`
+	Deaths            int32  `db:"total_deaths"`
+	Assists           int16  `db:"total_assists"`
+	DamageTaken       int32  `db:"total_dmg_taken"`
+	DamageDealt       int32  `db:"total_dmg_dealt"`
+	Shots             int32  `db:"total_shots"`
+	HeadHits          int16  `db:"total_head_hits"`
+	ChestHits         int16  `db:"total_chest_hits"`
+	StomachHits       int16  `db:"total_stomach_hits"`
+	LeftArmHits       int16  `db:"total_l_arm_hits"`
+	RightArmHits      int16  `db:"total_r_arm_hits"`
+	LeftLegHits       int16  `db:"total_l_leg_hits"`
+	RightLegHits      int16  `db:"total_r_leg_hits"`
+}
+
 func (r *playerRepo) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponTotalStats, error) {
 	b := r.client.Builder.
 		Select(
@@ -157,7 +180,7 @@ func (r *playerRepo) GetTotalWeaponStats(ctx context.Context, steamID uint64, f 
 		return nil, err
 	}
 
-	weaponStats, err := pgx.CollectRows(rows, pgx.RowToStructByPos[domain.WeaponTotalStats])
+	weaponStats, err := pgx.CollectRows(rows, pgx.RowToStructByName[weaponTotalStats])
 	if err != nil {
 
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -167,9 +190,10 @@ func (r *playerRepo) GetTotalWeaponStats(ctx context.Context, steamID uint64, f 
 		return nil, err
 	}
 
-	if len(weaponStats) <= 0 {
-		return nil, domain.ErrPlayerNotFound
+	res := make([]domain.WeaponTotalStats, len(weaponStats))
+	for i, s := range weaponStats {
+		res[i] = domain.WeaponTotalStats(s)
 	}
 
-	return weaponStats, nil
+	return res, nil
 }
