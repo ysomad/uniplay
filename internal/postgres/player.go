@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 	"errors"
+	"time"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
@@ -22,6 +23,32 @@ func NewPlayerRepo(l *zap.Logger, c *pgclient.Client) *playerRepo {
 		log:    l,
 		client: c,
 	}
+}
+
+type playerTotalStats struct {
+	Kills              int32         `db:"total_kills"`
+	HeadshotKills      int16         `db:"total_hs_kills"`
+	BlindKills         int16         `db:"total_blind_kills"`
+	WallbangKills      int16         `db:"total_wb_kills"`
+	NoScopeKills       int16         `db:"total_noscope_kills"`
+	ThroughSmokeKills  int16         `db:"total_smoke_kills"`
+	Deaths             int32         `db:"total_deaths"`
+	Assists            int16         `db:"total_assists"`
+	FlashbangAssists   int16         `db:"total_fb_assists"`
+	MVPCount           int16         `db:"total_mvp_count"`
+	DamageTaken        int32         `db:"total_dmg_taken"`
+	DamageDealt        int32         `db:"total_dmg_dealt"`
+	GrenadeDamageDealt int16         `db:"total_grenade_dmg_dealt"`
+	BlindedPlayers     int16         `db:"total_blinded_players"`
+	BlindedTimes       int16         `db:"total_blinded_times"`
+	BombsPlanted       int16         `db:"total_bombs_planted"`
+	BombsDefused       int16         `db:"total_bombs_defused"`
+	RoundsPlayed       int16         `db:"total_rounds_played"`
+	MatchesPlayed      int16         `db:"total_matches_played"`
+	Wins               int16         `db:"total_wins"`
+	Loses              int16         `db:"total_loses"`
+	Draws              int16         `db:"total_draws"`
+	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
 func (r *playerRepo) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
@@ -67,7 +94,7 @@ func (r *playerRepo) GetTotalStats(ctx context.Context, steamID uint64) (*domain
 		return nil, err
 	}
 
-	stats, err := pgx.CollectOneRow(rows, pgx.RowToAddrOfStructByPos[domain.PlayerTotalStats])
+	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[playerTotalStats])
 	if err != nil {
 
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -77,7 +104,8 @@ func (r *playerRepo) GetTotalStats(ctx context.Context, steamID uint64) (*domain
 		return nil, err
 	}
 
-	return stats, nil
+	res := domain.PlayerTotalStats(stats)
+	return &res, nil
 }
 
 func (r *playerRepo) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponTotalStats, error) {

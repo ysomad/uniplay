@@ -45,7 +45,7 @@ func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, er
 		return nil, err
 	}
 
-	w, err := pgx.CollectRows(rows, pgx.RowToStructByPos[weapon])
+	w, err := pgx.CollectRows(rows, pgx.RowToStructByName[weapon])
 	if err != nil {
 		return nil, err
 	}
