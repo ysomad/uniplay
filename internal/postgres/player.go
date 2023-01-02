@@ -4,10 +4,10 @@ import (
 	"context"
 	"errors"
 
-	"go.uber.org/zap"
-
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
+	"go.uber.org/zap"
+
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
 )
