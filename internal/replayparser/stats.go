@@ -2,6 +2,7 @@ package replayparser
 
 import (
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
+
 	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/dto"
 )

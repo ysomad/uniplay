@@ -337,6 +337,7 @@ func (p *parser) handlePlayerHurt(e events.PlayerHurt) {
 
 			// collect grenade damage
 			if e.Weapon.Class() == common.EqClassGrenade {
+				p.log.Error("grenade!!!!", zap.Int("damage", e.HealthDamage))
 				p.stats.addPlayerStat(e.Attacker.SteamID64, domain.MetricGrenadeDamageDealt, e.HealthDamage)
 			}
 		}
