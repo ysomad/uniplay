@@ -50,7 +50,6 @@ func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, er
 		return nil, err
 	}
 
-	// TODO: refactor
 	res := make([]domain.Weapon, len(w))
 	for i, v := range w {
 		res[i] = domain.Weapon(v)
@@ -83,7 +82,6 @@ func (r *compendiumRepo) GetWeaponClassList(ctx context.Context) ([]domain.Weapo
 		return nil, err
 	}
 
-	// TODO: refactor
 	res := make([]domain.WeaponClass, len(c))
 	for i, v := range c {
 		res[i] = domain.WeaponClass(v)

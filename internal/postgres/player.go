@@ -190,7 +190,6 @@ func (r *playerRepo) GetTotalWeaponStats(ctx context.Context, steamID uint64, f 
 		return nil, err
 	}
 
-	// TODO: refactor
 	res := make([]domain.WeaponTotalStats, len(weaponStats))
 	for i, s := range weaponStats {
 		res[i] = domain.WeaponTotalStats(s)
