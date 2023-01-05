@@ -20,7 +20,7 @@ func newStats() stats {
 }
 
 func (s *stats) addPlayerStat(steamID uint64, m domain.Metric, v int) {
-	if m == 0 || v <= 0 {
+	if m <= 0 || v <= 0 {
 		return
 	}
 
@@ -36,7 +36,7 @@ func (s *stats) incrPlayerStat(steamID uint64, m domain.Metric) {
 }
 
 func (s *stats) addWeaponStat(steamID uint64, m domain.Metric, e common.EquipmentType, v int) {
-	if e.Class() == common.EqClassUnknown || e == common.EqUnknown || v <= 0 || m == 0 {
+	if e.Class() == common.EqClassUnknown || e == common.EqUnknown || v <= 0 || m <= 0 {
 		return
 	}
 
