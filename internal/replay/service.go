@@ -2,7 +2,6 @@ package replay
 
 import (
 	"context"
-	"os"
 
 	"go.uber.org/zap"
 
@@ -21,17 +20,12 @@ func NewService(l *zap.Logger, r repository) *service {
 	}
 }
 
-func (s *service) CollectStats(ctx context.Context, filename string) (*domain.Match, error) {
-	replay, err := os.Open(filename)
+func (s *service) CollectStats(ctx context.Context, r Replay) (*domain.Match, error) {
+	parser, err := newParser(r, s.log)
 	if err != nil {
 		return nil, err
 	}
-
-	parser, err := newParser(replay, s.log)
-	if err != nil {
-		return nil, err
-	}
-	defer parser.close()
+	defer parser.p.Close()
 
 	matchID, err := parser.parseReplayHeader()
 	if err != nil {

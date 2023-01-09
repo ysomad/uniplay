@@ -70,12 +70,6 @@ func (p *parser) parseReplayHeader() (uuid.UUID, error) {
 	return p.match.id, nil
 }
 
-func (p *parser) close() {
-	if p != nil {
-		p.p.Close()
-	}
-}
-
 // collectStats collects player stats from the replay.
 func (p *parser) collectStats() (*replayMatch, []playerStat, []weaponStat, error) {
 	if (p.match.id == uuid.UUID{}) {
@@ -208,7 +202,7 @@ func (p *parser) handleKnifeRound() {
 
 // playerConnected checks is player connected and steamID is not equal to 0.
 func (p *parser) playerConnected(player *common.Player) bool {
-	return player != nil && player.SteamID64 != 0
+	return player != nil && player.SteamID64 != 0 && player.IsConnected && !player.IsBot
 }
 
 // hitgroupToMetric returns metric associated with the hitgroup.
