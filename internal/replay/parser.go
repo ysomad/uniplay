@@ -172,6 +172,13 @@ func (p *parser) collectStats() (*replayMatch, []playerStat, []weaponStat, error
 	return p.match, playerStats, weaponStats, nil
 }
 
+func (p *parser) close() error {
+	if p == nil {
+		return nil
+	}
+	return p.p.Close()
+}
+
 // playerSpectator checks whether player spectator or not.
 func (p *parser) playerSpectator(player *common.Player) bool {
 	return player.Team == common.TeamSpectators || player.Team == common.TeamUnassigned

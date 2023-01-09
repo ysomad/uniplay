@@ -21,13 +21,13 @@ func NewService(l *zap.Logger, r repository) *service {
 }
 
 func (s *service) CollectStats(ctx context.Context, r Replay) (*domain.Match, error) {
-	parser, err := newParser(r, s.log)
+	p, err := newParser(r, s.log)
 	if err != nil {
 		return nil, err
 	}
-	defer parser.p.Close()
+	defer p.close()
 
-	matchID, err := parser.parseReplayHeader()
+	matchID, err := p.parseReplayHeader()
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func (s *service) CollectStats(ctx context.Context, r Replay) (*domain.Match, er
 		return nil, domain.ErrMatchAlreadyExist
 	}
 
-	match, playerStats, weaponStats, err := parser.collectStats()
+	match, playerStats, weaponStats, err := p.collectStats()
 	if err != nil {
 		return nil, err
 	}
