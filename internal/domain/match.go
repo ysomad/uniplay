@@ -27,10 +27,7 @@ func NewMatchState(teamScore, opponentScore int8) MatchState {
 	if teamScore < opponentScore {
 		return MatchStateLose
 	}
-	if teamScore == opponentScore {
-		return MatchStateDraw
-	}
-	return 0
+	return MatchStateDraw
 }
 
 type Match struct {
@@ -42,15 +39,23 @@ type Match struct {
 	UploadedAt time.Time
 }
 
-// NewMatchID returns match id generated from meta data which was parsed from replay.
-func NewMatchID(server, client, mapName string, duration time.Duration, ticks, frames, signonLen int) (uuid.UUID, error) {
+type MatchTeam struct {
+	ID       int16
+	ClanName string
+	FlagCode string
+	Score    int8
+	Players  []uint64
+}
+
+// NewMatchID returns match id generated from meta data from replay header.
+func NewMatchID(server, client, mapName string, matchDuration time.Duration, ticks, frames, signonLen int) (uuid.UUID, error) {
 	if server == "" {
 		return uuid.UUID{}, errors.New("server name cannot be empty string")
 	}
 	if client == "" {
 		return uuid.UUID{}, errors.New("client name cannot be empty string")
 	}
-	if duration < minMatchDuration {
+	if matchDuration < minMatchDuration {
 		return uuid.UUID{}, errors.New("match duration cannot last less than 5 minutes")
 	}
 	if ticks <= 0 {
@@ -63,14 +68,6 @@ func NewMatchID(server, client, mapName string, duration time.Duration, ticks, f
 		return uuid.UUID{}, errors.New("got invalid amount of signon length")
 	}
 
-	format := fmt.Sprintf("%s,%s,%s,%d,%d,%d,%d", server, client, mapName, duration, ticks, frames, signonLen)
-	return uuid.NewMD5(uuid.UUID{}, []byte(format)), nil
-}
-
-type MatchTeam struct {
-	ID             int16
-	ClanName       string
-	FlagCode       string
-	Score          int8
-	PlayerSteamIDs []uint64
+	s := fmt.Sprintf("%s,%s,%s,%d,%d,%d,%d", server, client, mapName, matchDuration, ticks, frames, signonLen)
+	return uuid.NewMD5(uuid.UUID{}, []byte(s)), nil
 }

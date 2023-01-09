@@ -1,4 +1,4 @@
-package postgres
+package player
 
 import (
 	"context"
@@ -13,13 +13,13 @@ import (
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
 )
 
-type playerRepo struct {
+type pgStorage struct {
 	log    *zap.Logger
 	client *pgclient.Client
 }
 
-func NewPlayerRepo(l *zap.Logger, c *pgclient.Client) *playerRepo {
-	return &playerRepo{
+func NewPGStorage(l *zap.Logger, c *pgclient.Client) *pgStorage {
+	return &pgStorage{
 		log:    l,
 		client: c,
 	}
@@ -51,8 +51,8 @@ type playerTotalStats struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (r *playerRepo) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
-	sql, args, err := r.client.Builder.
+func (s *pgStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
+	sql, args, err := s.client.Builder.
 		Select(
 			"sum(ps.kills) as total_kills",
 			"sum(ps.hs_kills) as total_hs_kills",
@@ -87,9 +87,9 @@ func (r *playerRepo) GetTotalStats(ctx context.Context, steamID uint64) (*domain
 		return nil, err
 	}
 
-	r.log.Debug("playerRepo", zap.String("query", sql))
+	s.log.Debug("player - pgStorage", zap.String("query", sql))
 
-	rows, err := r.client.Pool.Query(ctx, sql, args...)
+	rows, err := s.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -131,8 +131,8 @@ type weaponTotalStats struct {
 	RightLegHits      int16  `db:"total_r_leg_hits"`
 }
 
-func (r *playerRepo) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponTotalStats, error) {
-	b := r.client.Builder.
+func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponTotalStats, error) {
+	b := s.client.Builder.
 		Select(
 			"ws.weapon_id",
 			"w.weapon",
@@ -173,9 +173,9 @@ func (r *playerRepo) GetTotalWeaponStats(ctx context.Context, steamID uint64, f 
 		return nil, err
 	}
 
-	r.log.Debug("playerRepo", zap.String("query", sql))
+	s.log.Debug("player - pgStorage", zap.String("query", sql))
 
-	rows, err := r.client.Pool.Query(ctx, sql, args...)
+	rows, err := s.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}

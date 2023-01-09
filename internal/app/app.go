@@ -11,13 +11,14 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"go.uber.org/zap"
 
+	"github.com/ssssargsian/uniplay/internal/compendium"
 	"github.com/ssssargsian/uniplay/internal/config"
 	v1 "github.com/ssssargsian/uniplay/internal/handler/v1"
 	"github.com/ssssargsian/uniplay/internal/pkg/httpserver"
 	"github.com/ssssargsian/uniplay/internal/pkg/logger"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
-	"github.com/ssssargsian/uniplay/internal/postgres"
-	"github.com/ssssargsian/uniplay/internal/service"
+	"github.com/ssssargsian/uniplay/internal/player"
+	"github.com/ssssargsian/uniplay/internal/replay"
 
 	v1gen "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
 )
@@ -35,14 +36,14 @@ func Run(conf *config.Config) {
 	}
 
 	// repos
-	replayRepo := postgres.NewReplayRepo(l, pgClient)
-	playerRepo := postgres.NewPlayerRepo(l, pgClient)
-	compendiumRepo := postgres.NewCompendiumRepo(l, pgClient)
+	replayRepo := replay.NewPGStorage(l, pgClient)
+	playerRepo := player.NewPGStorage(l, pgClient)
+	compendiumRepo := compendium.NewPGStorage(l, pgClient)
 
 	// services
-	replayService := service.NewReplay(l, replayRepo)
-	playerService := service.NewPlayer(playerRepo)
-	compendiumService := service.NewCompendium(compendiumRepo)
+	replayService := replay.NewService(l, replayRepo)
+	playerService := player.NewService(playerRepo)
+	compendiumService := compendium.NewService(compendiumRepo)
 
 	// init handlers
 	mux := chi.NewMux()
