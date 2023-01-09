@@ -10,10 +10,10 @@ import (
 
 type service struct {
 	log    *zap.Logger
-	replay repository
+	replay replayRepository
 }
 
-func NewService(l *zap.Logger, r repository) *service {
+func NewService(l *zap.Logger, r replayRepository) *service {
 	return &service{
 		log:    l,
 		replay: r,
