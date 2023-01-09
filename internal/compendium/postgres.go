@@ -1,4 +1,4 @@
-package postgres
+package compendium
 
 import (
 	"context"
@@ -10,13 +10,13 @@ import (
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
 )
 
-type compendiumRepo struct {
+type pgStorage struct {
 	log    *zap.Logger
 	client *pgclient.Client
 }
 
-func NewCompendiumRepo(l *zap.Logger, c *pgclient.Client) *compendiumRepo {
-	return &compendiumRepo{
+func NewPGStorage(l *zap.Logger, c *pgclient.Client) *pgStorage {
+	return &pgStorage{
 		log:    l,
 		client: c,
 	}
@@ -29,8 +29,8 @@ type weapon struct {
 	Class    string `db:"class"`
 }
 
-func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
-	sql, args, err := r.client.Builder.
+func (s *pgStorage) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
+	sql, args, err := s.client.Builder.
 		Select("w.id as weapon_id, w.weapon, wc.id as class_id, wc.class").
 		From("weapon w").
 		InnerJoin("weapon_class wc ON w.class_id = wc.id").
@@ -40,7 +40,7 @@ func (r *compendiumRepo) GetWeaponList(ctx context.Context) ([]domain.Weapon, er
 		return nil, err
 	}
 
-	rows, err := r.client.Pool.Query(ctx, sql, args...)
+	rows, err := s.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +63,8 @@ type weaponClass struct {
 	Class string `db:"class"`
 }
 
-func (r *compendiumRepo) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
-	sql, args, err := r.client.Builder.
+func (s *pgStorage) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
+	sql, args, err := s.client.Builder.
 		Select("id, class").
 		From("weapon_class").
 		ToSql()
@@ -72,7 +72,7 @@ func (r *compendiumRepo) GetWeaponClassList(ctx context.Context) ([]domain.Weapo
 		return nil, err
 	}
 
-	rows, err := r.client.Pool.Query(ctx, sql, args...)
+	rows, err := s.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
