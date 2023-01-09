@@ -17,6 +17,7 @@ import (
 	"github.com/ssssargsian/uniplay/internal/pkg/logger"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
 	"github.com/ssssargsian/uniplay/internal/postgres"
+	"github.com/ssssargsian/uniplay/internal/replay"
 	"github.com/ssssargsian/uniplay/internal/service"
 
 	v1gen "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
@@ -35,12 +36,12 @@ func Run(conf *config.Config) {
 	}
 
 	// repos
-	replayRepo := postgres.NewReplayRepo(l, pgClient)
+	replayRepo := replay.NewPGStorage(l, pgClient)
 	playerRepo := postgres.NewPlayerRepo(l, pgClient)
 	compendiumRepo := postgres.NewCompendiumRepo(l, pgClient)
 
 	// services
-	replayService := service.NewReplay(l, replayRepo)
+	replayService := replay.NewService(l, replayRepo)
 	playerService := service.NewPlayer(playerRepo)
 	compendiumService := service.NewCompendium(compendiumRepo)
 

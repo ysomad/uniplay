@@ -19,7 +19,7 @@ import (
 )
 
 func (h *handler) UploadReplay(w http.ResponseWriter, r *http.Request) {
-	r.Body = http.MaxBytesReader(w, r.Body, 160<<20) // max body size is 300 mb
+	r.Body = http.MaxBytesReader(w, r.Body, 160<<20) // max body size is 160 mb
 
 	if err := r.ParseMultipartForm(64 << 20); err != nil { // 64 mb
 		apperror.Write(w, http.StatusBadRequest, fmt.Errorf("r.ParseMultipartForm: %w", err))
@@ -86,13 +86,13 @@ func (h *handler) UploadReplay(w http.ResponseWriter, r *http.Request) {
 		Team1: v1.MatchTeam{
 			ClanName:       match.Team1.ClanName,
 			FlagCode:       match.Team1.FlagCode,
-			PlayerSteamIds: match.Team1.PlayerSteamIDs,
+			PlayerSteamIds: match.Team1.Players,
 			Score:          match.Team1.Score,
 		},
 		Team2: v1.MatchTeam{
 			ClanName:       match.Team2.ClanName,
 			FlagCode:       match.Team2.FlagCode,
-			PlayerSteamIds: match.Team2.PlayerSteamIDs,
+			PlayerSteamIds: match.Team2.Players,
 			Score:          match.Team2.Score,
 		},
 		UploadedAt: match.UploadedAt,
