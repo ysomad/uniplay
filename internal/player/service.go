@@ -25,11 +25,11 @@ func (s *service) GetStats(ctx context.Context, steamID uint64) (domain.PlayerSt
 	return domain.NewPlayerStats(ts), nil
 }
 
-func (s *service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
+func (s *service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStat, error) {
 	ts, err := s.player.GetTotalWeaponStats(ctx, steamID, f)
 	if err != nil {
 		return nil, err
 	}
 
-	return domain.NewWeaponStatsList(ts), nil
+	return domain.NewWeaponStats(ts), nil
 }

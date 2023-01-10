@@ -18,7 +18,7 @@ type replayService interface {
 
 type playerService interface {
 	GetStats(ctx context.Context, steamID uint64) (domain.PlayerStats, error)
-	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error)
+	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStat, error)
 }
 
 type compendiumService interface {

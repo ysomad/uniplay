@@ -131,7 +131,7 @@ type weaponTotalStats struct {
 	RightLegHits      int16  `db:"total_r_leg_hits"`
 }
 
-func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponTotalStats, error) {
+func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponTotalStat, error) {
 	b := s.client.Builder.
 		Select(
 			"ws.weapon_id",
@@ -190,9 +190,9 @@ func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 		return nil, err
 	}
 
-	res := make([]domain.WeaponTotalStats, len(weaponStats))
+	res := make([]domain.WeaponTotalStat, len(weaponStats))
 	for i, s := range weaponStats {
-		res[i] = domain.WeaponTotalStats(s)
+		res[i] = domain.WeaponTotalStat(s)
 	}
 
 	return res, nil

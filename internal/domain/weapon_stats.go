@@ -2,18 +2,18 @@ package domain
 
 import "math"
 
-type WeaponStats struct {
-	TotalStats    WeaponTotalStats    `json:"total_stats"`
-	AccuracyStats WeaponAccuracyStats `json:"accuracy_stats"`
+type WeaponStat struct {
+	TotalStat    WeaponTotalStat    `json:"total_stat"`
+	AccuracyStat WeaponAccuracyStat `json:"accuracy_stat"`
 }
 
-func NewWeaponStatsList(total []WeaponTotalStats) []WeaponStats {
-	res := make([]WeaponStats, len(total))
+func NewWeaponStats(total []WeaponTotalStat) []WeaponStat {
+	res := make([]WeaponStat, len(total))
 
 	for i, s := range total {
-		res[i] = WeaponStats{
-			TotalStats: s,
-			AccuracyStats: newWeaponAccuracyStats(
+		res[i] = WeaponStat{
+			TotalStat: s,
+			AccuracyStat: newWeaponAccuracyStat(
 				s.Shots,
 				s.HeadHits,
 				s.ChestHits,
@@ -29,7 +29,7 @@ func NewWeaponStatsList(total []WeaponTotalStats) []WeaponStats {
 	return res
 }
 
-type WeaponTotalStats struct {
+type WeaponTotalStat struct {
 	WeaponID          int16  `json:"weapon_id"`
 	Weapon            string `json:"weapon"`
 	Kills             int32  `json:"kills"`
@@ -52,7 +52,7 @@ type WeaponTotalStats struct {
 	RightLegHits      int16  `json:"right_leg_hits"`
 }
 
-type WeaponAccuracyStats struct {
+type WeaponAccuracyStat struct {
 	Total   float64 `json:"total"`
 	Head    float64 `json:"head"`
 	Chest   float64 `json:"chest"`
@@ -72,20 +72,20 @@ func calcAccuracy(a, b float64) float64 {
 	return round(a * 100 / b)
 }
 
-func newWeaponAccuracyStats(shots int32, headHits, chestHits, stomachHits, larmHits, rarmHits, llegHits, rlegHits int16) WeaponAccuracyStats {
-	hits := float64(headHits + chestHits + stomachHits + larmHits + rarmHits + llegHits + rlegHits)
+func newWeaponAccuracyStat(shots int32, headHits, chestHits, stomachHits, lArmHits, rArmHits, lLegHits, rLegHits int16) WeaponAccuracyStat {
+	hits := float64(headHits + chestHits + stomachHits + lArmHits + rArmHits + lLegHits + rLegHits)
 
 	if hits <= 0 {
-		return WeaponAccuracyStats{}
+		return WeaponAccuracyStat{}
 	}
 
-	return WeaponAccuracyStats{
+	return WeaponAccuracyStat{
 		Total:   calcAccuracy(hits, float64(shots)),
 		Head:    calcAccuracy(float64(headHits), hits),
 		Chest:   calcAccuracy(float64(chestHits), hits),
 		Stomach: calcAccuracy(float64(stomachHits), hits),
-		Arms:    calcAccuracy(float64(larmHits+rarmHits), hits),
-		Legs:    calcAccuracy(float64(llegHits+rlegHits), hits),
+		Arms:    calcAccuracy(float64(lArmHits+rArmHits), hits),
+		Legs:    calcAccuracy(float64(lLegHits+rLegHits), hits),
 	}
 }
 
