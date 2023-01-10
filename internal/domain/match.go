@@ -47,23 +47,28 @@ type MatchTeam struct {
 	Players  []uint64
 }
 
-// NewMatchID returns match id generated from meta data from replay header.
+// NewMatchID returns match id generated from meta data received from replay header.
 func NewMatchID(server, client, mapName string, matchDuration time.Duration, ticks, frames, signonLen int) (uuid.UUID, error) {
 	if server == "" {
 		return uuid.UUID{}, errors.New("server name cannot be empty string")
 	}
+
 	if client == "" {
 		return uuid.UUID{}, errors.New("client name cannot be empty string")
 	}
+
 	if matchDuration < minMatchDuration {
-		return uuid.UUID{}, errors.New("match duration cannot last less than 5 minutes")
+		return uuid.UUID{}, fmt.Errorf("match must last more than %d", minMatchDuration)
 	}
+
 	if ticks <= 0 {
 		return uuid.UUID{}, errors.New("got invalid amount of playback ticks")
 	}
+
 	if frames <= 0 {
 		return uuid.UUID{}, errors.New("got invalid amount of playback frames")
 	}
+
 	if signonLen <= 0 {
 		return uuid.UUID{}, errors.New("got invalid amount of signon length")
 	}

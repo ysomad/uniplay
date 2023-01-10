@@ -11,10 +11,6 @@ import "github.com/ssssargsian/uniplay/internal/pkg/apperror"
 */
 
 var (
-	ErrReplayTeamsNotSaved = apperror.New(500, "parsed teams from replay not saved")
-)
-
-var (
 	ErrMatchAlreadyExist = apperror.New(600, "match already exist")
 )
 
