@@ -2,7 +2,6 @@ package replay
 
 import (
 	"errors"
-	"io"
 	"time"
 
 	"github.com/google/uuid"
@@ -27,9 +26,9 @@ type parser struct {
 	match        *replayMatch
 }
 
-func newParser(r io.Reader, l *zap.Logger) (*parser, error) {
-	if r == nil {
-		return nil, errors.New("parser: reader cannot be nil")
+func newParser(r Replay, l *zap.Logger) (*parser, error) {
+	if (r == Replay{}) {
+		return nil, errors.New("parser: empty replay")
 	}
 
 	if l == nil {
