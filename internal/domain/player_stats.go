@@ -61,7 +61,7 @@ func newPlayerCalcStats(kills, deaths, hsKills, wins, matchesPlayed int32) Playe
 		s.HeadshotPercentage = round(float64(hsKills) / fKills * 100)
 	}
 
-	if matchesPlayed > 0 {
+	if matchesPlayed > 0 && wins >= 0 {
 		s.WinRate = round(float64(wins) / float64(matchesPlayed) * 100)
 	}
 
