@@ -17,7 +17,7 @@ paths:
     get:
       tags:
       - player
-      summary: Профиль игрока
+      summary: Получение информации об игроке
       operationId: getPlayerProfile
       parameters:
       - name: steam_id
@@ -237,7 +237,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /сompendiums/weapon-classes:
+  /сompendiums/classes:
     get:
       tags:
       - compendium
@@ -356,93 +356,71 @@ components:
         kills:
           type: integer
           format: int32
-          x-go-type: int32
         headshot_kills:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         blind_kills:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         wallbang_kills:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         noscope_kills:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
           x-go-name: NoScopeKills
         through_smoke_kills:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         deaths:
           type: integer
           format: int32
-          x-go-type: int32
         assists:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         flashbang_assists:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         mvp_count:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
           x-go-name: MVPCount
         damage_taken:
           type: integer
           format: int32
-          x-go-type: int32
         damage_dealt:
           type: integer
           format: int32
-          x-go-type: int32
         grenade_damage_dealt:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         blinded_players:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         blinded_times:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         bombs_planted:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         bombs_defused:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         rounds_played:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         matches_played:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         wins:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         loses:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         draws:
           type: integer
-          format: int16
-          x-go-type: int16
+          format: int32
         time_played:
           type: integer
           format: int64
@@ -463,37 +441,30 @@ components:
           type: number
           description: средний урон за раунд
           format: double
-          x-go-type: float64
         grenade_damage_dealt:
           type: number
           description: средний урон гранатами за раунд
           format: double
-          x-go-type: float64
         kills:
           type: number
           description: среднее кол-во убийств за раунд
           format: double
-          x-go-type: float64
         assists:
           type: number
           description: среднее кол-во ассистов за раунд
           format: double
-          x-go-type: float64
         deaths:
           type: number
           description: среднее кол-во смертей за раунд
           format: double
-          x-go-type: float64
         blinded_times:
           type: number
           description: среднее кол-во раз ослеплен за раунд
           format: double
-          x-go-type: float64
         blinded_players:
           type: number
           description: средне кол-во ослепленных игроков за раунд
           format: double
-          x-go-type: float64
       description: набор средних показателей за раунд
     PlayerStats:
       required:
@@ -547,22 +518,22 @@ components:
           format: int32
         headshot_kills:
           type: integer
-          format: int16
+          format: int32
         blind_kills:
           type: integer
-          format: int16
+          format: int32
         wallbang_kills:
           type: integer
-          format: int16
+          format: int32
         noscope_kills:
           type: integer
-          format: int16
+          format: int32
         through_smoke_kills:
           type: integer
-          format: int16
+          format: int32
         assists:
           type: integer
-          format: int16
+          format: int32
         damage_taken:
           type: integer
           format: int32

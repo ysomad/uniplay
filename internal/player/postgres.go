@@ -27,27 +27,27 @@ func NewPGStorage(l *zap.Logger, c *pgclient.Client) *pgStorage {
 
 type playerTotalStats struct {
 	Kills              int32         `db:"total_kills"`
-	HeadshotKills      int16         `db:"total_hs_kills"`
-	BlindKills         int16         `db:"total_blind_kills"`
-	WallbangKills      int16         `db:"total_wb_kills"`
-	NoScopeKills       int16         `db:"total_noscope_kills"`
-	ThroughSmokeKills  int16         `db:"total_smoke_kills"`
+	HeadshotKills      int32         `db:"total_hs_kills"`
+	BlindKills         int32         `db:"total_blind_kills"`
+	WallbangKills      int32         `db:"total_wb_kills"`
+	NoScopeKills       int32         `db:"total_noscope_kills"`
+	ThroughSmokeKills  int32         `db:"total_smoke_kills"`
 	Deaths             int32         `db:"total_deaths"`
-	Assists            int16         `db:"total_assists"`
-	FlashbangAssists   int16         `db:"total_fb_assists"`
-	MVPCount           int16         `db:"total_mvp_count"`
+	Assists            int32         `db:"total_assists"`
+	FlashbangAssists   int32         `db:"total_fb_assists"`
+	MVPCount           int32         `db:"total_mvp_count"`
 	DamageTaken        int32         `db:"total_dmg_taken"`
 	DamageDealt        int32         `db:"total_dmg_dealt"`
-	GrenadeDamageDealt int16         `db:"total_grenade_dmg_dealt"`
-	BlindedPlayers     int16         `db:"total_blinded_players"`
-	BlindedTimes       int16         `db:"total_blinded_times"`
-	BombsPlanted       int16         `db:"total_bombs_planted"`
-	BombsDefused       int16         `db:"total_bombs_defused"`
-	RoundsPlayed       int16         `db:"total_rounds_played"`
-	MatchesPlayed      int16         `db:"total_matches_played"`
-	Wins               int16         `db:"total_wins"`
-	Loses              int16         `db:"total_loses"`
-	Draws              int16         `db:"total_draws"`
+	GrenadeDamageDealt int32         `db:"total_grenade_dmg_dealt"`
+	BlindedPlayers     int32         `db:"total_blinded_players"`
+	BlindedTimes       int32         `db:"total_blinded_times"`
+	BombsPlanted       int32         `db:"total_bombs_planted"`
+	BombsDefused       int32         `db:"total_bombs_defused"`
+	RoundsPlayed       int32         `db:"total_rounds_played"`
+	MatchesPlayed      int32         `db:"total_matches_played"`
+	Wins               int32         `db:"total_wins"`
+	Loses              int32         `db:"total_loses"`
+	Draws              int32         `db:"total_draws"`
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
@@ -112,23 +112,23 @@ type weaponTotalStats struct {
 	WeaponID          int16  `db:"weapon_id"`
 	Weapon            string `db:"weapon"`
 	Kills             int32  `db:"total_kills"`
-	HeadshotKills     int16  `db:"total_hs_kills"`
-	BlindKills        int16  `db:"total_blind_kills"`
-	WallbangKills     int16  `db:"total_wb_kills"`
-	NoScopeKills      int16  `db:"total_noscope_kills"`
-	ThroughSmokeKills int16  `db:"total_smoke_kills"`
+	HeadshotKills     int32  `db:"total_hs_kills"`
+	BlindKills        int32  `db:"total_blind_kills"`
+	WallbangKills     int32  `db:"total_wb_kills"`
+	NoScopeKills      int32  `db:"total_noscope_kills"`
+	ThroughSmokeKills int32  `db:"total_smoke_kills"`
 	Deaths            int32  `db:"total_deaths"`
-	Assists           int16  `db:"total_assists"`
+	Assists           int32  `db:"total_assists"`
 	DamageTaken       int32  `db:"total_dmg_taken"`
 	DamageDealt       int32  `db:"total_dmg_dealt"`
 	Shots             int32  `db:"total_shots"`
-	HeadHits          int16  `db:"total_head_hits"`
-	ChestHits         int16  `db:"total_chest_hits"`
-	StomachHits       int16  `db:"total_stomach_hits"`
-	LeftArmHits       int16  `db:"total_l_arm_hits"`
-	RightArmHits      int16  `db:"total_r_arm_hits"`
-	LeftLegHits       int16  `db:"total_l_leg_hits"`
-	RightLegHits      int16  `db:"total_r_leg_hits"`
+	HeadHits          int32  `db:"total_head_hits"`
+	ChestHits         int32  `db:"total_chest_hits"`
+	StomachHits       int32  `db:"total_stomach_hits"`
+	LeftArmHits       int32  `db:"total_l_arm_hits"`
+	RightArmHits      int32  `db:"total_r_arm_hits"`
+	LeftLegHits       int32  `db:"total_l_leg_hits"`
+	RightLegHits      int32  `db:"total_r_leg_hits"`
 }
 
 func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponTotalStat, error) {

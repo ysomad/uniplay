@@ -7,7 +7,11 @@ CREATE TABLE IF NOT EXISTS team (
     flag_code char(2) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS player (steam_id bigint PRIMARY KEY NOT NULL);
+CREATE TABLE IF NOT EXISTS player (
+    steam_id bigint PRIMARY KEY NOT NULL,
+    avatar_uri varchar(2048),
+    display_name varchar(24)
+);
 
 CREATE TABLE IF NOT EXISTS team_player (
     team_id smallint NOT NULL REFERENCES team (id),

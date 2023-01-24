@@ -142,52 +142,52 @@ type SortOrder string
 
 // TotalStats общая статистика по сумме метрик игрока
 type TotalStats struct {
-	Assists            int16         `json:"assists"`
-	BlindKills         int16         `json:"blind_kills"`
-	BlindedPlayers     int16         `json:"blinded_players"`
-	BlindedTimes       int16         `json:"blinded_times"`
-	BombsDefused       int16         `json:"bombs_defused"`
-	BombsPlanted       int16         `json:"bombs_planted"`
+	Assists            int32         `json:"assists"`
+	BlindKills         int32         `json:"blind_kills"`
+	BlindedPlayers     int32         `json:"blinded_players"`
+	BlindedTimes       int32         `json:"blinded_times"`
+	BombsDefused       int32         `json:"bombs_defused"`
+	BombsPlanted       int32         `json:"bombs_planted"`
 	DamageDealt        int32         `json:"damage_dealt"`
 	DamageTaken        int32         `json:"damage_taken"`
 	Deaths             int32         `json:"deaths"`
-	Draws              int16         `json:"draws"`
-	FlashbangAssists   int16         `json:"flashbang_assists"`
-	GrenadeDamageDealt int16         `json:"grenade_damage_dealt"`
-	HeadshotKills      int16         `json:"headshot_kills"`
+	Draws              int32         `json:"draws"`
+	FlashbangAssists   int32         `json:"flashbang_assists"`
+	GrenadeDamageDealt int32         `json:"grenade_damage_dealt"`
+	HeadshotKills      int32         `json:"headshot_kills"`
 	Kills              int32         `json:"kills"`
-	Loses              int16         `json:"loses"`
-	MatchesPlayed      int16         `json:"matches_played"`
-	MVPCount           int16         `json:"mvp_count"`
-	NoScopeKills       int16         `json:"noscope_kills"`
-	RoundsPlayed       int16         `json:"rounds_played"`
-	ThroughSmokeKills  int16         `json:"through_smoke_kills"`
+	Loses              int32         `json:"loses"`
+	MatchesPlayed      int32         `json:"matches_played"`
+	MVPCount           int32         `json:"mvp_count"`
+	NoScopeKills       int32         `json:"noscope_kills"`
+	RoundsPlayed       int32         `json:"rounds_played"`
+	ThroughSmokeKills  int32         `json:"through_smoke_kills"`
 	TimePlayed         time.Duration `json:"time_played"`
-	WallbangKills      int16         `json:"wallbang_kills"`
-	Wins               int16         `json:"wins"`
+	WallbangKills      int32         `json:"wallbang_kills"`
+	Wins               int32         `json:"wins"`
 }
 
 // TotalWeaponStats defines model for TotalWeaponStats.
 type TotalWeaponStats struct {
-	Assists           int16  `json:"assists"`
-	BlindKills        int16  `json:"blind_kills"`
+	Assists           int32  `json:"assists"`
+	BlindKills        int32  `json:"blind_kills"`
 	ChestHits         int32  `json:"chest_hits"`
 	DamageDealt       int32  `json:"damage_dealt"`
 	DamageTaken       int32  `json:"damage_taken"`
 	Deaths            int32  `json:"deaths"`
 	HeadHits          int32  `json:"head_hits"`
-	HeadshotKills     int16  `json:"headshot_kills"`
+	HeadshotKills     int32  `json:"headshot_kills"`
 	Hits              int32  `json:"hits"`
 	Kills             int32  `json:"kills"`
 	LeftArmHits       int32  `json:"left_arm_hits"`
 	LeftLegHits       int32  `json:"left_leg_hits"`
-	NoscopeKills      int16  `json:"noscope_kills"`
+	NoscopeKills      int32  `json:"noscope_kills"`
 	RightArmHits      int32  `json:"right_arm_hits"`
 	RightLegHits      int32  `json:"right_leg_hits"`
 	Shots             int32  `json:"shots"`
 	StomachHits       int32  `json:"stomach_hits"`
-	ThroughSmokeKills int16  `json:"through_smoke_kills"`
-	WallbangKills     int16  `json:"wallbang_kills"`
+	ThroughSmokeKills int32  `json:"through_smoke_kills"`
+	WallbangKills     int32  `json:"wallbang_kills"`
 	Weapon            string `json:"weapon"`
 	WeaponId          int16  `json:"weapon_id"`
 }
@@ -255,7 +255,7 @@ type UploadReplayMultipartRequestBody UploadReplayMultipartBody
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
-	// Профиль игрока
+	// Получение информации об игроке
 	// (GET /players/{steam_id})
 	GetPlayerProfile(w http.ResponseWriter, r *http.Request, steamId uint64)
 	// Список матчей игрока
@@ -271,7 +271,7 @@ type ServerInterface interface {
 	// (POST /replays)
 	UploadReplay(w http.ResponseWriter, r *http.Request)
 	// Справочник классов оружий
-	// (GET /сompendiums/weapon-classes)
+	// (GET /сompendiums/classes)
 	GetWeaponClassCompendium(w http.ResponseWriter, r *http.Request)
 	// Справочник оружий
 	// (GET /сompendiums/weapons)
@@ -598,7 +598,7 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Post(options.BaseURL+"/replays", wrapper.UploadReplay)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/сompendiums/weapon-classes", wrapper.GetWeaponClassCompendium)
+		r.Get(options.BaseURL+"/сompendiums/classes", wrapper.GetWeaponClassCompendium)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/сompendiums/weapons", wrapper.GetWeaponCompendium)
