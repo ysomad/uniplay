@@ -65,27 +65,27 @@ type WeaponAccuracyStat struct {
 func round(n float64) float64 { return math.Round(n*100) / 100 }
 
 // calcAccuracy returns accuracy in percentage.
-func calcAccuracy(a, b float64) float64 {
-	if a <= 0 || b <= 0 {
+func calcAccuracy(sum, num int32) float64 {
+	if sum <= 0 || num <= 0 {
 		return 0
 	}
-	return round(a * 100 / b)
+	return round(float64(sum) * 100 / float64(num))
 }
 
 func newWeaponAccuracyStat(shots, headHits, chestHits, stomachHits, lArmHits, rArmHits, lLegHits, rLegHits int32) WeaponAccuracyStat {
-	hits := float64(headHits + chestHits + stomachHits + lArmHits + rArmHits + lLegHits + rLegHits)
+	hits := headHits + chestHits + stomachHits + lArmHits + rArmHits + lLegHits + rLegHits
 
 	if hits <= 0 {
 		return WeaponAccuracyStat{}
 	}
 
 	return WeaponAccuracyStat{
-		Total:   calcAccuracy(hits, float64(shots)),
-		Head:    calcAccuracy(float64(headHits), hits),
-		Chest:   calcAccuracy(float64(chestHits), hits),
-		Stomach: calcAccuracy(float64(stomachHits), hits),
-		Arms:    calcAccuracy(float64(lArmHits+rArmHits), hits),
-		Legs:    calcAccuracy(float64(lLegHits+rLegHits), hits),
+		Total:   calcAccuracy(hits, shots),
+		Head:    calcAccuracy(headHits, hits),
+		Chest:   calcAccuracy(chestHits, hits),
+		Stomach: calcAccuracy(stomachHits, hits),
+		Arms:    calcAccuracy(lArmHits+rArmHits, hits),
+		Legs:    calcAccuracy(lLegHits+rLegHits, hits),
 	}
 }
 
