@@ -17,7 +17,8 @@ const (
 )
 
 const (
-	minMatchDuration = time.Minute * 5
+	minMatchDuration  = time.Minute * 5
+	minServerTickrate = 64
 )
 
 func NewMatchState(teamScore, opponentScore int8) MatchState {
@@ -61,12 +62,15 @@ func NewMatchID(server, client, mapName string, matchDuration time.Duration, tic
 		return uuid.UUID{}, fmt.Errorf("match must last more than %s", minMatchDuration.String())
 	}
 
-	if ticks <= 0 {
-		return uuid.UUID{}, errors.New("invalid amount of playback ticks")
+	minPlaybackTicks := int(matchDuration) * minServerTickrate
+
+	if ticks <= 0 || ticks < minPlaybackTicks {
+		return uuid.UUID{}, errors.New(
+			"invalid amount of playback ticks, must be more or equal to playback time * server tickrate")
 	}
 
-	if frames <= 0 {
-		return uuid.UUID{}, errors.New("invalid amount of playback frames")
+	if frames <= 0 || time.Duration(frames) <= matchDuration {
+		return uuid.UUID{}, errors.New("invalid amount of frames, must be more than playback time")
 	}
 
 	if signonLen <= 0 {
