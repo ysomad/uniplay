@@ -3,11 +3,11 @@ package domain
 import "math"
 
 type WeaponStat struct {
-	TotalStat    WeaponTotalStat    `json:"total_stat"`
+	TotalStat    *WeaponTotalStat   `json:"total_stat"`
 	AccuracyStat WeaponAccuracyStat `json:"accuracy_stat"`
 }
 
-func NewWeaponStats(total []WeaponTotalStat) []WeaponStat {
+func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
 	res := make([]WeaponStat, len(total))
 
 	for i, s := range total {

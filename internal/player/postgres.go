@@ -25,7 +25,7 @@ func NewPGStorage(l *zap.Logger, c *pgclient.Client) *pgStorage {
 	}
 }
 
-type playerTotalStats struct {
+type playerTotalStat struct {
 	Kills              int32         `db:"total_kills"`
 	HeadshotKills      int32         `db:"total_hs_kills"`
 	BlindKills         int32         `db:"total_blind_kills"`
@@ -94,7 +94,7 @@ func (s *pgStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.
 		return nil, err
 	}
 
-	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[playerTotalStats])
+	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[playerTotalStat])
 	if err != nil {
 
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -108,7 +108,7 @@ func (s *pgStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.
 	return &res, nil
 }
 
-type weaponTotalStats struct {
+type weaponTotalStat struct {
 	WeaponID          int16  `db:"weapon_id"`
 	Weapon            string `db:"weapon"`
 	Kills             int32  `db:"total_kills"`
@@ -131,7 +131,7 @@ type weaponTotalStats struct {
 	RightLegHits      int32  `db:"total_r_leg_hits"`
 }
 
-func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponTotalStat, error) {
+func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponTotalStat, error) {
 	b := s.client.Builder.
 		Select(
 			"ws.weapon_id",
@@ -180,7 +180,7 @@ func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 		return nil, err
 	}
 
-	weaponStats, err := pgx.CollectRows(rows, pgx.RowToStructByName[weaponTotalStats])
+	weaponStats, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[weaponTotalStat])
 	if err != nil {
 
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -190,9 +190,28 @@ func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 		return nil, err
 	}
 
-	res := make([]domain.WeaponTotalStat, len(weaponStats))
+	res := make([]*domain.WeaponTotalStat, len(weaponStats))
 	for i, s := range weaponStats {
-		res[i] = domain.WeaponTotalStat(s)
+		res[i] = &domain.WeaponTotalStat{
+			Kills:             s.Kills,
+			HeadshotKills:     s.HeadshotKills,
+			BlindKills:        s.BlindKills,
+			WallbangKills:     s.WallbangKills,
+			NoScopeKills:      s.NoScopeKills,
+			ThroughSmokeKills: s.ThroughSmokeKills,
+			Deaths:            s.Deaths,
+			Assists:           s.Assists,
+			DamageTaken:       s.DamageTaken,
+			DamageDealt:       s.DamageDealt,
+			Shots:             s.Shots,
+			HeadHits:          s.HeadHits,
+			ChestHits:         s.ChestHits,
+			StomachHits:       s.StomachHits,
+			LeftArmHits:       s.LeftArmHits,
+			RightArmHits:      s.RightArmHits,
+			LeftLegHits:       s.LeftLegHits,
+			RightLegHits:      s.RightLegHits,
+		}
 	}
 
 	return res, nil

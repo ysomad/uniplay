@@ -8,7 +8,7 @@ import (
 
 func TestNewWeaponStats(t *testing.T) {
 	type args struct {
-		total []WeaponTotalStat
+		total []*WeaponTotalStat
 	}
 	tests := []struct {
 		name string
@@ -18,7 +18,7 @@ func TestNewWeaponStats(t *testing.T) {
 		{
 			name: "success",
 			args: args{
-				total: []WeaponTotalStat{
+				total: []*WeaponTotalStat{
 					{
 						WeaponID:          1,
 						Weapon:            "ak-47",
@@ -89,7 +89,7 @@ func TestNewWeaponStats(t *testing.T) {
 			},
 			want: []WeaponStat{
 				{
-					TotalStat: WeaponTotalStat{
+					TotalStat: &WeaponTotalStat{
 						WeaponID:          1,
 						Weapon:            "ak-47",
 						Kills:             1337,
@@ -121,7 +121,7 @@ func TestNewWeaponStats(t *testing.T) {
 					},
 				},
 				{
-					TotalStat: WeaponTotalStat{
+					TotalStat: &WeaponTotalStat{
 						WeaponID:          2,
 						Weapon:            "mp4a4",
 						Kills:             1337,
@@ -153,7 +153,7 @@ func TestNewWeaponStats(t *testing.T) {
 					},
 				},
 				{
-					TotalStat: WeaponTotalStat{
+					TotalStat: &WeaponTotalStat{
 						WeaponID:          3,
 						Weapon:            "awp",
 						Kills:             1337,
