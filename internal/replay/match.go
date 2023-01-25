@@ -47,10 +47,10 @@ func (m *replayMatch) toDomain() *domain.Match {
 // setTeams set new team to a match from GameState.
 func (m *replayMatch) setTeams(gs demoinfocs.GameState) {
 	t := gs.TeamTerrorists()
-	m.team1 = newTeam(t.ClanName(), t.Flag(), t.Team(), t.Members())
+	m.team1 = newReplayTeam(t.ClanName(), t.Flag(), t.Team(), t.Members())
 
 	ct := gs.TeamCounterTerrorists()
-	m.team2 = newTeam(ct.ClanName(), ct.Flag(), ct.Team(), ct.Members())
+	m.team2 = newReplayTeam(ct.ClanName(), ct.Flag(), ct.Team(), ct.Members())
 }
 
 func (m *replayMatch) swapTeamSides() {
@@ -116,21 +116,20 @@ type replayTeam struct {
 	_side common.Team
 }
 
-func newTeam(name, flag string, side common.Team, players []*common.Player) replayTeam {
-	var steamIDs []uint64
+func newReplayTeam(name, flag string, side common.Team, players []*common.Player) replayTeam {
+	rt := replayTeam{
+		clanName: name,
+		flagCode: flag,
+		_side:    side,
+	}
 
 	for _, p := range players {
 		if p != nil && p.SteamID64 != 0 {
-			steamIDs = append(steamIDs, p.SteamID64)
+			rt.players = append(rt.players, p.SteamID64)
 		}
 	}
 
-	return replayTeam{
-		clanName: name,
-		flagCode: flag,
-		players:  steamIDs,
-		_side:    side,
-	}
+	return rt
 }
 
 func (t *replayTeam) swapSide() {
