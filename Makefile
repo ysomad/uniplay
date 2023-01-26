@@ -53,4 +53,4 @@ gen-oapi:
 	oapi-codegen \
 	--package v1 \
 	-generate chi-server,types \
-	./api/openapi3_v1.yaml > ./internal/gen/oapi/v1/v1.gen.go
+	./openapi3.yaml > ./internal/gen/oapi/v1/v1.gen.go

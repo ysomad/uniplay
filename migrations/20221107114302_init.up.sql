@@ -7,7 +7,11 @@ CREATE TABLE IF NOT EXISTS team (
     flag_code char(2) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS player (steam_id bigint PRIMARY KEY NOT NULL);
+CREATE TABLE IF NOT EXISTS player (
+    steam_id bigint PRIMARY KEY NOT NULL,
+    avatar_uri varchar(2048),
+    display_name varchar(24)
+);
 
 CREATE TABLE IF NOT EXISTS team_player (
     team_id smallint NOT NULL REFERENCES team (id),
@@ -30,18 +34,18 @@ CREATE TABLE IF NOT EXISTS match (
 CREATE TABLE IF NOT EXISTS player_match_stat (
     player_steam_id bigint NOT NULL REFERENCES player (steam_id),
     match_id uuid NOT NULL REFERENCES match (id),
-    kills integer NOT NULL,
+    kills smallint NOT NULL,
     hs_kills smallint NOT NULL,
     blind_kills smallint NOT NULL,
     wallbang_kills smallint NOT NULL,
     noscope_kills smallint NOT NULL,
     through_smoke_kills smallint NOT NULL,
-    deaths integer NOT NULL,
+    deaths smallint NOT NULL,
     assists smallint NOT NULL,
     flashbang_assists smallint NOT NULL,
     mvp_count smallint NOT NULL,
-    damage_taken integer NOT NULL,
-    damage_dealt integer NOT NULL,
+    damage_taken smallint NOT NULL,
+    damage_dealt smallint NOT NULL,
     grenade_damage_dealt smallint NOT NULL,
     blinded_players smallint NOT NULL,
     blinded_times smallint NOT NULL,
@@ -79,9 +83,9 @@ CREATE TABLE IF NOT EXISTS player_match_weapon_stat (
     through_smoke_kills smallint NOT NULL,
     deaths smallint NOT NULL,
     assists smallint NOT NULL,
-    damage_taken integer NOT NULL,
-    damage_dealt integer NOT NULL,
-    shots integer NOT NULL,
+    damage_taken smallint NOT NULL,
+    damage_dealt smallint NOT NULL,
+    shots smallint NOT NULL,
     head_hits smallint NOT NULL,
     chest_hits smallint NOT NULL,
     stomach_hits smallint NOT NULL,

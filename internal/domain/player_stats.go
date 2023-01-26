@@ -21,27 +21,27 @@ func NewPlayerStats(t *PlayerTotalStats) PlayerStats {
 // PlayerTotalStats is a set of total statistics of a player.
 type PlayerTotalStats struct {
 	Kills              int32
-	HeadshotKills      int16
-	BlindKills         int16
-	WallbangKills      int16
-	NoScopeKills       int16
-	ThroughSmokeKills  int16
+	HeadshotKills      int32
+	BlindKills         int32
+	WallbangKills      int32
+	NoScopeKills       int32
+	ThroughSmokeKills  int32
 	Deaths             int32
-	Assists            int16
-	FlashbangAssists   int16
-	MVPCount           int16
+	Assists            int32
+	FlashbangAssists   int32
+	MVPCount           int32
 	DamageTaken        int32
 	DamageDealt        int32
-	GrenadeDamageDealt int16
-	BlindedPlayers     int16
-	BlindedTimes       int16
-	BombsPlanted       int16
-	BombsDefused       int16
-	RoundsPlayed       int16
-	MatchesPlayed      int16
-	Wins               int16
-	Loses              int16
-	Draws              int16
+	GrenadeDamageDealt int32
+	BlindedPlayers     int32
+	BlindedTimes       int32
+	BombsPlanted       int32
+	BombsDefused       int32
+	RoundsPlayed       int32
+	MatchesPlayed      int32
+	Wins               int32
+	Loses              int32
+	Draws              int32
 	TimePlayed         time.Duration
 }
 
@@ -52,7 +52,7 @@ type PlayerCalcStats struct {
 	WinRate            float64
 }
 
-func newPlayerCalcStats(kills, deaths int32, hsKills, wins, matchesPlayed int16) PlayerCalcStats {
+func newPlayerCalcStats(kills, deaths, hsKills, wins, matchesPlayed int32) PlayerCalcStats {
 	s := PlayerCalcStats{}
 	fKills := float64(kills)
 
@@ -61,7 +61,7 @@ func newPlayerCalcStats(kills, deaths int32, hsKills, wins, matchesPlayed int16)
 		s.HeadshotPercentage = round(float64(hsKills) / fKills * 100)
 	}
 
-	if matchesPlayed > 0 {
+	if matchesPlayed > 0 && wins >= 0 {
 		s.WinRate = round(float64(wins) / float64(matchesPlayed) * 100)
 	}
 
@@ -79,7 +79,7 @@ type PlayerRoundStats struct {
 	BlindedTimes       float64
 }
 
-func newPlayerRoundStats(kills, deaths, dmgDealt int32, assists, grenadeDmgDealt, blindedPlayers, blindedTimes, roundsPlayed int16) PlayerRoundStats {
+func newPlayerRoundStats(kills, deaths, dmgDealt, assists, grenadeDmgDealt, blindedPlayers, blindedTimes, roundsPlayed int32) PlayerRoundStats {
 	if roundsPlayed <= 0 {
 		return PlayerRoundStats{}
 	}
