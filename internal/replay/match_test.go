@@ -1,104 +1,111 @@
 package replay
 
 import (
-	"reflect"
 	"testing"
-	"time"
 
 	"github.com/google/uuid"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
-	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/events"
+	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_replayMatch_swapTeamSides(t *testing.T) {
 	type fields struct {
-		id         uuid.UUID
-		team1      replayTeam
-		team2      replayTeam
-		mapName    string
-		duration   time.Duration
-		uploadedAt time.Time
+		team1 replayTeam
+		team2 replayTeam
 	}
 	tests := []struct {
-		name   string
-		fields fields
+		name          string
+		fields        fields
+		wantTeam1Side common.Team
+		wantTeam2Side common.Team
 	}{
-		// TODO: Add test cases.
+		{
+			name: "success",
+			fields: fields{
+				team1: replayTeam{_side: common.TeamCounterTerrorists},
+				team2: replayTeam{_side: common.TeamTerrorists},
+			},
+			wantTeam1Side: common.TeamTerrorists,
+			wantTeam2Side: common.TeamCounterTerrorists,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			m := &replayMatch{
-				id:         tt.fields.id,
-				team1:      tt.fields.team1,
-				team2:      tt.fields.team2,
-				mapName:    tt.fields.mapName,
-				duration:   tt.fields.duration,
-				uploadedAt: tt.fields.uploadedAt,
+				team1: tt.fields.team1,
+				team2: tt.fields.team2,
 			}
 			m.swapTeamSides()
-		})
-	}
-}
 
-func Test_replayMatch_updateTeamsScore(t *testing.T) {
-	type fields struct {
-		id         uuid.UUID
-		team1      replayTeam
-		team2      replayTeam
-		mapName    string
-		duration   time.Duration
-		uploadedAt time.Time
-	}
-	type args struct {
-		e events.ScoreUpdated
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		args   args
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			m := &replayMatch{
-				id:         tt.fields.id,
-				team1:      tt.fields.team1,
-				team2:      tt.fields.team2,
-				mapName:    tt.fields.mapName,
-				duration:   tt.fields.duration,
-				uploadedAt: tt.fields.uploadedAt,
-			}
-			m.updateTeamsScore(tt.args.e)
+			assert.Equal(t, tt.wantTeam1Side, m.team1._side)
+			assert.Equal(t, tt.wantTeam2Side, m.team2._side)
 		})
 	}
 }
 
 func Test_replayMatch_setTeamStates(t *testing.T) {
 	type fields struct {
-		id         uuid.UUID
-		team1      replayTeam
-		team2      replayTeam
-		mapName    string
-		duration   time.Duration
-		uploadedAt time.Time
+		team1 replayTeam
+		team2 replayTeam
 	}
 	tests := []struct {
-		name   string
-		fields fields
+		name           string
+		fields         fields
+		wantTeam1State domain.MatchState
+		wantTeam2State domain.MatchState
 	}{
-		// TODO: Add test cases.
+		{
+			name: "team2 win",
+			fields: fields{
+				team1: replayTeam{
+					score:      12,
+					matchState: 0,
+				},
+				team2: replayTeam{
+					score:      0,
+					matchState: 16,
+				},
+			},
+			wantTeam1State: domain.MatchStateLose,
+			wantTeam2State: domain.MatchStateWin,
+		},
+		{
+			name: "team1 win",
+			fields: fields{
+				team1: replayTeam{
+					score:      22,
+					matchState: 0,
+				},
+				team2: replayTeam{
+					score:      5,
+					matchState: 0,
+				},
+			},
+			wantTeam1State: domain.MatchStateWin,
+			wantTeam2State: domain.MatchStateLose,
+		},
+		{
+			name: "draw",
+			fields: fields{
+				team1: replayTeam{
+					score:      15,
+					matchState: 0,
+				},
+				team2: replayTeam{
+					score:      15,
+					matchState: 0,
+				},
+			},
+			wantTeam1State: domain.MatchStateDraw,
+			wantTeam2State: domain.MatchStateDraw,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			m := &replayMatch{
-				id:         tt.fields.id,
-				team1:      tt.fields.team1,
-				team2:      tt.fields.team2,
-				mapName:    tt.fields.mapName,
-				duration:   tt.fields.duration,
-				uploadedAt: tt.fields.uploadedAt,
+				team1: tt.fields.team1,
+				team2: tt.fields.team2,
 			}
 			m.setTeamStates()
 		})
@@ -107,33 +114,115 @@ func Test_replayMatch_setTeamStates(t *testing.T) {
 
 func Test_replayMatch_teamPlayers(t *testing.T) {
 	type fields struct {
-		id         uuid.UUID
-		team1      replayTeam
-		team2      replayTeam
-		mapName    string
-		duration   time.Duration
-		uploadedAt time.Time
+		id    uuid.UUID
+		team1 replayTeam
+		team2 replayTeam
 	}
+
+	matchID, _ := uuid.NewRandom()
+
 	tests := []struct {
 		name   string
 		fields fields
 		want   []teamPlayer
 	}{
-		// TODO: Add test cases.
+		{
+			name: "success",
+			fields: fields{
+				id: matchID,
+				team1: replayTeam{
+					id:         1,
+					clanName:   "test",
+					flagCode:   "ru",
+					score:      16,
+					matchState: domain.MatchStateWin,
+					players:    []uint64{1, 2, 3, 4, 5},
+					_side:      common.TeamTerrorists,
+				},
+				team2: replayTeam{
+					id:         2,
+					clanName:   "test2",
+					flagCode:   "uk",
+					score:      12,
+					matchState: domain.MatchStateLose,
+					players:    []uint64{6, 7, 8, 9, 10},
+					_side:      common.TeamCounterTerrorists,
+				},
+			},
+			want: []teamPlayer{
+				{
+					steamID:    1,
+					teamID:     1,
+					matchID:    matchID,
+					matchState: domain.MatchStateWin,
+				},
+				{
+					steamID:    2,
+					teamID:     1,
+					matchID:    matchID,
+					matchState: domain.MatchStateWin,
+				},
+				{
+					steamID:    3,
+					teamID:     1,
+					matchID:    matchID,
+					matchState: domain.MatchStateWin,
+				},
+				{
+					steamID:    4,
+					teamID:     1,
+					matchID:    matchID,
+					matchState: domain.MatchStateWin,
+				},
+				{
+					steamID:    5,
+					teamID:     1,
+					matchID:    matchID,
+					matchState: domain.MatchStateWin,
+				},
+				{
+					steamID:    6,
+					teamID:     2,
+					matchID:    matchID,
+					matchState: domain.MatchStateLose,
+				},
+				{
+					steamID:    7,
+					teamID:     2,
+					matchID:    matchID,
+					matchState: domain.MatchStateLose,
+				},
+				{
+					steamID:    8,
+					teamID:     2,
+					matchID:    matchID,
+					matchState: domain.MatchStateLose,
+				},
+				{
+					steamID:    9,
+					teamID:     2,
+					matchID:    matchID,
+					matchState: domain.MatchStateLose,
+				},
+				{
+					steamID:    10,
+					teamID:     2,
+					matchID:    matchID,
+					matchState: domain.MatchStateLose,
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			m := &replayMatch{
-				id:         tt.fields.id,
-				team1:      tt.fields.team1,
-				team2:      tt.fields.team2,
-				mapName:    tt.fields.mapName,
-				duration:   tt.fields.duration,
-				uploadedAt: tt.fields.uploadedAt,
+				id:    tt.fields.id,
+				team1: tt.fields.team1,
+				team2: tt.fields.team2,
 			}
-			if got := m.teamPlayers(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("replayMatch.teamPlayers() = %v, want %v", got, tt.want)
-			}
+			got := m.teamPlayers()
+
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
