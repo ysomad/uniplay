@@ -180,6 +180,10 @@ func (p *parser) close() error {
 
 // playerSpectator checks whether player spectator or not.
 func (p *parser) playerSpectator(player *common.Player) bool {
+	if player == nil {
+		return true
+	}
+
 	return player.Team == common.TeamSpectators || player.Team == common.TeamUnassigned
 }
 
@@ -208,7 +212,7 @@ func (p *parser) handleKnifeRound() {
 
 // playerConnected checks is player connected and steamID is not equal to 0.
 func (p *parser) playerConnected(player *common.Player) bool {
-	return player != nil && player.SteamID64 != 0 && player.IsConnected && !player.IsBot
+	return player != nil && player.SteamID64 != 0 && player.IsConnected && !player.IsBot && !player.IsUnknown
 }
 
 // hitgroupToMetric returns metric associated with the hitgroup.
