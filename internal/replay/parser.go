@@ -70,7 +70,7 @@ func (p *parser) parseReplayHeader() (uuid.UUID, error) {
 }
 
 // collectStats collects player stats from the replay.
-func (p *parser) collectStats() (*replayMatch, []playerStat, []weaponStat, error) {
+func (p *parser) collectStats() (*replayMatch, []*playerStat, []*weaponStat, error) {
 	if (p.match.id == uuid.UUID{}) {
 		return nil, nil, nil, errors.New("parser: empty match id, call parseReplayHeader() first")
 	}
@@ -165,7 +165,7 @@ func (p *parser) collectStats() (*replayMatch, []playerStat, []weaponStat, error
 		return nil, nil, nil, err
 	}
 
-	playerStats, weaponStats := p.stats.normalize()
+	playerStats, weaponStats := p.stats.normalizeSync()
 	p.match.setTeamStates()
 
 	return p.match, playerStats, weaponStats, nil

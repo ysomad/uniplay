@@ -34,7 +34,7 @@ func (s *pgStorage) MatchExists(ctx context.Context, matchID uuid.UUID) (found b
 	return found, nil
 }
 
-func (s *pgStorage) SaveStats(ctx context.Context, match *replayMatch, ps []playerStat, ws []weaponStat) (*domain.Match, error) {
+func (s *pgStorage) SaveStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) (*domain.Match, error) {
 	txFunc := func(tx pgx.Tx) error {
 		steamIDs := append(match.team1.players, match.team2.players...)
 
@@ -220,7 +220,7 @@ func (s *pgStorage) savePlayersMatch(ctx context.Context, tx pgx.Tx, players []t
 }
 
 // savePlayersStat saves players statistic from specific match.
-func (s *pgStorage) savePlayersStat(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []playerStat) error {
+func (s *pgStorage) savePlayersStat(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []*playerStat) error {
 	b := s.client.Builder.
 		Insert("player_match_stat").
 		Columns(
@@ -284,7 +284,7 @@ func (s *pgStorage) savePlayersStat(ctx context.Context, tx pgx.Tx, matchID uuid
 }
 
 // saveWeaponsStat saves players weapon statistic of specific match.
-func (s *pgStorage) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []weaponStat) error {
+func (s *pgStorage) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []*weaponStat) error {
 	b := s.client.Builder.
 		Insert("player_match_weapon_stat").
 		Columns(

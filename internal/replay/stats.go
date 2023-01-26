@@ -19,18 +19,18 @@ func newStats() stats {
 }
 
 // normalize returns restructured player and weapon stats.
-func (s *stats) normalize() ([]playerStat, []weaponStat) {
+func (s *stats) normalize() ([]*playerStat, []*weaponStat) {
 	var (
 		wg          sync.WaitGroup
-		playerStats []playerStat
-		weaponStats []weaponStat
+		playerStats []*playerStat
+		weaponStats []*weaponStat
 	)
 
 	wg.Add(2)
 
 	go func() {
 		for _, ps := range s.playerStats {
-			playerStats = append(playerStats, *ps)
+			playerStats = append(playerStats, ps)
 		}
 
 		wg.Done()
@@ -39,7 +39,7 @@ func (s *stats) normalize() ([]playerStat, []weaponStat) {
 	go func() {
 		for _, weapons := range s.weaponStats {
 			for _, ws := range weapons {
-				weaponStats = append(weaponStats, *ws)
+				weaponStats = append(weaponStats, ws)
 			}
 		}
 
@@ -47,6 +47,25 @@ func (s *stats) normalize() ([]playerStat, []weaponStat) {
 	}()
 
 	wg.Wait()
+	return playerStats, weaponStats
+}
+
+func (s *stats) normalizeSync() ([]*playerStat, []*weaponStat) {
+	playerStats := make([]*playerStat, len(s.playerStats))
+
+	var i int8
+	for _, ps := range s.playerStats {
+		playerStats[i] = ps
+		i++
+	}
+
+	var weaponStats []*weaponStat
+	for _, weapons := range s.weaponStats {
+		for _, ws := range weapons {
+			weaponStats = append(weaponStats, ws)
+		}
+	}
+
 	return playerStats, weaponStats
 }
 
@@ -72,7 +91,12 @@ func (s *stats) validWeapon(e common.EquipmentType) bool {
 }
 
 // validMetric checks whether metric and value is valid or not.
-func (s *stats) validMetric(m metric, v int) bool { return v <= 0 || m <= 0 }
+func (s *stats) validMetric(m metric, v int) bool {
+	if v <= 0 || m <= 0 {
+		return false
+	}
+	return true
+}
 
 func (s *stats) addWeaponStat(steamID uint64, m metric, e common.EquipmentType, v int) {
 	if s.validWeapon(e) || s.validMetric(m, v) {
