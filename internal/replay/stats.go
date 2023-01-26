@@ -99,7 +99,10 @@ func (s *stats) incrPlayerStat(steamID uint64, m metric) {
 
 // validWeapon checks whether weapon is valid or not.
 func (s *stats) validWeapon(e common.EquipmentType) bool {
-	return e.Class() == common.EqClassUnknown || e == common.EqUnknown
+	if e.Class() == common.EqClassUnknown || e == common.EqUnknown {
+		return false
+	}
+	return true
 }
 
 // validMetric checks whether metric and value is valid or not.

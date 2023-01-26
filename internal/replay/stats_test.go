@@ -384,8 +384,8 @@ func Test_stats_normalizeSync(t *testing.T) {
 			}
 			got, got1 := s.normalizeSync()
 
-			assert.EqualValues(t, tt.want, got)
-			assert.EqualValues(t, tt.want1, got1)
+			assert.ObjectsAreEqual(tt.want, got)
+			assert.ObjectsAreEqual(tt.want1, got1)
 		})
 	}
 }
@@ -654,7 +654,6 @@ func Test_stats_normalize(t *testing.T) {
 func Test_stats_addPlayerStat(t *testing.T) {
 	type fields struct {
 		playerStats map[uint64]*playerStat
-		weaponStats map[uint64]map[common.EquipmentType]*weaponStat
 	}
 	type args struct {
 		steamID uint64
@@ -665,16 +664,540 @@ func Test_stats_addPlayerStat(t *testing.T) {
 		name   string
 		fields fields
 		args   args
+		want   map[uint64]*playerStat
 	}{
-		// TODO: Add test cases.
+		{
+			name: "death",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					1: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 1,
+				m:       metricDeath,
+				v:       4,
+			},
+			want: map[uint64]*playerStat{
+				1: {
+					kills:  5,
+					deaths: 7,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
+			name: "kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					1: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 2,
+				m:       metricKill,
+				v:       10,
+			},
+			want: map[uint64]*playerStat{
+				1: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					kills:       10,
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
+			name: "hs kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 4,
+				m:       metricHSKill,
+				v:       3,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+				4: {hsKills: 3},
+			},
+		},
+
+		{
+			name: "blind kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 5,
+				m:       metricBlindKill,
+				v:       2,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+				5: {blindKills: 2},
+			},
+		},
+		{
+			name: "wallbang kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken:   567,
+						damageDealt:   456,
+						wallbangKills: 33,
+					},
+				},
+			},
+			args: args{
+				steamID: 2,
+				m:       metricWallbangKill,
+				v:       4,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken:   567,
+					damageDealt:   456,
+					wallbangKills: 37,
+				},
+			},
+		},
+		{
+			name: "noscope kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:        5,
+						deaths:       3,
+						noScopeKills: 7,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 3,
+				m:       metricNoScopeKill,
+				v:       6,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:        5,
+					deaths:       3,
+					noScopeKills: 13,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
+			name: "through smoke kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:  5,
+						deaths: 3,
+					},
+					7: {},
+				},
+			},
+			args: args{
+				steamID: 7,
+				m:       metricThroughSmokeKill,
+				v:       1,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:  5,
+					deaths: 3,
+				},
+				7: {throughSmokeKills: 1},
+			},
+		},
+		{
+			name: "assist",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:  5,
+						deaths: 3,
+					},
+					13: {
+						throughSmokeKills: 5,
+						wallbangKills:     7,
+						assists:           3,
+					},
+				},
+			},
+			args: args{
+				steamID: 13,
+				m:       metricAssist,
+				v:       9,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:  5,
+					deaths: 3,
+				},
+				13: {
+					throughSmokeKills: 5,
+					wallbangKills:     7,
+					assists:           12,
+				},
+			},
+		},
+		{
+			name: "flashbang assist",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+					},
+					13: {
+						assists: 3,
+					},
+				},
+			},
+			args: args{
+				steamID: 3,
+				m:       metricFlashbangAssist,
+				v:       2,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 7,
+				},
+				13: {
+					assists: 3,
+				},
+			},
+		},
+		{
+			name: "damage taken",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+					},
+					13: {
+						assists: 3,
+					},
+				},
+			},
+			args: args{
+				steamID: 1,
+				m:       metricDamageTaken,
+				v:       99,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+				},
+				13: {
+					assists: 3,
+				},
+				1: {
+					damageTaken: 99,
+				},
+			},
+		},
+		{
+			name: "damage dealt",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+					},
+					13: {
+						assists:     3,
+						damageDealt: 133,
+					},
+				},
+			},
+			args: args{
+				steamID: 13,
+				m:       metricDamageDealt,
+				v:       7,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+				},
+				13: {
+					assists:     3,
+					damageDealt: 140,
+				},
+			},
+		},
+		{
+			name: "bomb plant",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+						bombsPlanted:     77,
+					},
+					13: {
+						assists:     3,
+						damageDealt: 133,
+					},
+				},
+			},
+			args: args{
+				steamID: 3,
+				m:       metricBombPlanted,
+				v:       1,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+					bombsPlanted:     78,
+				},
+				13: {
+					assists:     3,
+					damageDealt: 133,
+				},
+			},
+		},
+		{
+			name: "bomb defuse",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+						bombsPlanted:     77,
+					},
+					13: {
+						assists:     3,
+						damageDealt: 133,
+					},
+					5: {
+						kills: 5,
+					},
+				},
+			},
+			args: args{
+				steamID: 5,
+				m:       metricBombDefused,
+				v:       1,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+					bombsPlanted:     77,
+				},
+				13: {
+					assists:     3,
+					damageDealt: 133,
+				},
+				5: {
+					kills:        5,
+					bombsDefused: 1,
+				},
+			},
+		},
+		{
+			name: "round mvp",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+						bombsPlanted:     77,
+					},
+					4: {
+						mvpCount: 3,
+						kills:    133,
+					},
+				},
+			},
+
+			args: args{
+				steamID: 4,
+				m:       metricRoundMVP,
+				v:       1,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+					bombsPlanted:     77,
+				},
+				4: {
+					mvpCount: 4,
+					kills:    133,
+				},
+			},
+		},
+		{
+			name: "blind",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+						bombsPlanted:     77,
+					},
+					4: {
+						mvpCount: 3,
+						kills:    133,
+					},
+				},
+			},
+			args: args{
+				steamID: 5,
+				m:       metricBlinded,
+				v:       1,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+					bombsPlanted:     77,
+				},
+				4: {
+					mvpCount: 3,
+					kills:    133,
+				},
+				5: {blindedTimes: 1},
+			},
+		},
+		{
+			name: "blinded player",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+						bombsPlanted:     77,
+					},
+					4: {
+						mvpCount: 3,
+						kills:    133,
+					},
+					5: {blindedTimes: 1},
+				},
+			},
+			args: args{
+				steamID: 5,
+				m:       metricBlind,
+				v:       3,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+					bombsPlanted:     77,
+				},
+				4: {
+					mvpCount: 3,
+					kills:    133,
+				},
+				5: {
+					blindedTimes:   1,
+					blindedPlayers: 3,
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := &stats{
 				playerStats: tt.fields.playerStats,
-				weaponStats: tt.fields.weaponStats,
 			}
 			s.addPlayerStat(tt.args.steamID, tt.args.m, tt.args.v)
+
+			assert.ObjectsAreEqual(tt.want, s.playerStats)
 		})
 	}
 }
@@ -682,7 +1205,6 @@ func Test_stats_addPlayerStat(t *testing.T) {
 func Test_stats_incrPlayerStat(t *testing.T) {
 	type fields struct {
 		playerStats map[uint64]*playerStat
-		weaponStats map[uint64]map[common.EquipmentType]*weaponStat
 	}
 	type args struct {
 		steamID uint64
@@ -692,16 +1214,528 @@ func Test_stats_incrPlayerStat(t *testing.T) {
 		name   string
 		fields fields
 		args   args
+		want   map[uint64]*playerStat
 	}{
-		// TODO: Add test cases.
+		{
+			name: "death",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					1: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 1,
+				m:       metricDeath,
+			},
+			want: map[uint64]*playerStat{
+				1: {
+					kills:  5,
+					deaths: 4,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
+			name: "kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					1: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 2,
+				m:       metricKill,
+			},
+			want: map[uint64]*playerStat{
+				1: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					kills:       6,
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
+			name: "hs kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 4,
+				m:       metricHSKill,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+				4: {hsKills: 1},
+			},
+		},
+
+		{
+			name: "blind kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 5,
+				m:       metricBlindKill,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+				5: {blindKills: 1},
+			},
+		},
+		{
+			name: "wallbang kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken:   567,
+						damageDealt:   456,
+						wallbangKills: 33,
+					},
+				},
+			},
+			args: args{
+				steamID: 2,
+				m:       metricWallbangKill,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken:   567,
+					damageDealt:   456,
+					wallbangKills: 34,
+				},
+			},
+		},
+		{
+			name: "noscope kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:        5,
+						deaths:       3,
+						noScopeKills: 7,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 3,
+				m:       metricNoScopeKill,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:        5,
+					deaths:       3,
+					noScopeKills: 8,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
+			name: "through smoke kill",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:  5,
+						deaths: 3,
+					},
+					7: {},
+				},
+			},
+			args: args{
+				steamID: 7,
+				m:       metricThroughSmokeKill,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:  5,
+					deaths: 3,
+				},
+				7: {throughSmokeKills: 1},
+			},
+		},
+		{
+			name: "assist",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:  5,
+						deaths: 3,
+					},
+					13: {
+						throughSmokeKills: 5,
+						wallbangKills:     7,
+						assists:           3,
+					},
+				},
+			},
+			args: args{
+				steamID: 13,
+				m:       metricAssist,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:  5,
+					deaths: 3,
+				},
+				13: {
+					throughSmokeKills: 5,
+					wallbangKills:     7,
+					assists:           4,
+				},
+			},
+		},
+		{
+			name: "flashbang assist",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+					},
+					13: {
+						assists: 3,
+					},
+				},
+			},
+			args: args{
+				steamID: 3,
+				m:       metricFlashbangAssist,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 6,
+				},
+				13: {
+					assists: 3,
+				},
+			},
+		},
+		{
+			name: "damage taken",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+					},
+					13: {
+						assists: 3,
+					},
+				},
+			},
+			args: args{
+				steamID: 1,
+				m:       metricDamageTaken,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+				},
+				13: {
+					assists: 3,
+				},
+				1: {
+					damageTaken: 1,
+				},
+			},
+		},
+		{
+			name: "damage dealt",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+					},
+					13: {
+						assists:     3,
+						damageDealt: 133,
+					},
+				},
+			},
+			args: args{
+				steamID: 13,
+				m:       metricDamageDealt,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+				},
+				13: {
+					assists:     3,
+					damageDealt: 134,
+				},
+			},
+		},
+		{
+			name: "bomb plant",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+						bombsPlanted:     77,
+					},
+					13: {
+						assists:     3,
+						damageDealt: 133,
+					},
+				},
+			},
+			args: args{
+				steamID: 3,
+				m:       metricBombPlanted,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+					bombsPlanted:     78,
+				},
+				13: {
+					assists:     3,
+					damageDealt: 133,
+				},
+			},
+		},
+		{
+			name: "bomb defuse",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+						bombsPlanted:     77,
+					},
+					13: {
+						assists:     3,
+						damageDealt: 133,
+					},
+					5: {
+						kills: 5,
+					},
+				},
+			},
+			args: args{
+				steamID: 5,
+				m:       metricBombDefused,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+					bombsPlanted:     77,
+				},
+				13: {
+					assists:     3,
+					damageDealt: 133,
+				},
+				5: {
+					kills:        5,
+					bombsDefused: 1,
+				},
+			},
+		},
+		{
+			name: "round mvp",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+						bombsPlanted:     77,
+					},
+					4: {
+						mvpCount: 3,
+						kills:    133,
+					},
+				},
+			},
+
+			args: args{
+				steamID: 4,
+				m:       metricRoundMVP,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+					bombsPlanted:     77,
+				},
+				4: {
+					mvpCount: 4,
+					kills:    133,
+				},
+			},
+		},
+		{
+			name: "blind",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+						bombsPlanted:     77,
+					},
+					4: {
+						mvpCount: 3,
+						kills:    133,
+					},
+					5: {blindedTimes: 5},
+				},
+			},
+			args: args{
+				steamID: 5,
+				m:       metricBlinded,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+					bombsPlanted:     77,
+				},
+				4: {
+					mvpCount: 3,
+					kills:    133,
+				},
+				5: {blindedTimes: 6},
+			},
+		},
+		{
+			name: "blinded player",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					3: {
+						kills:            5,
+						deaths:           3,
+						flashbangAssists: 5,
+						bombsPlanted:     77,
+					},
+					4: {
+						mvpCount: 3,
+						kills:    133,
+					},
+					5: {
+						blindedTimes:   1,
+						blindedPlayers: 3,
+					},
+				},
+			},
+			args: args{
+				steamID: 5,
+				m:       metricBlind,
+			},
+			want: map[uint64]*playerStat{
+				3: {
+					kills:            5,
+					deaths:           3,
+					flashbangAssists: 5,
+					bombsPlanted:     77,
+				},
+				4: {
+					mvpCount: 3,
+					kills:    133,
+				},
+				5: {
+					blindedTimes:   1,
+					blindedPlayers: 4,
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := &stats{
 				playerStats: tt.fields.playerStats,
-				weaponStats: tt.fields.weaponStats,
 			}
 			s.incrPlayerStat(tt.args.steamID, tt.args.m)
+
+			assert.ObjectsAreEqual(tt.want, s.playerStats)
 		})
 	}
 }
@@ -804,16 +1838,246 @@ func Test_stats_addWeaponStat(t *testing.T) {
 		name   string
 		fields fields
 		args   args
+		want   map[uint64]map[common.EquipmentType]*weaponStat
 	}{
-		// TODO: Add test cases.
+		{
+			name: "add 1 kill to existed weapon",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					2: {
+						common.EqUSP: &weaponStat{kills: 4},
+					},
+				},
+			},
+			args: args{
+				steamID: 2,
+				m:       metricKill,
+				e:       common.EqUSP,
+				v:       1,
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				2: {
+					common.EqUSP: &weaponStat{kills: 5},
+				},
+			},
+		},
+		{
+			name: "add 5 kills to not existing weapon",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					11: {
+						common.EqUSP: &weaponStat{kills: 4},
+					},
+				},
+			},
+			args: args{
+				steamID: 11,
+				m:       metricKill,
+				e:       common.EqAWP,
+				v:       5,
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				11: {
+					common.EqUSP: &weaponStat{kills: 4},
+					common.EqAWP: &weaponStat{kills: 5},
+				},
+			},
+		},
+		{
+			name: "invalid metric, valid value",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					7: {
+						common.EqM4A1: &weaponStat{
+							kills:       11,
+							damageDealt: 1342,
+							damageTaken: 566,
+							deaths:      5,
+						},
+					},
+					11: {
+						common.EqAWP: &weaponStat{
+							kills:       5,
+							damageDealt: 400,
+							damageTaken: 500,
+							deaths:      5,
+						},
+					},
+				},
+			},
+			args: args{
+				steamID: 7,
+				m:       -1, // invalid metric
+				e:       common.EqUSP,
+				v:       5,
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				7: {
+					common.EqM4A1: &weaponStat{
+						kills:       11,
+						damageDealt: 1342,
+						damageTaken: 566,
+						deaths:      5,
+					},
+				},
+				11: {
+					common.EqAWP: &weaponStat{
+						kills:       5,
+						damageDealt: 400,
+						damageTaken: 500,
+						deaths:      5,
+					},
+				},
+			},
+		},
+		{
+			name: "invalid metric and invalid value",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					7: {
+						common.EqM4A1: &weaponStat{
+							kills:       11,
+							damageDealt: 1342,
+							damageTaken: 566,
+							deaths:      5,
+						},
+					},
+					11: {
+						common.EqAWP: &weaponStat{
+							kills:       5,
+							damageDealt: 400,
+							damageTaken: 500,
+							deaths:      5,
+						},
+					},
+				},
+			},
+			args: args{
+				steamID: 7,
+				m:       -1,           // invalid metric
+				e:       common.EqUSP, // invalid value
+				v:       0,
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				7: {
+					common.EqM4A1: &weaponStat{
+						kills:       11,
+						damageDealt: 1342,
+						damageTaken: 566,
+						deaths:      5,
+					},
+				},
+				11: {
+					common.EqAWP: &weaponStat{
+						kills:       5,
+						damageDealt: 400,
+						damageTaken: 500,
+						deaths:      5,
+					},
+				},
+			},
+		},
+		{
+			name: "invalid weapon",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					7: {
+						common.EqM4A1: &weaponStat{
+							kills:       11,
+							damageDealt: 1342,
+							damageTaken: 566,
+							deaths:      5,
+						},
+					},
+					11: {
+						common.EqAWP: &weaponStat{
+							kills:       5,
+							damageDealt: 400,
+							damageTaken: 500,
+							deaths:      5,
+						},
+					},
+				},
+			},
+			args: args{
+				steamID: 7,
+				m:       metricDeath,
+				e:       common.EqUnknown, // invalid weapon
+				v:       1,
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				7: {
+					common.EqM4A1: &weaponStat{
+						kills:       11,
+						damageDealt: 1342,
+						damageTaken: 566,
+						deaths:      5,
+					},
+				},
+				11: {
+					common.EqAWP: &weaponStat{
+						kills:       5,
+						damageDealt: 400,
+						damageTaken: 500,
+						deaths:      5,
+					},
+				},
+			},
+		},
+		{
+			name: "invalid steam id",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					7: {
+						common.EqM4A1: &weaponStat{
+							kills:       11,
+							damageDealt: 1342,
+							damageTaken: 566,
+							deaths:      5,
+						},
+					},
+					11: {
+						common.EqAWP: &weaponStat{
+							kills:       5,
+							damageDealt: 400,
+							damageTaken: 500,
+							deaths:      5,
+						},
+					},
+				},
+			},
+			args: args{
+				steamID: 0, // invalid steam id
+				m:       metricDamageDealt,
+				e:       common.EqHE,
+				v:       56,
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				7: {
+					common.EqM4A1: &weaponStat{
+						kills:       11,
+						damageDealt: 1342,
+						damageTaken: 566,
+						deaths:      5,
+					},
+				},
+				11: {
+					common.EqAWP: &weaponStat{
+						kills:       5,
+						damageDealt: 400,
+						damageTaken: 500,
+						deaths:      5,
+					},
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := &stats{
-				playerStats: tt.fields.playerStats,
-				weaponStats: tt.fields.weaponStats,
-			}
+			s := &stats{weaponStats: tt.fields.weaponStats}
 			s.addWeaponStat(tt.args.steamID, tt.args.m, tt.args.e, tt.args.v)
+
+			assert.ObjectsAreEqual(tt.want, s.weaponStats)
 		})
 	}
 }
@@ -832,8 +2096,234 @@ func Test_stats_incrWeaponStat(t *testing.T) {
 		name   string
 		fields fields
 		args   args
+		want   map[uint64]map[common.EquipmentType]*weaponStat
 	}{
-		// TODO: Add test cases.
+
+		{
+			name: "add 1 kill to existed weapon",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					2: {
+						common.EqUSP: &weaponStat{kills: 4},
+					},
+				},
+			},
+			args: args{
+				steamID: 2,
+				m:       metricKill,
+				e:       common.EqUSP,
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				2: {
+					common.EqUSP: &weaponStat{kills: 5},
+				},
+			},
+		},
+		{
+			name: "add 5 kills to not existing weapon",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					11: {
+						common.EqUSP: &weaponStat{kills: 4},
+					},
+				},
+			},
+			args: args{
+				steamID: 11,
+				m:       metricKill,
+				e:       common.EqAWP,
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				11: {
+					common.EqUSP: &weaponStat{kills: 4},
+					common.EqAWP: &weaponStat{kills: 5},
+				},
+			},
+		},
+		{
+			name: "invalid metric, valid value",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					7: {
+						common.EqM4A1: &weaponStat{
+							kills:       11,
+							damageDealt: 1342,
+							damageTaken: 566,
+							deaths:      5,
+						},
+					},
+					11: {
+						common.EqAWP: &weaponStat{
+							kills:       5,
+							damageDealt: 400,
+							damageTaken: 500,
+							deaths:      5,
+						},
+					},
+				},
+			},
+			args: args{
+				steamID: 7,
+				m:       -1, // invalid metric
+				e:       common.EqUSP,
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				7: {
+					common.EqM4A1: &weaponStat{
+						kills:       11,
+						damageDealt: 1342,
+						damageTaken: 566,
+						deaths:      5,
+					},
+				},
+				11: {
+					common.EqAWP: &weaponStat{
+						kills:       5,
+						damageDealt: 400,
+						damageTaken: 500,
+						deaths:      5,
+					},
+				},
+			},
+		},
+		{
+			name: "invalid metric and invalid value",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					7: {
+						common.EqM4A1: &weaponStat{
+							kills:       11,
+							damageDealt: 1342,
+							damageTaken: 566,
+							deaths:      5,
+						},
+					},
+					11: {
+						common.EqAWP: &weaponStat{
+							kills:       5,
+							damageDealt: 400,
+							damageTaken: 500,
+							deaths:      5,
+						},
+					},
+				},
+			},
+			args: args{
+				steamID: 7,
+				m:       -1,           // invalid metric
+				e:       common.EqUSP, // invalid value
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				7: {
+					common.EqM4A1: &weaponStat{
+						kills:       11,
+						damageDealt: 1342,
+						damageTaken: 566,
+						deaths:      5,
+					},
+				},
+				11: {
+					common.EqAWP: &weaponStat{
+						kills:       5,
+						damageDealt: 400,
+						damageTaken: 500,
+						deaths:      5,
+					},
+				},
+			},
+		},
+		{
+			name: "invalid weapon",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					7: {
+						common.EqM4A1: &weaponStat{
+							kills:       11,
+							damageDealt: 1342,
+							damageTaken: 566,
+							deaths:      5,
+						},
+					},
+					11: {
+						common.EqAWP: &weaponStat{
+							kills:       5,
+							damageDealt: 400,
+							damageTaken: 500,
+							deaths:      5,
+						},
+					},
+				},
+			},
+			args: args{
+				steamID: 7,
+				m:       metricDeath,
+				e:       common.EqUnknown, // invalid weapon
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				7: {
+					common.EqM4A1: &weaponStat{
+						kills:       11,
+						damageDealt: 1342,
+						damageTaken: 566,
+						deaths:      5,
+					},
+				},
+				11: {
+					common.EqAWP: &weaponStat{
+						kills:       5,
+						damageDealt: 400,
+						damageTaken: 500,
+						deaths:      5,
+					},
+				},
+			},
+		},
+		{
+			name: "invalid steam id",
+			fields: fields{
+				weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{
+					7: {
+						common.EqM4A1: &weaponStat{
+							kills:       11,
+							damageDealt: 1342,
+							damageTaken: 566,
+							deaths:      5,
+						},
+					},
+					11: {
+						common.EqAWP: &weaponStat{
+							kills:       5,
+							damageDealt: 400,
+							damageTaken: 500,
+							deaths:      5,
+						},
+					},
+				},
+			},
+			args: args{
+				steamID: 0, // invalid steam id
+				m:       metricDamageDealt,
+				e:       common.EqHE,
+			},
+			want: map[uint64]map[common.EquipmentType]*weaponStat{
+				7: {
+					common.EqM4A1: &weaponStat{
+						kills:       11,
+						damageDealt: 1342,
+						damageTaken: 566,
+						deaths:      5,
+					},
+				},
+				11: {
+					common.EqAWP: &weaponStat{
+						kills:       5,
+						damageDealt: 400,
+						damageTaken: 500,
+						deaths:      5,
+					},
+				},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -842,13 +2332,13 @@ func Test_stats_incrWeaponStat(t *testing.T) {
 				weaponStats: tt.fields.weaponStats,
 			}
 			s.incrWeaponStat(tt.args.steamID, tt.args.m, tt.args.e)
+
+			assert.ObjectsAreEqual(tt.want, s.weaponStats)
 		})
 	}
 }
 
 func Test_playerStat_add(t *testing.T) {
-	t.Parallel()
-
 	type args struct {
 		m metric
 		v int
@@ -1031,64 +2521,219 @@ func Test_playerStat_add(t *testing.T) {
 }
 
 func Test_weaponStat_add(t *testing.T) {
-	type fields struct {
-		steamID           uint64
-		weaponID          int16
-		kills             int
-		hsKills           int
-		blindKills        int
-		wallbangKills     int
-		noScopeKills      int
-		throughSmokeKills int
-		deaths            int
-		assists           int
-		damageTaken       int
-		damageDealt       int
-		shots             int
-		headHits          int
-		chestHits         int
-		stomachHits       int
-		leftArmHits       int
-		rightArmHits      int
-		leftLegHits       int
-		rightLegHits      int
-	}
 	type args struct {
 		m metric
 		v int
 	}
 	tests := []struct {
-		name   string
-		fields fields
-		args   args
+		name string
+		in   *weaponStat
+		args args
+		want *weaponStat
 	}{
-		// TODO: Add test cases.
+		{
+			name: "invalid metric, valid value",
+			in:   &weaponStat{kills: 35, damageDealt: 1356, shots: 13456},
+			args: args{
+				m: 0,
+				v: 1,
+			},
+			want: &weaponStat{kills: 35, damageDealt: 1356, shots: 13456},
+		},
+		{
+			name: "invalid metric and invalid value",
+			in:   &weaponStat{kills: 35, damageDealt: 1356, shots: 13456},
+			args: args{
+				m: 0,
+				v: 0,
+			},
+			want: &weaponStat{kills: 35, damageDealt: 1356, shots: 13456},
+		},
+		{
+			name: "valid metric and invalid value",
+			in:   &weaponStat{kills: 35, damageDealt: 1356, shots: 13456},
+			args: args{
+				m: metricHitHead,
+				v: 0,
+			},
+			want: &weaponStat{kills: 35, damageDealt: 1356, shots: 13456},
+		},
+		{
+			name: "kill",
+			in:   &weaponStat{kills: 35, damageDealt: 1356, shots: 13456},
+			args: args{
+				m: metricKill,
+				v: 3,
+			},
+			want: &weaponStat{kills: 38, damageDealt: 1356, shots: 13456},
+		},
+		{
+			name: "hs kill",
+			in:   &weaponStat{kills: 35, hsKills: 13, damageDealt: 1356, shots: 13456},
+			args: args{
+				m: metricHSKill,
+				v: 5,
+			},
+			want: &weaponStat{kills: 35, hsKills: 18, damageDealt: 1356, shots: 13456},
+		},
+		{
+			name: "blind kill",
+			in:   &weaponStat{kills: 35, hsKills: 13, damageDealt: 1356, shots: 13456, blindKills: 3},
+			args: args{
+				m: metricBlindKill,
+				v: 1,
+			},
+			want: &weaponStat{kills: 35, hsKills: 13, damageDealt: 1356, shots: 13456, blindKills: 4},
+		},
+		{
+			name: "wb kill",
+			in:   &weaponStat{kills: 35, damageDealt: 1356, blindKills: 3, wallbangKills: 7},
+			args: args{
+				m: metricWallbangKill,
+				v: 7,
+			},
+			want: &weaponStat{kills: 35, damageDealt: 1356, blindKills: 3, wallbangKills: 14},
+		},
+		{
+			name: "noscope kill",
+			in:   &weaponStat{kills: 35, damageDealt: 1356, blindKills: 3, wallbangKills: 7, noScopeKills: 5},
+			args: args{
+				m: metricNoScopeKill,
+				v: 3,
+			},
+			want: &weaponStat{kills: 35, damageDealt: 1356, blindKills: 3, wallbangKills: 7, noScopeKills: 8},
+		},
+		{
+			name: "through smoke kill",
+			in:   &weaponStat{kills: 35, blindKills: 3, wallbangKills: 7, noScopeKills: 8, throughSmokeKills: 13},
+			args: args{
+				m: metricThroughSmokeKill,
+				v: 3,
+			},
+			want: &weaponStat{kills: 35, blindKills: 3, wallbangKills: 7, noScopeKills: 8, throughSmokeKills: 16},
+		},
+		{
+			name: "death",
+			in:   &weaponStat{kills: 35, deaths: 28},
+			args: args{
+				m: metricDeath,
+				v: 1,
+			},
+			want: &weaponStat{kills: 35, deaths: 29},
+		},
+		{
+			name: "assist",
+			in:   &weaponStat{kills: 35, deaths: 28, assists: 15},
+			args: args{
+				m: metricAssist,
+				v: 10,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, assists: 25},
+		},
+		{
+			name: "damage taken",
+			in:   &weaponStat{kills: 35, deaths: 28, assists: 15, damageTaken: 1346},
+			args: args{
+				m: metricDamageTaken,
+				v: 136,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, assists: 15, damageTaken: 1482},
+		},
+		{
+			name: "damage taken",
+			in:   &weaponStat{kills: 35, deaths: 28, assists: 15, damageTaken: 1346},
+			args: args{
+				m: metricDamageTaken,
+				v: 136,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, assists: 15, damageTaken: 1482},
+		},
+		{
+			name: "damage dealt",
+			in:   &weaponStat{kills: 35, deaths: 28, assists: 15, damageTaken: 1346, damageDealt: 567},
+			args: args{
+				m: metricDamageDealt,
+				v: 76,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, assists: 15, damageTaken: 1346, damageDealt: 643},
+		},
+		{
+			name: "shot",
+			in:   &weaponStat{kills: 35, deaths: 28, shots: 79},
+			args: args{
+				m: metricShot,
+				v: 1,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, shots: 80},
+		},
+		{
+			name: "head hit",
+			in:   &weaponStat{kills: 35, deaths: 28, shots: 79, headHits: 5},
+			args: args{
+				m: metricHitHead,
+				v: 5,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, shots: 79, headHits: 10},
+		},
+		{
+			name: "chest hit",
+			in:   &weaponStat{kills: 35, deaths: 28, shots: 79, chestHits: 3},
+			args: args{
+				m: metricHitChest,
+				v: 7,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, shots: 79, chestHits: 10},
+		},
+		{
+			name: "stomach hit",
+			in:   &weaponStat{kills: 35, deaths: 28, shots: 79, stomachHits: 3},
+			args: args{
+				m: metricHitStomach,
+				v: 7,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, shots: 79, stomachHits: 10},
+		},
+		{
+			name: "left arm hit",
+			in:   &weaponStat{kills: 35, deaths: 28, shots: 79, leftArmHits: 45},
+			args: args{
+				m: metricHitLeftArm,
+				v: 1,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, shots: 79, leftArmHits: 46},
+		},
+		{
+			name: "right arm hit",
+			in:   &weaponStat{kills: 35, deaths: 28, shots: 79, rightArmHits: 13},
+			args: args{
+				m: metricHitRightArm,
+				v: 11,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, shots: 79, rightArmHits: 24},
+		},
+		{
+			name: "left leg hit",
+			in:   &weaponStat{kills: 35, deaths: 28, shots: 79, leftLegHits: 5},
+			args: args{
+				m: metricHitLeftLeg,
+				v: 3,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, shots: 79, leftLegHits: 8},
+		},
+		{
+			name: "right leg hit",
+			in:   &weaponStat{kills: 35, deaths: 28, shots: 79, rightLegHits: 9},
+			args: args{
+				m: metricHitRightLeg,
+				v: 1,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, shots: 79, rightLegHits: 10},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ws := &weaponStat{
-				steamID:           tt.fields.steamID,
-				weaponID:          tt.fields.weaponID,
-				kills:             tt.fields.kills,
-				hsKills:           tt.fields.hsKills,
-				blindKills:        tt.fields.blindKills,
-				wallbangKills:     tt.fields.wallbangKills,
-				noScopeKills:      tt.fields.noScopeKills,
-				throughSmokeKills: tt.fields.throughSmokeKills,
-				deaths:            tt.fields.deaths,
-				assists:           tt.fields.assists,
-				damageTaken:       tt.fields.damageTaken,
-				damageDealt:       tt.fields.damageDealt,
-				shots:             tt.fields.shots,
-				headHits:          tt.fields.headHits,
-				chestHits:         tt.fields.chestHits,
-				stomachHits:       tt.fields.stomachHits,
-				leftArmHits:       tt.fields.leftArmHits,
-				rightArmHits:      tt.fields.rightArmHits,
-				leftLegHits:       tt.fields.leftLegHits,
-				rightLegHits:      tt.fields.rightLegHits,
-			}
-			ws.add(tt.args.m, tt.args.v)
+			tt.in.add(tt.args.m, tt.args.v)
+			assert.Equal(t, tt.want, tt.in)
 		})
 	}
 }
