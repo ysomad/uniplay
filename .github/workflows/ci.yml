@@ -24,28 +24,30 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v2
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-go@v2
       with:
         go-version: 1.19
 
-      - name: Unit tests
-        run: "go test \
-          -v \
-          -race \
-          -covermode=atomic \
-          -coverprofile=coverage.out \
-          ./internal/..."
+    - name: Unit tests
+      run: "go test \
+        -v \
+        -race \
+        -covermode=atomic \
+        -coverprofile=coverage.out \
+        ./internal/..."
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
 
   golangci-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v3
+
       - name: golangci-lint
         uses: reviewdog/action-golangci-lint@v2
