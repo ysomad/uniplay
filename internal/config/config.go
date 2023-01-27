@@ -16,7 +16,8 @@ type App struct {
 
 type (
 	HTTP struct {
-		Port string `yaml:"port" env-required:"true"`
+		Host string `yaml:"host" env-required:"true"`
+		Port int    `yaml:"port" env-required:"true"`
 	}
 
 	Log struct {

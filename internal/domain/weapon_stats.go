@@ -30,7 +30,7 @@ func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
 }
 
 type WeaponTotalStat struct {
-	WeaponID          int16  `json:"weapon_id"`
+	WeaponID          int32  `json:"weapon_id"`
 	Weapon            string `json:"weapon"`
 	Kills             int32  `json:"kills"`
 	HeadshotKills     int32  `json:"headshot_kills"`

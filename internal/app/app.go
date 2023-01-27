@@ -2,25 +2,20 @@ package app
 
 import (
 	"log"
-	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-openapi/loads"
 	"go.uber.org/zap"
 
 	"github.com/ssssargsian/uniplay/internal/compendium"
 	"github.com/ssssargsian/uniplay/internal/config"
-	v1 "github.com/ssssargsian/uniplay/internal/handler/v1"
-	"github.com/ssssargsian/uniplay/internal/pkg/httpserver"
+
+	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi"
+	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations"
+	compendiumGen "github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/compendium"
+
 	"github.com/ssssargsian/uniplay/internal/pkg/logger"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
-	"github.com/ssssargsian/uniplay/internal/player"
-	"github.com/ssssargsian/uniplay/internal/replay"
-
-	v1gen "github.com/ssssargsian/uniplay/internal/gen/oapi/v1"
 )
 
 func Run(conf *config.Config) {
@@ -29,48 +24,62 @@ func Run(conf *config.Config) {
 		log.Fatalf("logger.New: %s", err.Error())
 	}
 
-	// db
 	pgClient, err := pgclient.New(conf.PG.URL, pgclient.WithMaxConns(conf.PG.MaxConns))
 	if err != nil {
 		l.Fatal("pgclient.New", zap.Error(err))
 	}
 
 	// repos
-	replayRepo := replay.NewPGStorage(l, pgClient)
-	playerRepo := player.NewPGStorage(l, pgClient)
+	// replayRepo := replay.NewPGStorage(l, pgClient)
+	// playerRepo := player.NewPGStorage(l, pgClient)
 	compendiumRepo := compendium.NewPGStorage(l, pgClient)
 
 	// services
-	replayService := replay.NewService(l, replayRepo)
-	playerService := player.NewService(playerRepo)
+	// replayService := replay.NewService(l, replayRepo)
+	// playerService := player.NewService(playerRepo)
 	compendiumService := compendium.NewService(compendiumRepo)
 
-	// init handlers
-	mux := chi.NewMux()
-	mux.Use(middleware.Logger, middleware.Recoverer)
+	// controllers
+	compendiumController := compendium.NewController(l, compendiumService)
 
-	handlerV1 := v1.NewHandler(l, replayService, playerService, compendiumService)
-	v1gen.HandlerFromMuxWithBaseURL(handlerV1, mux, "/v1")
+	// go-swagger
+	api, err := newAPI(compendiumController)
+	if err != nil {
+		l.Fatal("newAPI", zap.Error(err))
+	}
 
-	runHTTPServer(mux, l, conf.HTTP.Port)
+	srv := newServer(conf, api)
+	defer srv.Shutdown()
+
+	if err = srv.Serve(); err != nil {
+		l.Fatal("serverv1.Serve", zap.Error(err))
+	}
 }
 
-func runHTTPServer(mux http.Handler, l *zap.Logger, port string) {
-	l.Info("starting http server", zap.String("port", port))
-
-	httpServer := httpserver.New(mux, httpserver.WithPort(port))
-
-	interrupt := make(chan os.Signal, 1)
-	signal.Notify(interrupt, syscall.SIGINT, syscall.SIGTERM)
-
-	select {
-	case s := <-interrupt:
-		l.Info("received signal from httpserver", zap.String("signal", s.String()))
-	case err := <-httpServer.Notify():
-		l.Info("got error from http server notify", zap.Error(err))
+func newAPI(c *compendium.Controller) (*operations.UniplayAPI, error) {
+	spec, err := loads.Analyzed(restapi.SwaggerJSON, "2.0")
+	if err != nil {
+		return nil, err
 	}
 
-	if err := httpServer.Shutdown(); err != nil {
-		l.Info("got error on http server shutdown", zap.Error(err))
-	}
+	api := operations.NewUniplayAPI(spec)
+	api.UseSwaggerUI()
+
+	// compendium handlers
+	api.CompendiumGetWeaponsHandler = compendiumGen.GetWeaponsHandlerFunc(c.GetWeapons)
+	api.CompendiumGetWeaponClassesHandler = compendiumGen.GetWeaponClassesHandlerFunc(c.GetWeaponClasses)
+
+	// replay handlers
+
+	// player handlers
+
+	return api, nil
+}
+
+func newServer(conf *config.Config, api *operations.UniplayAPI) *restapi.Server {
+	srv := restapi.NewServer(api)
+	srv.Host = conf.HTTP.Host
+	srv.Port = conf.HTTP.Port
+	srv.EnabledListeners = []string{"http"}
+	return srv
 }

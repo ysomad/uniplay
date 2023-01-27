@@ -1,6 +1,6 @@
 package domain
 
 type WeaponClass struct {
-	ID    int8   `json:"id"`
+	ID    int32  `json:"id"`
 	Class string `json:"class"`
 }

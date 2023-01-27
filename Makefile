@@ -48,9 +48,13 @@ migrate-drop:
 .PHONY: dry-run
 dry-run: migrate-drop run-migrate
 
-.PHONY: gen-oapi
-gen-oapi:
-	oapi-codegen \
-	--package v1 \
-	-generate chi-server,types \
-	./openapi3.yaml > ./internal/gen/oapi/v1/v1.gen.go
+.PHONY: gen-swagger
+gen-swagger:
+	rm -rf ./internal/gen/swagger2/v1/*
+	swagger generate server \
+	-t internal/gen/swagger2/v1 \
+	-f swagger2.yaml \
+	-A uniplay \
+	--exclude-main \
+	--strict-responders \
+	go mod tidy
