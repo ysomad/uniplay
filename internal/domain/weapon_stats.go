@@ -69,6 +69,7 @@ func calcAccuracy(sum, num int32) float64 {
 	if sum <= 0 || num <= 0 {
 		return 0
 	}
+
 	return round(float64(sum) * 100 / float64(num))
 }
 

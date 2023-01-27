@@ -48,18 +48,17 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 		})
 	}
 
-	replay, err := newReplay(file, header.Filename)
+	r, err := newReplay(file, header.Filename)
 	if err != nil {
 		return replayGen.NewUploadReplayBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
 			Message: err.Error(),
 		})
 	}
-	defer replay.Close()
+	defer r.Close()
 
-	matchID, err := c.replay.CollectStats(p.HTTPRequest.Context(), replay)
+	matchID, err := c.replay.CollectStats(p.HTTPRequest.Context(), r)
 	if err != nil {
-
 		if errors.Is(err, domain.ErrMatchAlreadyExist) {
 			return replayGen.NewUploadReplayInternalServerError().WithPayload(&models.Error{
 				Code:    domain.CodeMatchAlreadyExist,
@@ -74,5 +73,6 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 	}
 
 	payload := &models.UploadReplayResponse{MatchID: strfmt.UUID(matchID.String())}
+
 	return replayGen.NewUploadReplayOK().WithPayload(payload)
 }

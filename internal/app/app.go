@@ -52,7 +52,11 @@ func Run(conf *config.Config) {
 	}
 
 	srv := newServer(conf, api)
-	defer srv.Shutdown()
+	defer func() {
+		if err = srv.Shutdown(); err != nil {
+			l.Fatal("srv.Shutdown", zap.Error(err))
+		}
+	}()
 
 	if err = srv.Serve(); err != nil {
 		l.Fatal("srv.Serve", zap.Error(err))

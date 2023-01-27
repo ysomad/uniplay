@@ -85,6 +85,7 @@ func newPlayerRoundStats(kills, deaths, dmgDealt, assists, grenadeDmgDealt, blin
 	}
 
 	floatRoundsPlayed := float64(roundsPlayed)
+
 	return PlayerRoundStats{
 		Kills:              round(float64(kills) / floatRoundsPlayed),
 		Assists:            round(float64(assists) / floatRoundsPlayed),

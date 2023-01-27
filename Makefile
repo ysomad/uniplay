@@ -25,6 +25,10 @@ run-migrate:
 	go mod tidy && go mod download && \
 	go run -tags migrate ./cmd/app
 
+.PHONY: lint
+lint:
+	golangci-lint run
+
 .PHONY: test
 test:
 	go test -v -cover -race -count 1 ./internal/...

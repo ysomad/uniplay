@@ -9,16 +9,18 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+var errNilWriter = errors.New("nil writer")
+
 func New(w io.Writer, level string) (*zap.Logger, error) {
 	if w == nil {
-		return nil, errors.New("writer is nil")
+		return nil, errNilWriter
 	}
 
 	conf := zap.NewProductionConfig()
 	core := zapcore.NewCore(
 		zapcore.NewJSONEncoder(conf.EncoderConfig),
 		zapcore.AddSync(w),
-		zapcore.Level(parseLevel(level)),
+		parseLevel(level),
 	)
 
 	return zap.New(core), nil

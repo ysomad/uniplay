@@ -46,5 +46,6 @@ func newServer(conf *config.Config, api *operations.UniplayAPI) *restapi.Server 
 	srv.Host = conf.HTTP.Host
 	srv.Port = conf.HTTP.Port
 	srv.EnabledListeners = []string{"http"}
+
 	return srv
 }

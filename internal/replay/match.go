@@ -36,7 +36,7 @@ func (m *replayMatch) swapTeamSides() {
 }
 
 func (m *replayMatch) updateTeamsScore(e events.ScoreUpdated) {
-	switch e.TeamState.Team() {
+	switch e.TeamState.Team() { //nolint:exhaustive // teams can be only ct or t
 	case m.team1._side:
 		m.team1.score = int8(e.NewScore)
 	case m.team2._side:
@@ -115,5 +115,7 @@ func (t *replayTeam) swapSide() {
 		t._side = common.TeamTerrorists
 	case common.TeamTerrorists:
 		t._side = common.TeamCounterTerrorists
+	case common.TeamUnassigned, common.TeamSpectators:
+		return
 	}
 }

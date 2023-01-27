@@ -14,6 +14,11 @@ import (
 	"github.com/ssssargsian/uniplay/internal/domain"
 )
 
+var (
+	errEmptyMatchID = errors.New("parser: empty match id, call parseReplayHeader() first")
+	errEmptyLogger  = errors.New("parser: logger cannot be nil")
+)
+
 // parser is a wrapper around demoinfocs.Parser.
 // ONE parser must be used for ONE replay.
 type parser struct {
@@ -27,12 +32,8 @@ type parser struct {
 }
 
 func newParser(r replay, l *zap.Logger) (*parser, error) {
-	if (r == replay{}) {
-		return nil, errors.New("parser: empty replay")
-	}
-
 	if l == nil {
-		return nil, errors.New("parser: logger cannot be nil")
+		return nil, errEmptyLogger
 	}
 
 	return &parser{
@@ -66,13 +67,14 @@ func (p *parser) parseReplayHeader() (uuid.UUID, error) {
 	}
 
 	p.match.uploadedAt = time.Now()
+
 	return p.match.id, nil
 }
 
 // collectStats collects player stats from the replay.
 func (p *parser) collectStats() (*replayMatch, []*playerStat, []*weaponStat, error) {
 	if (p.match.id == uuid.UUID{}) {
-		return nil, nil, nil, errors.New("parser: empty match id, call parseReplayHeader() first")
+		return nil, nil, nil, errEmptyMatchID
 	}
 
 	p.p.RegisterEventHandler(func(_ events.RoundFreezetimeEnd) {
@@ -113,7 +115,7 @@ func (p *parser) collectStats() (*replayMatch, []*playerStat, []*weaponStat, err
 	})
 
 	p.p.RegisterEventHandler(func(e events.PlayerHurt) {
-		p.handlePlayerHurt(e)
+		p.handlePlayerHurt(&e)
 	})
 
 	p.p.RegisterEventHandler(func(e events.BombDefused) {
@@ -175,6 +177,7 @@ func (p *parser) close() error {
 	if p == nil {
 		return nil
 	}
+
 	return p.p.Close()
 }
 
@@ -205,6 +208,7 @@ func (p *parser) handleKnifeRound() {
 		weapons := player.Weapons()
 		if len(weapons) == 1 && weapons[0].Type == common.EqKnife {
 			p.isKnifeRound = true
+
 			break
 		}
 	}
@@ -220,6 +224,8 @@ func (p *parser) hitgroupToMetric(g events.HitGroup) metric {
 	switch g {
 	case events.HitGroupHead:
 		return metricHitHead
+	case events.HitGroupNeck:
+		return metricHitNeck
 	case events.HitGroupChest:
 		return metricHitChest
 	case events.HitGroupStomach:
@@ -232,7 +238,10 @@ func (p *parser) hitgroupToMetric(g events.HitGroup) metric {
 		return metricHitLeftLeg
 	case events.HitGroupRightLeg:
 		return metricHitRightLeg
+	case events.HitGroupGeneric, events.HitGroupGear:
+		return 0
 	}
+
 	return 0
 }
 
@@ -322,7 +331,7 @@ func (p *parser) handleKills(e events.Kill) {
 }
 
 // handlePlayerHurt collects player and weapon stats on player hurt.
-func (p *parser) handlePlayerHurt(e events.PlayerHurt) {
+func (p *parser) handlePlayerHurt(e *events.PlayerHurt) {
 	if !p.matchStarted(p.p.GameState()) {
 		return
 	}

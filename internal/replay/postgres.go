@@ -23,50 +23,49 @@ func NewPGStorage(l *zap.Logger, c *pgclient.Client) *pgStorage {
 	}
 }
 
-func (s *pgStorage) MatchExists(ctx context.Context, matchID uuid.UUID) (found bool, err error) {
+func (s *pgStorage) MatchExists(ctx context.Context, matchID uuid.UUID) (bool, error) {
 	row := s.client.Pool.QueryRow(ctx, "select exists(select 1 from match where id = $1)", matchID)
 
-	if err = row.Scan(&found); err != nil {
+	var matchFound bool
+	if err := row.Scan(&matchFound); err != nil {
 		return false, err
 	}
 
-	return found, nil
+	return matchFound, nil
 }
 
 func (s *pgStorage) SaveStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error {
 	txFunc := func(tx pgx.Tx) error {
-		steamIDs := append(match.team1.players, match.team2.players...)
+		steamIDs := append(match.team1.players, match.team2.players...) //nolint:gocritic // why not ?
 
-		var err error
-
-		if err = s.savePlayers(ctx, tx, steamIDs); err != nil {
+		if err := s.savePlayers(ctx, tx, steamIDs); err != nil {
 			return err
 		}
 
-		match, err = s.saveTeams(ctx, tx, match)
+		savedMatch, err := s.saveTeams(ctx, tx, match)
 		if err != nil {
 			return err
 		}
 
-		teamPlayers := match.teamPlayers()
+		teamPlayers := savedMatch.teamPlayers()
 
-		if err = s.saveTeamPlayers(ctx, tx, teamPlayers); err != nil {
+		if err := s.saveTeamPlayers(ctx, tx, teamPlayers); err != nil {
 			return err
 		}
 
-		if err = s.saveMatch(ctx, tx, match); err != nil {
+		if err := s.saveMatch(ctx, tx, savedMatch); err != nil {
 			return err
 		}
 
-		if err = s.savePlayersMatch(ctx, tx, teamPlayers); err != nil {
+		if err := s.savePlayersMatch(ctx, tx, teamPlayers); err != nil {
 			return err
 		}
 
-		if err = s.savePlayersStat(ctx, tx, match.id, ps); err != nil {
+		if err := s.savePlayersStat(ctx, tx, savedMatch.id, ps); err != nil {
 			return err
 		}
 
-		if err = s.saveWeaponsStat(ctx, tx, match.id, ws); err != nil {
+		if err := s.saveWeaponsStat(ctx, tx, savedMatch.id, ws); err != nil {
 			return err
 		}
 
@@ -107,6 +106,8 @@ func (s *pgStorage) savePlayers(ctx context.Context, tx pgx.Tx, steamIDs []uint6
 	return nil
 }
 
+var errNoTeamIDsFound = errors.New("no team ids found")
+
 // saveTeams saves match teams, if team with given clan name already exist, returns its id in match.
 func (s *pgStorage) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*replayMatch, error) {
 	sql, args, err := s.client.Builder.
@@ -139,12 +140,12 @@ func (s *pgStorage) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*
 	}
 
 	if len(teamIDs) != 2 {
-		// TODO: use app error
-		return nil, errors.New("got no team ids")
+		return nil, errNoTeamIDsFound
 	}
 
 	m.team1.id = teamIDs[0].ID
 	m.team2.id = teamIDs[1].ID
+
 	return m, nil
 }
 
