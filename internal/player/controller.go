@@ -55,6 +55,7 @@ func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPla
 		})
 	}
 
+	// copilot is a LEGEND
 	payload := &models.PlayerStats{
 		TotalStats: &models.PlayerStatsTotalStats{
 			Assists:            s.Total.Assists,
@@ -101,6 +102,69 @@ func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPla
 }
 
 func (c *Controller) GetWeaponStats(p player.GetWeaponStatsParams) player.GetWeaponStatsResponder {
+	steamID, err := strconv.ParseUint(p.SteamID, 10, 64)
+	if err != nil {
+		return player.NewGetWeaponStatsNotFound().WithPayload(&models.Error{
+			Code:    domain.CodePlayerNotFound,
+			Message: err.Error(),
+		})
+	}
 
-	return player.NewGetWeaponStatsOK()
+	weaponStats, err := c.player.GetWeaponStats(p.HTTPRequest.Context(), steamID, domain.WeaponStatsFilter{
+		WeaponID: p.WeaponID,
+		ClassID:  p.ClassID,
+	})
+	if err != nil {
+
+		if errors.Is(err, domain.ErrPlayerNotFound) {
+			return player.NewGetWeaponStatsNotFound().WithPayload(&models.Error{
+				Code:    domain.CodePlayerNotFound,
+				Message: err.Error(),
+			})
+		}
+
+		return player.NewGetWeaponStatsInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	payload := make(models.PlayerWeaponStats, len(weaponStats))
+
+	for i, s := range weaponStats {
+		payload[i] = models.PlayerWeaponStatsInner{
+			TotalStats: &models.PlayerWeaponStatsInnerTotalStats{
+				Assists:           s.Total.Assists,
+				BlindKills:        s.Total.BlindKills,
+				ChestHits:         s.Total.ChestHits,
+				DamageDealt:       s.Total.DamageDealt,
+				DamageTaken:       s.Total.DamageTaken,
+				Deaths:            s.Total.Deaths,
+				HeadHits:          s.Total.HeadHits,
+				HeadshotKills:     s.Total.HeadshotKills,
+				Kills:             s.Total.Kills,
+				LeftArmHits:       s.Total.LeftArmHits,
+				LeftLegHits:       s.Total.LeftLegHits,
+				NoscopeKills:      s.Total.NoScopeKills,
+				RightArmHits:      s.Total.RightArmHits,
+				RightLegHits:      s.Total.RightLegHits,
+				Shots:             s.Total.Shots,
+				StomachHits:       s.Total.StomachHits,
+				ThroughSmokeKills: s.Total.ThroughSmokeKills,
+				WallbangKills:     s.Total.WallbangKills,
+				Weapon:            s.Total.Weapon,
+				WeaponID:          s.Total.WeaponID,
+			},
+			AccuracyStats: models.PlayerWeaponStatsInnerAccuracyStats{
+				Arms:    s.Accuracy.Arms,
+				Chest:   s.Accuracy.Chest,
+				Head:    s.Accuracy.Head,
+				Legs:    s.Accuracy.Legs,
+				Stomach: s.Accuracy.Stomach,
+				Total:   s.Accuracy.Total,
+			},
+		}
+	}
+
+	return player.NewGetWeaponStatsOK().WithPayload(payload)
 }

@@ -8,10 +8,8 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // PlayerWeaponStatsInnerAccuracyStats player weapon stats inner accuracy stats
@@ -20,115 +18,26 @@ import (
 type PlayerWeaponStatsInnerAccuracyStats struct {
 
 	// arms
-	// Required: true
-	Arms *float64 `json:"arms"`
+	Arms float64 `json:"arms,omitempty"`
 
 	// chest
-	// Required: true
-	Chest *float64 `json:"chest"`
+	Chest float64 `json:"chest,omitempty"`
 
 	// head
-	// Required: true
-	Head *float64 `json:"head"`
+	Head float64 `json:"head,omitempty"`
 
 	// legs
-	// Required: true
-	Legs *float64 `json:"legs"`
+	Legs float64 `json:"legs,omitempty"`
 
 	// stomach
-	// Required: true
-	Stomach *float64 `json:"stomach"`
+	Stomach float64 `json:"stomach,omitempty"`
 
 	// total
-	// Required: true
-	Total *float64 `json:"total"`
+	Total float64 `json:"total,omitempty"`
 }
 
 // Validate validates this player weapon stats inner accuracy stats
 func (m *PlayerWeaponStatsInnerAccuracyStats) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateArms(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateChest(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateHead(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateLegs(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateStomach(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTotal(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerAccuracyStats) validateArms(formats strfmt.Registry) error {
-
-	if err := validate.Required("arms", "body", m.Arms); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerAccuracyStats) validateChest(formats strfmt.Registry) error {
-
-	if err := validate.Required("chest", "body", m.Chest); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerAccuracyStats) validateHead(formats strfmt.Registry) error {
-
-	if err := validate.Required("head", "body", m.Head); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerAccuracyStats) validateLegs(formats strfmt.Registry) error {
-
-	if err := validate.Required("legs", "body", m.Legs); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerAccuracyStats) validateStomach(formats strfmt.Registry) error {
-
-	if err := validate.Required("stomach", "body", m.Stomach); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerAccuracyStats) validateTotal(formats strfmt.Registry) error {
-
-	if err := validate.Required("total", "body", m.Total); err != nil {
-		return err
-	}
-
 	return nil
 }
 

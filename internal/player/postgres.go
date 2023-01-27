@@ -159,9 +159,9 @@ func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 		Where(sq.Eq{"ws.player_steam_id": steamID})
 
 	switch {
-	case f.WeaponID > 0:
+	case f.WeaponID != nil:
 		b = b.Where(sq.Eq{"ws.weapon_id": f.WeaponID})
-	case f.ClassID > 0:
+	case f.ClassID != nil:
 		b = b.Where(sq.Eq{"w.class_id": f.ClassID})
 	}
 

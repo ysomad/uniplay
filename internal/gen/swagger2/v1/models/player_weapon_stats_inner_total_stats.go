@@ -8,10 +8,8 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // PlayerWeaponStatsInnerTotalStats player weapon stats inner total stats
@@ -20,370 +18,68 @@ import (
 type PlayerWeaponStatsInnerTotalStats struct {
 
 	// assists
-	// Required: true
-	Assists *int32 `json:"assists"`
+	Assists int32 `json:"assists,omitempty"`
 
 	// blind kills
-	// Required: true
-	BlindKills *int32 `json:"blind_kills"`
+	BlindKills int32 `json:"blind_kills,omitempty"`
 
 	// chest hits
-	// Required: true
-	ChestHits *int32 `json:"chest_hits"`
+	ChestHits int32 `json:"chest_hits,omitempty"`
 
 	// damage dealt
-	// Required: true
-	DamageDealt *int32 `json:"damage_dealt"`
+	DamageDealt int32 `json:"damage_dealt,omitempty"`
 
 	// damage taken
-	// Required: true
-	DamageTaken *int32 `json:"damage_taken"`
+	DamageTaken int32 `json:"damage_taken,omitempty"`
 
 	// deaths
-	// Required: true
-	Deaths *int32 `json:"deaths"`
+	Deaths int32 `json:"deaths,omitempty"`
 
 	// head hits
-	// Required: true
-	HeadHits *int32 `json:"head_hits"`
+	HeadHits int32 `json:"head_hits,omitempty"`
 
 	// headshot kills
-	// Required: true
-	HeadshotKills *int32 `json:"headshot_kills"`
-
-	// hits
-	// Required: true
-	Hits *int32 `json:"hits"`
+	HeadshotKills int32 `json:"headshot_kills,omitempty"`
 
 	// kills
-	// Required: true
-	Kills *int32 `json:"kills"`
+	Kills int32 `json:"kills,omitempty"`
 
 	// left arm hits
-	// Required: true
-	LeftArmHits *int32 `json:"left_arm_hits"`
+	LeftArmHits int32 `json:"left_arm_hits,omitempty"`
 
 	// left leg hits
-	// Required: true
-	LeftLegHits *int32 `json:"left_leg_hits"`
+	LeftLegHits int32 `json:"left_leg_hits,omitempty"`
 
 	// noscope kills
-	// Required: true
-	NoscopeKills *int32 `json:"noscope_kills"`
+	NoscopeKills int32 `json:"noscope_kills,omitempty"`
 
 	// right arm hits
-	// Required: true
-	RightArmHits *int32 `json:"right_arm_hits"`
+	RightArmHits int32 `json:"right_arm_hits,omitempty"`
 
 	// right leg hits
-	// Required: true
-	RightLegHits *int32 `json:"right_leg_hits"`
+	RightLegHits int32 `json:"right_leg_hits,omitempty"`
 
 	// shots
-	// Required: true
-	Shots *int32 `json:"shots"`
+	Shots int32 `json:"shots,omitempty"`
 
 	// stomach hits
-	// Required: true
-	StomachHits *int32 `json:"stomach_hits"`
+	StomachHits int32 `json:"stomach_hits,omitempty"`
 
 	// through smoke kills
-	// Required: true
-	ThroughSmokeKills *int32 `json:"through_smoke_kills"`
+	ThroughSmokeKills int32 `json:"through_smoke_kills,omitempty"`
 
 	// wallbang kills
-	// Required: true
-	WallbangKills *int32 `json:"wallbang_kills"`
+	WallbangKills int32 `json:"wallbang_kills,omitempty"`
 
 	// weapon
-	// Required: true
-	Weapon *string `json:"weapon"`
+	Weapon string `json:"weapon,omitempty"`
 
 	// weapon id
-	// Required: true
-	WeaponID *int16 `json:"weapon_id"`
+	WeaponID int32 `json:"weapon_id,omitempty"`
 }
 
 // Validate validates this player weapon stats inner total stats
 func (m *PlayerWeaponStatsInnerTotalStats) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateAssists(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateBlindKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateChestHits(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDamageDealt(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDamageTaken(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDeaths(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateHeadHits(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateHeadshotKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateHits(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateLeftArmHits(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateLeftLegHits(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateNoscopeKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRightArmHits(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRightLegHits(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateShots(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateStomachHits(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateThroughSmokeKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateWallbangKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateWeapon(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateWeaponID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateAssists(formats strfmt.Registry) error {
-
-	if err := validate.Required("assists", "body", m.Assists); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateBlindKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("blind_kills", "body", m.BlindKills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateChestHits(formats strfmt.Registry) error {
-
-	if err := validate.Required("chest_hits", "body", m.ChestHits); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateDamageDealt(formats strfmt.Registry) error {
-
-	if err := validate.Required("damage_dealt", "body", m.DamageDealt); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateDamageTaken(formats strfmt.Registry) error {
-
-	if err := validate.Required("damage_taken", "body", m.DamageTaken); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateDeaths(formats strfmt.Registry) error {
-
-	if err := validate.Required("deaths", "body", m.Deaths); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateHeadHits(formats strfmt.Registry) error {
-
-	if err := validate.Required("head_hits", "body", m.HeadHits); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateHeadshotKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("headshot_kills", "body", m.HeadshotKills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateHits(formats strfmt.Registry) error {
-
-	if err := validate.Required("hits", "body", m.Hits); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("kills", "body", m.Kills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateLeftArmHits(formats strfmt.Registry) error {
-
-	if err := validate.Required("left_arm_hits", "body", m.LeftArmHits); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateLeftLegHits(formats strfmt.Registry) error {
-
-	if err := validate.Required("left_leg_hits", "body", m.LeftLegHits); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateNoscopeKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("noscope_kills", "body", m.NoscopeKills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateRightArmHits(formats strfmt.Registry) error {
-
-	if err := validate.Required("right_arm_hits", "body", m.RightArmHits); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateRightLegHits(formats strfmt.Registry) error {
-
-	if err := validate.Required("right_leg_hits", "body", m.RightLegHits); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateShots(formats strfmt.Registry) error {
-
-	if err := validate.Required("shots", "body", m.Shots); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateStomachHits(formats strfmt.Registry) error {
-
-	if err := validate.Required("stomach_hits", "body", m.StomachHits); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateThroughSmokeKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("through_smoke_kills", "body", m.ThroughSmokeKills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateWallbangKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("wallbang_kills", "body", m.WallbangKills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateWeapon(formats strfmt.Registry) error {
-
-	if err := validate.Required("weapon", "body", m.Weapon); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerWeaponStatsInnerTotalStats) validateWeaponID(formats strfmt.Registry) error {
-
-	if err := validate.Required("weapon_id", "body", m.WeaponID); err != nil {
-		return err
-	}
-
 	return nil
 }
 

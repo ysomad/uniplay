@@ -11,32 +11,26 @@ import (
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 )
 
 // PlayerWeaponStats player weapon stats
 //
 // swagger:model PlayerWeaponStats
-type PlayerWeaponStats []*PlayerWeaponStatsInner
+type PlayerWeaponStats []PlayerWeaponStatsInner
 
 // Validate validates this player weapon stats
 func (m PlayerWeaponStats) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	for i := 0; i < len(m); i++ {
-		if swag.IsZero(m[i]) { // not required
-			continue
-		}
 
-		if m[i] != nil {
-			if err := m[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName(strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName(strconv.Itoa(i))
-				}
-				return err
+		if err := m[i].Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName(strconv.Itoa(i))
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName(strconv.Itoa(i))
 			}
+			return err
 		}
 
 	}
@@ -53,15 +47,13 @@ func (m PlayerWeaponStats) ContextValidate(ctx context.Context, formats strfmt.R
 
 	for i := 0; i < len(m); i++ {
 
-		if m[i] != nil {
-			if err := m[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName(strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName(strconv.Itoa(i))
-				}
-				return err
+		if err := m[i].ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName(strconv.Itoa(i))
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName(strconv.Itoa(i))
 			}
+			return err
 		}
 
 	}

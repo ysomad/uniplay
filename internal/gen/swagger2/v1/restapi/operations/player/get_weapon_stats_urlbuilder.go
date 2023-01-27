@@ -10,11 +10,16 @@ import (
 	"net/url"
 	golangswaggerpaths "path"
 	"strings"
+
+	"github.com/go-openapi/swag"
 )
 
 // GetWeaponStatsURL generates an URL for the get weapon stats operation
 type GetWeaponStatsURL struct {
 	SteamID string
+
+	ClassID  *int32
+	WeaponID *int32
 
 	_basePath string
 	// avoid unkeyed usage
@@ -54,6 +59,26 @@ func (o *GetWeaponStatsURL) Build() (*url.URL, error) {
 		_basePath = "/v1"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var classIDQ string
+	if o.ClassID != nil {
+		classIDQ = swag.FormatInt32(*o.ClassID)
+	}
+	if classIDQ != "" {
+		qs.Set("class_id", classIDQ)
+	}
+
+	var weaponIDQ string
+	if o.WeaponID != nil {
+		weaponIDQ = swag.FormatInt32(*o.WeaponID)
+	}
+	if weaponIDQ != "" {
+		qs.Set("weapon_id", weaponIDQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

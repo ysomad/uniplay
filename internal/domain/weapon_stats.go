@@ -3,8 +3,8 @@ package domain
 import "math"
 
 type WeaponStat struct {
-	TotalStat    *WeaponTotalStat   `json:"total_stat"`
-	AccuracyStat WeaponAccuracyStat `json:"accuracy_stat"`
+	Total    *WeaponTotalStat
+	Accuracy WeaponAccuracyStat
 }
 
 func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
@@ -12,8 +12,8 @@ func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
 
 	for i, s := range total {
 		res[i] = WeaponStat{
-			TotalStat: s,
-			AccuracyStat: newWeaponAccuracyStat(
+			Total: s,
+			Accuracy: newWeaponAccuracyStat(
 				s.Shots,
 				s.HeadHits,
 				s.ChestHits,
@@ -90,6 +90,5 @@ func newWeaponAccuracyStat(shots, headHits, chestHits, stomachHits, lArmHits, rA
 }
 
 type WeaponStatsFilter struct {
-	WeaponID int16
-	ClassID  int8
+	WeaponID, ClassID *int32
 }

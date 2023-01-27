@@ -152,6 +152,20 @@ func init() {
             "name": "steam_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Фильтр по оружию",
+            "name": "weapon_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Фильтр по классу оружия",
+            "name": "class_id",
+            "in": "query"
           }
         ],
         "responses": {
@@ -445,18 +459,11 @@ func init() {
         "total_stats": {
           "$ref": "#/definitions/PlayerWeaponStats_inner_total_stats"
         }
-      }
+      },
+      "x-nullable": false
     },
     "PlayerWeaponStats_inner_accuracy_stats": {
       "type": "object",
-      "required": [
-        "arms",
-        "chest",
-        "head",
-        "legs",
-        "stomach",
-        "total"
-      ],
       "properties": {
         "arms": {
           "type": "number",
@@ -482,33 +489,11 @@ func init() {
           "type": "number",
           "format": "double"
         }
-      }
+      },
+      "x-nullable": false
     },
     "PlayerWeaponStats_inner_total_stats": {
       "type": "object",
-      "required": [
-        "assists",
-        "blind_kills",
-        "chest_hits",
-        "damage_dealt",
-        "damage_taken",
-        "deaths",
-        "head_hits",
-        "headshot_kills",
-        "hits",
-        "kills",
-        "left_arm_hits",
-        "left_leg_hits",
-        "noscope_kills",
-        "right_arm_hits",
-        "right_leg_hits",
-        "shots",
-        "stomach_hits",
-        "through_smoke_kills",
-        "wallbang_kills",
-        "weapon",
-        "weapon_id"
-      ],
       "properties": {
         "assists": {
           "type": "integer",
@@ -539,10 +524,6 @@ func init() {
           "format": "int32"
         },
         "headshot_kills": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "hits": {
           "type": "integer",
           "format": "int32"
         },
@@ -591,7 +572,7 @@ func init() {
         },
         "weapon_id": {
           "type": "integer",
-          "format": "int16"
+          "format": "int32"
         }
       }
     },
@@ -822,6 +803,20 @@ func init() {
             "name": "steam_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Фильтр по оружию",
+            "name": "weapon_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Фильтр по классу оружия",
+            "name": "class_id",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1115,18 +1110,11 @@ func init() {
         "total_stats": {
           "$ref": "#/definitions/PlayerWeaponStats_inner_total_stats"
         }
-      }
+      },
+      "x-nullable": false
     },
     "PlayerWeaponStats_inner_accuracy_stats": {
       "type": "object",
-      "required": [
-        "arms",
-        "chest",
-        "head",
-        "legs",
-        "stomach",
-        "total"
-      ],
       "properties": {
         "arms": {
           "type": "number",
@@ -1152,33 +1140,11 @@ func init() {
           "type": "number",
           "format": "double"
         }
-      }
+      },
+      "x-nullable": false
     },
     "PlayerWeaponStats_inner_total_stats": {
       "type": "object",
-      "required": [
-        "assists",
-        "blind_kills",
-        "chest_hits",
-        "damage_dealt",
-        "damage_taken",
-        "deaths",
-        "head_hits",
-        "headshot_kills",
-        "hits",
-        "kills",
-        "left_arm_hits",
-        "left_leg_hits",
-        "noscope_kills",
-        "right_arm_hits",
-        "right_leg_hits",
-        "shots",
-        "stomach_hits",
-        "through_smoke_kills",
-        "wallbang_kills",
-        "weapon",
-        "weapon_id"
-      ],
       "properties": {
         "assists": {
           "type": "integer",
@@ -1209,10 +1175,6 @@ func init() {
           "format": "int32"
         },
         "headshot_kills": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "hits": {
           "type": "integer",
           "format": "int32"
         },
@@ -1261,7 +1223,7 @@ func init() {
         },
         "weapon_id": {
           "type": "integer",
-          "format": "int16"
+          "format": "int32"
         }
       }
     },

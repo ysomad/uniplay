@@ -21,7 +21,7 @@ type PlayerWeaponStatsInner struct {
 
 	// accuracy stats
 	// Required: true
-	AccuracyStats *PlayerWeaponStatsInnerAccuracyStats `json:"accuracy_stats"`
+	AccuracyStats PlayerWeaponStatsInnerAccuracyStats `json:"accuracy_stats"`
 
 	// total stats
 	// Required: true
@@ -48,19 +48,13 @@ func (m *PlayerWeaponStatsInner) Validate(formats strfmt.Registry) error {
 
 func (m *PlayerWeaponStatsInner) validateAccuracyStats(formats strfmt.Registry) error {
 
-	if err := validate.Required("accuracy_stats", "body", m.AccuracyStats); err != nil {
-		return err
-	}
-
-	if m.AccuracyStats != nil {
-		if err := m.AccuracyStats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("accuracy_stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("accuracy_stats")
-			}
-			return err
+	if err := m.AccuracyStats.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("accuracy_stats")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("accuracy_stats")
 		}
+		return err
 	}
 
 	return nil
@@ -106,15 +100,13 @@ func (m *PlayerWeaponStatsInner) ContextValidate(ctx context.Context, formats st
 
 func (m *PlayerWeaponStatsInner) contextValidateAccuracyStats(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.AccuracyStats != nil {
-		if err := m.AccuracyStats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("accuracy_stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("accuracy_stats")
-			}
-			return err
+	if err := m.AccuracyStats.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("accuracy_stats")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("accuracy_stats")
 		}
+		return err
 	}
 
 	return nil
