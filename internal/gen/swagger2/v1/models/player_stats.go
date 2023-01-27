@@ -21,11 +21,11 @@ type PlayerStats struct {
 
 	// calculated stats
 	// Required: true
-	CalculatedStats *PlayerStatsCalculatedStats `json:"calculated_stats"`
+	CalculatedStats PlayerStatsCalculatedStats `json:"calculated_stats"`
 
 	// round stats
 	// Required: true
-	RoundStats *PlayerStatsRoundStats `json:"round_stats"`
+	RoundStats PlayerStatsRoundStats `json:"round_stats"`
 
 	// total stats
 	// Required: true
@@ -56,19 +56,13 @@ func (m *PlayerStats) Validate(formats strfmt.Registry) error {
 
 func (m *PlayerStats) validateCalculatedStats(formats strfmt.Registry) error {
 
-	if err := validate.Required("calculated_stats", "body", m.CalculatedStats); err != nil {
-		return err
-	}
-
-	if m.CalculatedStats != nil {
-		if err := m.CalculatedStats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("calculated_stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("calculated_stats")
-			}
-			return err
+	if err := m.CalculatedStats.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("calculated_stats")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("calculated_stats")
 		}
+		return err
 	}
 
 	return nil
@@ -76,19 +70,13 @@ func (m *PlayerStats) validateCalculatedStats(formats strfmt.Registry) error {
 
 func (m *PlayerStats) validateRoundStats(formats strfmt.Registry) error {
 
-	if err := validate.Required("round_stats", "body", m.RoundStats); err != nil {
-		return err
-	}
-
-	if m.RoundStats != nil {
-		if err := m.RoundStats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("round_stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("round_stats")
-			}
-			return err
+	if err := m.RoundStats.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("round_stats")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("round_stats")
 		}
+		return err
 	}
 
 	return nil
@@ -138,15 +126,13 @@ func (m *PlayerStats) ContextValidate(ctx context.Context, formats strfmt.Regist
 
 func (m *PlayerStats) contextValidateCalculatedStats(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.CalculatedStats != nil {
-		if err := m.CalculatedStats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("calculated_stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("calculated_stats")
-			}
-			return err
+	if err := m.CalculatedStats.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("calculated_stats")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("calculated_stats")
 		}
+		return err
 	}
 
 	return nil
@@ -154,15 +140,13 @@ func (m *PlayerStats) contextValidateCalculatedStats(ctx context.Context, format
 
 func (m *PlayerStats) contextValidateRoundStats(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.RoundStats != nil {
-		if err := m.RoundStats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("round_stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("round_stats")
-			}
-			return err
+	if err := m.RoundStats.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("round_stats")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("round_stats")
 		}
+		return err
 	}
 
 	return nil

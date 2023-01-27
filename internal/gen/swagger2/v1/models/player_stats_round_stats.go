@@ -8,10 +8,8 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // PlayerStatsRoundStats набор средних показателей за раунд
@@ -20,132 +18,29 @@ import (
 type PlayerStatsRoundStats struct {
 
 	// среднее кол-во ассистов за раунд
-	// Required: true
-	Assists *float64 `json:"assists"`
+	Assists float64 `json:"assists,omitempty"`
 
 	// средне кол-во ослепленных игроков за раунд
-	// Required: true
-	BlindedPlayers *float64 `json:"blinded_players"`
+	BlindedPlayers float64 `json:"blinded_players,omitempty"`
 
 	// среднее кол-во раз ослеплен за раунд
-	// Required: true
-	BlindedTimes *float64 `json:"blinded_times"`
+	BlindedTimes float64 `json:"blinded_times,omitempty"`
 
 	// средний урон за раунд
-	// Required: true
-	DamageDealt *float64 `json:"damage_dealt"`
+	DamageDealt float64 `json:"damage_dealt,omitempty"`
 
 	// среднее кол-во смертей за раунд
-	// Required: true
-	Deaths *float64 `json:"deaths"`
+	Deaths float64 `json:"deaths,omitempty"`
 
 	// средний урон гранатами за раунд
-	// Required: true
-	GrenadeDamageDealt *float64 `json:"grenade_damage_dealt"`
+	GrenadeDamageDealt float64 `json:"grenade_damage_dealt,omitempty"`
 
 	// среднее кол-во убийств за раунд
-	// Required: true
-	Kills *float64 `json:"kills"`
+	Kills float64 `json:"kills,omitempty"`
 }
 
 // Validate validates this player stats round stats
 func (m *PlayerStatsRoundStats) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateAssists(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateBlindedPlayers(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateBlindedTimes(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDamageDealt(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDeaths(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateGrenadeDamageDealt(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PlayerStatsRoundStats) validateAssists(formats strfmt.Registry) error {
-
-	if err := validate.Required("assists", "body", m.Assists); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsRoundStats) validateBlindedPlayers(formats strfmt.Registry) error {
-
-	if err := validate.Required("blinded_players", "body", m.BlindedPlayers); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsRoundStats) validateBlindedTimes(formats strfmt.Registry) error {
-
-	if err := validate.Required("blinded_times", "body", m.BlindedTimes); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsRoundStats) validateDamageDealt(formats strfmt.Registry) error {
-
-	if err := validate.Required("damage_dealt", "body", m.DamageDealt); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsRoundStats) validateDeaths(formats strfmt.Registry) error {
-
-	if err := validate.Required("deaths", "body", m.Deaths); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsRoundStats) validateGrenadeDamageDealt(formats strfmt.Registry) error {
-
-	if err := validate.Required("grenade_damage_dealt", "body", m.GrenadeDamageDealt); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsRoundStats) validateKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("kills", "body", m.Kills); err != nil {
-		return err
-	}
-
 	return nil
 }
 

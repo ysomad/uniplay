@@ -8,10 +8,8 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // PlayerStatsTotalStats статистика игрока по всем сыгранным матчам
@@ -20,404 +18,77 @@ import (
 type PlayerStatsTotalStats struct {
 
 	// assists
-	// Required: true
-	Assists *int32 `json:"assists"`
+	Assists int32 `json:"assists,omitempty"`
 
 	// blind kills
-	// Required: true
-	BlindKills *int32 `json:"blind_kills"`
+	BlindKills int32 `json:"blind_kills,omitempty"`
 
 	// blinded players
-	// Required: true
-	BlindedPlayers *int32 `json:"blinded_players"`
+	BlindedPlayers int32 `json:"blinded_players,omitempty"`
 
 	// blinded times
-	// Required: true
-	BlindedTimes *int32 `json:"blinded_times"`
+	BlindedTimes int32 `json:"blinded_times,omitempty"`
 
 	// bombs defused
-	// Required: true
-	BombsDefused *int32 `json:"bombs_defused"`
+	BombsDefused int32 `json:"bombs_defused,omitempty"`
 
 	// bombs planted
-	// Required: true
-	BombsPlanted *int32 `json:"bombs_planted"`
+	BombsPlanted int32 `json:"bombs_planted,omitempty"`
 
 	// damage dealt
-	// Required: true
-	DamageDealt *int32 `json:"damage_dealt"`
+	DamageDealt int32 `json:"damage_dealt,omitempty"`
 
 	// damage taken
-	// Required: true
-	DamageTaken *int32 `json:"damage_taken"`
+	DamageTaken int32 `json:"damage_taken,omitempty"`
 
 	// deaths
-	// Required: true
-	Deaths *int32 `json:"deaths"`
+	Deaths int32 `json:"deaths,omitempty"`
 
 	// draws
-	// Required: true
-	Draws *int32 `json:"draws"`
+	Draws int32 `json:"draws,omitempty"`
 
 	// flashbang assists
-	// Required: true
-	FlashbangAssists *int32 `json:"flashbang_assists"`
+	FlashbangAssists int32 `json:"flashbang_assists,omitempty"`
 
 	// grenade damage dealt
-	// Required: true
-	GrenadeDamageDealt *int32 `json:"grenade_damage_dealt"`
+	GrenadeDamageDealt int32 `json:"grenade_damage_dealt,omitempty"`
 
 	// headshot kills
-	// Required: true
-	HeadshotKills *int32 `json:"headshot_kills"`
+	HeadshotKills int32 `json:"headshot_kills,omitempty"`
 
 	// kills
-	// Required: true
-	Kills *int32 `json:"kills"`
+	Kills int32 `json:"kills,omitempty"`
 
 	// loses
-	// Required: true
-	Loses *int32 `json:"loses"`
+	Loses int32 `json:"loses,omitempty"`
 
 	// matches played
-	// Required: true
-	MatchesPlayed *int32 `json:"matches_played"`
+	MatchesPlayed int32 `json:"matches_played,omitempty"`
 
 	// mvp count
-	// Required: true
-	MvpCount *int32 `json:"mvp_count"`
+	MvpCount int32 `json:"mvp_count,omitempty"`
 
 	// noscope kills
-	// Required: true
-	NoscopeKills *int32 `json:"noscope_kills"`
+	NoscopeKills int32 `json:"noscope_kills,omitempty"`
 
 	// rounds played
-	// Required: true
-	RoundsPlayed *int32 `json:"rounds_played"`
+	RoundsPlayed int32 `json:"rounds_played,omitempty"`
 
 	// through smoke kills
-	// Required: true
-	ThroughSmokeKills *int32 `json:"through_smoke_kills"`
+	ThroughSmokeKills int32 `json:"through_smoke_kills,omitempty"`
 
 	// time played
-	// Required: true
-	TimePlayed *int64 `json:"time_played"`
+	TimePlayed int64 `json:"time_played,omitempty"`
 
 	// wallbang kills
-	// Required: true
-	WallbangKills *int32 `json:"wallbang_kills"`
+	WallbangKills int32 `json:"wallbang_kills,omitempty"`
 
 	// wins
-	// Required: true
-	Wins *int32 `json:"wins"`
+	Wins int32 `json:"wins,omitempty"`
 }
 
 // Validate validates this player stats total stats
 func (m *PlayerStatsTotalStats) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateAssists(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateBlindKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateBlindedPlayers(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateBlindedTimes(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateBombsDefused(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateBombsPlanted(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDamageDealt(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDamageTaken(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDeaths(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDraws(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateFlashbangAssists(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateGrenadeDamageDealt(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateHeadshotKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateLoses(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateMatchesPlayed(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateMvpCount(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateNoscopeKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRoundsPlayed(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateThroughSmokeKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTimePlayed(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateWallbangKills(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateWins(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateAssists(formats strfmt.Registry) error {
-
-	if err := validate.Required("assists", "body", m.Assists); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateBlindKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("blind_kills", "body", m.BlindKills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateBlindedPlayers(formats strfmt.Registry) error {
-
-	if err := validate.Required("blinded_players", "body", m.BlindedPlayers); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateBlindedTimes(formats strfmt.Registry) error {
-
-	if err := validate.Required("blinded_times", "body", m.BlindedTimes); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateBombsDefused(formats strfmt.Registry) error {
-
-	if err := validate.Required("bombs_defused", "body", m.BombsDefused); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateBombsPlanted(formats strfmt.Registry) error {
-
-	if err := validate.Required("bombs_planted", "body", m.BombsPlanted); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateDamageDealt(formats strfmt.Registry) error {
-
-	if err := validate.Required("damage_dealt", "body", m.DamageDealt); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateDamageTaken(formats strfmt.Registry) error {
-
-	if err := validate.Required("damage_taken", "body", m.DamageTaken); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateDeaths(formats strfmt.Registry) error {
-
-	if err := validate.Required("deaths", "body", m.Deaths); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateDraws(formats strfmt.Registry) error {
-
-	if err := validate.Required("draws", "body", m.Draws); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateFlashbangAssists(formats strfmt.Registry) error {
-
-	if err := validate.Required("flashbang_assists", "body", m.FlashbangAssists); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateGrenadeDamageDealt(formats strfmt.Registry) error {
-
-	if err := validate.Required("grenade_damage_dealt", "body", m.GrenadeDamageDealt); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateHeadshotKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("headshot_kills", "body", m.HeadshotKills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("kills", "body", m.Kills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateLoses(formats strfmt.Registry) error {
-
-	if err := validate.Required("loses", "body", m.Loses); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateMatchesPlayed(formats strfmt.Registry) error {
-
-	if err := validate.Required("matches_played", "body", m.MatchesPlayed); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateMvpCount(formats strfmt.Registry) error {
-
-	if err := validate.Required("mvp_count", "body", m.MvpCount); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateNoscopeKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("noscope_kills", "body", m.NoscopeKills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateRoundsPlayed(formats strfmt.Registry) error {
-
-	if err := validate.Required("rounds_played", "body", m.RoundsPlayed); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateThroughSmokeKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("through_smoke_kills", "body", m.ThroughSmokeKills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateTimePlayed(formats strfmt.Registry) error {
-
-	if err := validate.Required("time_played", "body", m.TimePlayed); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateWallbangKills(formats strfmt.Registry) error {
-
-	if err := validate.Required("wallbang_kills", "body", m.WallbangKills); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsTotalStats) validateWins(formats strfmt.Registry) error {
-
-	if err := validate.Required("wins", "body", m.Wins); err != nil {
-		return err
-	}
-
 	return nil
 }
 

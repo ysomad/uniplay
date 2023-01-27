@@ -73,5 +73,6 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 		})
 	}
 
-	return replayGen.NewUploadReplayOK().WithPayload(&models.UploadReplayResponse{MatchID: strfmt.UUID(matchID.String())})
+	payload := &models.UploadReplayResponse{MatchID: strfmt.UUID(matchID.String())}
+	return replayGen.NewUploadReplayOK().WithPayload(payload)
 }

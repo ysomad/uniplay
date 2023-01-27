@@ -199,30 +199,6 @@ definitions:
       $ref: '#/definitions/WeaponClassList_inner'
   PlayerStats_total_stats:
     type: object
-    required:
-    - assists
-    - blind_kills
-    - blinded_players
-    - blinded_times
-    - bombs_defused
-    - bombs_planted
-    - damage_dealt
-    - damage_taken
-    - deaths
-    - draws
-    - flashbang_assists
-    - grenade_damage_dealt
-    - headshot_kills
-    - kills
-    - loses
-    - matches_played
-    - mvp_count
-    - noscope_kills
-    - rounds_played
-    - through_smoke_kills
-    - time_played
-    - wallbang_kills
-    - wins
     properties:
       kills:
         type: integer
@@ -296,10 +272,6 @@ definitions:
     description: статистика игрока по всем сыгранным матчам
   PlayerStats_calculated_stats:
     type: object
-    required:
-    - headshot_percentage
-    - kill_death_ratio
-    - win_rate
     properties:
       kill_death_ratio:
         type: number
@@ -311,16 +283,9 @@ definitions:
         type: number
         format: double
     description: высчитанная статистика на основе статистики по матчам
+    x-nullable: false
   PlayerStats_round_stats:
     type: object
-    required:
-    - assists
-    - blinded_players
-    - blinded_times
-    - damage_dealt
-    - deaths
-    - grenade_damage_dealt
-    - kills
     properties:
       damage_dealt:
         type: number
@@ -351,6 +316,7 @@ definitions:
         format: double
         description: средне кол-во ослепленных игроков за раунд
     description: набор средних показателей за раунд
+    x-nullable: false
   PlayerWeaponStats_inner_total_stats:
     type: object
     required:

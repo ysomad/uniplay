@@ -8,10 +8,8 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // PlayerStatsCalculatedStats высчитанная статистика на основе статистики по матчам
@@ -20,64 +18,17 @@ import (
 type PlayerStatsCalculatedStats struct {
 
 	// headshot percentage
-	// Required: true
-	HeadshotPercentage *float64 `json:"headshot_percentage"`
+	HeadshotPercentage float64 `json:"headshot_percentage,omitempty"`
 
 	// kill death ratio
-	// Required: true
-	KillDeathRatio *float64 `json:"kill_death_ratio"`
+	KillDeathRatio float64 `json:"kill_death_ratio,omitempty"`
 
 	// win rate
-	// Required: true
-	WinRate *float64 `json:"win_rate"`
+	WinRate float64 `json:"win_rate,omitempty"`
 }
 
 // Validate validates this player stats calculated stats
 func (m *PlayerStatsCalculatedStats) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateHeadshotPercentage(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateKillDeathRatio(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateWinRate(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *PlayerStatsCalculatedStats) validateHeadshotPercentage(formats strfmt.Registry) error {
-
-	if err := validate.Required("headshot_percentage", "body", m.HeadshotPercentage); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsCalculatedStats) validateKillDeathRatio(formats strfmt.Registry) error {
-
-	if err := validate.Required("kill_death_ratio", "body", m.KillDeathRatio); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStatsCalculatedStats) validateWinRate(formats strfmt.Registry) error {
-
-	if err := validate.Required("win_rate", "body", m.WinRate); err != nil {
-		return err
-	}
-
 	return nil
 }
 

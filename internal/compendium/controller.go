@@ -2,6 +2,7 @@ package compendium
 
 import (
 	"context"
+	"net/http"
 
 	"go.uber.org/zap"
 
@@ -31,7 +32,11 @@ func NewController(l *zap.Logger, c compendiumService) *Controller {
 func (c *Controller) GetWeapons(p compendium.GetWeaponsParams) compendium.GetWeaponsResponder {
 	weapons, err := c.compendium.GetWeaponList(p.HTTPRequest.Context())
 	if err != nil {
-		return compendium.NewGetWeaponsInternalServerError()
+		return compendium.NewGetWeaponsInternalServerError().
+			WithPayload(&models.Error{
+				Code:    http.StatusInternalServerError,
+				Message: err.Error(),
+			})
 	}
 
 	payload := make(models.WeaponList, len(weapons))
@@ -51,7 +56,11 @@ func (c *Controller) GetWeapons(p compendium.GetWeaponsParams) compendium.GetWea
 func (c *Controller) GetWeaponClasses(p compendium.GetWeaponClassesParams) compendium.GetWeaponClassesResponder {
 	classes, err := c.compendium.GetWeaponClassList(p.HTTPRequest.Context())
 	if err != nil {
-		return compendium.NewGetWeaponClassesInternalServerError()
+		return compendium.NewGetWeaponClassesInternalServerError().
+			WithPayload(&models.Error{
+				Code:    http.StatusInternalServerError,
+				Message: err.Error(),
+			})
 	}
 
 	payload := make(models.WeaponClassList, len(classes))

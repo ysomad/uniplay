@@ -270,11 +270,6 @@ func init() {
     "PlayerStats_calculated_stats": {
       "description": "высчитанная статистика на основе статистики по матчам",
       "type": "object",
-      "required": [
-        "headshot_percentage",
-        "kill_death_ratio",
-        "win_rate"
-      ],
       "properties": {
         "headshot_percentage": {
           "type": "number",
@@ -288,20 +283,12 @@ func init() {
           "type": "number",
           "format": "double"
         }
-      }
+      },
+      "x-nullable": false
     },
     "PlayerStats_round_stats": {
       "description": "набор средних показателей за раунд",
       "type": "object",
-      "required": [
-        "assists",
-        "blinded_players",
-        "blinded_times",
-        "damage_dealt",
-        "deaths",
-        "grenade_damage_dealt",
-        "kills"
-      ],
       "properties": {
         "assists": {
           "description": "среднее кол-во ассистов за раунд",
@@ -338,36 +325,12 @@ func init() {
           "type": "number",
           "format": "double"
         }
-      }
+      },
+      "x-nullable": false
     },
     "PlayerStats_total_stats": {
       "description": "статистика игрока по всем сыгранным матчам",
       "type": "object",
-      "required": [
-        "assists",
-        "blind_kills",
-        "blinded_players",
-        "blinded_times",
-        "bombs_defused",
-        "bombs_planted",
-        "damage_dealt",
-        "damage_taken",
-        "deaths",
-        "draws",
-        "flashbang_assists",
-        "grenade_damage_dealt",
-        "headshot_kills",
-        "kills",
-        "loses",
-        "matches_played",
-        "mvp_count",
-        "noscope_kills",
-        "rounds_played",
-        "through_smoke_kills",
-        "time_played",
-        "wallbang_kills",
-        "wins"
-      ],
       "properties": {
         "assists": {
           "type": "integer",
@@ -977,11 +940,6 @@ func init() {
     "PlayerStats_calculated_stats": {
       "description": "высчитанная статистика на основе статистики по матчам",
       "type": "object",
-      "required": [
-        "headshot_percentage",
-        "kill_death_ratio",
-        "win_rate"
-      ],
       "properties": {
         "headshot_percentage": {
           "type": "number",
@@ -995,20 +953,12 @@ func init() {
           "type": "number",
           "format": "double"
         }
-      }
+      },
+      "x-nullable": false
     },
     "PlayerStats_round_stats": {
       "description": "набор средних показателей за раунд",
       "type": "object",
-      "required": [
-        "assists",
-        "blinded_players",
-        "blinded_times",
-        "damage_dealt",
-        "deaths",
-        "grenade_damage_dealt",
-        "kills"
-      ],
       "properties": {
         "assists": {
           "description": "среднее кол-во ассистов за раунд",
@@ -1045,36 +995,12 @@ func init() {
           "type": "number",
           "format": "double"
         }
-      }
+      },
+      "x-nullable": false
     },
     "PlayerStats_total_stats": {
       "description": "статистика игрока по всем сыгранным матчам",
       "type": "object",
-      "required": [
-        "assists",
-        "blind_kills",
-        "blinded_players",
-        "blinded_times",
-        "bombs_defused",
-        "bombs_planted",
-        "damage_dealt",
-        "damage_taken",
-        "deaths",
-        "draws",
-        "flashbang_assists",
-        "grenade_damage_dealt",
-        "headshot_kills",
-        "kills",
-        "loses",
-        "matches_played",
-        "mvp_count",
-        "noscope_kills",
-        "rounds_played",
-        "through_smoke_kills",
-        "time_played",
-        "wallbang_kills",
-        "wins"
-      ],
       "properties": {
         "assists": {
           "type": "integer",
