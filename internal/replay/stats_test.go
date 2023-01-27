@@ -8,6 +8,8 @@ import (
 )
 
 func Test_newStats(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name string
 		want stats
@@ -130,6 +132,8 @@ func Benchmark_stats_normalize(b *testing.B) {
 }
 
 func Test_stats_normalizeSync(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		playerStats map[uint64]*playerStat
 		weaponStats map[uint64]map[common.EquipmentType]*weaponStat
@@ -391,6 +395,8 @@ func Test_stats_normalizeSync(t *testing.T) {
 }
 
 func Test_stats_normalize(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		playerStats map[uint64]*playerStat
 		weaponStats map[uint64]map[common.EquipmentType]*weaponStat
@@ -645,13 +651,15 @@ func Test_stats_normalize(t *testing.T) {
 			}
 			got, got1 := s.normalize()
 
-			assert.EqualValues(t, tt.want, got)
-			assert.EqualValues(t, tt.want1, got1)
+			assert.ObjectsAreEqualValues(tt.want, got)
+			assert.ObjectsAreEqualValues(tt.want1, got1)
 		})
 	}
 }
 
 func Test_stats_addPlayerStat(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		playerStats map[uint64]*playerStat
 	}
@@ -1203,6 +1211,8 @@ func Test_stats_addPlayerStat(t *testing.T) {
 }
 
 func Test_stats_incrPlayerStat(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		playerStats map[uint64]*playerStat
 	}
@@ -1741,6 +1751,8 @@ func Test_stats_incrPlayerStat(t *testing.T) {
 }
 
 func Test_stats_validWeapon(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		playerStats map[uint64]*playerStat
 		weaponStats map[uint64]map[common.EquipmentType]*weaponStat
@@ -1779,6 +1791,8 @@ func Test_stats_validWeapon(t *testing.T) {
 }
 
 func Test_stats_validMetric(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		m metric
 		v int
@@ -1824,6 +1838,8 @@ func Test_stats_validMetric(t *testing.T) {
 }
 
 func Test_stats_addWeaponStat(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		playerStats map[uint64]*playerStat
 		weaponStats map[uint64]map[common.EquipmentType]*weaponStat
@@ -2083,6 +2099,8 @@ func Test_stats_addWeaponStat(t *testing.T) {
 }
 
 func Test_stats_incrWeaponStat(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		playerStats map[uint64]*playerStat
 		weaponStats map[uint64]map[common.EquipmentType]*weaponStat
@@ -2339,6 +2357,8 @@ func Test_stats_incrWeaponStat(t *testing.T) {
 }
 
 func Test_playerStat_add(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		m metric
 		v int
@@ -2521,6 +2541,8 @@ func Test_playerStat_add(t *testing.T) {
 }
 
 func Test_weaponStat_add(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		m metric
 		v int

@@ -9,6 +9,8 @@ import (
 )
 
 func Test_parser_playerSpectator(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name   string
 		player *common.Player
@@ -59,6 +61,8 @@ func Test_parser_playerSpectator(t *testing.T) {
 }
 
 func Test_parser_playerConnected(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name   string
 		player *common.Player
@@ -131,6 +135,8 @@ func Test_parser_playerConnected(t *testing.T) {
 }
 
 func Test_parser_hitgroupToMetric(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name     string
 		hitgroup events.HitGroup

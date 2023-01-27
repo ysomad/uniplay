@@ -8,6 +8,8 @@ import (
 )
 
 func TestNewMatchState(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		teamScore     int8
 		opponentScore int8
@@ -109,6 +111,8 @@ func TestNewMatchState(t *testing.T) {
 }
 
 func TestNewMatchID(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		server        string
 		client        string

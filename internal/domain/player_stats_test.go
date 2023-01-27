@@ -8,6 +8,8 @@ import (
 )
 
 func TestNewPlayerStats(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		t *PlayerTotalStats
 	}
@@ -97,6 +99,8 @@ func TestNewPlayerStats(t *testing.T) {
 }
 
 func Test_newPlayerCalcStats(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		kills         int32
 		deaths        int32
@@ -239,6 +243,8 @@ func Test_newPlayerCalcStats(t *testing.T) {
 }
 
 func Test_newPlayerRoundStats(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		kills           int32
 		deaths          int32

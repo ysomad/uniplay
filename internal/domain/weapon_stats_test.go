@@ -7,6 +7,8 @@ import (
 )
 
 func TestNewWeaponStats(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		total []*WeaponTotalStat
 	}
@@ -196,6 +198,8 @@ func TestNewWeaponStats(t *testing.T) {
 }
 
 func Test_round(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		n float64
 	}
@@ -239,6 +243,8 @@ func Test_round(t *testing.T) {
 }
 
 func Test_calcAccuracy(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		sum int32
 		num int32
@@ -306,6 +312,8 @@ func Test_calcAccuracy(t *testing.T) {
 }
 
 func Test_newWeaponAccuracyStat(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		shots       int32
 		headHits    int32

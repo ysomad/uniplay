@@ -25,6 +25,10 @@ run-migrate:
 	go mod tidy && go mod download && \
 	go run -tags migrate ./cmd/app
 
+.PHONY: test
+test:
+	go test -v -cover -race -count 1 ./internal/...
+
 .PHONY: migrate-new
 migrate-new:
 	@read -p "Enter the name of the new migration: " name; \
