@@ -8,7 +8,6 @@ import (
 	"github.com/jackc/pgx/v5"
 	"go.uber.org/zap"
 
-	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
 )
 
@@ -34,7 +33,7 @@ func (s *pgStorage) MatchExists(ctx context.Context, matchID uuid.UUID) (found b
 	return found, nil
 }
 
-func (s *pgStorage) SaveStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) (*domain.Match, error) {
+func (s *pgStorage) SaveStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error {
 	txFunc := func(tx pgx.Tx) error {
 		steamIDs := append(match.team1.players, match.team2.players...)
 
@@ -75,11 +74,10 @@ func (s *pgStorage) SaveStats(ctx context.Context, match *replayMatch, ps []*pla
 	}
 
 	if err := pgx.BeginTxFunc(ctx, s.client.Pool, pgx.TxOptions{}, txFunc); err != nil {
-		return nil, err
+		return err
 	}
 
-	// TODO: change when domain model is finished!!!
-	return match.toDomain(), nil
+	return nil
 }
 
 func (s *pgStorage) logDebugQuery(sql string) {

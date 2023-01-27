@@ -109,7 +109,7 @@ func (s *pgStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.
 }
 
 type weaponTotalStat struct {
-	WeaponID          int16  `db:"weapon_id"`
+	WeaponID          int32  `db:"weapon_id"`
 	Weapon            string `db:"weapon"`
 	Kills             int32  `db:"total_kills"`
 	HeadshotKills     int32  `db:"total_hs_kills"`
@@ -159,9 +159,9 @@ func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 		Where(sq.Eq{"ws.player_steam_id": steamID})
 
 	switch {
-	case f.WeaponID > 0:
+	case f.WeaponID != nil:
 		b = b.Where(sq.Eq{"ws.weapon_id": f.WeaponID})
-	case f.ClassID > 0:
+	case f.ClassID != nil:
 		b = b.Where(sq.Eq{"w.class_id": f.ClassID})
 	}
 
@@ -193,6 +193,8 @@ func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 	res := make([]*domain.WeaponTotalStat, len(weaponStats))
 	for i, s := range weaponStats {
 		res[i] = &domain.WeaponTotalStat{
+			WeaponID:          s.WeaponID,
+			Weapon:            s.Weapon,
 			Kills:             s.Kills,
 			HeadshotKills:     s.HeadshotKills,
 			BlindKills:        s.BlindKills,

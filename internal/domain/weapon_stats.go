@@ -3,8 +3,8 @@ package domain
 import "math"
 
 type WeaponStat struct {
-	TotalStat    *WeaponTotalStat   `json:"total_stat"`
-	AccuracyStat WeaponAccuracyStat `json:"accuracy_stat"`
+	Total    *WeaponTotalStat
+	Accuracy WeaponAccuracyStat
 }
 
 func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
@@ -12,8 +12,8 @@ func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
 
 	for i, s := range total {
 		res[i] = WeaponStat{
-			TotalStat: s,
-			AccuracyStat: newWeaponAccuracyStat(
+			Total: s,
+			Accuracy: newWeaponAccuracyStat(
 				s.Shots,
 				s.HeadHits,
 				s.ChestHits,
@@ -30,35 +30,35 @@ func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
 }
 
 type WeaponTotalStat struct {
-	WeaponID          int16  `json:"weapon_id"`
-	Weapon            string `json:"weapon"`
-	Kills             int32  `json:"kills"`
-	HeadshotKills     int32  `json:"headshot_kills"`
-	BlindKills        int32  `json:"blind_kills"`
-	WallbangKills     int32  `json:"wallbang_kills"`
-	NoScopeKills      int32  `json:"no_scope_kills"`
-	ThroughSmokeKills int32  `json:"through_smoke_kills"`
-	Deaths            int32  `json:"deaths"`
-	Assists           int32  `json:"assists"`
-	DamageTaken       int32  `json:"damage_taken"`
-	DamageDealt       int32  `json:"damage_dealt"`
-	Shots             int32  `json:"shots"`
-	HeadHits          int32  `json:"head_hits"`
-	ChestHits         int32  `json:"chest_hits"`
-	StomachHits       int32  `json:"stomach_hits"`
-	LeftArmHits       int32  `json:"left_arm_hits"`
-	RightArmHits      int32  `json:"right_arm_hits"`
-	LeftLegHits       int32  `json:"left_leg_hits"`
-	RightLegHits      int32  `json:"right_leg_hits"`
+	WeaponID          int32
+	Weapon            string
+	Kills             int32
+	HeadshotKills     int32
+	BlindKills        int32
+	WallbangKills     int32
+	NoScopeKills      int32
+	ThroughSmokeKills int32
+	Deaths            int32
+	Assists           int32
+	DamageTaken       int32
+	DamageDealt       int32
+	Shots             int32
+	HeadHits          int32
+	ChestHits         int32
+	StomachHits       int32
+	LeftArmHits       int32
+	RightArmHits      int32
+	LeftLegHits       int32
+	RightLegHits      int32
 }
 
 type WeaponAccuracyStat struct {
-	Total   float64 `json:"total"`
-	Head    float64 `json:"head"`
-	Chest   float64 `json:"chest"`
-	Stomach float64 `json:"stomach"`
-	Arms    float64 `json:"arms"`
-	Legs    float64 `json:"legs"`
+	Total   float64
+	Head    float64
+	Chest   float64
+	Stomach float64
+	Arms    float64
+	Legs    float64
 }
 
 // round rounds float64 to 2 decimal places.
@@ -90,6 +90,5 @@ func newWeaponAccuracyStat(shots, headHits, chestHits, stomachHits, lArmHits, rA
 }
 
 type WeaponStatsFilter struct {
-	WeaponID int16
-	ClassID  int8
+	WeaponID, ClassID *int32
 }

@@ -82,7 +82,7 @@ func (s *stats) normalizeSync() ([]*playerStat, []*weaponStat) {
 }
 
 func (s *stats) addPlayerStat(steamID uint64, m metric, v int) {
-	if s.validMetric(m, v) {
+	if !s.validMetric(m, v) {
 		return
 	}
 
@@ -114,7 +114,7 @@ func (s *stats) validMetric(m metric, v int) bool {
 }
 
 func (s *stats) addWeaponStat(steamID uint64, m metric, e common.EquipmentType, v int) {
-	if s.validWeapon(e) || s.validMetric(m, v) {
+	if !s.validWeapon(e) || !s.validMetric(m, v) {
 		return
 	}
 

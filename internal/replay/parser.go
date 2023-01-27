@@ -26,8 +26,8 @@ type parser struct {
 	match        *replayMatch
 }
 
-func newParser(r Replay, l *zap.Logger) (*parser, error) {
-	if (r == Replay{}) {
+func newParser(r replay, l *zap.Logger) (*parser, error) {
+	if (r == replay{}) {
 		return nil, errors.New("parser: empty replay")
 	}
 

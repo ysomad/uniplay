@@ -1,6 +1,6 @@
 package domain
 
-import "github.com/ssssargsian/uniplay/internal/pkg/apperror"
+import "errors"
 
 /*
 `Match` - >= 600
@@ -10,10 +10,12 @@ import "github.com/ssssargsian/uniplay/internal/pkg/apperror"
 `WeaponStats` - >= 1000
 */
 
-var (
-	ErrMatchAlreadyExist = apperror.New(600, "match already exist")
+const (
+	CodeMatchAlreadyExist = 600
+	CodePlayerNotFound    = 800
 )
 
 var (
-	ErrPlayerNotFound = apperror.New(800, "player not found")
+	ErrMatchAlreadyExist = errors.New("match already exist")
+	ErrPlayerNotFound    = errors.New("player not found")
 )

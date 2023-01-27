@@ -10,6 +10,8 @@ import (
 )
 
 func Test_replayMatch_swapTeamSides(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		team1 replayTeam
 		team2 replayTeam
@@ -45,6 +47,8 @@ func Test_replayMatch_swapTeamSides(t *testing.T) {
 }
 
 func Test_replayMatch_setTeamStates(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		team1 replayTeam
 		team2 replayTeam
@@ -113,6 +117,8 @@ func Test_replayMatch_setTeamStates(t *testing.T) {
 }
 
 func Test_replayMatch_teamPlayers(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		id    uuid.UUID
 		team1 replayTeam
@@ -228,6 +234,8 @@ func Test_replayMatch_teamPlayers(t *testing.T) {
 }
 
 func Test_newReplayTeam(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		name    string
 		flag    string
@@ -381,6 +389,8 @@ func Test_newReplayTeam(t *testing.T) {
 }
 
 func Test_replayTeam_swapSide(t *testing.T) {
+	t.Parallel()
+
 	type fields struct {
 		_side common.Team
 	}

@@ -7,6 +7,8 @@ import (
 )
 
 func TestNewWeaponStats(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		total []*WeaponTotalStat
 	}
@@ -89,7 +91,7 @@ func TestNewWeaponStats(t *testing.T) {
 			},
 			want: []WeaponStat{
 				{
-					TotalStat: &WeaponTotalStat{
+					Total: &WeaponTotalStat{
 						WeaponID:          1,
 						Weapon:            "ak-47",
 						Kills:             1337,
@@ -111,7 +113,7 @@ func TestNewWeaponStats(t *testing.T) {
 						LeftLegHits:       45,
 						RightLegHits:      88,
 					},
-					AccuracyStat: WeaponAccuracyStat{
+					Accuracy: WeaponAccuracyStat{
 						Total:   62.43,
 						Head:    32.36,
 						Chest:   12.4,
@@ -121,7 +123,7 @@ func TestNewWeaponStats(t *testing.T) {
 					},
 				},
 				{
-					TotalStat: &WeaponTotalStat{
+					Total: &WeaponTotalStat{
 						WeaponID:          2,
 						Weapon:            "mp4a4",
 						Kills:             1337,
@@ -143,7 +145,7 @@ func TestNewWeaponStats(t *testing.T) {
 						LeftLegHits:       65,
 						RightLegHits:      54,
 					},
-					AccuracyStat: WeaponAccuracyStat{
+					Accuracy: WeaponAccuracyStat{
 						Total:   52.19,
 						Head:    84.29,
 						Chest:   4.84,
@@ -153,7 +155,7 @@ func TestNewWeaponStats(t *testing.T) {
 					},
 				},
 				{
-					TotalStat: &WeaponTotalStat{
+					Total: &WeaponTotalStat{
 						WeaponID:          3,
 						Weapon:            "awp",
 						Kills:             1337,
@@ -175,7 +177,7 @@ func TestNewWeaponStats(t *testing.T) {
 						LeftLegHits:       45,
 						RightLegHits:      11,
 					},
-					AccuracyStat: WeaponAccuracyStat{
+					Accuracy: WeaponAccuracyStat{
 						Total:   13.35,
 						Head:    39.58,
 						Chest:   20.67,
@@ -196,6 +198,8 @@ func TestNewWeaponStats(t *testing.T) {
 }
 
 func Test_round(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		n float64
 	}
@@ -239,6 +243,8 @@ func Test_round(t *testing.T) {
 }
 
 func Test_calcAccuracy(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		sum int32
 		num int32
@@ -306,6 +312,8 @@ func Test_calcAccuracy(t *testing.T) {
 }
 
 func Test_newWeaponAccuracyStat(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		shots       int32
 		headHits    int32
