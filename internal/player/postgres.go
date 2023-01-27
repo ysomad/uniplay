@@ -96,7 +96,6 @@ func (s *pgStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.
 
 	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[playerTotalStat])
 	if err != nil {
-
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, domain.ErrPlayerNotFound
 		}
@@ -105,6 +104,7 @@ func (s *pgStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.
 	}
 
 	res := domain.PlayerTotalStats(stats)
+
 	return &res, nil
 }
 
@@ -182,7 +182,6 @@ func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 
 	weaponStats, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[weaponTotalStat])
 	if err != nil {
-
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, domain.ErrPlayerNotFound
 		}
@@ -191,6 +190,7 @@ func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 	}
 
 	res := make([]*domain.WeaponTotalStat, len(weaponStats))
+
 	for i, s := range weaponStats {
 		res[i] = &domain.WeaponTotalStat{
 			WeaponID:          s.WeaponID,

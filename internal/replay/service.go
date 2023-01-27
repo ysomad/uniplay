@@ -26,6 +26,7 @@ func (s *service) CollectStats(ctx context.Context, r replay) (matchID uuid.UUID
 	if err != nil {
 		return uuid.UUID{}, err
 	}
+
 	defer p.close()
 
 	matchID, err = p.parseReplayHeader()
@@ -47,7 +48,7 @@ func (s *service) CollectStats(ctx context.Context, r replay) (matchID uuid.UUID
 		return uuid.UUID{}, err
 	}
 
-	if err = s.replay.SaveStats(ctx, match, playerStats, weaponStats); err != nil {
+	if err := s.replay.SaveStats(ctx, match, playerStats, weaponStats); err != nil {
 		return uuid.UUID{}, err
 	}
 

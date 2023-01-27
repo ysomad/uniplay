@@ -21,6 +21,7 @@ const (
 	metricBlinded
 	metricShot
 	metricHitHead
+	metricHitNeck
 	metricHitChest
 	metricHitStomach
 	metricHitLeftArm

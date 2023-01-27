@@ -41,7 +41,6 @@ func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPla
 
 	s, err := c.player.GetStats(p.HTTPRequest.Context(), steamID)
 	if err != nil {
-
 		if errors.Is(err, domain.ErrPlayerNotFound) {
 			return player.NewGetPlayerStatsNotFound().WithPayload(&models.Error{
 				Code:    domain.CodePlayerNotFound,
@@ -115,7 +114,6 @@ func (c *Controller) GetWeaponStats(p player.GetWeaponStatsParams) player.GetWea
 		ClassID:  p.ClassID,
 	})
 	if err != nil {
-
 		if errors.Is(err, domain.ErrPlayerNotFound) {
 			return player.NewGetWeaponStatsNotFound().WithPayload(&models.Error{
 				Code:    domain.CodePlayerNotFound,
