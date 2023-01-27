@@ -22,4 +22,13 @@ jobs:
       run: go build -v ./cmd/app
 
     - name: Unit tests
-      run: make test
+      run: "go test \
+        -v \
+        -race \
+        -covermode=atomic \
+        -coverprofile=coverage.out \
+        ./internal/..."
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
