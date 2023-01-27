@@ -94,7 +94,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ReplayMatch'
+            $ref: '#/definitions/UploadReplayResponse'
         "400":
           description: Bad Request
           schema:
@@ -163,61 +163,14 @@ definitions:
         type: string
         description: сообщение ошибки
         x-nullable: false
-  ReplayTeam:
+  UploadReplayResponse:
     type: object
     required:
-    - clan_name
-    - flag_code
-    - players
-    - score
-    properties:
-      clan_name:
-        type: string
-        description: название команды, берется из загруженной записи матча
-        x-isnullable: false
-      flag_code:
-        type: string
-        description: ISO 3166 код флага
-        x-isnullable: false
-      score:
-        type: integer
-        format: int32
-        x-isnullable: false
-      players:
-        type: array
-        description: list of player steam ids
-        items:
-          type: string
-          example: "90071996842377217"
-  ReplayMatch:
-    type: object
-    required:
-    - map_name
-    - match_duration
     - match_id
-    - team1
-    - team2
-    - uploaded_at
     properties:
       match_id:
         type: string
         format: uuid
-        x-isnullable: false
-      map_name:
-        type: string
-        x-isnullable: false
-      match_duration:
-        type: integer
-        format: int64
-        x-isnullable: false
-      team1:
-        $ref: '#/definitions/ReplayTeam'
-      team2:
-        $ref: '#/definitions/ReplayTeam'
-      uploaded_at:
-        type: string
-        format: date-time
-        description: datetime RFC3339
         x-isnullable: false
   PlayerStats:
     type: object

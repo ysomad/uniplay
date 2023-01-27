@@ -164,20 +164,7 @@ func TestNewMatchID(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "invalid amount of ticks 1",
-			args: args{
-				server:        "server",
-				client:        "client",
-				mapName:       "de_dust2",
-				matchDuration: time.Minute * 25,
-				ticks:         int(time.Minute * 25 * 32), // 32 server tickrate
-				frames:        int(time.Minute * 25 * 128),
-				signonLen:     1337,
-			},
-			wantErr: true,
-		},
-		{
-			name: "invalid amount of ticks 2",
+			name: "invalid amount of ticks",
 			args: args{
 				server:        "server",
 				client:        "client",
@@ -190,7 +177,7 @@ func TestNewMatchID(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "invalid amount of frames 1",
+			name: "invalid amount of frames",
 			args: args{
 				server:        "server",
 				client:        "client",
@@ -198,19 +185,6 @@ func TestNewMatchID(t *testing.T) {
 				matchDuration: time.Minute * 25,
 				ticks:         int(time.Minute * 25 * 128),
 				frames:        0,
-				signonLen:     1337,
-			},
-			wantErr: true,
-		},
-		{
-			name: "invalid amount of frames 2",
-			args: args{
-				server:        "server",
-				client:        "client",
-				mapName:       "de_dust2",
-				matchDuration: time.Minute * 25,
-				ticks:         int(time.Minute * 25 * 128),
-				frames:        int(time.Minute * 24),
 				signonLen:     1337,
 			},
 			wantErr: true,

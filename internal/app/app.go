@@ -9,10 +9,12 @@ import (
 
 	"github.com/ssssargsian/uniplay/internal/compendium"
 	"github.com/ssssargsian/uniplay/internal/config"
+	"github.com/ssssargsian/uniplay/internal/replay"
 
 	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi"
 	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations"
 	compendiumGen "github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/compendium"
+	replayGen "github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/replay"
 
 	"github.com/ssssargsian/uniplay/internal/pkg/logger"
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
@@ -29,21 +31,21 @@ func Run(conf *config.Config) {
 		l.Fatal("pgclient.New", zap.Error(err))
 	}
 
-	// repos
-	// replayRepo := replay.NewPGStorage(l, pgClient)
-	// playerRepo := player.NewPGStorage(l, pgClient)
+	// replay
+	replayRepo := replay.NewPGStorage(l, pgClient)
+	replayService := replay.NewService(l, replayRepo)
+	replayController := replay.NewController(l, replayService)
+
+	// compendium
 	compendiumRepo := compendium.NewPGStorage(l, pgClient)
-
-	// services
-	// replayService := replay.NewService(l, replayRepo)
-	// playerService := player.NewService(playerRepo)
 	compendiumService := compendium.NewService(compendiumRepo)
-
-	// controllers
 	compendiumController := compendium.NewController(l, compendiumService)
 
 	// go-swagger
-	api, err := newAPI(compendiumController)
+	api, err := newAPI(apiDeps{
+		replay:     replayController,
+		compendium: compendiumController,
+	})
 	if err != nil {
 		l.Fatal("newAPI", zap.Error(err))
 	}
@@ -52,11 +54,16 @@ func Run(conf *config.Config) {
 	defer srv.Shutdown()
 
 	if err = srv.Serve(); err != nil {
-		l.Fatal("serverv1.Serve", zap.Error(err))
+		l.Fatal("srv.Serve", zap.Error(err))
 	}
 }
 
-func newAPI(c *compendium.Controller) (*operations.UniplayAPI, error) {
+type apiDeps struct {
+	replay     *replay.Controller
+	compendium *compendium.Controller
+}
+
+func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
 	spec, err := loads.Analyzed(restapi.SwaggerJSON, "2.0")
 	if err != nil {
 		return nil, err
@@ -65,13 +72,10 @@ func newAPI(c *compendium.Controller) (*operations.UniplayAPI, error) {
 	api := operations.NewUniplayAPI(spec)
 	api.UseSwaggerUI()
 
-	// compendium handlers
-	api.CompendiumGetWeaponsHandler = compendiumGen.GetWeaponsHandlerFunc(c.GetWeapons)
-	api.CompendiumGetWeaponClassesHandler = compendiumGen.GetWeaponClassesHandlerFunc(c.GetWeaponClasses)
+	api.CompendiumGetWeaponsHandler = compendiumGen.GetWeaponsHandlerFunc(d.compendium.GetWeapons)
+	api.CompendiumGetWeaponClassesHandler = compendiumGen.GetWeaponClassesHandlerFunc(d.compendium.GetWeaponClasses)
 
-	// replay handlers
-
-	// player handlers
+	api.ReplayUploadReplayHandler = replayGen.UploadReplayHandlerFunc(d.replay.UploadReplay)
 
 	return api, nil
 }

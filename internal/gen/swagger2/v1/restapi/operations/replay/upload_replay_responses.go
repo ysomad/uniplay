@@ -27,7 +27,7 @@ type UploadReplayOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.ReplayMatch `json:"body,omitempty"`
+	Payload *models.UploadReplayResponse `json:"body,omitempty"`
 }
 
 // NewUploadReplayOK creates UploadReplayOK with default headers values
@@ -37,13 +37,13 @@ func NewUploadReplayOK() *UploadReplayOK {
 }
 
 // WithPayload adds the payload to the upload replay o k response
-func (o *UploadReplayOK) WithPayload(payload *models.ReplayMatch) *UploadReplayOK {
+func (o *UploadReplayOK) WithPayload(payload *models.UploadReplayResponse) *UploadReplayOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the upload replay o k response
-func (o *UploadReplayOK) SetPayload(payload *models.ReplayMatch) {
+func (o *UploadReplayOK) SetPayload(payload *models.UploadReplayResponse) {
 	o.Payload = payload
 }
 

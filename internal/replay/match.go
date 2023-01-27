@@ -21,29 +21,6 @@ type replayMatch struct {
 	uploadedAt time.Time
 }
 
-func (m *replayMatch) toDomain() *domain.Match {
-	return &domain.Match{
-		ID:       m.id,
-		MapName:  m.mapName,
-		Duration: m.duration,
-		Team1: domain.MatchTeam{
-			ID:       m.team1.id,
-			ClanName: m.team1.clanName,
-			FlagCode: m.team1.flagCode,
-			Score:    m.team1.score,
-			Players:  m.team1.players,
-		},
-		Team2: domain.MatchTeam{
-			ID:       m.team2.id,
-			ClanName: m.team2.clanName,
-			FlagCode: m.team2.flagCode,
-			Score:    m.team2.score,
-			Players:  m.team2.players,
-		},
-		UploadedAt: m.uploadedAt,
-	}
-}
-
 // setTeams set new team to a match from GameState.
 func (m *replayMatch) setTeams(gs demoinfocs.GameState) {
 	t := gs.TeamTerrorists()

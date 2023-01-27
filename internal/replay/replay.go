@@ -11,25 +11,25 @@ var (
 	errEmptyReplay                = errors.New("replay is empty")
 )
 
-type Replay struct {
+type replay struct {
 	io.ReadCloser
 }
 
-func New(rc io.ReadCloser, filename string) (Replay, error) {
+func newReplay(rc io.ReadCloser, filename string) (replay, error) {
 	if rc == nil {
-		return Replay{}, errEmptyReplay
+		return replay{}, errEmptyReplay
 	}
 
 	sub := strings.Split(filename, ".")
 	lastIndex := len(sub) - 1
 
 	if lastIndex <= 0 {
-		return Replay{}, errInvalidReplayFileExtension
+		return replay{}, errInvalidReplayFileExtension
 	}
 
 	if sub[lastIndex] != "dem" {
-		return Replay{}, errInvalidReplayFileExtension
+		return replay{}, errInvalidReplayFileExtension
 	}
 
-	return Replay{rc}, nil
+	return replay{rc}, nil
 }

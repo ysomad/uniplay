@@ -202,7 +202,7 @@ func init() {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/ReplayMatch"
+              "$ref": "#/definitions/UploadReplayResponse"
             }
           },
           "400": {
@@ -632,75 +632,15 @@ func init() {
         }
       }
     },
-    "ReplayMatch": {
+    "UploadReplayResponse": {
       "type": "object",
       "required": [
-        "map_name",
-        "match_duration",
-        "match_id",
-        "team1",
-        "team2",
-        "uploaded_at"
+        "match_id"
       ],
       "properties": {
-        "map_name": {
-          "type": "string",
-          "x-isnullable": false
-        },
-        "match_duration": {
-          "type": "integer",
-          "format": "int64",
-          "x-isnullable": false
-        },
         "match_id": {
           "type": "string",
           "format": "uuid",
-          "x-isnullable": false
-        },
-        "team1": {
-          "$ref": "#/definitions/ReplayTeam"
-        },
-        "team2": {
-          "$ref": "#/definitions/ReplayTeam"
-        },
-        "uploaded_at": {
-          "description": "datetime RFC3339",
-          "type": "string",
-          "format": "date-time",
-          "x-isnullable": false
-        }
-      }
-    },
-    "ReplayTeam": {
-      "type": "object",
-      "required": [
-        "clan_name",
-        "flag_code",
-        "players",
-        "score"
-      ],
-      "properties": {
-        "clan_name": {
-          "description": "название команды, берется из загруженной записи матча",
-          "type": "string",
-          "x-isnullable": false
-        },
-        "flag_code": {
-          "description": "ISO 3166 код флага",
-          "type": "string",
-          "x-isnullable": false
-        },
-        "players": {
-          "description": "list of player steam ids",
-          "type": "array",
-          "items": {
-            "type": "string",
-            "example": "90071996842377217"
-          }
-        },
-        "score": {
-          "type": "integer",
-          "format": "int32",
           "x-isnullable": false
         }
       }
@@ -969,7 +909,7 @@ func init() {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/ReplayMatch"
+              "$ref": "#/definitions/UploadReplayResponse"
             }
           },
           "400": {
@@ -1399,75 +1339,15 @@ func init() {
         }
       }
     },
-    "ReplayMatch": {
+    "UploadReplayResponse": {
       "type": "object",
       "required": [
-        "map_name",
-        "match_duration",
-        "match_id",
-        "team1",
-        "team2",
-        "uploaded_at"
+        "match_id"
       ],
       "properties": {
-        "map_name": {
-          "type": "string",
-          "x-isnullable": false
-        },
-        "match_duration": {
-          "type": "integer",
-          "format": "int64",
-          "x-isnullable": false
-        },
         "match_id": {
           "type": "string",
           "format": "uuid",
-          "x-isnullable": false
-        },
-        "team1": {
-          "$ref": "#/definitions/ReplayTeam"
-        },
-        "team2": {
-          "$ref": "#/definitions/ReplayTeam"
-        },
-        "uploaded_at": {
-          "description": "datetime RFC3339",
-          "type": "string",
-          "format": "date-time",
-          "x-isnullable": false
-        }
-      }
-    },
-    "ReplayTeam": {
-      "type": "object",
-      "required": [
-        "clan_name",
-        "flag_code",
-        "players",
-        "score"
-      ],
-      "properties": {
-        "clan_name": {
-          "description": "название команды, берется из загруженной записи матча",
-          "type": "string",
-          "x-isnullable": false
-        },
-        "flag_code": {
-          "description": "ISO 3166 код флага",
-          "type": "string",
-          "x-isnullable": false
-        },
-        "players": {
-          "description": "list of player steam ids",
-          "type": "array",
-          "items": {
-            "type": "string",
-            "example": "90071996842377217"
-          }
-        },
-        "score": {
-          "type": "integer",
-          "format": "int32",
           "x-isnullable": false
         }
       }
