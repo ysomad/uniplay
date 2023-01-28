@@ -10,8 +10,9 @@ type Config struct {
 }
 
 type App struct {
-	Name string `yaml:"name" env-required:"true"`
-	Ver  string `yaml:"version" env-required:"true"`
+	Name        string `yaml:"name" env-required:"true"`
+	Ver         string `yaml:"version" env-required:"true"`
+	Environment string `yaml:"environment" env-required:"true"`
 }
 
 type (

@@ -1,9 +1,11 @@
 package app
 
 import (
+	"context"
 	"log"
 	"os"
 
+	"go.opentelemetry.io/otel"
 	"go.uber.org/zap"
 
 	"github.com/ssssargsian/uniplay/internal/compendium"
@@ -21,15 +23,40 @@ func Run(conf *config.Config) {
 		log.Fatalf("logger.New: %s", err.Error())
 	}
 
+	f, err := os.Create("traces.txt")
+	if err != nil {
+		l.Fatal("os.Create", zap.Error(err))
+	}
+	defer f.Close()
+
+	exp, err := newStdoutTracerExporter(f)
+	if err != nil {
+		l.Fatal("newStdoutTracerExporter", zap.Error(err))
+	}
+
+	tp, err := newTraceProvider(conf.App, exp)
+	if err != nil {
+		l.Fatal("newTraceProvider", zap.Error(err))
+	}
+	defer func() {
+		if err = tp.Shutdown(context.Background()); err != nil {
+			l.Fatal("tp.Shutdown", zap.Error(err))
+		}
+	}()
+
+	otel.SetTracerProvider(tp)
+
+	tracer := tp.Tracer(conf.App.Name)
+
 	pg, err := pgclient.New(conf.PG.URL, pgclient.WithMaxConns(conf.PG.MaxConns))
 	if err != nil {
 		l.Fatal("pgclient.New", zap.Error(err))
 	}
 
 	// replay
-	replayRepo := replay.NewPGStorage(l, pg)
-	replayService := replay.NewService(l, replayRepo)
-	replayController := replay.NewController(l, replayService)
+	replayRepo := replay.NewPGStorage(l, tracer, pg)
+	replayService := replay.NewService(l, tracer, replayRepo)
+	replayController := replay.NewController(l, tracer, replayService)
 
 	// compendium
 	compendiumRepo := compendium.NewPGStorage(l, pg)
@@ -51,7 +78,10 @@ func Run(conf *config.Config) {
 		l.Fatal("newAPI", zap.Error(err))
 	}
 
-	srv := newServer(conf, api)
+	// параметр внутри - миддлвари, которые выполнятся после раутинга и валидации
+	_ = api.Serve(nil)
+
+	srv := newServer(conf.HTTP, api)
 	defer func() {
 		if err = srv.Shutdown(); err != nil {
 			l.Fatal("srv.Shutdown", zap.Error(err))

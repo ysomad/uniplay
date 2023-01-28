@@ -22,7 +22,7 @@ type apiDeps struct {
 }
 
 func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
-	spec, err := loads.Analyzed(restapi.SwaggerJSON, "2.0")
+	spec, err := loads.Embedded(restapi.SwaggerJSON, restapi.FlatSwaggerJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -30,6 +30,12 @@ func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
 	api := operations.NewUniplayAPI(spec)
 	api.UseSwaggerUI()
 
+	attachHandlers(api, d)
+
+	return api, nil
+}
+
+func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 	api.CompendiumGetWeaponsHandler = compendiumGen.GetWeaponsHandlerFunc(d.compendium.GetWeapons)
 	api.CompendiumGetWeaponClassesHandler = compendiumGen.GetWeaponClassesHandlerFunc(d.compendium.GetWeaponClasses)
 
@@ -37,14 +43,12 @@ func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
 
 	api.PlayerGetPlayerStatsHandler = playerGen.GetPlayerStatsHandlerFunc(d.player.GetPlayerStats)
 	api.PlayerGetWeaponStatsHandler = playerGen.GetWeaponStatsHandlerFunc(d.player.GetWeaponStats)
-
-	return api, nil
 }
 
-func newServer(conf *config.Config, api *operations.UniplayAPI) *restapi.Server {
+func newServer(conf config.HTTP, api *operations.UniplayAPI) *restapi.Server {
 	srv := restapi.NewServer(api)
-	srv.Host = conf.HTTP.Host
-	srv.Port = conf.HTTP.Port
+	srv.Host = conf.Host
+	srv.Port = conf.Port
 	srv.EnabledListeners = []string{"http"}
 
 	return srv

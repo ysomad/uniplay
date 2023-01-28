@@ -7,6 +7,8 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
+	"go.opentelemetry.io/otel/codes"
+	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 
 	"github.com/ssssargsian/uniplay/internal/domain"
@@ -21,19 +23,26 @@ type replayService interface {
 
 type Controller struct {
 	log    *zap.Logger
+	tracer trace.Tracer
 	replay replayService
 }
 
-func NewController(l *zap.Logger, r replayService) *Controller {
+func NewController(l *zap.Logger, t trace.Tracer, r replayService) *Controller {
 	return &Controller{
 		log:    l,
+		tracer: t,
 		replay: r,
 	}
 }
 
 func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.UploadReplayResponder {
-	err := p.HTTPRequest.ParseMultipartForm(50 << 20)
-	if err != nil {
+	ctx, span := c.tracer.Start(p.HTTPRequest.Context(), "replay.Controller.UploadReplay")
+	defer span.End()
+
+	if err := p.HTTPRequest.ParseMultipartForm(50 << 20); err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, err.Error())
+
 		return replayGen.NewUploadReplayBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
 			Message: err.Error(),
@@ -42,6 +51,9 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 
 	file, header, err := p.HTTPRequest.FormFile("replay")
 	if err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, err.Error())
+
 		return replayGen.NewUploadReplayBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
 			Message: err.Error(),
@@ -50,6 +62,9 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 
 	r, err := newReplay(file, header.Filename)
 	if err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, err.Error())
+
 		return replayGen.NewUploadReplayBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
 			Message: err.Error(),
@@ -57,10 +72,13 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 	}
 	defer r.Close()
 
-	matchID, err := c.replay.CollectStats(p.HTTPRequest.Context(), r)
+	matchID, err := c.replay.CollectStats(ctx, r)
 	if err != nil {
+		span.RecordError(err)
+		span.SetStatus(codes.Error, err.Error())
+
 		if errors.Is(err, domain.ErrMatchAlreadyExist) {
-			return replayGen.NewUploadReplayInternalServerError().WithPayload(&models.Error{
+			return replayGen.NewUploadReplayConflict().WithPayload(&models.Error{
 				Code:    domain.CodeMatchAlreadyExist,
 				Message: err.Error(),
 			})

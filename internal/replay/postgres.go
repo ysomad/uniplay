@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 
 	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
@@ -13,12 +14,14 @@ import (
 
 type pgStorage struct {
 	log    *zap.Logger
+	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPGStorage(l *zap.Logger, c *pgclient.Client) *pgStorage {
+func NewPGStorage(l *zap.Logger, t trace.Tracer, c *pgclient.Client) *pgStorage {
 	return &pgStorage{
 		log:    l,
+		tracer: t,
 		client: c,
 	}
 }
@@ -35,6 +38,9 @@ func (s *pgStorage) MatchExists(ctx context.Context, matchID uuid.UUID) (bool, e
 }
 
 func (s *pgStorage) SaveStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error {
+	ctx, span := s.tracer.Start(ctx, "replay.pgStorage.SaveStats")
+	defer span.End()
+
 	txFunc := func(tx pgx.Tx) error {
 		steamIDs := append(match.team1.players, match.team2.players...) //nolint:gocritic // why not ?
 

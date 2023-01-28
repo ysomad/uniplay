@@ -3,6 +3,7 @@ package replay
 import (
 	"context"
 
+	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -11,17 +12,22 @@ import (
 
 type service struct {
 	log    *zap.Logger
+	tracer trace.Tracer
 	replay replayRepository
 }
 
-func NewService(l *zap.Logger, r replayRepository) *service {
+func NewService(l *zap.Logger, t trace.Tracer, r replayRepository) *service {
 	return &service{
 		log:    l,
+		tracer: t,
 		replay: r,
 	}
 }
 
 func (s *service) CollectStats(ctx context.Context, r replay) (matchID uuid.UUID, err error) {
+	ctx, span := s.tracer.Start(ctx, "replay.service.CollectStats")
+	defer span.End()
+
 	p, err := newParser(r, s.log)
 	if err != nil {
 		return uuid.UUID{}, err
