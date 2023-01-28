@@ -60,7 +60,7 @@ func Test_parser_playerSpectator(t *testing.T) {
 	}
 }
 
-func Test_parser_playerConnected(t *testing.T) {
+func Test_parser_playerValid(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
