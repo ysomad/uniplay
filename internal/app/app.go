@@ -38,6 +38,7 @@ func Run(conf *config.Config) {
 	if err != nil {
 		l.Fatal("newTraceProvider", zap.Error(err))
 	}
+
 	defer func() {
 		if err = tp.Shutdown(context.Background()); err != nil {
 			l.Fatal("tp.Shutdown", zap.Error(err))
