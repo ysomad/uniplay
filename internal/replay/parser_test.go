@@ -127,7 +127,7 @@ func Test_parser_playerConnected(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			p := new(parser)
-			got := p.playerConnected(tt.player)
+			got := p.playerValid(tt.player)
 
 			assert.Equal(t, tt.want, got)
 		})

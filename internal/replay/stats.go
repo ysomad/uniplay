@@ -130,7 +130,7 @@ func (s *stats) addWeaponStat(steamID uint64, m metric, e common.EquipmentType, 
 	if _, ok := s.weaponStats[steamID][e]; !ok {
 		s.weaponStats[steamID][e] = &weaponStat{
 			steamID:  steamID,
-			weaponID: int16(e),
+			weaponID: int32(e),
 		}
 	}
 
@@ -164,7 +164,7 @@ type playerStat struct {
 
 // add adds v to a particular field depending on a received metric.
 func (s *playerStat) add(m metric, v int) {
-	switch m { //nolint:exhaustive // each metric corresponds to playerStat field, not needed to handle all of the metrics
+	switch m { //nolint:exhaustive // each metric corresponds to playerStat specific field, no need to handle all of the metrics
 	case metricKill:
 		s.kills += v
 	case metricHSKill:
@@ -204,7 +204,7 @@ func (s *playerStat) add(m metric, v int) {
 
 type weaponStat struct {
 	steamID           uint64
-	weaponID          int16
+	weaponID          int32
 	kills             int
 	hsKills           int
 	blindKills        int
