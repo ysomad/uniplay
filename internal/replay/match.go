@@ -110,12 +110,10 @@ func newReplayTeam(name, flag string, side common.Team, players []*common.Player
 }
 
 func (t *replayTeam) swapSide() {
-	switch t._side {
+	switch t._side { //nolint:exhaustive // player side cannot be spectator or unassigned
 	case common.TeamCounterTerrorists:
 		t._side = common.TeamTerrorists
 	case common.TeamTerrorists:
 		t._side = common.TeamCounterTerrorists
-	case common.TeamUnassigned, common.TeamSpectators:
-		return
 	}
 }

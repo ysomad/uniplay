@@ -350,6 +350,20 @@ func Test_newWeaponAccuracyStat(t *testing.T) {
 				Legs:    13.41,
 			},
 		},
+		{
+			name: "0 hits",
+			args: args{
+				shots:       1589,
+				headHits:    0,
+				chestHits:   0,
+				stomachHits: 0,
+				lArmHits:    0,
+				rArmHits:    0,
+				lLegHits:    0,
+				rLegHits:    0,
+			},
+			want: WeaponAccuracyStat{},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
