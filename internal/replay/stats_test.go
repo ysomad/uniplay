@@ -675,6 +675,96 @@ func Test_stats_addPlayerStat(t *testing.T) {
 		want   map[uint64]*playerStat
 	}{
 		{
+			name: "invalid metric with valid value",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					1: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 1,
+				m:       0,
+				v:       4,
+			},
+			want: map[uint64]*playerStat{
+				1: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
+			name: "invalid metric value",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					1: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 1,
+				m:       metricDeath,
+				v:       0,
+			},
+			want: map[uint64]*playerStat{
+				1: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
+			name: "invalid metric and metric value",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					1: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 1,
+				m:       0,
+				v:       0,
+			},
+			want: map[uint64]*playerStat{
+				1: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
 			name: "death",
 			fields: fields{
 				playerStats: map[uint64]*playerStat{
@@ -2527,6 +2617,16 @@ func Test_playerStat_add(t *testing.T) {
 			},
 			want: &playerStat{
 				blindedPlayers: 1,
+			},
+		},
+		{
+			name: "grenade damage dealt",
+			args: args{
+				m: metricGrenadeDamageDealt,
+				v: 25,
+			},
+			want: &playerStat{
+				grenadeDamageDealt: 25,
 			},
 		},
 	}

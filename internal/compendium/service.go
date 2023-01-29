@@ -3,7 +3,7 @@ package compendium
 import (
 	"context"
 
-	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/domain"
 )
 
 type service struct {

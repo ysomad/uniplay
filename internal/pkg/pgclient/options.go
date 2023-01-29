@@ -1,6 +1,10 @@
 package pgclient
 
-import "time"
+import (
+	"time"
+
+	"github.com/jackc/pgx/v5"
+)
 
 type Option func(*Client)
 
@@ -19,5 +23,11 @@ func WithConnAttempts(attempts uint8) Option {
 func WithConnTimeout(timeout time.Duration) Option {
 	return func(c *Client) {
 		c.connTimeout = timeout
+	}
+}
+
+func WithQueryTracer(tracer pgx.QueryTracer) Option {
+	return func(c *Client) {
+		c.tracer = tracer
 	}
 }

@@ -9,17 +9,19 @@ import (
 	"github.com/jackc/pgx/v5"
 	"go.uber.org/zap"
 
-	"github.com/ssssargsian/uniplay/internal/domain"
-	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
+	"github.com/ysomad/uniplay/internal/domain"
+
+	"github.com/ysomad/uniplay/internal/pkg/otel"
+	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-type pgStorage struct {
+type PGStorage struct {
 	log    *zap.Logger
 	client *pgclient.Client
 }
 
-func NewPGStorage(l *zap.Logger, c *pgclient.Client) *pgStorage {
-	return &pgStorage{
+func NewPGStorage(l *zap.Logger, c *pgclient.Client) *PGStorage {
+	return &PGStorage{
 		log:    l,
 		client: c,
 	}
@@ -51,7 +53,10 @@ type playerTotalStat struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (s *pgStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
+func (s *PGStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
+	_, span := otel.StartTrace(ctx, libraryName, "player.PGStorage.GetTotalStats")
+	defer span.End()
+
 	sql, args, err := s.client.Builder.
 		Select(
 			"sum(ps.kills) as total_kills",
@@ -86,8 +91,6 @@ func (s *pgStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.
 	if err != nil {
 		return nil, err
 	}
-
-	s.log.Debug("player - pgStorage", zap.String("query", sql))
 
 	rows, err := s.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
@@ -131,7 +134,10 @@ type weaponTotalStat struct {
 	RightLegHits      int32  `db:"total_r_leg_hits"`
 }
 
-func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponTotalStat, error) {
+func (s *PGStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponTotalStat, error) {
+	_, span := otel.StartTrace(ctx, libraryName, "player.PGStorage.GetTotalWeaponStats")
+	defer span.End()
+
 	b := s.client.Builder.
 		Select(
 			"ws.weapon_id",
@@ -172,8 +178,6 @@ func (s *pgStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 	if err != nil {
 		return nil, err
 	}
-
-	s.log.Debug("player - pgStorage", zap.String("query", sql))
 
 	rows, err := s.client.Pool.Query(ctx, sql, args...)
 	if err != nil {

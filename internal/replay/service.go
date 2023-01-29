@@ -3,25 +3,29 @@ package replay
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/google/uuid"
-	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/pkg/otel"
 )
 
-type service struct {
+type Service struct {
 	log    *zap.Logger
 	replay replayRepository
 }
 
-func NewService(l *zap.Logger, r replayRepository) *service {
-	return &service{
+func NewService(l *zap.Logger, r replayRepository) *Service {
+	return &Service{
 		log:    l,
 		replay: r,
 	}
 }
 
-func (s *service) CollectStats(ctx context.Context, r replay) (matchID uuid.UUID, err error) {
+func (s *Service) CollectStats(ctx context.Context, r replay) (matchID uuid.UUID, err error) {
+	_, span := otel.StartTrace(ctx, libraryName, "replay.Service.CollectStats")
+	defer span.End()
+
 	p, err := newParser(r, s.log)
 	if err != nil {
 		return uuid.UUID{}, err
@@ -43,7 +47,7 @@ func (s *service) CollectStats(ctx context.Context, r replay) (matchID uuid.UUID
 		return uuid.UUID{}, domain.ErrMatchAlreadyExist
 	}
 
-	match, playerStats, weaponStats, err := p.collectStats()
+	match, playerStats, weaponStats, err := p.collectStats(ctx)
 	if err != nil {
 		return uuid.UUID{}, err
 	}

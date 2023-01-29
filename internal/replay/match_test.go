@@ -5,8 +5,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
-	"github.com/ssssargsian/uniplay/internal/domain"
 	"github.com/stretchr/testify/assert"
+	"github.com/ysomad/uniplay/internal/domain"
 )
 
 func Test_replayMatch_swapTeamSides(t *testing.T) {

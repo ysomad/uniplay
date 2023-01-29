@@ -5,7 +5,7 @@ MIGRATE := migrate -path migrations -database "$(PG_URL)?sslmode=disable"
 
 .PHONY: compose-up
 compose-up:
-	docker-compose up --build -d postgres && docker compose logs -f
+	docker-compose up --build -d postgres jaeger && docker compose logs -f
 
 .PHONY: compose-all
 compose-all:
@@ -58,9 +58,9 @@ dry-run: migrate-drop run-migrate
 
 .PHONY: gen-swagger
 gen-swagger:
-	rm -rf ./internal/gen/swagger2/v1/*
+	rm -rf ./internal/gen/swagger2/*
 	swagger generate server \
-	-t internal/gen/swagger2/v1 \
+	-t internal/gen/swagger2 \
 	-f swagger2.yaml \
 	-A uniplay \
 	--exclude-main \
