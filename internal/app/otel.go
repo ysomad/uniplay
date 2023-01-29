@@ -22,7 +22,7 @@ func newJaegerExporter(conf config.Jaeger) (*jaeger.Exporter, error) {
 // newTraceProvider returns and registers cnfigured tracer provider.
 //
 // docs: https://opentelemetry.io/docs/instrumentation/go/exporting_data/
-func newTraceProvider(conf config.App, exp sdktrace.SpanExporter) (func(context.Context) error, error) {
+func newTraceProvider(conf config.App, exp sdktrace.SpanExporter) func(context.Context) error {
 	r := resource.NewWithAttributes(
 		semconv.SchemaURL,
 		semconv.ServiceNameKey.String(conf.Name),
@@ -39,5 +39,5 @@ func newTraceProvider(conf config.App, exp sdktrace.SpanExporter) (func(context.
 
 	otel.SetTracerProvider(tp)
 
-	return tp.Shutdown, nil
+	return tp.Shutdown
 }

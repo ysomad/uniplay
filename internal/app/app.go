@@ -29,10 +29,7 @@ func Run(conf *config.Config) {
 		l.Fatal("newJaegerExporter", zap.Error(err))
 	}
 
-	shutdownTraceProvider, err := newTraceProvider(conf.App, jaegerExp)
-	if err != nil {
-		l.Fatal("newTraceProvider", zap.Error(err))
-	}
+	shutdownTraceProvider := newTraceProvider(conf.App, jaegerExp)
 
 	defer func() {
 		if err = shutdownTraceProvider(context.Background()); err != nil {
