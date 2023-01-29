@@ -282,6 +282,20 @@ func Test_newPlayerRoundStats(t *testing.T) {
 				BlindedTimes:       0.16,
 			},
 		},
+		{
+			name: "0 rounds played",
+			args: args{
+				kills:           1337,
+				deaths:          1067,
+				dmgDealt:        324566,
+				assists:         324,
+				grenadeDmgDealt: 23004,
+				blindedPlayers:  56,
+				blindedTimes:    99,
+				roundsPlayed:    0,
+			},
+			want: PlayerRoundStats{},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

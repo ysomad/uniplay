@@ -9,10 +9,10 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/domain"
 
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/models"
-	replayGen "github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/replay"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
+	replayGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/replay"
 )
 
 type replayService interface {
@@ -32,8 +32,7 @@ func NewController(l *zap.Logger, r replayService) *Controller {
 }
 
 func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.UploadReplayResponder {
-	err := p.HTTPRequest.ParseMultipartForm(50 << 20)
-	if err != nil {
+	if err := p.HTTPRequest.ParseMultipartForm(150 << 20); err != nil {
 		return replayGen.NewUploadReplayBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
 			Message: err.Error(),
@@ -48,20 +47,19 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 		})
 	}
 
-	replay, err := newReplay(file, header.Filename)
+	r, err := newReplay(file, header.Filename)
 	if err != nil {
 		return replayGen.NewUploadReplayBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
 			Message: err.Error(),
 		})
 	}
-	defer replay.Close()
+	defer r.Close()
 
-	matchID, err := c.replay.CollectStats(p.HTTPRequest.Context(), replay)
+	matchID, err := c.replay.CollectStats(p.HTTPRequest.Context(), r)
 	if err != nil {
-
 		if errors.Is(err, domain.ErrMatchAlreadyExist) {
-			return replayGen.NewUploadReplayInternalServerError().WithPayload(&models.Error{
+			return replayGen.NewUploadReplayConflict().WithPayload(&models.Error{
 				Code:    domain.CodeMatchAlreadyExist,
 				Message: err.Error(),
 			})
@@ -74,5 +72,6 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 	}
 
 	payload := &models.UploadReplayResponse{MatchID: strfmt.UUID(matchID.String())}
+
 	return replayGen.NewUploadReplayOK().WithPayload(payload)
 }

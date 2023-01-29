@@ -8,9 +8,9 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/ssssargsian/uniplay/internal/domain"
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/models"
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/player"
+	"github.com/ysomad/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
 )
 
 type playerService interface {
@@ -41,7 +41,6 @@ func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPla
 
 	s, err := c.player.GetStats(p.HTTPRequest.Context(), steamID)
 	if err != nil {
-
 		if errors.Is(err, domain.ErrPlayerNotFound) {
 			return player.NewGetPlayerStatsNotFound().WithPayload(&models.Error{
 				Code:    domain.CodePlayerNotFound,
@@ -115,7 +114,6 @@ func (c *Controller) GetWeaponStats(p player.GetWeaponStatsParams) player.GetWea
 		ClassID:  p.ClassID,
 	})
 	if err != nil {
-
 		if errors.Is(err, domain.ErrPlayerNotFound) {
 			return player.NewGetWeaponStatsNotFound().WithPayload(&models.Error{
 				Code:    domain.CodePlayerNotFound,

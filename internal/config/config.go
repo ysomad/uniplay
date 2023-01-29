@@ -3,15 +3,17 @@ package config
 import "time"
 
 type Config struct {
-	App  App  `yaml:"app"`
-	HTTP HTTP `yaml:"http"`
-	Log  Log  `yaml:"log"`
-	PG   PG   `yaml:"postgres"`
+	App    App    `yaml:"app"`
+	HTTP   HTTP   `yaml:"http"`
+	Log    Log    `yaml:"log"`
+	PG     PG     `yaml:"postgres"`
+	Jaeger Jaeger `yaml:"jaeger"`
 }
 
 type App struct {
-	Name string `yaml:"name" env-required:"true"`
-	Ver  string `yaml:"version" env-required:"true"`
+	Name        string `yaml:"name" env-required:"true"`
+	Ver         string `yaml:"version" env-required:"true"`
+	Environment string `yaml:"environment" env-required:"true"`
 }
 
 type (
@@ -28,5 +30,9 @@ type (
 	PG struct {
 		MaxConns int32  `yaml:"max_connections" env-required:"true"`
 		URL      string `env:"PG_URL" env-required:"true"`
+	}
+
+	Jaeger struct {
+		Endpoint string `env:"JAEGER_ENDPOINT" env-required:"true"`
 	}
 )

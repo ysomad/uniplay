@@ -19,7 +19,7 @@ func newStats() stats {
 }
 
 // normalize returns restructured player and weapon stats.
-func (s *stats) normalize() ([]*playerStat, []*weaponStat) {
+func (s *stats) normalize() ([]*playerStat, []*weaponStat) { //nolint:unused // for benchmarks
 	var (
 		wg          sync.WaitGroup
 		playerStats []*playerStat
@@ -55,6 +55,7 @@ func (s *stats) normalize() ([]*playerStat, []*weaponStat) {
 	}()
 
 	wg.Wait()
+
 	return playerStats, weaponStats
 }
 
@@ -62,12 +63,14 @@ func (s *stats) normalizeSync() ([]*playerStat, []*weaponStat) {
 	playerStats := make([]*playerStat, len(s.playerStats))
 
 	var i int8
+
 	for _, ps := range s.playerStats {
 		playerStats[i] = ps
 		i++
 	}
 
 	var weaponStats []*weaponStat
+
 	for _, weapons := range s.weaponStats {
 		for _, ws := range weapons {
 			if ws == nil {
@@ -102,6 +105,7 @@ func (s *stats) validWeapon(e common.EquipmentType) bool {
 	if e.Class() == common.EqClassUnknown || e == common.EqUnknown {
 		return false
 	}
+
 	return true
 }
 
@@ -110,6 +114,7 @@ func (s *stats) validMetric(m metric, v int) bool {
 	if v <= 0 || m <= 0 {
 		return false
 	}
+
 	return true
 }
 
@@ -125,7 +130,7 @@ func (s *stats) addWeaponStat(steamID uint64, m metric, e common.EquipmentType, 
 	if _, ok := s.weaponStats[steamID][e]; !ok {
 		s.weaponStats[steamID][e] = &weaponStat{
 			steamID:  steamID,
-			weaponID: int16(e),
+			weaponID: int32(e),
 		}
 	}
 
@@ -159,7 +164,7 @@ type playerStat struct {
 
 // add adds v to a particular field depending on a received metric.
 func (s *playerStat) add(m metric, v int) {
-	switch m {
+	switch m { //nolint:exhaustive // each metric corresponds to playerStat specific field, no need to handle all of the metrics
 	case metricKill:
 		s.kills += v
 	case metricHSKill:
@@ -199,7 +204,7 @@ func (s *playerStat) add(m metric, v int) {
 
 type weaponStat struct {
 	steamID           uint64
-	weaponID          int16
+	weaponID          int32
 	kills             int
 	hsKills           int
 	blindKills        int
@@ -222,7 +227,7 @@ type weaponStat struct {
 
 // add adds v to a particular field depending on a received metric.
 func (ws *weaponStat) add(m metric, v int) {
-	switch m {
+	switch m { //nolint:exhaustive // each metric corresponds to specific weaponStat fields, no need to handle every metric
 	case metricKill:
 		ws.kills += v
 	case metricHSKill:

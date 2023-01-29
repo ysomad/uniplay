@@ -9,13 +9,13 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations"
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/compendium"
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/player"
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/replay"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/replay"
 )
 
-//go:generate swagger generate server --target ../../v1 --name Uniplay --spec ../../../../../swagger2.yaml --principal interface{} --exclude-main --strict-responders
+//go:generate swagger generate server --target ../../swagger2 --name Uniplay --spec ../../../../swagger2.yaml --principal interface{} --exclude-main --strict-responders
 
 func configureFlags(api *operations.UniplayAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }

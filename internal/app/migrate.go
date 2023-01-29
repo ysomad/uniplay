@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/ssssargsian/uniplay/internal/pkg/migrate"
+	"github.com/ysomad/uniplay/internal/pkg/migrate"
 )
 
 func init() {

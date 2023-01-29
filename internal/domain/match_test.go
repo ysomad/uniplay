@@ -155,6 +155,19 @@ func TestNewMatchID(t *testing.T) {
 			wantErr: true,
 		},
 		{
+			name: "invalid client",
+			args: args{
+				server:        "server",
+				client:        "",
+				mapName:       "de_dust2",
+				matchDuration: time.Minute * 25,
+				ticks:         int(time.Minute * 25 * 128),
+				frames:        int(time.Minute * 25 * 128),
+				signonLen:     1337,
+			},
+			wantErr: true,
+		},
+		{
 			name: "match too short",
 			args: args{
 				server:        "server",

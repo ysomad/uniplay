@@ -203,7 +203,7 @@ func Test_stats_normalizeSync(t *testing.T) {
 					1: {
 						common.EqAWP: {
 							steamID:           1,
-							weaponID:          int16(common.EqAWP),
+							weaponID:          int32(common.EqAWP),
 							kills:             50,
 							hsKills:           15,
 							blindKills:        5,
@@ -223,7 +223,7 @@ func Test_stats_normalizeSync(t *testing.T) {
 						},
 						common.EqM4A1: {
 							steamID:           1,
-							weaponID:          int16(common.EqM4A1),
+							weaponID:          int32(common.EqM4A1),
 							kills:             23,
 							hsKills:           10,
 							blindKills:        2,
@@ -247,7 +247,7 @@ func Test_stats_normalizeSync(t *testing.T) {
 					2: {
 						common.EqKnife: {
 							steamID:     2,
-							weaponID:    int16(common.EqKnife),
+							weaponID:    int32(common.EqKnife),
 							kills:       3,
 							deaths:      1,
 							damageTaken: 100,
@@ -259,7 +259,7 @@ func Test_stats_normalizeSync(t *testing.T) {
 						},
 						common.EqHE: {
 							steamID:     2,
-							weaponID:    int16(common.EqHE),
+							weaponID:    int32(common.EqHE),
 							kills:       2,
 							deaths:      5,
 							assists:     2,
@@ -315,7 +315,7 @@ func Test_stats_normalizeSync(t *testing.T) {
 			want1: []*weaponStat{
 				{
 					steamID:           1,
-					weaponID:          int16(common.EqAWP),
+					weaponID:          int32(common.EqAWP),
 					kills:             50,
 					hsKills:           15,
 					blindKills:        5,
@@ -335,7 +335,7 @@ func Test_stats_normalizeSync(t *testing.T) {
 				},
 				{
 					steamID:           1,
-					weaponID:          int16(common.EqM4A1),
+					weaponID:          int32(common.EqM4A1),
 					kills:             23,
 					hsKills:           10,
 					blindKills:        2,
@@ -357,7 +357,7 @@ func Test_stats_normalizeSync(t *testing.T) {
 				},
 				{
 					steamID:     2,
-					weaponID:    int16(common.EqKnife),
+					weaponID:    int32(common.EqKnife),
 					kills:       3,
 					deaths:      1,
 					damageTaken: 100,
@@ -369,7 +369,7 @@ func Test_stats_normalizeSync(t *testing.T) {
 				},
 				{
 					steamID:     2,
-					weaponID:    int16(common.EqHE),
+					weaponID:    int32(common.EqHE),
 					kills:       2,
 					deaths:      5,
 					assists:     2,
@@ -466,7 +466,7 @@ func Test_stats_normalize(t *testing.T) {
 					1: {
 						common.EqAWP: {
 							steamID:           1,
-							weaponID:          int16(common.EqAWP),
+							weaponID:          int32(common.EqAWP),
 							kills:             50,
 							hsKills:           15,
 							blindKills:        5,
@@ -486,7 +486,7 @@ func Test_stats_normalize(t *testing.T) {
 						},
 						common.EqM4A1: {
 							steamID:           1,
-							weaponID:          int16(common.EqM4A1),
+							weaponID:          int32(common.EqM4A1),
 							kills:             23,
 							hsKills:           10,
 							blindKills:        2,
@@ -510,7 +510,7 @@ func Test_stats_normalize(t *testing.T) {
 					2: {
 						common.EqKnife: {
 							steamID:     2,
-							weaponID:    int16(common.EqKnife),
+							weaponID:    int32(common.EqKnife),
 							kills:       3,
 							deaths:      1,
 							damageTaken: 100,
@@ -522,7 +522,7 @@ func Test_stats_normalize(t *testing.T) {
 						},
 						common.EqHE: {
 							steamID:     2,
-							weaponID:    int16(common.EqHE),
+							weaponID:    int32(common.EqHE),
 							kills:       2,
 							deaths:      5,
 							assists:     2,
@@ -578,7 +578,7 @@ func Test_stats_normalize(t *testing.T) {
 			want1: []*weaponStat{
 				{
 					steamID:           1,
-					weaponID:          int16(common.EqAWP),
+					weaponID:          int32(common.EqAWP),
 					kills:             50,
 					hsKills:           15,
 					blindKills:        5,
@@ -598,7 +598,7 @@ func Test_stats_normalize(t *testing.T) {
 				},
 				{
 					steamID:           1,
-					weaponID:          int16(common.EqM4A1),
+					weaponID:          int32(common.EqM4A1),
 					kills:             23,
 					hsKills:           10,
 					blindKills:        2,
@@ -620,7 +620,7 @@ func Test_stats_normalize(t *testing.T) {
 				},
 				{
 					steamID:     2,
-					weaponID:    int16(common.EqKnife),
+					weaponID:    int32(common.EqKnife),
 					kills:       3,
 					deaths:      1,
 					damageTaken: 100,
@@ -632,7 +632,7 @@ func Test_stats_normalize(t *testing.T) {
 				},
 				{
 					steamID:     2,
-					weaponID:    int16(common.EqHE),
+					weaponID:    int32(common.EqHE),
 					kills:       2,
 					deaths:      5,
 					assists:     2,
@@ -674,6 +674,96 @@ func Test_stats_addPlayerStat(t *testing.T) {
 		args   args
 		want   map[uint64]*playerStat
 	}{
+		{
+			name: "invalid metric with valid value",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					1: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 1,
+				m:       0,
+				v:       4,
+			},
+			want: map[uint64]*playerStat{
+				1: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
+			name: "invalid metric value",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					1: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 1,
+				m:       metricDeath,
+				v:       0,
+			},
+			want: map[uint64]*playerStat{
+				1: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
+		{
+			name: "invalid metric and metric value",
+			fields: fields{
+				playerStats: map[uint64]*playerStat{
+					1: {
+						kills:  5,
+						deaths: 3,
+					},
+					2: {
+						damageTaken: 567,
+						damageDealt: 456,
+					},
+				},
+			},
+			args: args{
+				steamID: 1,
+				m:       0,
+				v:       0,
+			},
+			want: map[uint64]*playerStat{
+				1: {
+					kills:  5,
+					deaths: 3,
+				},
+				2: {
+					damageTaken: 567,
+					damageDealt: 456,
+				},
+			},
+		},
 		{
 			name: "death",
 			fields: fields{
@@ -2527,6 +2617,16 @@ func Test_playerStat_add(t *testing.T) {
 			},
 			want: &playerStat{
 				blindedPlayers: 1,
+			},
+		},
+		{
+			name: "grenade damage dealt",
+			args: args{
+				m: metricGrenadeDamageDealt,
+				v: 25,
+			},
+			want: &playerStat{
+				grenadeDamageDealt: 25,
 			},
 		},
 	}

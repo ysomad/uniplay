@@ -9,7 +9,7 @@ import (
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/events"
 
-	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/domain"
 )
 
 type replayMatch struct {
@@ -36,7 +36,7 @@ func (m *replayMatch) swapTeamSides() {
 }
 
 func (m *replayMatch) updateTeamsScore(e events.ScoreUpdated) {
-	switch e.TeamState.Team() {
+	switch e.TeamState.Team() { //nolint:exhaustive // teams can be only ct or t
 	case m.team1._side:
 		m.team1.score = int8(e.NewScore)
 	case m.team2._side:
@@ -110,7 +110,7 @@ func newReplayTeam(name, flag string, side common.Team, players []*common.Player
 }
 
 func (t *replayTeam) swapSide() {
-	switch t._side {
+	switch t._side { //nolint:exhaustive // player side cannot be spectator or unassigned
 	case common.TeamCounterTerrorists:
 		t._side = common.TeamTerrorists
 	case common.TeamTerrorists:
