@@ -317,6 +317,7 @@ func Test_newWeaponAccuracyStat(t *testing.T) {
 	type args struct {
 		shots       int32
 		headHits    int32
+		neckHits    int32
 		chestHits   int32
 		stomachHits int32
 		lArmHits    int32
@@ -334,6 +335,7 @@ func Test_newWeaponAccuracyStat(t *testing.T) {
 			args: args{
 				shots:       1589,
 				headHits:    321,
+				neckHits:    131,
 				chestHits:   123,
 				stomachHits: 256,
 				lArmHits:    95,
@@ -342,12 +344,13 @@ func Test_newWeaponAccuracyStat(t *testing.T) {
 				rLegHits:    88,
 			},
 			want: WeaponAccuracyStat{
-				Total:   62.43,
-				Head:    32.36,
-				Chest:   12.4,
-				Stomach: 25.81,
-				Arms:    16.03,
-				Legs:    13.41,
+				Total:   70.67,
+				Head:    28.58,
+				Neck:    11.67,
+				Chest:   10.95,
+				Stomach: 22.80,
+				Arms:    14.16,
+				Legs:    11.84,
 			},
 		},
 		{
@@ -355,6 +358,7 @@ func Test_newWeaponAccuracyStat(t *testing.T) {
 			args: args{
 				shots:       1589,
 				headHits:    0,
+				neckHits:    0,
 				chestHits:   0,
 				stomachHits: 0,
 				lArmHits:    0,
@@ -367,7 +371,16 @@ func Test_newWeaponAccuracyStat(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := newWeaponAccuracyStat(tt.args.shots, tt.args.headHits, tt.args.chestHits, tt.args.stomachHits, tt.args.lArmHits, tt.args.rArmHits, tt.args.lLegHits, tt.args.rLegHits)
+			got := newWeaponAccuracyStat(
+				tt.args.shots,
+				tt.args.headHits,
+				tt.args.neckHits,
+				tt.args.chestHits,
+				tt.args.stomachHits,
+				tt.args.lArmHits,
+				tt.args.rArmHits,
+				tt.args.lLegHits,
+				tt.args.rLegHits)
 			assert.Equal(t, tt.want, got)
 		})
 	}

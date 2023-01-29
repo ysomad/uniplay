@@ -16,6 +16,7 @@ func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
 			Accuracy: newWeaponAccuracyStat(
 				s.Shots,
 				s.HeadHits,
+				s.NeckHits,
 				s.ChestHits,
 				s.StomachHits,
 				s.LeftArmHits,
@@ -44,6 +45,7 @@ type WeaponTotalStat struct {
 	DamageDealt       int32
 	Shots             int32
 	HeadHits          int32
+	NeckHits          int32
 	ChestHits         int32
 	StomachHits       int32
 	LeftArmHits       int32
@@ -55,6 +57,7 @@ type WeaponTotalStat struct {
 type WeaponAccuracyStat struct {
 	Total   float64
 	Head    float64
+	Neck    float64
 	Chest   float64
 	Stomach float64
 	Arms    float64
@@ -73,8 +76,8 @@ func calcAccuracy(sum, num int32) float64 {
 	return round(float64(sum) * 100 / float64(num))
 }
 
-func newWeaponAccuracyStat(shots, headHits, chestHits, stomachHits, lArmHits, rArmHits, lLegHits, rLegHits int32) WeaponAccuracyStat {
-	hits := headHits + chestHits + stomachHits + lArmHits + rArmHits + lLegHits + rLegHits
+func newWeaponAccuracyStat(shots, headHits, neckHits, chestHits, stomachHits, lArmHits, rArmHits, lLegHits, rLegHits int32) WeaponAccuracyStat {
+	hits := headHits + neckHits + chestHits + stomachHits + lArmHits + rArmHits + lLegHits + rLegHits
 
 	if hits <= 0 {
 		return WeaponAccuracyStat{}
@@ -83,6 +86,7 @@ func newWeaponAccuracyStat(shots, headHits, chestHits, stomachHits, lArmHits, rA
 	return WeaponAccuracyStat{
 		Total:   calcAccuracy(hits, shots),
 		Head:    calcAccuracy(headHits, hits),
+		Neck:    calcAccuracy(neckHits, hits),
 		Chest:   calcAccuracy(chestHits, hits),
 		Stomach: calcAccuracy(stomachHits, hits),
 		Arms:    calcAccuracy(lArmHits+rArmHits, hits),

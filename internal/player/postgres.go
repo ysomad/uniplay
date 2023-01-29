@@ -10,7 +10,8 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/domain"
-	"github.com/ysomad/uniplay/internal/otel"
+
+	"github.com/ysomad/uniplay/internal/pkg/otel"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
@@ -125,6 +126,7 @@ type weaponTotalStat struct {
 	DamageDealt       int32  `db:"total_dmg_dealt"`
 	Shots             int32  `db:"total_shots"`
 	HeadHits          int32  `db:"total_head_hits"`
+	NeckHits          int32  `db:"total_neck_hits"`
 	ChestHits         int32  `db:"total_chest_hits"`
 	StomachHits       int32  `db:"total_stomach_hits"`
 	LeftArmHits       int32  `db:"total_l_arm_hits"`
@@ -153,6 +155,7 @@ func (s *PGStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 			"sum(ws.damage_dealt) as total_dmg_dealt",
 			"sum(ws.shots) as total_shots",
 			"sum(ws.head_hits) as total_head_hits",
+			"sum(ws.neck_hits) as total_neck_hits",
 			"sum(ws.chest_hits) as total_chest_hits",
 			"sum(ws.stomach_hits) as total_stomach_hits",
 			"sum(ws.left_arm_hits) as total_l_arm_hits",
@@ -210,6 +213,7 @@ func (s *PGStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 			DamageDealt:       s.DamageDealt,
 			Shots:             s.Shots,
 			HeadHits:          s.HeadHits,
+			NeckHits:          s.NeckHits,
 			ChestHits:         s.ChestHits,
 			StomachHits:       s.StomachHits,
 			LeftArmHits:       s.LeftArmHits,

@@ -481,6 +481,10 @@ func init() {
           "type": "number",
           "format": "double"
         },
+        "neck": {
+          "type": "number",
+          "format": "double"
+        },
         "stomach": {
           "type": "number",
           "format": "double"
@@ -536,6 +540,10 @@ func init() {
           "format": "int32"
         },
         "left_leg_hits": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "neck_hits": {
           "type": "integer",
           "format": "int32"
         },
@@ -1132,6 +1140,10 @@ func init() {
           "type": "number",
           "format": "double"
         },
+        "neck": {
+          "type": "number",
+          "format": "double"
+        },
         "stomach": {
           "type": "number",
           "format": "double"
@@ -1187,6 +1199,10 @@ func init() {
           "format": "int32"
         },
         "left_leg_hits": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "neck_hits": {
           "type": "integer",
           "format": "int32"
         },

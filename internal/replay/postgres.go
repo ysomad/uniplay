@@ -8,7 +8,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"go.uber.org/zap"
 
-	"github.com/ysomad/uniplay/internal/otel"
+	"github.com/ysomad/uniplay/internal/pkg/otel"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
@@ -314,6 +314,7 @@ func (s *PGStorage) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid
 			"damage_dealt",
 			"shots",
 			"head_hits",
+			"neck_hits",
 			"chest_hits",
 			"stomach_hits",
 			"left_arm_hits",
@@ -339,6 +340,7 @@ func (s *PGStorage) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid
 			s.damageDealt,
 			s.shots,
 			s.headHits,
+			s.neckHits,
 			s.chestHits,
 			s.stomachHits,
 			s.leftArmHits,

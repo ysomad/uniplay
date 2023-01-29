@@ -29,6 +29,9 @@ type PlayerWeaponStatsInnerAccuracyStats struct {
 	// legs
 	Legs float64 `json:"legs,omitempty"`
 
+	// neck
+	Neck float64 `json:"neck,omitempty"`
+
 	// stomach
 	Stomach float64 `json:"stomach,omitempty"`
 

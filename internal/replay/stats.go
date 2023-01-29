@@ -217,6 +217,7 @@ type weaponStat struct {
 	damageDealt       int
 	shots             int
 	headHits          int
+	neckHits          int
 	chestHits         int
 	stomachHits       int
 	leftArmHits       int
@@ -252,6 +253,8 @@ func (ws *weaponStat) add(m metric, v int) {
 		ws.shots += v
 	case metricHitHead:
 		ws.headHits += v
+	case metricHitNeck:
+		ws.neckHits += v
 	case metricHitChest:
 		ws.chestHits += v
 	case metricHitStomach:

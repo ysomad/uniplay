@@ -50,6 +50,9 @@ type PlayerWeaponStatsInnerTotalStats struct {
 	// left leg hits
 	LeftLegHits int32 `json:"left_leg_hits,omitempty"`
 
+	// neck hits
+	NeckHits int32 `json:"neck_hits,omitempty"`
+
 	// noscope kills
 	NoscopeKills int32 `json:"noscope_kills,omitempty"`
 

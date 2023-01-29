@@ -2798,6 +2798,15 @@ func Test_weaponStat_add(t *testing.T) {
 			want: &weaponStat{kills: 35, deaths: 28, shots: 79, headHits: 10},
 		},
 		{
+			name: "neck hit",
+			in:   &weaponStat{kills: 35, deaths: 28, shots: 79, headHits: 5, neckHits: 3},
+			args: args{
+				m: metricHitNeck,
+				v: 3,
+			},
+			want: &weaponStat{kills: 35, deaths: 28, shots: 79, headHits: 5, neckHits: 6},
+		},
+		{
 			name: "chest hit",
 			in:   &weaponStat{kills: 35, deaths: 28, shots: 79, chestHits: 3},
 			args: args{
