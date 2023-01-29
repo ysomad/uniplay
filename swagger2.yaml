@@ -373,6 +373,9 @@ definitions:
       head_hits:
         type: integer
         format: int32
+      neck_hits:
+        type: integer
+        format: int32
       chest_hits:
         type: integer
         format: int32
@@ -398,6 +401,9 @@ definitions:
         type: number
         format: double
       head:
+        type: number
+        format: double
+      neck:
         type: number
         format: double
       chest:

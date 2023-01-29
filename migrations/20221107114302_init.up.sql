@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS player_match_weapon_stat (
     damage_dealt smallint NOT NULL,
     shots smallint NOT NULL,
     head_hits smallint NOT NULL,
+    neck_hits smallint NOT NULL,
     chest_hits smallint NOT NULL,
     stomach_hits smallint NOT NULL,
     left_arm_hits smallint NOT NULL,
