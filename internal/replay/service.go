@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
-	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/domain"
 )
 
 type service struct {

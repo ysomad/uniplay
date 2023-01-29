@@ -3,16 +3,16 @@ package app
 import (
 	"github.com/go-openapi/loads"
 
-	"github.com/ssssargsian/uniplay/internal/compendium"
-	"github.com/ssssargsian/uniplay/internal/config"
-	"github.com/ssssargsian/uniplay/internal/player"
-	"github.com/ssssargsian/uniplay/internal/replay"
+	"github.com/ysomad/uniplay/internal/compendium"
+	"github.com/ysomad/uniplay/internal/config"
+	"github.com/ysomad/uniplay/internal/player"
+	"github.com/ysomad/uniplay/internal/replay"
 
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi"
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations"
-	compendiumGen "github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/compendium"
-	playerGen "github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/player"
-	replayGen "github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/replay"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations"
+	compendiumGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
+	playerGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
+	replayGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/replay"
 )
 
 type apiDeps struct {

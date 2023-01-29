@@ -1,4 +1,4 @@
-module github.com/ssssargsian/uniplay
+module github.com/ysomad/uniplay
 
 go 1.19
 

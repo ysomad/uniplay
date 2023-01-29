@@ -9,7 +9,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 
-	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
+	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
 type pgStorage struct {

@@ -11,7 +11,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/models"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
 )
 
 // GetWeaponsOKCode is the HTTP code returned for type GetWeaponsOK

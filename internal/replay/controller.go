@@ -11,10 +11,10 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 
-	"github.com/ssssargsian/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/domain"
 
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/models"
-	replayGen "github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/replay"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
+	replayGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/replay"
 )
 
 type replayService interface {

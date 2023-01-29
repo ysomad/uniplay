@@ -5,8 +5,8 @@ import (
 
 	"github.com/ilyakaznacheev/cleanenv"
 
-	"github.com/ssssargsian/uniplay/internal/app"
-	"github.com/ssssargsian/uniplay/internal/config"
+	"github.com/ysomad/uniplay/internal/app"
+	"github.com/ysomad/uniplay/internal/config"
 )
 
 func main() {

@@ -8,13 +8,13 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.uber.org/zap"
 
-	"github.com/ssssargsian/uniplay/internal/compendium"
-	"github.com/ssssargsian/uniplay/internal/config"
-	"github.com/ssssargsian/uniplay/internal/player"
-	"github.com/ssssargsian/uniplay/internal/replay"
+	"github.com/ysomad/uniplay/internal/compendium"
+	"github.com/ysomad/uniplay/internal/config"
+	"github.com/ysomad/uniplay/internal/player"
+	"github.com/ysomad/uniplay/internal/replay"
 
-	"github.com/ssssargsian/uniplay/internal/pkg/logger"
-	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
+	"github.com/ysomad/uniplay/internal/pkg/logger"
+	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
 func Run(conf *config.Config) {

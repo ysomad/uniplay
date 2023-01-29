@@ -19,9 +19,9 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/compendium"
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/player"
-	"github.com/ssssargsian/uniplay/internal/gen/swagger2/v1/restapi/operations/replay"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/replay"
 )
 
 // NewUniplayAPI creates a new Uniplay instance

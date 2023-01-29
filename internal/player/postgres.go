@@ -9,8 +9,8 @@ import (
 	"github.com/jackc/pgx/v5"
 	"go.uber.org/zap"
 
-	"github.com/ssssargsian/uniplay/internal/domain"
-	"github.com/ssssargsian/uniplay/internal/pkg/pgclient"
+	"github.com/ysomad/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
 type pgStorage struct {

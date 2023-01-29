@@ -3,7 +3,7 @@ package app
 import (
 	"io"
 
-	"github.com/ssssargsian/uniplay/internal/config"
+	"github.com/ysomad/uniplay/internal/config"
 
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
