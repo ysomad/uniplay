@@ -1,7 +1,10 @@
 package app
 
 import (
+	"net/http"
+
 	"github.com/go-openapi/loads"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
@@ -30,12 +33,12 @@ func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
 	api := operations.NewUniplayAPI(spec)
 	api.UseSwaggerUI()
 
-	attachHandlers(api, d)
+	_attachHandlers(api, d)
 
 	return api, nil
 }
 
-func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
+func _attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 	api.CompendiumGetWeaponsHandler = compendiumGen.GetWeaponsHandlerFunc(d.compendium.GetWeapons)
 	api.CompendiumGetWeaponClassesHandler = compendiumGen.GetWeaponClassesHandlerFunc(d.compendium.GetWeaponClasses)
 
@@ -52,4 +55,10 @@ func newServer(conf config.HTTP, api *operations.UniplayAPI) *restapi.Server {
 	srv.EnabledListeners = []string{"http"}
 
 	return srv
+}
+
+func newHandler(api *operations.UniplayAPI) http.Handler {
+	h := otelhttp.NewHandler(api.Serve(nil), "")
+
+	return h
 }

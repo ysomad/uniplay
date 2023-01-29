@@ -6,6 +6,7 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -19,6 +20,7 @@ type Client struct {
 	maxConns     int32
 	connAttempts uint8
 	connTimeout  time.Duration
+	tracer       pgx.QueryTracer
 
 	Builder sq.StatementBuilderType
 	Pool    *pgxpool.Pool
@@ -38,6 +40,10 @@ func New(connString string, opts ...Option) (*Client, error) {
 	poolConf, err := pgxpool.ParseConfig(connString)
 	if err != nil {
 		return nil, err
+	}
+
+	if c.tracer != nil {
+		poolConf.ConnConfig.Tracer = c.tracer
 	}
 
 	poolConf.MaxConns = c.maxConns

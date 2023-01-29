@@ -1,41 +1,43 @@
 package app
 
 import (
-	"io"
+	"context"
 
 	"github.com/ysomad/uniplay/internal/config"
 
+	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
+	"go.opentelemetry.io/otel/exporters/jaeger"
 	"go.opentelemetry.io/otel/sdk/resource"
-	"go.opentelemetry.io/otel/sdk/trace"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.12.0"
 )
 
-func newStdoutTracerExporter(w io.Writer) (trace.SpanExporter, error) {
-	return stdouttrace.New(
-		stdouttrace.WithWriter(w),
-		stdouttrace.WithPrettyPrint(),
-		stdouttrace.WithoutTimestamps(),
+func newJaegerExporter(conf config.Jaeger) (*jaeger.Exporter, error) {
+	return jaeger.New(
+		jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(conf.Endpoint)),
 	)
 }
 
-func newTraceProvider(conf config.App, exp trace.SpanExporter) (*trace.TracerProvider, error) {
-	r, err := resource.Merge(
-		resource.Default(),
-		resource.NewWithAttributes(
-			semconv.SchemaURL,
-			semconv.ServiceNameKey.String(conf.Name),
-			semconv.ServiceVersionKey.String(conf.Ver),
-			attribute.String("environment", conf.Environment),
-		),
+// newTraceProvider returns and registers cnfigured tracer provider.
+//
+// docs: https://opentelemetry.io/docs/instrumentation/go/exporting_data/
+func newTraceProvider(conf config.App, exp sdktrace.SpanExporter) (func(context.Context) error, error) {
+	r := resource.NewWithAttributes(
+		semconv.SchemaURL,
+		semconv.ServiceNameKey.String(conf.Name),
+		semconv.ServiceVersionKey.String(conf.Ver),
+		attribute.String("environment", conf.Environment),
 	)
-	if err != nil {
-		return nil, err
-	}
 
-	return trace.NewTracerProvider(
-		trace.WithBatcher(exp),
-		trace.WithResource(r),
-	), nil
+	tp := sdktrace.NewTracerProvider(
+		sdktrace.WithSampler(sdktrace.AlwaysSample()),
+		// sdktrace.WithBatcher(exp),
+		sdktrace.WithSyncer(exp),
+		sdktrace.WithResource(r),
+	)
+
+	otel.SetTracerProvider(tp)
+
+	return tp.Shutdown, nil
 }

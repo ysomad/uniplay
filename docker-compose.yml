@@ -14,6 +14,12 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data
 
+  jaeger:
+    image: jaegertracing/all-in-one:1.41
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+
   app:
     image: app
     container_name: app
