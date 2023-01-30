@@ -6,26 +6,23 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
-	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/pkg/otel"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-type PGStorage struct {
-	log    *zap.Logger
+type Postgres struct {
 	client *pgclient.Client
 }
 
-func NewPGStorage(l *zap.Logger, c *pgclient.Client) *PGStorage {
-	return &PGStorage{
-		log:    l,
+func NewPostgres(c *pgclient.Client) *Postgres {
+	return &Postgres{
 		client: c,
 	}
 }
 
-func (s *PGStorage) MatchExists(ctx context.Context, matchID uuid.UUID) (bool, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.PGStorage.MatchExists")
+func (s *Postgres) MatchExists(ctx context.Context, matchID uuid.UUID) (bool, error) {
+	_, span := otel.StartTrace(ctx, libraryName, "replay.Postgres.MatchExists")
 	defer span.End()
 
 	row := s.client.Pool.QueryRow(ctx, "select exists(select 1 from match where id = $1)", matchID)
@@ -38,8 +35,8 @@ func (s *PGStorage) MatchExists(ctx context.Context, matchID uuid.UUID) (bool, e
 	return matchFound, nil
 }
 
-func (s *PGStorage) SaveStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.PGStorage.SaveStats")
+func (s *Postgres) SaveStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error {
+	_, span := otel.StartTrace(ctx, libraryName, "replay.Postgres.SaveStats")
 	defer span.End()
 
 	txFunc := func(tx pgx.Tx) error {
@@ -86,8 +83,8 @@ func (s *PGStorage) SaveStats(ctx context.Context, match *replayMatch, ps []*pla
 	return nil
 }
 
-func (s *PGStorage) savePlayers(ctx context.Context, tx pgx.Tx, steamIDs []uint64) error {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.PGStorage.savePlayers")
+func (s *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, steamIDs []uint64) error {
+	_, span := otel.StartTrace(ctx, libraryName, "replay.Postgres.savePlayers")
 	defer span.End()
 
 	b := s.client.Builder.
@@ -113,8 +110,8 @@ func (s *PGStorage) savePlayers(ctx context.Context, tx pgx.Tx, steamIDs []uint6
 var errNoTeamIDsFound = errors.New("no team ids found")
 
 // saveTeams saves match teams, if team with given clan name already exist, returns its id in match.
-func (s *PGStorage) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*replayMatch, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.PGStorage.saveTeams")
+func (s *Postgres) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*replayMatch, error) {
+	_, span := otel.StartTrace(ctx, libraryName, "replay.Postgres.saveTeams")
 	defer span.End()
 
 	sql, args, err := s.client.Builder.
@@ -155,8 +152,8 @@ func (s *PGStorage) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*
 }
 
 // saveTeamPlayers saves players to teams in which they was playing last game.
-func (s *PGStorage) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.PGStorage.saveTeamPlayers")
+func (s *Postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
+	_, span := otel.StartTrace(ctx, libraryName, "replay.Postgres.saveTeamPlayers")
 	defer span.End()
 
 	b := s.client.Builder.
@@ -181,8 +178,8 @@ func (s *PGStorage) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []te
 	return nil
 }
 
-func (s *PGStorage) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.PGStorage.saveMatch")
+func (s *Postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
+	_, span := otel.StartTrace(ctx, libraryName, "replay.Postgres.saveMatch")
 	defer span.End()
 
 	sql, args, err := s.client.Builder.
@@ -202,8 +199,8 @@ func (s *PGStorage) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) er
 }
 
 // savePlayersMatch saves match and its state to player match history.
-func (s *PGStorage) savePlayersMatch(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.PGStorage.savePlayersMatch")
+func (s *Postgres) savePlayersMatch(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
+	_, span := otel.StartTrace(ctx, libraryName, "replay.Postgres.savePlayersMatch")
 	defer span.End()
 
 	b := s.client.Builder.
@@ -227,8 +224,8 @@ func (s *PGStorage) savePlayersMatch(ctx context.Context, tx pgx.Tx, players []t
 }
 
 // savePlayerStats saves players statistic from specific match.
-func (s *PGStorage) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []*playerStat) error {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.PGStorage.savePlayerStats")
+func (s *Postgres) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []*playerStat) error {
+	_, span := otel.StartTrace(ctx, libraryName, "replay.Postgres.savePlayerStats")
 	defer span.End()
 
 	b := s.client.Builder.
@@ -292,8 +289,8 @@ func (s *PGStorage) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid
 }
 
 // saveWeaponsStat saves players weapon statistic of specific match.
-func (s *PGStorage) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []*weaponStat) error {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.PGStorage.saveWeaponStat")
+func (s *Postgres) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []*weaponStat) error {
+	_, span := otel.StartTrace(ctx, libraryName, "replay.Postgres.saveWeaponStat")
 	defer span.End()
 
 	b := s.client.Builder.

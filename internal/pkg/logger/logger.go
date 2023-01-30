@@ -1,46 +1,28 @@
 package logger
 
 import (
-	"errors"
-	"io"
 	"strings"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-var errNilWriter = errors.New("nil writer")
-
-func New(w io.Writer, level string) (*zap.Logger, error) {
-	if w == nil {
-		return nil, errNilWriter
+// New creates new instance of logger and sets it to global variable.
+func New(level string) (*zap.Logger, error) {
+	zaplevel, err := zapcore.ParseLevel(strings.ToUpper(level))
+	if err != nil {
+		return nil, err
 	}
 
-	conf := zap.NewProductionConfig()
-	core := zapcore.NewCore(
-		zapcore.NewJSONEncoder(conf.EncoderConfig),
-		zapcore.AddSync(w),
-		parseLevel(level),
-	)
+	cfg := zap.NewProductionConfig()
+	cfg.Level.SetLevel(zaplevel)
 
-	return zap.New(core), nil
-}
-
-func parseLevel(l string) zapcore.Level {
-	switch strings.ToLower(l) {
-	case "debug":
-		return zapcore.DebugLevel
-	case "warn":
-		return zapcore.WarnLevel
-	case "error":
-		return zapcore.ErrorLevel
-	case "dpanic":
-		return zapcore.DPanicLevel
-	case "panic":
-		return zapcore.PanicLevel
-	case "fatal":
-		return zapcore.FatalLevel
-	default:
-		return zapcore.InfoLevel
+	l, err := cfg.Build()
+	if err != nil {
+		return nil, err
 	}
+
+	zap.ReplaceGlobals(l)
+
+	return l, nil
 }

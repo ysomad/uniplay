@@ -6,9 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"go.uber.org/zap"
-
 	"github.com/ysomad/uniplay/internal/domain"
+
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
 )
@@ -19,13 +18,11 @@ type playerService interface {
 }
 
 type Controller struct {
-	log    *zap.Logger
 	player playerService
 }
 
-func NewController(l *zap.Logger, p playerService) *Controller {
+func NewController(p playerService) *Controller {
 	return &Controller{
-		log:    l,
 		player: p,
 	}
 }

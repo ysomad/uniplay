@@ -4,20 +4,17 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/pkg/otel"
 )
 
 type Service struct {
-	log    *zap.Logger
 	replay replayRepository
 }
 
-func NewService(l *zap.Logger, r replayRepository) *Service {
+func NewService(r replayRepository) *Service {
 	return &Service{
-		log:    l,
 		replay: r,
 	}
 }
@@ -26,7 +23,7 @@ func (s *Service) CollectStats(ctx context.Context, r replay) (matchID uuid.UUID
 	_, span := otel.StartTrace(ctx, libraryName, "replay.Service.CollectStats")
 	defer span.End()
 
-	p, err := newParser(r, s.log)
+	p, err := newParser(r)
 	if err != nil {
 		return uuid.UUID{}, err
 	}

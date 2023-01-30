@@ -7,7 +7,6 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/domain"
 
@@ -20,13 +19,11 @@ type replayService interface {
 }
 
 type Controller struct {
-	log    *zap.Logger
 	replay replayService
 }
 
-func NewController(l *zap.Logger, r replayService) *Controller {
+func NewController(r replayService) *Controller {
 	return &Controller{
-		log:    l,
 		replay: r,
 	}
 }

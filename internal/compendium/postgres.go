@@ -4,25 +4,22 @@ import (
 	"context"
 
 	"github.com/jackc/pgx/v5"
-	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-type pgStorage struct {
-	log    *zap.Logger
+type Postgres struct {
 	client *pgclient.Client
 }
 
-func NewPGStorage(l *zap.Logger, c *pgclient.Client) *pgStorage {
-	return &pgStorage{
-		log:    l,
+func NewPostgres(c *pgclient.Client) *Postgres {
+	return &Postgres{
 		client: c,
 	}
 }
 
-func (s *pgStorage) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
+func (s *Postgres) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
 	sql, args, err := s.client.Builder.
 		Select("w.id as weapon_id, w.weapon, wc.id as class_id, wc.class").
 		From("weapon w").
@@ -46,7 +43,7 @@ func (s *pgStorage) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) 
 	return weapons, nil
 }
 
-func (s *pgStorage) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
+func (s *Postgres) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
 	sql, args, err := s.client.Builder.
 		Select("id, class").
 		From("weapon_class").
