@@ -7,7 +7,6 @@ import (
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
-	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/domain"
 
@@ -15,14 +14,12 @@ import (
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-type PGStorage struct {
-	log    *zap.Logger
+type Postgres struct {
 	client *pgclient.Client
 }
 
-func NewPGStorage(l *zap.Logger, c *pgclient.Client) *PGStorage {
-	return &PGStorage{
-		log:    l,
+func NewPostgres(c *pgclient.Client) *Postgres {
+	return &Postgres{
 		client: c,
 	}
 }
@@ -53,8 +50,8 @@ type playerTotalStat struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (s *PGStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "player.PGStorage.GetTotalStats")
+func (s *Postgres) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
+	_, span := otel.StartTrace(ctx, libraryName, "player.Postgres.GetTotalStats")
 	defer span.End()
 
 	sql, args, err := s.client.Builder.
@@ -135,8 +132,8 @@ type weaponTotalStat struct {
 	RightLegHits      int32  `db:"total_r_leg_hits"`
 }
 
-func (s *PGStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponTotalStat, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "player.PGStorage.GetTotalWeaponStats")
+func (s *Postgres) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponTotalStat, error) {
+	_, span := otel.StartTrace(ctx, libraryName, "player.Postgres.GetTotalWeaponStats")
 	defer span.End()
 
 	b := s.client.Builder.

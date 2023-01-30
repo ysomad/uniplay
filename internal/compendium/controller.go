@@ -4,8 +4,6 @@ import (
 	"context"
 	"net/http"
 
-	"go.uber.org/zap"
-
 	"github.com/ysomad/uniplay/internal/domain"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
@@ -18,13 +16,11 @@ type compendiumService interface {
 }
 
 type Controller struct {
-	log        *zap.Logger
 	compendium compendiumService
 }
 
-func NewController(l *zap.Logger, c compendiumService) *Controller {
+func NewController(c compendiumService) *Controller {
 	return &Controller{
-		log:        l,
 		compendium: c,
 	}
 }

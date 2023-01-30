@@ -19,7 +19,6 @@ import (
 
 var (
 	errEmptyMatchID = errors.New("parser: empty match id, call parseReplayHeader() first")
-	errEmptyLogger  = errors.New("parser: logger cannot be nil")
 )
 
 // parser is a wrapper around demoinfocs.Parser.
@@ -34,14 +33,9 @@ type parser struct {
 	match        *replayMatch
 }
 
-func newParser(r replay, l *zap.Logger) (*parser, error) {
-	if l == nil {
-		return nil, errEmptyLogger
-	}
-
+func newParser(r replay) (*parser, error) {
 	return &parser{
 		p:            demoinfocs.NewParser(r),
-		log:          l,
 		isKnifeRound: false,
 		stats:        newStats(),
 		match:        new(replayMatch),

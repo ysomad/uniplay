@@ -3,11 +3,10 @@ package app
 import (
 	"context"
 	"log"
-	"os"
-
-	"go.uber.org/zap"
 
 	"github.com/exaring/otelpgx"
+	"go.uber.org/zap"
+
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
 	"github.com/ysomad/uniplay/internal/player"
@@ -18,7 +17,7 @@ import (
 )
 
 func Run(conf *config.Config) {
-	l, err := logger.New(os.Stderr, conf.Log.Level)
+	l, err := logger.New(conf.Log.Level)
 	if err != nil {
 		log.Fatalf("logger.New: %s", err.Error())
 	}
@@ -50,19 +49,19 @@ func Run(conf *config.Config) {
 	}
 
 	// replay
-	replayRepo := replay.NewPGStorage(l, pgClient)
-	replayService := replay.NewService(l, replayRepo)
-	replayController := replay.NewController(l, replayService)
+	replayRepo := replay.NewPostgres(pgClient)
+	replayService := replay.NewService(replayRepo)
+	replayController := replay.NewController(replayService)
 
 	// compendium
-	compendiumRepo := compendium.NewPGStorage(l, pgClient)
+	compendiumRepo := compendium.NewPostgres(pgClient)
 	compendiumService := compendium.NewService(compendiumRepo)
-	compendiumController := compendium.NewController(l, compendiumService)
+	compendiumController := compendium.NewController(compendiumService)
 
 	// player
-	playerRepo := player.NewPGStorage(l, pgClient)
+	playerRepo := player.NewPostgres(pgClient)
 	playerService := player.NewService(playerRepo)
-	playerController := player.NewController(l, playerService)
+	playerController := player.NewController(playerService)
 
 	// go-swagger
 	api, err := newAPI(apiDeps{
