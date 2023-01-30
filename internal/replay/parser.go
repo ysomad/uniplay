@@ -71,6 +71,7 @@ func (p *parser) parseReplayHeader() (uuid.UUID, error) {
 // collectStats collects player stats from the replay.
 func (p *parser) collectStats(ctx context.Context) (*replayMatch, []*playerStat, []*weaponStat, error) {
 	span := trace.SpanFromContext(ctx)
+
 	span.AddEvent("Starting replay parse", trace.WithAttributes(attribute.String("match_id", p.match.id.String())))
 	defer span.AddEvent("Finished replay parse")
 

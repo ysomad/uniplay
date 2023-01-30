@@ -85,8 +85,8 @@ func (p *Postgres) SaveStats(ctx context.Context, match *replayMatch, ps []*play
 	return nil
 }
 
-func (s *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, steamIDs []uint64) error {
-	b := s.client.Builder.
+func (p *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, steamIDs []uint64) error {
+	b := p.client.Builder.
 		Insert("player").
 		Columns("steam_id")
 
@@ -109,8 +109,8 @@ func (s *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, steamIDs []uint64
 var errNoTeamIDsFound = errors.New("no team ids found")
 
 // saveTeams saves match teams, if team with given clan name already exist, returns its id in match.
-func (s *Postgres) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*replayMatch, error) {
-	sql, args, err := s.client.Builder.
+func (p *Postgres) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*replayMatch, error) {
+	sql, args, err := p.client.Builder.
 		Insert("team").
 		Columns("clan_name, flag_code").
 		Values(m.team1.clanName, m.team2.flagCode).
@@ -148,8 +148,8 @@ func (s *Postgres) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*r
 }
 
 // saveTeamPlayers saves players to teams in which they was playing last game.
-func (s *Postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
-	b := s.client.Builder.
+func (p *Postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
+	b := p.client.Builder.
 		Insert("team_player").
 		Columns("team_id, player_steam_id")
 
@@ -171,8 +171,8 @@ func (s *Postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []tea
 	return nil
 }
 
-func (s *Postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
-	sql, args, err := s.client.Builder.
+func (p *Postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
+	sql, args, err := p.client.Builder.
 		Insert("match").
 		Columns("id, map_name, team1_id, team1_score, team2_id, team2_score, duration, uploaded_at").
 		Values(m.id, m.mapName, m.team1.id, m.team1.score, m.team2.id, m.team2.score, m.duration, m.uploadedAt).
@@ -189,8 +189,8 @@ func (s *Postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) err
 }
 
 // savePlayersMatch saves match and its state to player match history.
-func (s *Postgres) savePlayersMatch(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
-	b := s.client.Builder.
+func (p *Postgres) savePlayersMatch(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
+	b := p.client.Builder.
 		Insert("player_match").
 		Columns("player_steam_id, match_id, team_id, match_state")
 
@@ -211,8 +211,8 @@ func (s *Postgres) savePlayersMatch(ctx context.Context, tx pgx.Tx, players []te
 }
 
 // savePlayerStats saves players statistic from specific match.
-func (s *Postgres) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []*playerStat) error {
-	b := s.client.Builder.
+func (p *Postgres) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []*playerStat) error {
+	b := p.client.Builder.
 		Insert("player_match_stat").
 		Columns(
 			"player_steam_id",
@@ -273,8 +273,8 @@ func (s *Postgres) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.
 }
 
 // saveWeaponsStat saves players weapon statistic of specific match.
-func (s *Postgres) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []*weaponStat) error {
-	b := s.client.Builder.
+func (p *Postgres) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []*weaponStat) error {
+	b := p.client.Builder.
 		Insert("player_match_weapon_stat").
 		Columns(
 			"player_steam_id",
