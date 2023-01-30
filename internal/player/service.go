@@ -3,22 +3,25 @@ package player
 import (
 	"context"
 
+	"go.opentelemetry.io/otel/trace"
+
 	"github.com/ysomad/uniplay/internal/domain"
-	"github.com/ysomad/uniplay/internal/pkg/otel"
 )
 
 type Service struct {
+	tracer trace.Tracer
 	player playerRepository
 }
 
-func NewService(r playerRepository) *Service {
+func NewService(t trace.Tracer, r playerRepository) *Service {
 	return &Service{
+		tracer: t,
 		player: r,
 	}
 }
 
 func (s *Service) GetStats(ctx context.Context, steamID uint64) (domain.PlayerStats, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "player.Service.GetStats")
+	ctx, span := s.tracer.Start(ctx, "player.Service.GetStats")
 	defer span.End()
 
 	ts, err := s.player.GetTotalStats(ctx, steamID)
@@ -30,7 +33,7 @@ func (s *Service) GetStats(ctx context.Context, steamID uint64) (domain.PlayerSt
 }
 
 func (s *Service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStat, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "player.Service.GetWeaponStats")
+	ctx, span := s.tracer.Start(ctx, "player.Service.GetWeaponStats")
 	defer span.End()
 
 	ts, err := s.player.GetTotalWeaponStats(ctx, steamID, f)
