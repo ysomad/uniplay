@@ -7,19 +7,21 @@ import (
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
+	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
 
-	"github.com/ysomad/uniplay/internal/pkg/otel"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
 type Postgres struct {
+	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPostgres(c *pgclient.Client) *Postgres {
+func NewPostgres(t trace.Tracer, c *pgclient.Client) *Postgres {
 	return &Postgres{
+		tracer: t,
 		client: c,
 	}
 }
@@ -50,11 +52,11 @@ type playerTotalStat struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (s *Postgres) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "player.Postgres.GetTotalStats")
+func (p *Postgres) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
+	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetTotalStats")
 	defer span.End()
 
-	sql, args, err := s.client.Builder.
+	sql, args, err := p.client.Builder.
 		Select(
 			"sum(ps.kills) as total_kills",
 			"sum(ps.hs_kills) as total_hs_kills",
@@ -89,12 +91,12 @@ func (s *Postgres) GetTotalStats(ctx context.Context, steamID uint64) (*domain.P
 		return nil, err
 	}
 
-	rows, err := s.client.Pool.Query(ctx, sql, args...)
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
 
-	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[playerTotalStat])
+	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByPos[domain.PlayerTotalStats])
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, domain.ErrPlayerNotFound
@@ -132,11 +134,11 @@ type weaponTotalStat struct {
 	RightLegHits      int32  `db:"total_r_leg_hits"`
 }
 
-func (s *Postgres) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponTotalStat, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "player.Postgres.GetTotalWeaponStats")
+func (p *Postgres) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponTotalStat, error) {
+	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetTotalWeaponStats")
 	defer span.End()
 
-	b := s.client.Builder.
+	b := p.client.Builder.
 		Select(
 			"ws.weapon_id",
 			"w.weapon",
@@ -178,7 +180,7 @@ func (s *Postgres) GetTotalWeaponStats(ctx context.Context, steamID uint64, f do
 		return nil, err
 	}
 
-	rows, err := s.client.Pool.Query(ctx, sql, args...)
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}

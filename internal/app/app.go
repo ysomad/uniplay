@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/exaring/otelpgx"
+	"go.opentelemetry.io/otel"
 	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/compendium"
@@ -28,13 +29,15 @@ func Run(conf *config.Config) {
 		l.Fatal("newJaegerExporter", zap.Error(err))
 	}
 
-	shutdownTraceProvider := newTraceProvider(conf.App, jaegerExp)
+	shutdownTracerProvider := newTracerProvider(conf.App, jaegerExp)
 
 	defer func() {
-		if err = shutdownTraceProvider(context.Background()); err != nil {
-			l.Fatal("shutdownTraceProvider", zap.Error(err))
+		if err = shutdownTracerProvider(context.Background()); err != nil {
+			l.Fatal("shutdownTracerProvider", zap.Error(err))
 		}
 	}()
+
+	tracer := otel.GetTracerProvider().Tracer("uniplay")
 
 	// postgres
 	pgTracer := otelpgx.NewTracer(otelpgx.WithTrimSQLInSpanName())
@@ -49,8 +52,8 @@ func Run(conf *config.Config) {
 	}
 
 	// replay
-	replayRepo := replay.NewPostgres(pgClient)
-	replayService := replay.NewService(replayRepo)
+	replayRepo := replay.NewPostgres(tracer, pgClient)
+	replayService := replay.NewService(tracer, replayRepo)
 	replayController := replay.NewController(replayService)
 
 	// compendium
@@ -59,8 +62,8 @@ func Run(conf *config.Config) {
 	compendiumController := compendium.NewController(compendiumService)
 
 	// player
-	playerRepo := player.NewPostgres(pgClient)
-	playerService := player.NewService(playerRepo)
+	playerRepo := player.NewPostgres(tracer, pgClient)
+	playerService := player.NewService(tracer, playerRepo)
 	playerController := player.NewController(playerService)
 
 	// go-swagger

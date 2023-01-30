@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs"
@@ -14,7 +15,6 @@ import (
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/events"
 
 	"github.com/ysomad/uniplay/internal/domain"
-	"github.com/ysomad/uniplay/internal/pkg/otel"
 )
 
 var (
@@ -70,10 +70,10 @@ func (p *parser) parseReplayHeader() (uuid.UUID, error) {
 
 // collectStats collects player stats from the replay.
 func (p *parser) collectStats(ctx context.Context) (*replayMatch, []*playerStat, []*weaponStat, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.parser.collectStats")
-	defer span.End()
+	span := trace.SpanFromContext(ctx)
 
-	span.SetAttributes(attribute.String("match_id", p.match.id.String()))
+	span.AddEvent("Starting replay parse", trace.WithAttributes(attribute.String("match_id", p.match.id.String())))
+	defer span.AddEvent("Finished replay parse")
 
 	if (p.match.id == uuid.UUID{}) {
 		return nil, nil, nil, errEmptyMatchID

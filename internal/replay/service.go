@@ -4,23 +4,25 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
-	"github.com/ysomad/uniplay/internal/pkg/otel"
 )
 
 type Service struct {
+	tracer trace.Tracer
 	replay replayRepository
 }
 
-func NewService(r replayRepository) *Service {
+func NewService(t trace.Tracer, r replayRepository) *Service {
 	return &Service{
+		tracer: t,
 		replay: r,
 	}
 }
 
 func (s *Service) CollectStats(ctx context.Context, r replay) (matchID uuid.UUID, err error) {
-	_, span := otel.StartTrace(ctx, libraryName, "replay.Service.CollectStats")
+	ctx, span := s.tracer.Start(ctx, "replay.Service.CollectStats")
 	defer span.End()
 
 	p, err := newParser(r)
