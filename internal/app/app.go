@@ -6,6 +6,7 @@ import (
 
 	"github.com/exaring/otelpgx"
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/prometheus"
 	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/compendium"
@@ -23,21 +24,39 @@ func Run(conf *config.Config) {
 		log.Fatalf("logger.New: %s", err.Error())
 	}
 
+	resource := newResource(conf.App)
+
 	// tracing
 	jaegerExp, err := newJaegerExporter(conf.Jaeger)
 	if err != nil {
 		l.Fatal("newJaegerExporter", zap.Error(err))
 	}
 
-	shutdownTracerProvider := newTracerProvider(conf.App, jaegerExp)
+	shutdownTracerProvider := newTracerProvider(resource, jaegerExp)
+
+	ctx := context.Background()
 
 	defer func() {
-		if err = shutdownTracerProvider(context.Background()); err != nil {
+		if err = shutdownTracerProvider(ctx); err != nil {
 			l.Fatal("shutdownTracerProvider", zap.Error(err))
 		}
 	}()
 
 	tracer := otel.GetTracerProvider().Tracer("uniplay")
+
+	// metrics
+	prometheusExp, err := prometheus.New()
+
+	shutdownMeterProvider, err := newMeterProvider(resource, prometheusExp)
+	if err != nil {
+		l.Fatal("newMeterProvider", zap.Error(err))
+	}
+
+	defer func() {
+		if err = shutdownMeterProvider(ctx); err != nil {
+			l.Fatal("shutdownMeterProvider", zap.Error(err))
+		}
+	}()
 
 	// postgres
 	pgTracer := otelpgx.NewTracer(otelpgx.WithTrimSQLInSpanName())

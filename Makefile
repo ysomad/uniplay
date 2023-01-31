@@ -5,7 +5,7 @@ MIGRATE := migrate -path migrations -database "$(PG_URL)?sslmode=disable"
 
 .PHONY: compose-up
 compose-up:
-	docker-compose up --build -d postgres jaeger && docker compose logs -f
+	docker-compose up --build -d postgres jaeger prometheus grafana && docker compose logs -f
 
 .PHONY: compose-all
 compose-all:
