@@ -4,9 +4,11 @@ import (
 	"context"
 	"log"
 
+	"github.com/IBM/pgxpoolprometheus"
 	"github.com/exaring/otelpgx"
+	"github.com/prometheus/client_golang/prometheus"
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/prometheus"
+	otelprometheus "go.opentelemetry.io/otel/exporters/prometheus"
 	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/compendium"
@@ -45,7 +47,7 @@ func Run(conf *config.Config) {
 	tracer := otel.GetTracerProvider().Tracer("uniplay")
 
 	// metrics
-	prometheusExp, err := prometheus.New()
+	prometheusExp, err := otelprometheus.New()
 
 	shutdownMeterProvider, err := newMeterProvider(resource, prometheusExp)
 	if err != nil {
@@ -59,15 +61,21 @@ func Run(conf *config.Config) {
 	}()
 
 	// postgres
-	pgTracer := otelpgx.NewTracer(otelpgx.WithTrimSQLInSpanName())
+	pgxTracer := otelpgx.NewTracer(otelpgx.WithTrimSQLInSpanName())
 
 	pgClient, err := pgclient.New(
 		conf.PG.URL,
 		pgclient.WithMaxConns(conf.PG.MaxConns),
-		pgclient.WithQueryTracer(pgTracer),
+		pgclient.WithQueryTracer(pgxTracer),
 	)
 	if err != nil {
 		l.Fatal("pgclient.New", zap.Error(err))
+	}
+
+	// pgx metrics
+	pgxCollector := pgxpoolprometheus.NewCollector(pgClient.Pool, map[string]string{"db_name": conf.PG.DBName})
+	if err = prometheus.Register(pgxCollector); err != nil {
+		l.Fatal("prometheus.Register", zap.Error(err))
 	}
 
 	// replay
