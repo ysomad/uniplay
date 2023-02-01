@@ -37,13 +37,13 @@ services:
       - ./build/prometheus/dev.yml:/etc/prometheus/prometheus.yml
 
   grafana:
-    image: grafana/grafana-enterprise:9.3.6
+    image: grafana/grafana-oss:9.3.6
     container_name: grafana
     restart: unless-stopped
     ports:
       - "3000:3000"
-    env:
-    - GF_SECURITY_ADMIN_PASSWORD=“pass”
+    environment:
+    - GF_SECURITY_ADMIN_PASSWORD=pass
     volumes:
       - grafana-data:/var/lib/grafana
       - ./build/grafana/datasources:/etc/grafana/provisioning/datasources 
