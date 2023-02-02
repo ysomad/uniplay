@@ -1,10 +1,15 @@
 version: "3.9"
 
+volumes:
+  pg-data:
+  grafana-data:
+
 services:
+
   postgres:
-    image: "postgres:14.5-alpine"
+    image: "postgres:15.1-alpine"
     container_name: postgres
-    restart: on-failure
+    restart: unless-stopped
     environment:
       POSTGRES_USER: "user"
       POSTGRES_PASSWORD: "pass"
@@ -16,14 +21,39 @@ services:
 
   jaeger:
     image: jaegertracing/all-in-one:1.41
+    container_name: jaeger
+    restart: unless-stopped
     ports:
       - "16686:16686"
       - "14268:14268"
+  
+  prometheus:
+    image: prom/prometheus:v2.41.0
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./build/prometheus/dev.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana-oss:9.3.6
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+    - GF_SECURITY_ADMIN_PASSWORD=pass
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./build/grafana/datasources:/etc/grafana/provisioning/datasources 
+    depends_on:
+      - prometheus
 
   app:
     image: app
     container_name: app
-    restart: on-failure
+    restart: unless-stopped
     build: .
     env_file:
       - .env
@@ -31,7 +61,5 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
-
-
-volumes:
-  pg-data:
+      - prometheus
+      - jaeger

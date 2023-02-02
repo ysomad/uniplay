@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/loads"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 
 	"github.com/ysomad/uniplay/internal/compendium"
@@ -58,7 +59,10 @@ func newServer(conf config.HTTP, api *operations.UniplayAPI) *restapi.Server {
 }
 
 func newHandler(api *operations.UniplayAPI) http.Handler {
-	h := otelhttp.NewHandler(api.Serve(nil), "")
+	mux := http.DefaultServeMux
 
-	return h
+	mux.Handle("/metrics", promhttp.Handler())
+	mux.Handle("/", otelhttp.NewHandler(api.Serve(nil), ""))
+
+	return mux
 }
