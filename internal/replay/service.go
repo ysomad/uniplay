@@ -6,6 +6,7 @@ import (
 
 	"go.opentelemetry.io/otel/trace"
 
+	"github.com/google/uuid"
 	"github.com/ysomad/uniplay/internal/domain"
 )
 
@@ -21,7 +22,12 @@ func NewService(t trace.Tracer, r replayRepository) *Service {
 	}
 }
 
-func (s *Service) CollectStats(ctx context.Context, r replay) (matchNumber int32, err error) {
+type collectStatsRes struct {
+	MatchID     uuid.UUID
+	MatchNumber int32
+}
+
+func (s *Service) CollectStats(ctx context.Context, r replay) (collectStatsRes, error) {
 	ctx, span := s.tracer.Start(ctx, "replay.Service.CollectStats")
 	defer span.End()
 
@@ -30,7 +36,7 @@ func (s *Service) CollectStats(ctx context.Context, r replay) (matchNumber int32
 
 	h, err := p.parseReplayHeader()
 	if err != nil {
-		return 0, err
+		return collectStatsRes{}, err
 	}
 
 	p.match.id, err = domain.NewMatchID(
@@ -43,29 +49,32 @@ func (s *Service) CollectStats(ctx context.Context, r replay) (matchNumber int32
 		h.SignonLength,
 	)
 	if err != nil {
-		return 0, err
+		return collectStatsRes{}, err
 	}
 
 	p.match.uploadedAt = time.Now()
 
 	matchExists, err := s.replay.MatchExists(ctx, p.match.id)
 	if err != nil {
-		return 0, err
+		return collectStatsRes{}, err
 	}
 
 	if matchExists {
-		return 0, domain.ErrMatchAlreadyExist
+		return collectStatsRes{}, domain.ErrMatchAlreadyExist
 	}
 
 	match, playerStats, weaponStats, err := p.collectStats(ctx)
 	if err != nil {
-		return 0, err
+		return collectStatsRes{}, err
 	}
 
-	matchNumber, err = s.replay.SaveStats(ctx, match, playerStats, weaponStats)
+	matchNum, err := s.replay.SaveStats(ctx, match, playerStats, weaponStats)
 	if err != nil {
-		return 0, err
+		return collectStatsRes{}, err
 	}
 
-	return matchNumber, nil
+	return collectStatsRes{
+		MatchID:     p.match.id,
+		MatchNumber: matchNum,
+	}, nil
 }

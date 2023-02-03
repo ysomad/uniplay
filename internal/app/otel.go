@@ -1,12 +1,10 @@
-package opentelemetry
+package app
 
 import (
 	"context"
 	"time"
 
 	"github.com/exaring/otelpgx"
-	"github.com/ysomad/uniplay/internal/config"
-
 	"go.opentelemetry.io/contrib/instrumentation/runtime"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -18,6 +16,8 @@ import (
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 	"go.opentelemetry.io/otel/trace"
+
+	"github.com/ysomad/uniplay/internal/config"
 )
 
 type openTelemetry struct {
@@ -28,7 +28,7 @@ type openTelemetry struct {
 	CleanupFuncs [2]func(context.Context) error
 }
 
-func New(conf *config.Config) (openTelemetry, error) {
+func newOpenTelemetry(conf *config.Config) (openTelemetry, error) {
 	ol := openTelemetry{}
 	res := newResource(conf.App)
 

@@ -12,10 +12,12 @@ import "errors"
 
 const (
 	CodeMatchAlreadyExist = 600
+	CodeMatchNotFound     = 601
 	CodePlayerNotFound    = 800
 )
 
 var (
 	ErrMatchAlreadyExist = errors.New("match already exist")
+	ErrMatchNotFound     = errors.New("match not found")
 	ErrPlayerNotFound    = errors.New("player not found")
 )

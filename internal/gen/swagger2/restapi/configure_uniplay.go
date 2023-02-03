@@ -11,6 +11,7 @@ import (
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/replay"
 )
@@ -43,6 +44,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 	// You may change here the memory limit for this multipart form parser. Below is the default (32 MB).
 	// replay.UploadReplayMaxParseMemory = 32 << 20
 
+	if api.MatchDeleteMatchHandler == nil {
+		api.MatchDeleteMatchHandler = match.DeleteMatchHandlerFunc(func(params match.DeleteMatchParams) match.DeleteMatchResponder {
+			return match.DeleteMatchNotImplemented()
+		})
+	}
 	if api.PlayerGetPlayerStatsHandler == nil {
 		api.PlayerGetPlayerStatsHandler = player.GetPlayerStatsHandlerFunc(func(params player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
 			return player.GetPlayerStatsNotImplemented()
