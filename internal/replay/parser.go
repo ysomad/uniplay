@@ -3,22 +3,18 @@ package replay
 import (
 	"context"
 	"errors"
-	"time"
 
 	"github.com/google/uuid"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
-	"go.uber.org/zap"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/events"
-
-	"github.com/ysomad/uniplay/internal/domain"
 )
 
 var (
-	errEmptyMatchID = errors.New("parser: empty match id, call parseReplayHeader() first")
+	errEmptyMatchID = errors.New("parser: empty match id")
 )
 
 // parser is a wrapper around demoinfocs.Parser.
@@ -26,47 +22,23 @@ var (
 type parser struct {
 	p demoinfocs.Parser
 
-	log *zap.Logger
-
 	isKnifeRound bool
 	stats        stats
 	match        *replayMatch
 }
 
-func newParser(r replay) (*parser, error) {
+func newParser(r replay) *parser {
 	return &parser{
 		p:            demoinfocs.NewParser(r),
 		isKnifeRound: false,
 		stats:        newStats(),
 		match:        new(replayMatch),
-	}, nil
+	}
 }
 
 // parseReplayHeader parses replay header and generates match id from it.
 // Must be called before collectStats().
-func (p *parser) parseReplayHeader() (uuid.UUID, error) {
-	h, err := p.p.ParseHeader()
-	if err != nil {
-		return uuid.UUID{}, err
-	}
-
-	p.match.id, err = domain.NewMatchID(
-		h.ServerName,
-		h.ClientName,
-		h.MapName,
-		h.PlaybackTime,
-		h.PlaybackTicks,
-		h.PlaybackFrames,
-		h.SignonLength,
-	)
-	if err != nil {
-		return uuid.UUID{}, err
-	}
-
-	p.match.uploadedAt = time.Now()
-
-	return p.match.id, nil
-}
+func (p *parser) parseReplayHeader() (common.DemoHeader, error) { return p.p.ParseHeader() }
 
 // collectStats collects player stats from the replay.
 func (p *parser) collectStats(ctx context.Context) (*replayMatch, []*playerStat, []*weaponStat, error) {
@@ -151,6 +123,7 @@ func (p *parser) detectKnifeRound() {
 
 // hitgroupToMetric returns metric associated with the hitgroup.
 func (p *parser) hitgroupToMetric(g events.HitGroup) metric {
+	//nolint:exhaustive // each hitgroup correspond to specific metric, no need to check all cases
 	switch g {
 	case events.HitGroupHead:
 		return metricHitHead
@@ -168,11 +141,9 @@ func (p *parser) hitgroupToMetric(g events.HitGroup) metric {
 		return metricHitLeftLeg
 	case events.HitGroupRightLeg:
 		return metricHitRightLeg
-	case events.HitGroupGeneric, events.HitGroupGear:
+	default:
 		return 0
 	}
-
-	return 0
 }
 
 func (p *parser) killHandler(e events.Kill) {

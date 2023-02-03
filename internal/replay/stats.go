@@ -163,8 +163,9 @@ type playerStat struct {
 }
 
 // add adds v to a particular field depending on a received metric.
-func (s *playerStat) add(m metric, v int) {
-	switch m { //nolint:exhaustive // each metric corresponds to playerStat specific field, no need to handle all of the metrics
+func (s *playerStat) add(m metric, v int) { //nolint:gocyclo // no other options to implement this
+	//nolint:exhaustive // each metric corresponds to specific playerStat field, no need to check all
+	switch m {
 	case metricKill:
 		s.kills += v
 	case metricHSKill:
@@ -227,8 +228,9 @@ type weaponStat struct {
 }
 
 // add adds v to a particular field depending on a received metric.
-func (ws *weaponStat) add(m metric, v int) {
-	switch m { //nolint:exhaustive // each metric corresponds to specific weaponStat fields, no need to handle every metric
+func (ws *weaponStat) add(m metric, v int) { //nolint:gocyclo // no other options to implement this
+	//nolint:exhaustive // each metric corresponds to specific weaponStat field, no need to check all
+	switch m {
 	case metricKill:
 		ws.kills += v
 	case metricHSKill:

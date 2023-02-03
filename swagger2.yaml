@@ -177,12 +177,10 @@ definitions:
         x-nullable: false
   UploadReplayResponse:
     type: object
-    required:
-    - match_id
     properties:
-      match_id:
-        type: string
-        format: uuid
+      match_number:
+        type: number
+        format: int32
         x-isnullable: false
   PlayerStats:
     type: object

@@ -37,7 +37,7 @@ func (p *Postgres) MatchExists(ctx context.Context, matchID uuid.UUID) (bool, er
 	return matchFound, nil
 }
 
-func (p *Postgres) SaveStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error {
+func (p *Postgres) SaveStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) (matchNumber int32, err error) {
 	ctx, span := p.tracer.Start(ctx, "replay.Postgres.SaveStats")
 	defer span.End()
 
@@ -55,11 +55,13 @@ func (p *Postgres) SaveStats(ctx context.Context, match *replayMatch, ps []*play
 
 		teamPlayers := savedMatch.teamPlayers()
 
-		if err := p.saveTeamPlayers(ctx, tx, teamPlayers); err != nil {
+		err = p.saveTeamPlayers(ctx, tx, teamPlayers)
+		if err != nil {
 			return err
 		}
 
-		if err := p.saveMatch(ctx, tx, savedMatch); err != nil {
+		matchNumber, err = p.saveMatch(ctx, tx, savedMatch)
+		if err != nil {
 			return err
 		}
 
@@ -79,10 +81,10 @@ func (p *Postgres) SaveStats(ctx context.Context, match *replayMatch, ps []*play
 	}
 
 	if err := pgx.BeginTxFunc(ctx, p.client.Pool, pgx.TxOptions{}, txFunc); err != nil {
-		return err
+		return 0, err
 	}
 
-	return nil
+	return matchNumber, nil
 }
 
 func (p *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, steamIDs []uint64) error {
@@ -171,21 +173,24 @@ func (p *Postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []tea
 	return nil
 }
 
-func (p *Postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
+func (p *Postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) (int32, error) {
 	sql, args, err := p.client.Builder.
 		Insert("match").
 		Columns("id, map_name, team1_id, team1_score, team2_id, team2_score, duration, uploaded_at").
 		Values(m.id, m.mapName, m.team1.id, m.team1.score, m.team2.id, m.team2.score, m.duration, m.uploadedAt).
+		Suffix("RETURNING number").
 		ToSql()
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	if _, err = tx.Exec(ctx, sql, args...); err != nil {
-		return err
+	var matchNumber int32
+
+	if err := tx.QueryRow(ctx, sql, args...).Scan(&matchNumber); err != nil {
+		return 0, err
 	}
 
-	return nil
+	return matchNumber, nil
 }
 
 // savePlayersMatch saves match and its state to player match history.

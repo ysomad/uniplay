@@ -96,7 +96,7 @@ func (p *Postgres) GetTotalStats(ctx context.Context, steamID uint64) (*domain.P
 		return nil, err
 	}
 
-	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByPos[domain.PlayerTotalStats])
+	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[playerTotalStat])
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, domain.ErrPlayerNotFound

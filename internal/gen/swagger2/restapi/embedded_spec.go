@@ -586,13 +586,10 @@ func init() {
     },
     "UploadReplayResponse": {
       "type": "object",
-      "required": [
-        "match_id"
-      ],
       "properties": {
-        "match_id": {
-          "type": "string",
-          "format": "uuid",
+        "match_number": {
+          "type": "number",
+          "format": "int32",
           "x-isnullable": false
         }
       }
@@ -1245,13 +1242,10 @@ func init() {
     },
     "UploadReplayResponse": {
       "type": "object",
-      "required": [
-        "match_id"
-      ],
       "properties": {
-        "match_id": {
-          "type": "string",
-          "format": "uuid",
+        "match_number": {
+          "type": "number",
+          "format": "int32",
           "x-isnullable": false
         }
       }

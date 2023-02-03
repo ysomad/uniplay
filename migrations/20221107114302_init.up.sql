@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS team_player (
 
 CREATE TABLE IF NOT EXISTS match (
     id uuid PRIMARY KEY NOT NULL,
+    number serial UNIQUE NOT NULL,
     map_name varchar(64) NOT NULL,
     team1_id smallint NOT NULL REFERENCES team (id),
     team1_score smallint NOT NULL,
