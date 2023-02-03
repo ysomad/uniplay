@@ -7,6 +7,6 @@ import (
 )
 
 type replayRepository interface {
-	SaveStats(context.Context, *replayMatch, []*playerStat, []*weaponStat) error
+	SaveStats(context.Context, *replayMatch, []*playerStat, []*weaponStat) (matchNumber int32, err error)
 	MatchExists(ctx context.Context, matchID uuid.UUID) (found bool, err error)
 }

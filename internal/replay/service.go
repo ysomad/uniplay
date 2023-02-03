@@ -2,8 +2,8 @@ package replay
 
 import (
 	"context"
+	"time"
 
-	"github.com/google/uuid"
 	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
@@ -21,39 +21,51 @@ func NewService(t trace.Tracer, r replayRepository) *Service {
 	}
 }
 
-func (s *Service) CollectStats(ctx context.Context, r replay) (matchID uuid.UUID, err error) {
+func (s *Service) CollectStats(ctx context.Context, r replay) (matchNumber int32, err error) {
 	ctx, span := s.tracer.Start(ctx, "replay.Service.CollectStats")
 	defer span.End()
 
-	p, err := newParser(r)
-	if err != nil {
-		return uuid.UUID{}, err
-	}
-
+	p := newParser(r)
 	defer p.close()
 
-	matchID, err = p.parseReplayHeader()
+	h, err := p.parseReplayHeader()
 	if err != nil {
-		return uuid.UUID{}, err
+		return 0, err
 	}
 
-	matchExists, err := s.replay.MatchExists(ctx, matchID)
+	p.match.id, err = domain.NewMatchID(
+		h.ServerName,
+		h.ClientName,
+		h.MapName,
+		h.PlaybackTime,
+		h.PlaybackTicks,
+		h.PlaybackFrames,
+		h.SignonLength,
+	)
 	if err != nil {
-		return uuid.UUID{}, err
+		return 0, err
+	}
+
+	p.match.uploadedAt = time.Now()
+
+	matchExists, err := s.replay.MatchExists(ctx, p.match.id)
+	if err != nil {
+		return 0, err
 	}
 
 	if matchExists {
-		return uuid.UUID{}, domain.ErrMatchAlreadyExist
+		return 0, domain.ErrMatchAlreadyExist
 	}
 
 	match, playerStats, weaponStats, err := p.collectStats(ctx)
 	if err != nil {
-		return uuid.UUID{}, err
+		return 0, err
 	}
 
-	if err := s.replay.SaveStats(ctx, match, playerStats, weaponStats); err != nil {
-		return uuid.UUID{}, err
+	matchNumber, err = s.replay.SaveStats(ctx, match, playerStats, weaponStats)
+	if err != nil {
+		return 0, err
 	}
 
-	return matchID, nil
+	return matchNumber, nil
 }

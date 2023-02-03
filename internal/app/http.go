@@ -34,12 +34,12 @@ func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
 	api := operations.NewUniplayAPI(spec)
 	api.UseSwaggerUI()
 
-	_attachHandlers(api, d)
+	attachHandlers(api, d)
 
 	return api, nil
 }
 
-func _attachHandlers(api *operations.UniplayAPI, d apiDeps) {
+func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 	api.CompendiumGetWeaponsHandler = compendiumGen.GetWeaponsHandlerFunc(d.compendium.GetWeapons)
 	api.CompendiumGetWeaponClassesHandler = compendiumGen.GetWeaponClassesHandlerFunc(d.compendium.GetWeaponClasses)
 

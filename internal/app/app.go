@@ -1,18 +1,15 @@
 package app
 
 import (
-	"context"
 	"log"
 
 	"github.com/IBM/pgxpoolprometheus"
-	"github.com/exaring/otelpgx"
 	"github.com/prometheus/client_golang/prometheus"
-	"go.opentelemetry.io/otel"
-	otelprometheus "go.opentelemetry.io/otel/exporters/prometheus"
 	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
+	"github.com/ysomad/uniplay/internal/opentelemetry"
 	"github.com/ysomad/uniplay/internal/player"
 	"github.com/ysomad/uniplay/internal/replay"
 
@@ -26,47 +23,15 @@ func Run(conf *config.Config) {
 		log.Fatalf("logger.New: %s", err.Error())
 	}
 
-	resource := newResource(conf.App)
-
-	// tracing
-	jaegerExp, err := newJaegerExporter(conf.Jaeger)
+	otel, err := opentelemetry.New(conf)
 	if err != nil {
-		l.Fatal("newJaegerExporter", zap.Error(err))
+		l.Fatal("otel.New", zap.Error(err))
 	}
-
-	shutdownTracerProvider := newTracerProvider(resource, jaegerExp)
-
-	ctx := context.Background()
-
-	defer func() {
-		if err = shutdownTracerProvider(ctx); err != nil {
-			l.Fatal("shutdownTracerProvider", zap.Error(err))
-		}
-	}()
-
-	tracer := otel.GetTracerProvider().Tracer("uniplay")
-
-	// metrics
-	prometheusExp, err := otelprometheus.New()
-
-	shutdownMeterProvider, err := newMeterProvider(resource, prometheusExp)
-	if err != nil {
-		l.Fatal("newMeterProvider", zap.Error(err))
-	}
-
-	defer func() {
-		if err = shutdownMeterProvider(ctx); err != nil {
-			l.Fatal("shutdownMeterProvider", zap.Error(err))
-		}
-	}()
-
-	// postgres
-	pgxTracer := otelpgx.NewTracer(otelpgx.WithTrimSQLInSpanName())
 
 	pgClient, err := pgclient.New(
 		conf.PG.URL,
 		pgclient.WithMaxConns(conf.PG.MaxConns),
-		pgclient.WithQueryTracer(pgxTracer),
+		pgclient.WithQueryTracer(otel.PgxTracer),
 	)
 	if err != nil {
 		l.Fatal("pgclient.New", zap.Error(err))
@@ -74,13 +39,14 @@ func Run(conf *config.Config) {
 
 	// pgx metrics
 	pgxCollector := pgxpoolprometheus.NewCollector(pgClient.Pool, map[string]string{"db_name": conf.PG.DBName})
+
 	if err = prometheus.Register(pgxCollector); err != nil {
 		l.Fatal("prometheus.Register", zap.Error(err))
 	}
 
 	// replay
-	replayRepo := replay.NewPostgres(tracer, pgClient)
-	replayService := replay.NewService(tracer, replayRepo)
+	replayRepo := replay.NewPostgres(otel.AppTracer, pgClient)
+	replayService := replay.NewService(otel.AppTracer, replayRepo)
 	replayController := replay.NewController(replayService)
 
 	// compendium
@@ -89,8 +55,8 @@ func Run(conf *config.Config) {
 	compendiumController := compendium.NewController(compendiumService)
 
 	// player
-	playerRepo := player.NewPostgres(tracer, pgClient)
-	playerService := player.NewService(tracer, playerRepo)
+	playerRepo := player.NewPostgres(otel.AppTracer, pgClient)
+	playerService := player.NewService(otel.AppTracer, playerRepo)
 	playerController := player.NewController(playerService)
 
 	// go-swagger
