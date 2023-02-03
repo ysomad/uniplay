@@ -9,12 +9,14 @@ import (
 
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
+	"github.com/ysomad/uniplay/internal/match"
 	"github.com/ysomad/uniplay/internal/player"
 	"github.com/ysomad/uniplay/internal/replay"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations"
 	compendiumGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
+	matchGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	playerGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
 	replayGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/replay"
 )
@@ -23,6 +25,7 @@ type apiDeps struct {
 	replay     *replay.Controller
 	compendium *compendium.Controller
 	player     *player.Controller
+	match      *match.Controller
 }
 
 func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
@@ -47,6 +50,8 @@ func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 
 	api.PlayerGetPlayerStatsHandler = playerGen.GetPlayerStatsHandlerFunc(d.player.GetPlayerStats)
 	api.PlayerGetWeaponStatsHandler = playerGen.GetWeaponStatsHandlerFunc(d.player.GetWeaponStats)
+
+	api.MatchDeleteMatchHandler = matchGen.DeleteMatchHandlerFunc(d.match.DeleteMatch)
 }
 
 func newServer(conf config.HTTP, api *operations.UniplayAPI) *restapi.Server {

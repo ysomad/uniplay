@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/ysomad/uniplay/internal/domain"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
@@ -12,7 +13,7 @@ import (
 )
 
 type replayService interface {
-	CollectStats(context.Context, replay) (matchNumber int32, err error)
+	CollectStats(context.Context, replay) (collectStatsRes, error)
 }
 
 type Controller struct {
@@ -50,7 +51,7 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 	}
 	defer r.Close()
 
-	matchNumber, err := c.replay.CollectStats(p.HTTPRequest.Context(), r)
+	res, err := c.replay.CollectStats(p.HTTPRequest.Context(), r)
 	if err != nil {
 		if errors.Is(err, domain.ErrMatchAlreadyExist) {
 			return replayGen.NewUploadReplayConflict().WithPayload(&models.Error{
@@ -65,7 +66,10 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 		})
 	}
 
-	payload := &models.UploadReplayResponse{MatchNumber: matchNumber}
+	payload := &models.UploadReplayResponse{
+		MatchID:     strfmt.UUID(res.MatchID.String()),
+		MatchNumber: res.MatchNumber,
+	}
 
 	return replayGen.NewUploadReplayOK().WithPayload(payload)
 }

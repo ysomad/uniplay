@@ -8,6 +8,8 @@ basePath: /v1
 tags:
 - name: player
   description: Профиль игрока
+- name: match
+  description: Матч
 - name: replay
   description: Запись матча
 - name: compendium
@@ -86,11 +88,39 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
+  /matches/{match_id}:
+    delete:
+      tags:
+      - match
+      summary: Удаление матча
+      operationId: deleteMatch
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: match_id
+        in: path
+        description: ID матча
+        required: true
+        type: string
+        format: uuid
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
   /replays:
     post:
       tags:
       - replay
-      summary: Загрузить запись матча
+      summary: Загрузка записи матча
       operationId: uploadReplay
       consumes:
       - multipart/form-data
@@ -177,7 +207,14 @@ definitions:
         x-nullable: false
   UploadReplayResponse:
     type: object
+    required:
+    - match_id
+    - match_number
     properties:
+      match_id:
+        type: string
+        format: uuid
+        x-isnullable: false
       match_number:
         type: number
         format: int32

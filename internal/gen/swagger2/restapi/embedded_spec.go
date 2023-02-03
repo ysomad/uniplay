@@ -88,6 +88,48 @@ func init() {
         }
       }
     },
+    "/matches/{match_id}": {
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "match"
+        ],
+        "summary": "Удаление матча",
+        "operationId": "deleteMatch",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID матча",
+            "name": "match_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -201,7 +243,7 @@ func init() {
         "tags": [
           "replay"
         ],
-        "summary": "Загрузить запись матча",
+        "summary": "Загрузка записи матча",
         "operationId": "uploadReplay",
         "parameters": [
           {
@@ -586,7 +628,16 @@ func init() {
     },
     "UploadReplayResponse": {
       "type": "object",
+      "required": [
+        "match_id",
+        "match_number"
+      ],
       "properties": {
+        "match_id": {
+          "type": "string",
+          "format": "uuid",
+          "x-isnullable": false
+        },
         "match_number": {
           "type": "number",
           "format": "int32",
@@ -662,6 +713,10 @@ func init() {
     {
       "description": "Профиль игрока",
       "name": "player"
+    },
+    {
+      "description": "Матч",
+      "name": "match"
     },
     {
       "description": "Запись матча",
@@ -744,6 +799,48 @@ func init() {
         }
       }
     },
+    "/matches/{match_id}": {
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "match"
+        ],
+        "summary": "Удаление матча",
+        "operationId": "deleteMatch",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID матча",
+            "name": "match_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -857,7 +954,7 @@ func init() {
         "tags": [
           "replay"
         ],
-        "summary": "Загрузить запись матча",
+        "summary": "Загрузка записи матча",
         "operationId": "uploadReplay",
         "parameters": [
           {
@@ -1242,7 +1339,16 @@ func init() {
     },
     "UploadReplayResponse": {
       "type": "object",
+      "required": [
+        "match_id",
+        "match_number"
+      ],
       "properties": {
+        "match_id": {
+          "type": "string",
+          "format": "uuid",
+          "x-isnullable": false
+        },
         "match_number": {
           "type": "number",
           "format": "int32",
@@ -1318,6 +1424,10 @@ func init() {
     {
       "description": "Профиль игрока",
       "name": "player"
+    },
+    {
+      "description": "Матч",
+      "name": "match"
     },
     {
       "description": "Запись матча",

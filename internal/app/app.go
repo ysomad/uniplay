@@ -9,7 +9,7 @@ import (
 
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
-	"github.com/ysomad/uniplay/internal/opentelemetry"
+	"github.com/ysomad/uniplay/internal/match"
 	"github.com/ysomad/uniplay/internal/player"
 	"github.com/ysomad/uniplay/internal/replay"
 
@@ -23,7 +23,7 @@ func Run(conf *config.Config) {
 		log.Fatalf("logger.New: %s", err.Error())
 	}
 
-	otel, err := opentelemetry.New(conf)
+	otel, err := newOpenTelemetry(conf)
 	if err != nil {
 		l.Fatal("otel.New", zap.Error(err))
 	}
@@ -45,25 +45,31 @@ func Run(conf *config.Config) {
 	}
 
 	// replay
-	replayRepo := replay.NewPostgres(otel.AppTracer, pgClient)
-	replayService := replay.NewService(otel.AppTracer, replayRepo)
+	replayPostgres := replay.NewPostgres(otel.AppTracer, pgClient)
+	replayService := replay.NewService(otel.AppTracer, replayPostgres)
 	replayController := replay.NewController(replayService)
 
 	// compendium
-	compendiumRepo := compendium.NewPostgres(pgClient)
-	compendiumService := compendium.NewService(compendiumRepo)
+	compendiumPostgres := compendium.NewPostgres(pgClient)
+	compendiumService := compendium.NewService(compendiumPostgres)
 	compendiumController := compendium.NewController(compendiumService)
 
 	// player
-	playerRepo := player.NewPostgres(otel.AppTracer, pgClient)
-	playerService := player.NewService(otel.AppTracer, playerRepo)
+	playerPostgres := player.NewPostgres(otel.AppTracer, pgClient)
+	playerService := player.NewService(otel.AppTracer, playerPostgres)
 	playerController := player.NewController(playerService)
+
+	// match
+	matchPostgres := match.NewPostgres(otel.AppTracer, pgClient)
+	matchService := match.NewService(otel.AppTracer, matchPostgres)
+	matchController := match.NewController(matchService)
 
 	// go-swagger
 	api, err := newAPI(apiDeps{
 		replay:     replayController,
 		compendium: compendiumController,
 		player:     playerController,
+		match:      matchController,
 	})
 	if err != nil {
 		l.Fatal("newAPI", zap.Error(err))

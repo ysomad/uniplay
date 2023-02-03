@@ -8,8 +8,10 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // UploadReplayResponse upload replay response
@@ -17,12 +19,53 @@ import (
 // swagger:model UploadReplayResponse
 type UploadReplayResponse struct {
 
+	// match id
+	// Required: true
+	// Format: uuid
+	MatchID strfmt.UUID `json:"match_id"`
+
 	// match number
-	MatchNumber int32 `json:"match_number,omitempty"`
+	// Required: true
+	MatchNumber int32 `json:"match_number"`
 }
 
 // Validate validates this upload replay response
 func (m *UploadReplayResponse) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateMatchID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateMatchNumber(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *UploadReplayResponse) validateMatchID(formats strfmt.Registry) error {
+
+	if err := validate.Required("match_id", "body", strfmt.UUID(m.MatchID)); err != nil {
+		return err
+	}
+
+	if err := validate.FormatOf("match_id", "body", "uuid", m.MatchID.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *UploadReplayResponse) validateMatchNumber(formats strfmt.Registry) error {
+
+	if err := validate.Required("match_number", "body", int32(m.MatchNumber)); err != nil {
+		return err
+	}
+
 	return nil
 }
 

@@ -32,7 +32,7 @@ func NewUploadReplay(ctx *middleware.Context, handler UploadReplayHandler) *Uplo
 /*
 	UploadReplay swagger:route POST /replays replay uploadReplay
 
-Загрузить запись матча
+Загрузка записи матча
 */
 type UploadReplay struct {
 	Context *middleware.Context
