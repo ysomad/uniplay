@@ -83,6 +83,7 @@ func (m *replayMatch) teamPlayers() []teamPlayer {
 }
 
 type replayPlayer struct {
+	id          uuid.UUID
 	steamID     uint64
 	displayName string
 }
@@ -107,12 +108,17 @@ func newReplayTeam(name, flag string, side common.Team, players []*common.Player
 	}
 
 	for _, p := range players {
-		if p != nil && p.SteamID64 != 0 {
-			rt.players = append(rt.players, replayPlayer{
-				steamID:     p.SteamID64,
-				displayName: p.Name,
-			})
+		if p == nil || p.SteamID64 == 0 {
+			continue
 		}
+
+		id, _ := domain.NewPlayerID() //nolint:errcheck // never returns err
+
+		rt.players = append(rt.players, replayPlayer{
+			id:          id,
+			steamID:     p.SteamID64,
+			displayName: p.Name,
+		})
 	}
 
 	return rt

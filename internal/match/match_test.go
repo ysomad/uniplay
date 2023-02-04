@@ -446,7 +446,12 @@ func Test_newReplayTeam(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := newReplayTeam(tt.args.name, tt.args.flag, tt.args.side, tt.args.players)
-			assert.Equal(t, tt.want, got)
+
+			for i, p := range got.players {
+				assert.NotEmpty(t, p.id)
+				assert.Equal(t, tt.want.players[i].steamID, p.steamID)
+				assert.Equal(t, tt.want.players[i].displayName, p.displayName)
+			}
 		})
 	}
 }
