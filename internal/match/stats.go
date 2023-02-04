@@ -30,10 +30,6 @@ func (s *stats) normalize() ([]*playerStat, []*weaponStat) { //nolint:unused // 
 
 	go func() {
 		for _, ps := range s.playerStats {
-			if ps == nil {
-				continue
-			}
-
 			playerStats = append(playerStats, ps)
 		}
 
@@ -43,10 +39,6 @@ func (s *stats) normalize() ([]*playerStat, []*weaponStat) { //nolint:unused // 
 	go func() {
 		for _, weapons := range s.weaponStats {
 			for _, ws := range weapons {
-				if ws == nil {
-					continue
-				}
-
 				weaponStats = append(weaponStats, ws)
 			}
 		}
@@ -70,10 +62,6 @@ func (s *stats) normalizeSync() ([]*playerStat, []*weaponStat) {
 
 	for _, weapons := range s.weaponStats {
 		for _, ws := range weapons {
-			if ws == nil {
-				continue
-			}
-
 			weaponStats = append(weaponStats, ws)
 		}
 	}
