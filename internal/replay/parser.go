@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/google/uuid"
+	"github.com/ysomad/uniplay/internal/domain"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
 
@@ -14,7 +15,7 @@ import (
 )
 
 var (
-	errEmptyMatchID = errors.New("parser: empty match id")
+	errEmptyMatchID = errors.New("parser: empty match id, call parseReplayHeader() first")
 )
 
 // parser is a wrapper around demoinfocs.Parser.
@@ -22,23 +23,41 @@ var (
 type parser struct {
 	p demoinfocs.Parser
 
-	isKnifeRound bool
-	stats        stats
-	match        *replayMatch
+	isKnifeRound   bool
+	stats          stats
+	match          *replayMatch
+	replayFilesize int64
 }
 
 func newParser(r replay) *parser {
 	return &parser{
-		p:            demoinfocs.NewParser(r),
-		isKnifeRound: false,
-		stats:        newStats(),
-		match:        new(replayMatch),
+		p:              demoinfocs.NewParser(r),
+		isKnifeRound:   false,
+		stats:          newStats(),
+		match:          new(replayMatch),
+		replayFilesize: r.size,
 	}
 }
 
 // parseReplayHeader parses replay header and generates match id from it.
 // Must be called before collectStats().
-func (p *parser) parseReplayHeader() (common.DemoHeader, error) { return p.p.ParseHeader() }
+func (p *parser) parseReplayHeader() (*domain.ReplayHeader, error) {
+	h, err := p.p.ParseHeader()
+	if err != nil {
+		return nil, err
+	}
+
+	return domain.NewReplayHeader(
+		h.PlaybackTicks,
+		h.PlaybackFrames,
+		h.SignonLength,
+		h.ServerName,
+		h.ClientName,
+		h.MapName,
+		h.PlaybackTime,
+		p.replayFilesize,
+	)
+}
 
 // collectStats collects player stats from the replay.
 func (p *parser) collectStats(ctx context.Context) (*replayMatch, []*playerStat, []*weaponStat, error) {

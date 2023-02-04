@@ -39,19 +39,7 @@ func (s *Service) CollectStats(ctx context.Context, r replay) (collectStatsRes, 
 		return collectStatsRes{}, err
 	}
 
-	p.match.id, err = domain.NewMatchID(
-		h.ServerName,
-		h.ClientName,
-		h.MapName,
-		h.PlaybackTime,
-		h.PlaybackTicks,
-		h.PlaybackFrames,
-		h.SignonLength,
-	)
-	if err != nil {
-		return collectStatsRes{}, err
-	}
-
+	p.match.id = domain.NewMatchID(h)
 	p.match.uploadedAt = time.Now()
 
 	matchExists, err := s.replay.MatchExists(ctx, p.match.id)

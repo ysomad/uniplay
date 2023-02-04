@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"errors"
 	"fmt"
 	"time"
 
@@ -30,42 +29,17 @@ func NewMatchState(teamScore, opponentScore int8) MatchState {
 	return MatchStateDraw
 }
 
-var (
-	errInvalidServerName     = errors.New("invalid server name")
-	errInvalidClientName     = errors.New("invalid client name")
-	errInvalidMatchDuration  = fmt.Errorf("match must last more than %s", minMatchDuration.String())
-	errInvalidPlaybackTicks  = errors.New("invalid amount of playback ticks")
-	errInvalidPlaybackFrames = errors.New("invalid amount of playback frames")
-	errInvalidSignonLength   = errors.New("invalid signon length")
-)
-
 // NewMatchID returns match id generated from meta data received from replay header.
-func NewMatchID(server, client, mapName string, matchDuration time.Duration, ticks, frames, signonLen int) (uuid.UUID, error) {
-	if server == "" {
-		return uuid.UUID{}, errInvalidServerName
-	}
-
-	if client == "" {
-		return uuid.UUID{}, errInvalidClientName
-	}
-
-	if matchDuration < minMatchDuration {
-		return uuid.UUID{}, errInvalidMatchDuration
-	}
-
-	if ticks <= 0 {
-		return uuid.UUID{}, errInvalidPlaybackTicks
-	}
-
-	if frames <= 0 {
-		return uuid.UUID{}, errInvalidPlaybackFrames
-	}
-
-	if signonLen <= 0 {
-		return uuid.UUID{}, errInvalidSignonLength
-	}
-
-	s := fmt.Sprintf("%s,%s,%s,%d,%d,%d,%d", server, client, mapName, matchDuration, ticks, frames, signonLen)
-
-	return uuid.NewMD5(uuid.UUID{}, []byte(s)), nil
+func NewMatchID(h *ReplayHeader) uuid.UUID {
+	return uuid.NewMD5(uuid.UUID{}, []byte(fmt.Sprintf(
+		"%d,%d,%d,%s,%s,%s,%d,%d",
+		h.playbackTicks,
+		h.playbackFrames,
+		h.signonLength,
+		h.server,
+		h.client,
+		h.mapName,
+		h.playbackTime,
+		h.filesize,
+	)))
 }
