@@ -1,10 +1,19 @@
 BEGIN
 ;
 
+CREATE TABLE IF NOT EXISTS university (
+    id smallserial PRIMARY KEY NOT NULL,
+    long_name varchar(320) NOT NULL,
+    short_name varchar(320) NOT NULL,
+    city varchar(64) NOT NULL,
+    logo_url varchar(2048) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS team (
     id smallserial PRIMARY KEY NOT NULL,
     clan_name varchar(64) UNIQUE NOT NULL,
-    flag_code char(2) NOT NULL
+    flag_code char(2) NOT NULL,
+    captain_steam_id bigint REFERENCES player (steam_id)
 );
 
 CREATE TABLE IF NOT EXISTS player (
