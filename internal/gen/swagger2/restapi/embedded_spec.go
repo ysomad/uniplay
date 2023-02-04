@@ -88,6 +88,56 @@ func init() {
         }
       }
     },
+    "/matches": {
+      "post": {
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "match"
+        ],
+        "summary": "Создание матча из записи",
+        "operationId": "createMatch",
+        "parameters": [
+          {
+            "type": "file",
+            "description": "файл записи матча с расширением .dem",
+            "name": "replay",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateMatchResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/matches/{match_id}": {
       "delete": {
         "consumes": [
@@ -231,59 +281,28 @@ func init() {
           }
         }
       }
-    },
-    "/replays": {
-      "post": {
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "replay"
-        ],
-        "summary": "Загрузка записи матча",
-        "operationId": "uploadReplay",
-        "parameters": [
-          {
-            "type": "file",
-            "description": "файл записи матча с расширением .dem",
-            "name": "replay",
-            "in": "formData",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/UploadReplayResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
     }
   },
   "definitions": {
+    "CreateMatchResponse": {
+      "type": "object",
+      "required": [
+        "match_id",
+        "match_number"
+      ],
+      "properties": {
+        "match_id": {
+          "type": "string",
+          "format": "uuid",
+          "x-isnullable": false
+        },
+        "match_number": {
+          "type": "number",
+          "format": "int32",
+          "x-isnullable": false
+        }
+      }
+    },
     "Error": {
       "type": "object",
       "required": [
@@ -626,25 +645,6 @@ func init() {
         }
       }
     },
-    "UploadReplayResponse": {
-      "type": "object",
-      "required": [
-        "match_id",
-        "match_number"
-      ],
-      "properties": {
-        "match_id": {
-          "type": "string",
-          "format": "uuid",
-          "x-isnullable": false
-        },
-        "match_number": {
-          "type": "number",
-          "format": "int32",
-          "x-isnullable": false
-        }
-      }
-    },
     "WeaponClassList": {
       "type": "array",
       "items": {
@@ -717,10 +717,6 @@ func init() {
     {
       "description": "Матч",
       "name": "match"
-    },
-    {
-      "description": "Запись матча",
-      "name": "replay"
     },
     {
       "description": "Справочник",
@@ -799,6 +795,56 @@ func init() {
         }
       }
     },
+    "/matches": {
+      "post": {
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "match"
+        ],
+        "summary": "Создание матча из записи",
+        "operationId": "createMatch",
+        "parameters": [
+          {
+            "type": "file",
+            "description": "файл записи матча с расширением .dem",
+            "name": "replay",
+            "in": "formData",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateMatchResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/matches/{match_id}": {
       "delete": {
         "consumes": [
@@ -942,59 +988,28 @@ func init() {
           }
         }
       }
-    },
-    "/replays": {
-      "post": {
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "replay"
-        ],
-        "summary": "Загрузка записи матча",
-        "operationId": "uploadReplay",
-        "parameters": [
-          {
-            "type": "file",
-            "description": "файл записи матча с расширением .dem",
-            "name": "replay",
-            "in": "formData",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/UploadReplayResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
     }
   },
   "definitions": {
+    "CreateMatchResponse": {
+      "type": "object",
+      "required": [
+        "match_id",
+        "match_number"
+      ],
+      "properties": {
+        "match_id": {
+          "type": "string",
+          "format": "uuid",
+          "x-isnullable": false
+        },
+        "match_number": {
+          "type": "number",
+          "format": "int32",
+          "x-isnullable": false
+        }
+      }
+    },
     "Error": {
       "type": "object",
       "required": [
@@ -1337,25 +1352,6 @@ func init() {
         }
       }
     },
-    "UploadReplayResponse": {
-      "type": "object",
-      "required": [
-        "match_id",
-        "match_number"
-      ],
-      "properties": {
-        "match_id": {
-          "type": "string",
-          "format": "uuid",
-          "x-isnullable": false
-        },
-        "match_number": {
-          "type": "number",
-          "format": "int32",
-          "x-isnullable": false
-        }
-      }
-    },
     "WeaponClassList": {
       "type": "array",
       "items": {
@@ -1428,10 +1424,6 @@ func init() {
     {
       "description": "Матч",
       "name": "match"
-    },
-    {
-      "description": "Запись матча",
-      "name": "replay"
     },
     {
       "description": "Справочник",

@@ -1,4 +1,4 @@
-package replay
+package match
 
 import (
 	"sync"
@@ -30,10 +30,6 @@ func (s *stats) normalize() ([]*playerStat, []*weaponStat) { //nolint:unused // 
 
 	go func() {
 		for _, ps := range s.playerStats {
-			if ps == nil {
-				continue
-			}
-
 			playerStats = append(playerStats, ps)
 		}
 
@@ -43,10 +39,6 @@ func (s *stats) normalize() ([]*playerStat, []*weaponStat) { //nolint:unused // 
 	go func() {
 		for _, weapons := range s.weaponStats {
 			for _, ws := range weapons {
-				if ws == nil {
-					continue
-				}
-
 				weaponStats = append(weaponStats, ws)
 			}
 		}
@@ -60,23 +52,16 @@ func (s *stats) normalize() ([]*playerStat, []*weaponStat) { //nolint:unused // 
 }
 
 func (s *stats) normalizeSync() ([]*playerStat, []*weaponStat) {
-	playerStats := make([]*playerStat, len(s.playerStats))
-
-	var i int8
+	playerStats := make([]*playerStat, 0, len(s.playerStats))
 
 	for _, ps := range s.playerStats {
-		playerStats[i] = ps
-		i++
+		playerStats = append(playerStats, ps)
 	}
 
 	var weaponStats []*weaponStat
 
 	for _, weapons := range s.weaponStats {
 		for _, ws := range weapons {
-			if ws == nil {
-				continue
-			}
-
 			weaponStats = append(weaponStats, ws)
 		}
 	}

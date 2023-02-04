@@ -11,7 +11,6 @@ import (
 	"github.com/ysomad/uniplay/internal/config"
 	"github.com/ysomad/uniplay/internal/match"
 	"github.com/ysomad/uniplay/internal/player"
-	"github.com/ysomad/uniplay/internal/replay"
 
 	"github.com/ysomad/uniplay/internal/pkg/logger"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
@@ -44,10 +43,10 @@ func Run(conf *config.Config) {
 		l.Fatal("prometheus.Register", zap.Error(err))
 	}
 
-	// replay
-	replayPostgres := replay.NewPostgres(otel.AppTracer, pgClient)
-	replayService := replay.NewService(otel.AppTracer, replayPostgres)
-	replayController := replay.NewController(replayService)
+	// match
+	matchPostgres := match.NewPostgres(otel.AppTracer, pgClient)
+	matchService := match.NewService(otel.AppTracer, matchPostgres)
+	matchController := match.NewController(matchService)
 
 	// compendium
 	compendiumPostgres := compendium.NewPostgres(pgClient)
@@ -59,14 +58,8 @@ func Run(conf *config.Config) {
 	playerService := player.NewService(otel.AppTracer, playerPostgres)
 	playerController := player.NewController(playerService)
 
-	// match
-	matchPostgres := match.NewPostgres(otel.AppTracer, pgClient)
-	matchService := match.NewService(otel.AppTracer, matchPostgres)
-	matchController := match.NewController(matchService)
-
 	// go-swagger
 	api, err := newAPI(apiDeps{
-		replay:     replayController,
 		compendium: compendiumController,
 		player:     playerController,
 		match:      matchController,

@@ -1,10 +1,12 @@
-package replay
+package match
 
 import (
 	"context"
 	"errors"
+	"time"
 
 	"github.com/google/uuid"
+	"github.com/ysomad/uniplay/internal/domain"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
 
@@ -14,7 +16,7 @@ import (
 )
 
 var (
-	errEmptyMatchID = errors.New("parser: empty match id")
+	errEmptyMatchID = errors.New("parser: empty match id, call parseReplayHeader() first")
 )
 
 // parser is a wrapper around demoinfocs.Parser.
@@ -22,23 +24,49 @@ var (
 type parser struct {
 	p demoinfocs.Parser
 
-	isKnifeRound bool
-	stats        stats
-	match        *replayMatch
+	knifeRound     bool
+	stats          stats
+	match          *replayMatch
+	replayFilesize int64
 }
 
 func newParser(r replay) *parser {
 	return &parser{
-		p:            demoinfocs.NewParser(r),
-		isKnifeRound: false,
-		stats:        newStats(),
-		match:        new(replayMatch),
+		p:              demoinfocs.NewParser(r),
+		knifeRound:     false,
+		stats:          newStats(),
+		match:          new(replayMatch),
+		replayFilesize: r.size,
 	}
 }
 
 // parseReplayHeader parses replay header and generates match id from it.
 // Must be called before collectStats().
-func (p *parser) parseReplayHeader() (common.DemoHeader, error) { return p.p.ParseHeader() }
+func (p *parser) parseReplayHeader() (*domain.ReplayHeader, error) {
+	h, err := p.p.ParseHeader()
+	if err != nil {
+		return nil, err
+	}
+
+	rh, err := domain.NewReplayHeader(
+		h.PlaybackTicks,
+		h.PlaybackFrames,
+		h.SignonLength,
+		h.ServerName,
+		h.ClientName,
+		h.MapName,
+		h.PlaybackTime,
+		p.replayFilesize,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	p.match.id = domain.NewMatchID(rh)
+	p.match.uploadedAt = time.Now()
+
+	return rh, nil
+}
 
 // collectStats collects player stats from the replay.
 func (p *parser) collectStats(ctx context.Context) (*replayMatch, []*playerStat, []*weaponStat, error) {
@@ -94,7 +122,7 @@ func (p *parser) playerSpectator(player *common.Player) bool {
 // collectAllowed detects if stats can be collected to prevent collection of stats on knife or warmup rounds.
 // return false if current round is knife round or match is not started.
 func (p *parser) collectAllowed(matchStarted bool) bool {
-	if p.isKnifeRound || !matchStarted {
+	if p.knifeRound || !matchStarted {
 		return false
 	}
 
@@ -108,13 +136,13 @@ func (p *parser) playerValid(player *common.Player) bool {
 
 // detectKnifeRound detects is current round is a knife round,
 // sets isKnifeRound to true if any player has no secondary weapon and first slot is a knife.
-func (p *parser) detectKnifeRound() {
-	p.isKnifeRound = false
+func (p *parser) detectKnifeRound(players []*common.Player) {
+	p.knifeRound = false
 
-	for _, player := range p.p.GameState().TeamCounterTerrorists().Members() {
+	for _, player := range players {
 		weapons := player.Weapons()
 		if len(weapons) == 1 && weapons[0].Type == common.EqKnife {
-			p.isKnifeRound = true
+			p.knifeRound = true
 
 			break
 		}
@@ -217,7 +245,7 @@ func (p *parser) playerHurtHandler(e events.PlayerHurt) { //nolint:gocritic // d
 }
 
 func (p *parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
-	p.detectKnifeRound()
+	p.detectKnifeRound(p.p.GameState().TeamCounterTerrorists().Members())
 }
 
 func (p *parser) matchStartedChangedHandler(e events.MatchStartedChanged) {
