@@ -61,18 +61,18 @@ type teamPlayer struct {
 func (m *replayMatch) teamPlayers() []teamPlayer {
 	res := make([]teamPlayer, len(m.team1.players)+len(m.team2.players))
 
-	for i, steamID := range m.team1.players {
+	for i, p := range m.team1.players {
 		res[i] = teamPlayer{
-			steamID:    steamID,
+			steamID:    p.steamID,
 			teamID:     m.team1.id,
 			matchID:    m.id,
 			matchState: m.team1.matchState,
 		}
 	}
 
-	for i, steamID := range m.team2.players {
+	for i, p := range m.team2.players {
 		res[i+len(m.team2.players)] = teamPlayer{
-			steamID:    steamID,
+			steamID:    p.steamID,
 			teamID:     m.team2.id,
 			matchID:    m.id,
 			matchState: m.team2.matchState,
@@ -82,13 +82,18 @@ func (m *replayMatch) teamPlayers() []teamPlayer {
 	return res
 }
 
+type replayPlayer struct {
+	steamID     uint64
+	displayName string
+}
+
 type replayTeam struct {
 	id         int16
 	clanName   string
 	flagCode   string
 	score      int8
 	matchState domain.MatchState
-	players    []uint64
+	players    []replayPlayer
 
 	_side common.Team
 }
@@ -97,12 +102,16 @@ func newReplayTeam(name, flag string, side common.Team, players []*common.Player
 	rt := replayTeam{
 		clanName: name,
 		flagCode: flag,
+		players:  make([]replayPlayer, 0, len(players)),
 		_side:    side,
 	}
 
 	for _, p := range players {
 		if p != nil && p.SteamID64 != 0 {
-			rt.players = append(rt.players, p.SteamID64)
+			rt.players = append(rt.players, replayPlayer{
+				steamID:     p.SteamID64,
+				displayName: p.Name,
+			})
 		}
 	}
 

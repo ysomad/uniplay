@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"log"
 
 	"github.com/IBM/pgxpoolprometheus"
@@ -81,5 +82,11 @@ func Run(conf *config.Config) {
 
 	if err = srv.Serve(); err != nil {
 		l.Fatal("srv.Serve", zap.Error(err))
+	}
+
+	for _, f := range otel.CleanupFuncs {
+		if err = f(context.Background()); err != nil {
+			l.Fatal("cleanupFuncs", zap.Error(err))
+		}
 	}
 }
