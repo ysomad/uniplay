@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS team (
 
 CREATE TABLE IF NOT EXISTS player (
     steam_id bigint PRIMARY KEY NOT NULL,
-    avatar_uri varchar(2048),
-    display_name varchar(24)
+    display_name varchar(64) NOT NULL,
+    avatar_uri varchar(2048)
 );
 
 CREATE TABLE IF NOT EXISTS team_player (

@@ -44,9 +44,9 @@ func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps [
 	defer span.End()
 
 	txFunc := func(tx pgx.Tx) error {
-		steamIDs := append(match.team1.players, match.team2.players...) //nolint:gocritic // why not ?
+		players := append(match.team1.players, match.team2.players...) //nolint:gocritic // why not ?
 
-		if err := p.savePlayers(ctx, tx, steamIDs); err != nil {
+		if err := p.savePlayers(ctx, tx, players); err != nil {
 			return err
 		}
 
@@ -89,13 +89,13 @@ func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps [
 	return matchNumber, nil
 }
 
-func (p *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, steamIDs []uint64) error {
+func (p *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, players []replayPlayer) error {
 	b := p.client.Builder.
 		Insert("player").
-		Columns("steam_id")
+		Columns("steam_id, display_name")
 
-	for _, steamID := range steamIDs {
-		b = b.Values(steamID)
+	for _, p := range players {
+		b = b.Values(p.steamID, p.displayName)
 	}
 
 	sql, args, err := b.Suffix("ON CONFLICT(steam_id) DO NOTHING").ToSql()

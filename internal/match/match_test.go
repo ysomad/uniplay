@@ -142,8 +142,14 @@ func Test_replayMatch_teamPlayers(t *testing.T) {
 					flagCode:   "ru",
 					score:      16,
 					matchState: domain.MatchStateWin,
-					players:    []uint64{1, 2, 3, 4, 5},
-					_side:      common.TeamTerrorists,
+					players: []replayPlayer{
+						{steamID: 1, displayName: "test1"},
+						{steamID: 2, displayName: "test2"},
+						{steamID: 3, displayName: "test3"},
+						{steamID: 4, displayName: "test4"},
+						{steamID: 5, displayName: "test5"},
+					},
+					_side: common.TeamTerrorists,
 				},
 				team2: replayTeam{
 					id:         2,
@@ -151,8 +157,14 @@ func Test_replayMatch_teamPlayers(t *testing.T) {
 					flagCode:   "uk",
 					score:      12,
 					matchState: domain.MatchStateLose,
-					players:    []uint64{6, 7, 8, 9, 10},
-					_side:      common.TeamCounterTerrorists,
+					players: []replayPlayer{
+						{steamID: 6, displayName: "test6"},
+						{steamID: 7, displayName: "test7"},
+						{steamID: 8, displayName: "test8"},
+						{steamID: 9, displayName: "test9"},
+						{steamID: 10, displayName: "test10"},
+					},
+					_side: common.TeamCounterTerrorists,
 				},
 			},
 			want: []teamPlayer{
@@ -256,41 +268,62 @@ func Test_newReplayTeam(t *testing.T) {
 				players: []*common.Player{
 					{
 						SteamID64: 1,
+						Name:      "test1",
 					},
 					{
 						SteamID64: 2,
+						Name:      "test2",
 					},
 					{
 						SteamID64: 3,
+						Name:      "test3",
 					},
 					{
 						SteamID64: 4,
+						Name:      "test4",
 					},
 					{
 						SteamID64: 5,
+						Name:      "test5",
 					},
 					{
 						SteamID64: 6,
+						Name:      "test6",
 					},
 					{
 						SteamID64: 7,
+						Name:      "test7",
 					},
 					{
 						SteamID64: 8,
+						Name:      "test8",
 					},
 					{
 						SteamID64: 9,
+						Name:      "test9",
 					},
 					{
 						SteamID64: 10,
+						Name:      "test10",
 					},
 				},
 			},
 			want: replayTeam{
 				clanName: "Virtus PRO",
 				flagCode: "RU",
-				players:  []uint64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
-				_side:    common.TeamCounterTerrorists,
+				players: []replayPlayer{
+					{steamID: 1, displayName: "test1"},
+					{steamID: 2, displayName: "test2"},
+					{steamID: 3, displayName: "test3"},
+					{steamID: 4, displayName: "test4"},
+					{steamID: 5, displayName: "test5"},
+					{steamID: 6, displayName: "test6"},
+					{steamID: 7, displayName: "test7"},
+					{steamID: 8, displayName: "test8"},
+					{steamID: 9, displayName: "test9"},
+					{steamID: 10, displayName: "test10"},
+				},
+				_side: common.TeamCounterTerrorists,
 			},
 		},
 		{
@@ -301,36 +334,48 @@ func Test_newReplayTeam(t *testing.T) {
 				side: common.TeamTerrorists,
 				players: []*common.Player{
 					nil,
-					nil,
+					{
+						SteamID64: 2,
+						Name:      "test2",
+					},
 					{
 						SteamID64: 3,
+						Name:      "test3",
 					},
-					{
-						SteamID64: 4,
-					},
+					nil,
 					{
 						SteamID64: 5,
+						Name:      "test5",
 					},
 					{
 						SteamID64: 6,
+						Name:      "test6",
 					},
-					{
-						SteamID64: 7,
-					},
+					nil,
 					nil,
 					{
 						SteamID64: 9,
+						Name:      "test9",
 					},
 					{
 						SteamID64: 10,
+						Name:      "test10",
 					},
 				},
 			},
 			want: replayTeam{
 				clanName: "Na`Vi",
 				flagCode: "UA",
-				players:  []uint64{3, 4, 5, 6, 7, 9, 10},
-				_side:    common.TeamTerrorists,
+				players: []replayPlayer{
+					{steamID: 2, displayName: "test2"},
+					{steamID: 3, displayName: "test3"},
+					{steamID: 5, displayName: "test5"},
+					{steamID: 6, displayName: "test6"},
+					{steamID: 9, displayName: "test9"},
+					{steamID: 10, displayName: "test10"},
+				},
+
+				_side: common.TeamTerrorists,
 			},
 		},
 		{
@@ -342,41 +387,59 @@ func Test_newReplayTeam(t *testing.T) {
 				players: []*common.Player{
 					{
 						SteamID64: 0,
+						Name:      "test1",
 					},
 					{
 						SteamID64: 2,
+						Name:      "test2",
 					},
 					{
 						SteamID64: 3,
+						Name:      "test3",
 					},
 					{
 						SteamID64: 4,
+						Name:      "test4",
 					},
 					{
 						SteamID64: 0,
+						Name:      "test5",
 					},
 					{
 						SteamID64: 6,
+						Name:      "test6",
 					},
 					{
 						SteamID64: 7,
-					},
-					{
-						SteamID64: 8,
+						Name:      "test7",
 					},
 					{
 						SteamID64: 0,
+						Name:      "test8",
+					},
+					{
+						SteamID64: 0,
+						Name:      "test9",
 					},
 					{
 						SteamID64: 10,
+						Name:      "test10",
 					},
 				},
 			},
 			want: replayTeam{
 				clanName: "Mousesports",
 				flagCode: "FR",
-				players:  []uint64{2, 3, 4, 6, 7, 8, 10},
-				_side:    common.TeamTerrorists,
+				players: []replayPlayer{
+					{steamID: 2, displayName: "test2"},
+					{steamID: 3, displayName: "test3"},
+					{steamID: 4, displayName: "test4"},
+					{steamID: 6, displayName: "test6"},
+					{steamID: 7, displayName: "test7"},
+					{steamID: 10, displayName: "test10"},
+				},
+
+				_side: common.TeamTerrorists,
 			},
 		},
 	}
