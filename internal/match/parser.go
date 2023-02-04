@@ -1,8 +1,9 @@
-package replay
+package match
 
 import (
 	"context"
 	"errors"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/ysomad/uniplay/internal/domain"
@@ -47,7 +48,7 @@ func (p *parser) parseReplayHeader() (*domain.ReplayHeader, error) {
 		return nil, err
 	}
 
-	return domain.NewReplayHeader(
+	rh, err := domain.NewReplayHeader(
 		h.PlaybackTicks,
 		h.PlaybackFrames,
 		h.SignonLength,
@@ -57,6 +58,14 @@ func (p *parser) parseReplayHeader() (*domain.ReplayHeader, error) {
 		h.PlaybackTime,
 		p.replayFilesize,
 	)
+	if err != nil {
+		return nil, err
+	}
+
+	p.match.id = domain.NewMatchID(rh)
+	p.match.uploadedAt = time.Now()
+
+	return rh, nil
 }
 
 // collectStats collects player stats from the replay.

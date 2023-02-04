@@ -13,7 +13,6 @@ import (
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
-	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/replay"
 )
 
 //go:generate swagger generate server --target ../../swagger2 --name Uniplay --spec ../../../../swagger2.yaml --principal interface{} --exclude-main --strict-responders
@@ -42,8 +41,13 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	// You may change here the memory limit for this multipart form parser. Below is the default (32 MB).
-	// replay.UploadReplayMaxParseMemory = 32 << 20
+	// match.CreateMatchMaxParseMemory = 32 << 20
 
+	if api.MatchCreateMatchHandler == nil {
+		api.MatchCreateMatchHandler = match.CreateMatchHandlerFunc(func(params match.CreateMatchParams) match.CreateMatchResponder {
+			return match.CreateMatchNotImplemented()
+		})
+	}
 	if api.MatchDeleteMatchHandler == nil {
 		api.MatchDeleteMatchHandler = match.DeleteMatchHandlerFunc(func(params match.DeleteMatchParams) match.DeleteMatchResponder {
 			return match.DeleteMatchNotImplemented()
@@ -67,11 +71,6 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 	if api.CompendiumGetWeaponsHandler == nil {
 		api.CompendiumGetWeaponsHandler = compendium.GetWeaponsHandlerFunc(func(params compendium.GetWeaponsParams) compendium.GetWeaponsResponder {
 			return compendium.GetWeaponsNotImplemented()
-		})
-	}
-	if api.ReplayUploadReplayHandler == nil {
-		api.ReplayUploadReplayHandler = replay.UploadReplayHandlerFunc(func(params replay.UploadReplayParams) replay.UploadReplayResponder {
-			return replay.UploadReplayNotImplemented()
 		})
 	}
 

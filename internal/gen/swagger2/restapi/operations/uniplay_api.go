@@ -22,7 +22,6 @@ import (
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
-	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/replay"
 )
 
 // NewUniplayAPI creates a new Uniplay instance
@@ -48,6 +47,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
+		MatchCreateMatchHandler: match.CreateMatchHandlerFunc(func(params match.CreateMatchParams) match.CreateMatchResponder {
+			return match.CreateMatchNotImplemented()
+		}),
 		MatchDeleteMatchHandler: match.DeleteMatchHandlerFunc(func(params match.DeleteMatchParams) match.DeleteMatchResponder {
 			return match.DeleteMatchNotImplemented()
 		}),
@@ -62,9 +64,6 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		}),
 		CompendiumGetWeaponsHandler: compendium.GetWeaponsHandlerFunc(func(params compendium.GetWeaponsParams) compendium.GetWeaponsResponder {
 			return compendium.GetWeaponsNotImplemented()
-		}),
-		ReplayUploadReplayHandler: replay.UploadReplayHandlerFunc(func(params replay.UploadReplayParams) replay.UploadReplayResponder {
-			return replay.UploadReplayNotImplemented()
 		}),
 	}
 }
@@ -105,6 +104,8 @@ type UniplayAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
+	// MatchCreateMatchHandler sets the operation handler for the create match operation
+	MatchCreateMatchHandler match.CreateMatchHandler
 	// MatchDeleteMatchHandler sets the operation handler for the delete match operation
 	MatchDeleteMatchHandler match.DeleteMatchHandler
 	// PlayerGetPlayerStatsHandler sets the operation handler for the get player stats operation
@@ -115,8 +116,6 @@ type UniplayAPI struct {
 	PlayerGetWeaponStatsHandler player.GetWeaponStatsHandler
 	// CompendiumGetWeaponsHandler sets the operation handler for the get weapons operation
 	CompendiumGetWeaponsHandler compendium.GetWeaponsHandler
-	// ReplayUploadReplayHandler sets the operation handler for the upload replay operation
-	ReplayUploadReplayHandler replay.UploadReplayHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -197,6 +196,9 @@ func (o *UniplayAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.MatchCreateMatchHandler == nil {
+		unregistered = append(unregistered, "match.CreateMatchHandler")
+	}
 	if o.MatchDeleteMatchHandler == nil {
 		unregistered = append(unregistered, "match.DeleteMatchHandler")
 	}
@@ -211,9 +213,6 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.CompendiumGetWeaponsHandler == nil {
 		unregistered = append(unregistered, "compendium.GetWeaponsHandler")
-	}
-	if o.ReplayUploadReplayHandler == nil {
-		unregistered = append(unregistered, "replay.UploadReplayHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -305,6 +304,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/matches"] = match.NewCreateMatch(o.context, o.MatchCreateMatchHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -325,10 +328,6 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/compendiums/weapons"] = compendium.NewGetWeapons(o.context, o.CompendiumGetWeaponsHandler)
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/replays"] = replay.NewUploadReplay(o.context, o.ReplayUploadReplayHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

@@ -5,15 +5,18 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
 
-	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
-	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
+	matchGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
+
+	"github.com/ysomad/uniplay/internal/domain"
 )
 
 type matchService interface {
-	Delete(ctx context.Context, matchID uuid.UUID) error
+	CreateFromReplay(context.Context, replay) (collectStatsRes, error)
+	DeleteByID(ctx context.Context, matchID uuid.UUID) error
 }
 
 type Controller struct {
@@ -26,28 +29,76 @@ func NewController(m matchService) *Controller {
 	}
 }
 
-func (c *Controller) DeleteMatch(p match.DeleteMatchParams) match.DeleteMatchResponder {
-	matchID, err := uuid.Parse(p.MatchID.String())
+func (c *Controller) CreateMatch(p matchGen.CreateMatchParams) matchGen.CreateMatchResponder {
+	if err := p.HTTPRequest.ParseMultipartForm(150 << 20); err != nil {
+		return matchGen.NewCreateMatchBadRequest().WithPayload(&models.Error{
+			Code:    http.StatusBadRequest,
+			Message: err.Error(),
+		})
+	}
+
+	file, header, err := p.HTTPRequest.FormFile("replay")
 	if err != nil {
-		return match.NewDeleteMatchInternalServerError().WithPayload(&models.Error{
+		return matchGen.NewCreateMatchBadRequest().WithPayload(&models.Error{
+			Code:    http.StatusBadRequest,
+			Message: err.Error(),
+		})
+	}
+
+	r, err := newReplay(file, header)
+	if err != nil {
+		return matchGen.NewCreateMatchBadRequest().WithPayload(&models.Error{
+			Code:    http.StatusBadRequest,
+			Message: err.Error(),
+		})
+	}
+	defer r.Close()
+
+	res, err := c.match.CreateFromReplay(p.HTTPRequest.Context(), r)
+	if err != nil {
+		if errors.Is(err, domain.ErrMatchAlreadyExist) {
+			return matchGen.NewCreateMatchConflict().WithPayload(&models.Error{
+				Code:    domain.CodeMatchAlreadyExist,
+				Message: err.Error(),
+			})
+		}
+
+		return matchGen.NewCreateMatchInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		})
 	}
 
-	if err := c.match.Delete(p.HTTPRequest.Context(), matchID); err != nil {
+	payload := &models.CreateMatchResponse{
+		MatchID:     strfmt.UUID(res.MatchID.String()),
+		MatchNumber: res.MatchNumber,
+	}
+
+	return matchGen.NewCreateMatchOK().WithPayload(payload)
+}
+
+func (c *Controller) DeleteMatch(p matchGen.DeleteMatchParams) matchGen.DeleteMatchResponder {
+	matchID, err := uuid.Parse(p.MatchID.String())
+	if err != nil {
+		return matchGen.NewDeleteMatchInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	if err := c.match.DeleteByID(p.HTTPRequest.Context(), matchID); err != nil {
 		if errors.Is(err, domain.ErrMatchNotFound) {
-			return match.NewDeleteMatchNotFound().WithPayload(&models.Error{
+			return matchGen.NewDeleteMatchNotFound().WithPayload(&models.Error{
 				Code:    domain.CodeMatchNotFound,
 				Message: err.Error(),
 			})
 		}
 
-		return match.NewDeleteMatchInternalServerError().WithPayload(&models.Error{
+		return matchGen.NewDeleteMatchInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		})
 	}
 
-	return match.NewDeleteMatchNoContent()
+	return matchGen.NewDeleteMatchNoContent()
 }

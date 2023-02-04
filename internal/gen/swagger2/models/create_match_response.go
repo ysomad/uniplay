@@ -14,10 +14,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// UploadReplayResponse upload replay response
+// CreateMatchResponse create match response
 //
-// swagger:model UploadReplayResponse
-type UploadReplayResponse struct {
+// swagger:model CreateMatchResponse
+type CreateMatchResponse struct {
 
 	// match id
 	// Required: true
@@ -29,8 +29,8 @@ type UploadReplayResponse struct {
 	MatchNumber int32 `json:"match_number"`
 }
 
-// Validate validates this upload replay response
-func (m *UploadReplayResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this create match response
+func (m *CreateMatchResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateMatchID(formats); err != nil {
@@ -47,7 +47,7 @@ func (m *UploadReplayResponse) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *UploadReplayResponse) validateMatchID(formats strfmt.Registry) error {
+func (m *CreateMatchResponse) validateMatchID(formats strfmt.Registry) error {
 
 	if err := validate.Required("match_id", "body", strfmt.UUID(m.MatchID)); err != nil {
 		return err
@@ -60,7 +60,7 @@ func (m *UploadReplayResponse) validateMatchID(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *UploadReplayResponse) validateMatchNumber(formats strfmt.Registry) error {
+func (m *CreateMatchResponse) validateMatchNumber(formats strfmt.Registry) error {
 
 	if err := validate.Required("match_number", "body", int32(m.MatchNumber)); err != nil {
 		return err
@@ -69,13 +69,13 @@ func (m *UploadReplayResponse) validateMatchNumber(formats strfmt.Registry) erro
 	return nil
 }
 
-// ContextValidate validates this upload replay response based on context it is used
-func (m *UploadReplayResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this create match response based on context it is used
+func (m *CreateMatchResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *UploadReplayResponse) MarshalBinary() ([]byte, error) {
+func (m *CreateMatchResponse) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -83,8 +83,8 @@ func (m *UploadReplayResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *UploadReplayResponse) UnmarshalBinary(b []byte) error {
-	var res UploadReplayResponse
+func (m *CreateMatchResponse) UnmarshalBinary(b []byte) error {
+	var res CreateMatchResponse
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
