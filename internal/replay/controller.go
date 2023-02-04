@@ -42,7 +42,7 @@ func (c *Controller) UploadReplay(p replayGen.UploadReplayParams) replayGen.Uplo
 		})
 	}
 
-	r, err := newReplay(file, header.Filename)
+	r, err := newReplay(file, header)
 	if err != nil {
 		return replayGen.NewUploadReplayBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
