@@ -24,7 +24,7 @@ var (
 type parser struct {
 	p demoinfocs.Parser
 
-	isKnifeRound   bool
+	knifeRound     bool
 	stats          stats
 	match          *replayMatch
 	replayFilesize int64
@@ -33,7 +33,7 @@ type parser struct {
 func newParser(r replay) *parser {
 	return &parser{
 		p:              demoinfocs.NewParser(r),
-		isKnifeRound:   false,
+		knifeRound:     false,
 		stats:          newStats(),
 		match:          new(replayMatch),
 		replayFilesize: r.size,
@@ -122,7 +122,7 @@ func (p *parser) playerSpectator(player *common.Player) bool {
 // collectAllowed detects if stats can be collected to prevent collection of stats on knife or warmup rounds.
 // return false if current round is knife round or match is not started.
 func (p *parser) collectAllowed(matchStarted bool) bool {
-	if p.isKnifeRound || !matchStarted {
+	if p.knifeRound || !matchStarted {
 		return false
 	}
 
@@ -136,13 +136,13 @@ func (p *parser) playerValid(player *common.Player) bool {
 
 // detectKnifeRound detects is current round is a knife round,
 // sets isKnifeRound to true if any player has no secondary weapon and first slot is a knife.
-func (p *parser) detectKnifeRound() {
-	p.isKnifeRound = false
+func (p *parser) detectKnifeRound(players []*common.Player) {
+	p.knifeRound = false
 
-	for _, player := range p.p.GameState().TeamCounterTerrorists().Members() {
+	for _, player := range players {
 		weapons := player.Weapons()
 		if len(weapons) == 1 && weapons[0].Type == common.EqKnife {
-			p.isKnifeRound = true
+			p.knifeRound = true
 
 			break
 		}
@@ -245,7 +245,7 @@ func (p *parser) playerHurtHandler(e events.PlayerHurt) { //nolint:gocritic // d
 }
 
 func (p *parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
-	p.detectKnifeRound()
+	p.detectKnifeRound(p.p.GameState().TeamCounterTerrorists().Members())
 }
 
 func (p *parser) matchStartedChangedHandler(e events.MatchStartedChanged) {

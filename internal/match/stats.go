@@ -60,13 +60,10 @@ func (s *stats) normalize() ([]*playerStat, []*weaponStat) { //nolint:unused // 
 }
 
 func (s *stats) normalizeSync() ([]*playerStat, []*weaponStat) {
-	playerStats := make([]*playerStat, len(s.playerStats))
-
-	var i int8
+	playerStats := make([]*playerStat, 0, len(s.playerStats))
 
 	for _, ps := range s.playerStats {
-		playerStats[i] = ps
-		i++
+		playerStats = append(playerStats, ps)
 	}
 
 	var weaponStats []*weaponStat
