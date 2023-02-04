@@ -1843,10 +1843,6 @@ func Test_stats_incrPlayerStat(t *testing.T) {
 func Test_stats_validWeapon(t *testing.T) {
 	t.Parallel()
 
-	type fields struct {
-		playerStats map[uint64]*playerStat
-		weaponStats map[uint64]map[common.EquipmentType]*weaponStat
-	}
 	type args struct {
 		e common.EquipmentType
 	}
@@ -2180,7 +2176,7 @@ func Test_stats_addWeaponStat(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			s := &stats{weaponStats: tt.fields.weaponStats}
+			s := &stats{weaponStats: tt.fields.weaponStats, playerStats: tt.fields.playerStats}
 			s.addWeaponStat(tt.args.steamID, tt.args.m, tt.args.e, tt.args.v)
 
 			assert.ObjectsAreEqual(tt.want, s.weaponStats)

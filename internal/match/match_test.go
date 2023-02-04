@@ -454,9 +454,6 @@ func Test_newReplayTeam(t *testing.T) {
 func Test_replayTeam_swapSide(t *testing.T) {
 	t.Parallel()
 
-	type fields struct {
-		_side common.Team
-	}
 	tests := []struct {
 		name     string
 		teamSide common.Team

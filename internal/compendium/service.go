@@ -6,6 +6,11 @@ import (
 	"github.com/ysomad/uniplay/internal/domain"
 )
 
+type compendiumRepository interface {
+	GetWeaponList(context.Context) ([]domain.Weapon, error)
+	GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
+}
+
 type Service struct {
 	compendium compendiumRepository
 }
