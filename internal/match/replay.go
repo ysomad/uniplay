@@ -33,13 +33,12 @@ func newReplay(rc io.ReadCloser, h *multipart.FileHeader) (replay, error) {
 	}
 
 	sub := strings.Split(h.Filename, ".")
-	lastIndex := len(sub) - 1
 
-	if lastIndex <= 0 {
+	if len(sub)-1 <= 0 {
 		return replay{}, errInvalidReplayFileExtension
 	}
 
-	if sub[lastIndex] != "dem" {
+	if sub[len(sub)-1] != "dem" {
 		return replay{}, errInvalidReplayFileExtension
 	}
 

@@ -43,10 +43,54 @@ func Test_newReplay(t *testing.T) {
 			wantErr: true,
 		},
 		{
+			name: "0 size of file",
+			args: args{
+				rc: io.NopCloser(strings.NewReader("TEST")),
+				fh: &multipart.FileHeader{Filename: "test.dem", Size: 0},
+			},
+			want: replay{
+				ReadCloser: nil,
+			},
+			wantErr: true,
+		},
+		{
+			name: "negative size of file",
+			args: args{
+				rc: io.NopCloser(strings.NewReader("TEST")),
+				fh: &multipart.FileHeader{Filename: "test.dem", Size: -55},
+			},
+			want: replay{
+				ReadCloser: nil,
+			},
+			wantErr: true,
+		},
+		{
 			name: "invalid replay filename",
 			args: args{
 				rc: io.NopCloser(strings.NewReader("TEST")),
 				fh: &multipart.FileHeader{Filename: "invalid", Size: 555},
+			},
+			want: replay{
+				ReadCloser: nil,
+			},
+			wantErr: true,
+		},
+		{
+			name: "empty replay filename",
+			args: args{
+				rc: io.NopCloser(strings.NewReader("TEST")),
+				fh: &multipart.FileHeader{Filename: "invalid", Size: 555},
+			},
+			want: replay{
+				ReadCloser: nil,
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid replay filename 2",
+			args: args{
+				rc: io.NopCloser(strings.NewReader("TEST")),
+				fh: &multipart.FileHeader{Filename: "invalid.demo", Size: 555},
 			},
 			want: replay{
 				ReadCloser: nil,

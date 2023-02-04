@@ -170,7 +170,7 @@ func TestNewReplayHeader(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "invalid playback time",
+			name: "playback time less than minimal match duration",
 			args: args{
 				ticks:        1488,
 				frames:       133777,
@@ -209,6 +209,21 @@ func TestNewReplayHeader(t *testing.T) {
 				client:       "",
 				mapName:      "de_dust2",
 				playbackTime: 0,
+				filesize:     425632453253245323,
+			},
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name: "empty map name",
+			args: args{
+				ticks:        1488,
+				frames:       133777,
+				signonLen:    123,
+				server:       "test",
+				client:       "client",
+				mapName:      "",
+				playbackTime: time.Minute * 25,
 				filesize:     425632453253245323,
 			},
 			want:    nil,
