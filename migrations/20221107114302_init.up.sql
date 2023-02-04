@@ -9,29 +9,29 @@ CREATE TABLE IF NOT EXISTS university (
     logo_url varchar(2048) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS player (
+    id uuid PRIMARY KEY NOT NULL,
+    steam_id numeric UNIQUE NOT NULL,
+    display_name varchar(64) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS team (
     id smallserial PRIMARY KEY NOT NULL,
     clan_name varchar(64) UNIQUE NOT NULL,
     flag_code char(2) NOT NULL,
-    captain_steam_id bigint REFERENCES player (steam_id)
-);
-
-CREATE TABLE IF NOT EXISTS player (
-    steam_id bigint PRIMARY KEY NOT NULL,
-    display_name varchar(64) NOT NULL,
-    avatar_uri varchar(2048)
+    captain_steam_id numeric REFERENCES player (steam_id)
 );
 
 CREATE TABLE IF NOT EXISTS team_player (
     team_id smallint NOT NULL REFERENCES team (id),
-    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    player_steam_id numeric NOT NULL REFERENCES player (steam_id),
     is_active boolean NOT NULL DEFAULT false,
     PRIMARY KEY (team_id, player_steam_id)
 );
 
 CREATE TABLE IF NOT EXISTS match (
     id uuid PRIMARY KEY NOT NULL,
-    number serial UNIQUE NOT NULL,
+    number smallserial UNIQUE NOT NULL,
     map_name varchar(64) NOT NULL,
     team1_id smallint NOT NULL REFERENCES team (id),
     team1_score smallint NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS match (
 );
 
 CREATE TABLE IF NOT EXISTS player_match_stat (
-    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    player_steam_id numeric NOT NULL REFERENCES player (steam_id),
     match_id uuid NOT NULL REFERENCES match (id),
     kills smallint NOT NULL,
     hs_kills smallint NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS player_match_stat (
 );
 
 CREATE TABLE IF NOT EXISTS player_match (
-    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    player_steam_id numeric NOT NULL REFERENCES player (steam_id),
     match_id uuid NOT NULL REFERENCES match (id),
     team_id smallint NOT NULL REFERENCES team (id),
     match_state smallint NOT NULL
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS weapon (
 );
 
 CREATE TABLE IF NOT EXISTS player_match_weapon_stat (
-    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    player_steam_id numeric NOT NULL REFERENCES player (steam_id),
     match_id uuid NOT NULL REFERENCES match (id),
     weapon_id smallint NOT NULL REFERENCES weapon (id),
     kills smallint NOT NULL,

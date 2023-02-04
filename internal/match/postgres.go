@@ -92,10 +92,10 @@ func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps [
 func (p *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, players []replayPlayer) error {
 	b := p.client.Builder.
 		Insert("player").
-		Columns("steam_id, display_name")
+		Columns("id, steam_id, display_name")
 
 	for _, p := range players {
-		b = b.Values(p.steamID, p.displayName)
+		b = b.Values(p.id, p.steamID, p.displayName)
 	}
 
 	sql, args, err := b.Suffix("ON CONFLICT(steam_id) DO NOTHING").ToSql()
