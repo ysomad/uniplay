@@ -1,6 +1,3 @@
-BEGIN
-;
-
 INSERT INTO university(long_name, short_name, city, logo_url)
 VALUES
 	('Московский государственный университет имени М.В. Ломоносова', 'МГУ имени М.В. Ломоносова', 'Москва', 'https://vuzoteka.ru/files/images/1c/18/62/1c18620f9705a9d08321d916402d1ad6_logo7.jpeg'),
@@ -2041,5 +2038,3 @@ VALUES
 	('Чебоксарский кооперативный институт', 'ЧКИ РУК', 'Чебоксары', 'https://vuzoteka.ru/files/images/fc/2b/54/fc2b5409405c8ea0c7af9b4707545256_logo7.jpeg'),
 	('Московского политехнического университета', 'Чебоксарский филиал МПУ', 'Чебоксары', 'https://vuzoteka.ru/files/images/ef/d5/c9/efd5c9f59af114686beb01a269aa7cc6_logo7.jpeg'),
 	('Финансового университета при Правительстве Российской федерации', 'Челябинский филиал Финуниверситета', 'Челябинск', 'https://vuzoteka.ru/files/images/be/4d/e2/be4de24f59e96acc2d06cc32b8dc99b3_logo7.jpeg');
-
-COMMIT;

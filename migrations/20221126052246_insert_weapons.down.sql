@@ -1,3 +1,3 @@
-DELETE FROM weapon_class CASCADE;
-
 DELETE FROM weapon CASCADE;
+
+DELETE FROM weapon_class CASCADE;
