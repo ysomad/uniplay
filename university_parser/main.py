@@ -1,21 +1,10 @@
 import logging
-import json
-from dataclasses import dataclass
-from re import I
 
 import requests
 from bs4 import BeautifulSoup
 
 
 URL = 'https://vuzoteka.ru/%D0%B2%D1%83%D0%B7%D1%8B'
-
-
-@dataclass
-class Institution:
-    full_name: str
-    short_name: str
-    city: str
-    logo_url: str
 
 
 def main() -> None:
@@ -35,13 +24,8 @@ def main() -> None:
 
     last_page = int(last_page_div.text)
 
-    # institutions: list[Institution] = []
-
     with open('migration.sql', 'w') as outfile:
-        outfile.write("""BEGIN
-;
-
-INSERT INTO university(long_name, short_name, city, logo_url)
+        outfile.write("""INSERT INTO university(long_name, short_name, city, logo_url)
 VALUES""")
 
         for current_page in range(1, last_page+1):
@@ -92,33 +76,16 @@ VALUES""")
                 city = city_tag[1].text.strip()
                 logo_url = f'https://{logo_tag["data-src"][2:]}'
 
-                # institution = Institution(
-                #     full_name=full_name.strip(), 
-                #     short_name=short_name.strip(),
-                #     city=city, 
-                #     logo_url=logo_url
-                # )
-
-                # institutions.append(institution)
-
                 outfile.write(f"\n\t('{full_name.strip()}', '{short_name.strip()}', '{city}', '{logo_url}')")
 
                 if current_page == last_page and i == len(rows):
-                    outfile.write(';\n\nCOMMIT;')
+                    outfile.write(';')
                     break
                     
                 outfile.write(',')
                 i += 1
 
     
-    # json_string = json.dumps([institution.__dict__ for institution in institutions], ensure_ascii=False, indent=2)
-
-    # with open('institutions.json', 'w') as f:
-    #     f.write(json_string)
-
-    # print(len(institutions))
-
-
 if __name__ == '__main__':
     try:
         main()
