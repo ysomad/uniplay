@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
 
@@ -29,23 +30,18 @@ func NewController(m matchService) *Controller {
 	}
 }
 
+const msgReplayFileNotFound = "replay file not found in request"
+
 func (c *Controller) CreateMatch(p matchGen.CreateMatchParams) matchGen.CreateMatchResponder {
-	if err := p.HTTPRequest.ParseMultipartForm(150 << 20); err != nil {
-		return matchGen.NewCreateMatchBadRequest().WithPayload(&models.Error{
-			Code:    http.StatusBadRequest,
-			Message: err.Error(),
+	formFile, ok := p.Replay.(*runtime.File)
+	if !ok {
+		return matchGen.NewCreateMatchInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: msgReplayFileNotFound,
 		})
 	}
 
-	file, header, err := p.HTTPRequest.FormFile("replay")
-	if err != nil {
-		return matchGen.NewCreateMatchBadRequest().WithPayload(&models.Error{
-			Code:    http.StatusBadRequest,
-			Message: err.Error(),
-		})
-	}
-
-	r, err := newReplay(file, header)
+	r, err := newReplay(formFile.Data, formFile.Header)
 	if err != nil {
 		return matchGen.NewCreateMatchBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
