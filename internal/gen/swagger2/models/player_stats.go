@@ -19,6 +19,10 @@ import (
 // swagger:model PlayerStats
 type PlayerStats struct {
 
+	// base stats
+	// Required: true
+	BaseStats *PlayerStatsBaseStats `json:"base_stats"`
+
 	// calculated stats
 	// Required: true
 	CalculatedStats PlayerStatsCalculatedStats `json:"calculated_stats"`
@@ -26,15 +30,15 @@ type PlayerStats struct {
 	// round stats
 	// Required: true
 	RoundStats PlayerStatsRoundStats `json:"round_stats"`
-
-	// total stats
-	// Required: true
-	TotalStats *PlayerStatsTotalStats `json:"total_stats"`
 }
 
 // Validate validates this player stats
 func (m *PlayerStats) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateBaseStats(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.validateCalculatedStats(formats); err != nil {
 		res = append(res, err)
@@ -44,13 +48,29 @@ func (m *PlayerStats) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateTotalStats(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *PlayerStats) validateBaseStats(formats strfmt.Registry) error {
+
+	if err := validate.Required("base_stats", "body", m.BaseStats); err != nil {
+		return err
+	}
+
+	if m.BaseStats != nil {
+		if err := m.BaseStats.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("base_stats")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("base_stats")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -82,29 +102,13 @@ func (m *PlayerStats) validateRoundStats(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *PlayerStats) validateTotalStats(formats strfmt.Registry) error {
-
-	if err := validate.Required("total_stats", "body", m.TotalStats); err != nil {
-		return err
-	}
-
-	if m.TotalStats != nil {
-		if err := m.TotalStats.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("total_stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("total_stats")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
 // ContextValidate validate this player stats based on the context it is used
 func (m *PlayerStats) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.contextValidateBaseStats(ctx, formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.contextValidateCalculatedStats(ctx, formats); err != nil {
 		res = append(res, err)
@@ -114,13 +118,25 @@ func (m *PlayerStats) ContextValidate(ctx context.Context, formats strfmt.Regist
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateTotalStats(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *PlayerStats) contextValidateBaseStats(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.BaseStats != nil {
+		if err := m.BaseStats.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("base_stats")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("base_stats")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -147,22 +163,6 @@ func (m *PlayerStats) contextValidateRoundStats(ctx context.Context, formats str
 			return ce.ValidateName("round_stats")
 		}
 		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStats) contextValidateTotalStats(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.TotalStats != nil {
-		if err := m.TotalStats.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("total_stats")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("total_stats")
-			}
-			return err
-		}
 	}
 
 	return nil

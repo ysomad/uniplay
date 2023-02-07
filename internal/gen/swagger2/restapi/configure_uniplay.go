@@ -11,8 +11,10 @@ import (
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/team"
 )
 
 //go:generate swagger generate server --target ../../swagger2 --name Uniplay --spec ../../../../swagger2.yaml --principal interface{} --exclude-main --strict-responders
@@ -53,9 +55,19 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 			return match.DeleteMatchNotImplemented()
 		})
 	}
+	if api.InstitutionGetInstitutionsHandler == nil {
+		api.InstitutionGetInstitutionsHandler = institution.GetInstitutionsHandlerFunc(func(params institution.GetInstitutionsParams) institution.GetInstitutionsResponder {
+			return institution.GetInstitutionsNotImplemented()
+		})
+	}
 	if api.PlayerGetPlayerStatsHandler == nil {
 		api.PlayerGetPlayerStatsHandler = player.GetPlayerStatsHandlerFunc(func(params player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
 			return player.GetPlayerStatsNotImplemented()
+		})
+	}
+	if api.TeamGetTeamListHandler == nil {
+		api.TeamGetTeamListHandler = team.GetTeamListHandlerFunc(func(params team.GetTeamListParams) team.GetTeamListResponder {
+			return team.GetTeamListNotImplemented()
 		})
 	}
 	if api.CompendiumGetWeaponClassesHandler == nil {

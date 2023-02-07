@@ -1,19 +1,23 @@
 package domain
 
-import "math"
+import (
+	"math"
 
-type WeaponStat struct {
-	Total    *WeaponTotalStat
-	Accuracy WeaponAccuracyStat
+	"github.com/google/uuid"
+)
+
+type WeaponStats struct {
+	Base     *WeaponBaseStats
+	Accuracy WeaponAccuracyStats
 }
 
-func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
-	res := make([]WeaponStat, len(total))
+func NewWeaponStats(total []*WeaponBaseStats) []WeaponStats {
+	res := make([]WeaponStats, len(total))
 
 	for i, s := range total {
-		res[i] = WeaponStat{
-			Total: s,
-			Accuracy: newWeaponAccuracyStat(
+		res[i] = WeaponStats{
+			Base: s,
+			Accuracy: newWeaponAccuracyStats(
 				s.Shots,
 				s.HeadHits,
 				s.NeckHits,
@@ -30,7 +34,7 @@ func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
 	return res
 }
 
-type WeaponTotalStat struct {
+type WeaponBaseStats struct {
 	WeaponID          int32
 	Weapon            string
 	Kills             int32
@@ -54,7 +58,7 @@ type WeaponTotalStat struct {
 	RightLegHits      int32
 }
 
-type WeaponAccuracyStat struct {
+type WeaponAccuracyStats struct {
 	Total   float64
 	Head    float64
 	Neck    float64
@@ -76,14 +80,14 @@ func calcAccuracy(sum, num int32) float64 {
 	return round(float64(sum) * 100 / float64(num))
 }
 
-func newWeaponAccuracyStat(shots, headHits, neckHits, chestHits, stomachHits, lArmHits, rArmHits, lLegHits, rLegHits int32) WeaponAccuracyStat {
+func newWeaponAccuracyStats(shots, headHits, neckHits, chestHits, stomachHits, lArmHits, rArmHits, lLegHits, rLegHits int32) WeaponAccuracyStats {
 	hits := headHits + neckHits + chestHits + stomachHits + lArmHits + rArmHits + lLegHits + rLegHits
 
 	if hits <= 0 {
-		return WeaponAccuracyStat{}
+		return WeaponAccuracyStats{}
 	}
 
-	return WeaponAccuracyStat{
+	return WeaponAccuracyStats{
 		Total:   calcAccuracy(hits, shots),
 		Head:    calcAccuracy(headHits, hits),
 		Neck:    calcAccuracy(neckHits, hits),
@@ -95,5 +99,7 @@ func newWeaponAccuracyStat(shots, headHits, neckHits, chestHits, stomachHits, lA
 }
 
 type WeaponStatsFilter struct {
-	WeaponID, ClassID *int32
+	WeaponID *int32
+	ClassID  *int32
+	MatchID  uuid.UUID
 }

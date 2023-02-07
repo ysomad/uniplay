@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/google/uuid"
+
 	"github.com/ysomad/uniplay/internal/domain"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
@@ -13,8 +15,8 @@ import (
 )
 
 type playerService interface {
-	GetStats(ctx context.Context, steamID uint64) (domain.PlayerStats, error)
-	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStat, error)
+	GetStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (domain.PlayerStats, error)
+	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error)
 }
 
 type Controller struct {
@@ -28,15 +30,29 @@ func NewController(p playerService) *Controller {
 }
 
 func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
+	var err error
+
 	steamID, err := strconv.ParseUint(p.SteamID, 10, 64)
 	if err != nil {
-		return player.NewGetPlayerStatsNotFound().WithPayload(&models.Error{
-			Code:    domain.CodePlayerNotFound,
+		return player.NewGetPlayerStatsBadRequest().WithPayload(&models.Error{
+			Code:    http.StatusBadRequest,
 			Message: err.Error(),
 		})
 	}
 
-	s, err := c.player.GetStats(p.HTTPRequest.Context(), steamID)
+	filter := domain.PlayerStatsFilter{}
+
+	if p.MatchID != nil {
+		filter.MatchID, err = uuid.Parse(p.MatchID.String())
+		if err != nil {
+			return player.NewGetPlayerStatsBadRequest().WithPayload(&models.Error{
+				Code:    http.StatusBadRequest,
+				Message: err.Error(),
+			})
+		}
+	}
+
+	s, err := c.player.GetStats(p.HTTPRequest.Context(), steamID, filter)
 	if err != nil {
 		if errors.Is(err, domain.ErrPlayerNotFound) {
 			return player.NewGetPlayerStatsNotFound().WithPayload(&models.Error{
@@ -53,30 +69,30 @@ func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPla
 
 	// copilot is a LEGEND
 	payload := &models.PlayerStats{
-		TotalStats: &models.PlayerStatsTotalStats{
-			Assists:            s.Total.Assists,
-			BlindKills:         s.Total.BlindKills,
-			BlindedPlayers:     s.Total.BlindedPlayers,
-			BlindedTimes:       s.Total.BlindedTimes,
-			BombsDefused:       s.Total.BombsDefused,
-			BombsPlanted:       s.Total.BombsPlanted,
-			DamageDealt:        s.Total.DamageDealt,
-			DamageTaken:        s.Total.DamageTaken,
-			Deaths:             s.Total.Deaths,
-			Draws:              s.Total.Draws,
-			FlashbangAssists:   s.Total.FlashbangAssists,
-			GrenadeDamageDealt: s.Total.GrenadeDamageDealt,
-			HeadshotKills:      s.Total.HeadshotKills,
-			Kills:              s.Total.Kills,
-			Loses:              s.Total.Loses,
-			MatchesPlayed:      s.Total.MatchesPlayed,
-			MvpCount:           s.Total.MVPCount,
-			NoscopeKills:       s.Total.NoScopeKills,
-			RoundsPlayed:       s.Total.RoundsPlayed,
-			ThroughSmokeKills:  s.Total.ThroughSmokeKills,
-			TimePlayed:         int64(s.Total.TimePlayed),
-			WallbangKills:      s.Total.WallbangKills,
-			Wins:               s.Total.Wins,
+		BaseStats: &models.PlayerStatsBaseStats{
+			Assists:            s.Base.Assists,
+			BlindKills:         s.Base.BlindKills,
+			BlindedPlayers:     s.Base.BlindedPlayers,
+			BlindedTimes:       s.Base.BlindedTimes,
+			BombsDefused:       s.Base.BombsDefused,
+			BombsPlanted:       s.Base.BombsPlanted,
+			DamageDealt:        s.Base.DamageDealt,
+			DamageTaken:        s.Base.DamageTaken,
+			Deaths:             s.Base.Deaths,
+			Draws:              s.Base.Draws,
+			FlashbangAssists:   s.Base.FlashbangAssists,
+			GrenadeDamageDealt: s.Base.GrenadeDamageDealt,
+			HeadshotKills:      s.Base.HeadshotKills,
+			Kills:              s.Base.Kills,
+			Loses:              s.Base.Loses,
+			MatchesPlayed:      s.Base.MatchesPlayed,
+			MvpCount:           s.Base.MVPCount,
+			NoscopeKills:       s.Base.NoScopeKills,
+			RoundsPlayed:       s.Base.RoundsPlayed,
+			ThroughSmokeKills:  s.Base.ThroughSmokeKills,
+			TimePlayed:         int64(s.Base.TimePlayed),
+			WallbangKills:      s.Base.WallbangKills,
+			Wins:               s.Base.Wins,
 		},
 		RoundStats: models.PlayerStatsRoundStats{
 			Assists:            s.Round.Assists,
@@ -98,18 +114,32 @@ func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPla
 }
 
 func (c *Controller) GetWeaponStats(p player.GetWeaponStatsParams) player.GetWeaponStatsResponder {
+	var err error
+
 	steamID, err := strconv.ParseUint(p.SteamID, 10, 64)
 	if err != nil {
-		return player.NewGetWeaponStatsNotFound().WithPayload(&models.Error{
-			Code:    domain.CodePlayerNotFound,
+		return player.NewGetWeaponStatsBadRequest().WithPayload(&models.Error{
+			Code:    http.StatusBadRequest,
 			Message: err.Error(),
 		})
 	}
 
-	weaponStats, err := c.player.GetWeaponStats(p.HTTPRequest.Context(), steamID, domain.WeaponStatsFilter{
+	filter := domain.WeaponStatsFilter{
 		WeaponID: p.WeaponID,
 		ClassID:  p.ClassID,
-	})
+	}
+
+	if p.MatchID != nil {
+		filter.MatchID, err = uuid.Parse(p.MatchID.String())
+		if err != nil {
+			return player.NewGetWeaponStatsBadRequest().WithPayload(&models.Error{
+				Code:    http.StatusBadRequest,
+				Message: err.Error(),
+			})
+		}
+	}
+
+	weaponStats, err := c.player.GetWeaponStats(p.HTTPRequest.Context(), steamID, filter)
 	if err != nil {
 		if errors.Is(err, domain.ErrPlayerNotFound) {
 			return player.NewGetWeaponStatsNotFound().WithPayload(&models.Error{
@@ -128,28 +158,28 @@ func (c *Controller) GetWeaponStats(p player.GetWeaponStatsParams) player.GetWea
 
 	for i, s := range weaponStats {
 		payload[i] = models.PlayerWeaponStatsInner{
-			TotalStats: &models.PlayerWeaponStatsInnerTotalStats{
-				Assists:           s.Total.Assists,
-				BlindKills:        s.Total.BlindKills,
-				ChestHits:         s.Total.ChestHits,
-				DamageDealt:       s.Total.DamageDealt,
-				DamageTaken:       s.Total.DamageTaken,
-				Deaths:            s.Total.Deaths,
-				HeadHits:          s.Total.HeadHits,
-				NeckHits:          s.Total.NeckHits,
-				HeadshotKills:     s.Total.HeadshotKills,
-				Kills:             s.Total.Kills,
-				LeftArmHits:       s.Total.LeftArmHits,
-				LeftLegHits:       s.Total.LeftLegHits,
-				NoscopeKills:      s.Total.NoScopeKills,
-				RightArmHits:      s.Total.RightArmHits,
-				RightLegHits:      s.Total.RightLegHits,
-				Shots:             s.Total.Shots,
-				StomachHits:       s.Total.StomachHits,
-				ThroughSmokeKills: s.Total.ThroughSmokeKills,
-				WallbangKills:     s.Total.WallbangKills,
-				Weapon:            s.Total.Weapon,
-				WeaponID:          s.Total.WeaponID,
+			BaseStats: &models.PlayerWeaponStatsInnerBaseStats{
+				Assists:           s.Base.Assists,
+				BlindKills:        s.Base.BlindKills,
+				ChestHits:         s.Base.ChestHits,
+				DamageDealt:       s.Base.DamageDealt,
+				DamageTaken:       s.Base.DamageTaken,
+				Deaths:            s.Base.Deaths,
+				HeadHits:          s.Base.HeadHits,
+				NeckHits:          s.Base.NeckHits,
+				HeadshotKills:     s.Base.HeadshotKills,
+				Kills:             s.Base.Kills,
+				LeftArmHits:       s.Base.LeftArmHits,
+				LeftLegHits:       s.Base.LeftLegHits,
+				NoscopeKills:      s.Base.NoScopeKills,
+				RightArmHits:      s.Base.RightArmHits,
+				RightLegHits:      s.Base.RightLegHits,
+				Shots:             s.Base.Shots,
+				StomachHits:       s.Base.StomachHits,
+				ThroughSmokeKills: s.Base.ThroughSmokeKills,
+				WallbangKills:     s.Base.WallbangKills,
+				Weapon:            s.Base.Weapon,
+				WeaponID:          s.Base.WeaponID,
 			},
 			AccuracyStats: models.PlayerWeaponStatsInnerAccuracyStats{
 				Arms:    s.Accuracy.Arms,

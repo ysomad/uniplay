@@ -6,6 +6,7 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"go.opentelemetry.io/otel/trace"
 
@@ -26,7 +27,7 @@ func NewPostgres(t trace.Tracer, c *pgclient.Client) *Postgres {
 	}
 }
 
-type playerTotalStat struct {
+type playerBaseStats struct {
 	Kills              int32         `db:"total_kills"`
 	HeadshotKills      int32         `db:"total_hs_kills"`
 	BlindKills         int32         `db:"total_blind_kills"`
@@ -52,11 +53,11 @@ type playerTotalStat struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (p *Postgres) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
-	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetTotalStats")
+func (p *Postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error) {
+	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetBaseStats")
 	defer span.End()
 
-	sql, args, err := p.client.Builder.
+	b := p.client.Builder.
 		Select(
 			"sum(ps.kills) as total_kills",
 			"sum(ps.hs_kills) as total_hs_kills",
@@ -84,9 +85,13 @@ func (p *Postgres) GetTotalStats(ctx context.Context, steamID uint64) (*domain.P
 		From("player_match_stat ps").
 		InnerJoin("player_match pm ON ps.player_steam_id = pm.player_steam_id").
 		InnerJoin("match m ON pm.match_id = m.id").
-		Where(sq.Eq{"ps.player_steam_id": steamID}).
-		GroupBy("pm.match_state").
-		ToSql()
+		Where(sq.Eq{"ps.player_steam_id": steamID})
+
+	if (f.MatchID != uuid.UUID{}) {
+		b = b.Where(sq.Eq{"ps.match_id": f.MatchID})
+	}
+
+	sql, args, err := b.GroupBy("pm.match_state").ToSql()
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +101,7 @@ func (p *Postgres) GetTotalStats(ctx context.Context, steamID uint64) (*domain.P
 		return nil, err
 	}
 
-	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[playerTotalStat])
+	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[playerBaseStats])
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, domain.ErrPlayerNotFound
@@ -105,12 +110,12 @@ func (p *Postgres) GetTotalStats(ctx context.Context, steamID uint64) (*domain.P
 		return nil, err
 	}
 
-	res := domain.PlayerTotalStats(stats)
+	res := domain.PlayerBaseStats(stats)
 
 	return &res, nil
 }
 
-type weaponTotalStat struct {
+type weaponBaseStats struct {
 	WeaponID          int32  `db:"weapon_id"`
 	Weapon            string `db:"weapon"`
 	Kills             int32  `db:"total_kills"`
@@ -134,8 +139,8 @@ type weaponTotalStat struct {
 	RightLegHits      int32  `db:"total_r_leg_hits"`
 }
 
-func (p *Postgres) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponTotalStat, error) {
-	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetTotalWeaponStats")
+func (p *Postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
+	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetWeaponBaseStats")
 	defer span.End()
 
 	b := p.client.Builder.
@@ -170,6 +175,8 @@ func (p *Postgres) GetTotalWeaponStats(ctx context.Context, steamID uint64, f do
 		b = b.Where(sq.Eq{"ws.weapon_id": f.WeaponID})
 	case f.ClassID != nil:
 		b = b.Where(sq.Eq{"w.class_id": f.ClassID})
+	case f.MatchID != uuid.UUID{}:
+		b = b.Where(sq.Eq{"ws.match_id": f.MatchID})
 	}
 
 	sql, args, err := b.
@@ -185,7 +192,7 @@ func (p *Postgres) GetTotalWeaponStats(ctx context.Context, steamID uint64, f do
 		return nil, err
 	}
 
-	weaponStats, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[weaponTotalStat])
+	weaponStats, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[weaponBaseStats])
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, domain.ErrPlayerNotFound
@@ -194,10 +201,10 @@ func (p *Postgres) GetTotalWeaponStats(ctx context.Context, steamID uint64, f do
 		return nil, err
 	}
 
-	res := make([]*domain.WeaponTotalStat, len(weaponStats))
+	res := make([]*domain.WeaponBaseStats, len(weaponStats))
 
 	for i, s := range weaponStats {
-		res[i] = &domain.WeaponTotalStat{
+		res[i] = &domain.WeaponBaseStats{
 			WeaponID:          s.WeaponID,
 			Weapon:            s.Weapon,
 			Kills:             s.Kills,

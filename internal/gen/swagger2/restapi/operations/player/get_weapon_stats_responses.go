@@ -64,6 +64,53 @@ func (o *GetWeaponStatsOK) WriteResponse(rw http.ResponseWriter, producer runtim
 
 func (o *GetWeaponStatsOK) GetWeaponStatsResponder() {}
 
+// GetWeaponStatsBadRequestCode is the HTTP code returned for type GetWeaponStatsBadRequest
+const GetWeaponStatsBadRequestCode int = 400
+
+/*
+GetWeaponStatsBadRequest Bad Request
+
+swagger:response getWeaponStatsBadRequest
+*/
+type GetWeaponStatsBadRequest struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Error `json:"body,omitempty"`
+}
+
+// NewGetWeaponStatsBadRequest creates GetWeaponStatsBadRequest with default headers values
+func NewGetWeaponStatsBadRequest() *GetWeaponStatsBadRequest {
+
+	return &GetWeaponStatsBadRequest{}
+}
+
+// WithPayload adds the payload to the get weapon stats bad request response
+func (o *GetWeaponStatsBadRequest) WithPayload(payload *models.Error) *GetWeaponStatsBadRequest {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the get weapon stats bad request response
+func (o *GetWeaponStatsBadRequest) SetPayload(payload *models.Error) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *GetWeaponStatsBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(400)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+func (o *GetWeaponStatsBadRequest) GetWeaponStatsResponder() {}
+
 // GetWeaponStatsNotFoundCode is the HTTP code returned for type GetWeaponStatsNotFound
 const GetWeaponStatsNotFoundCode int = 404
 
