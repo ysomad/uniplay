@@ -9,8 +9,8 @@ import (
 )
 
 type playerRepository interface {
-	GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error)
-	GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponTotalStat, error)
+	GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error)
+	GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error)
 }
 
 type Service struct {
@@ -25,11 +25,11 @@ func NewService(t trace.Tracer, r playerRepository) *Service {
 	}
 }
 
-func (s *Service) GetStats(ctx context.Context, steamID uint64) (domain.PlayerStats, error) {
+func (s *Service) GetStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (domain.PlayerStats, error) {
 	ctx, span := s.tracer.Start(ctx, "player.Service.GetStats")
 	defer span.End()
 
-	ts, err := s.player.GetTotalStats(ctx, steamID)
+	ts, err := s.player.GetBaseStats(ctx, steamID, f)
 	if err != nil {
 		return domain.PlayerStats{}, err
 	}
@@ -37,11 +37,11 @@ func (s *Service) GetStats(ctx context.Context, steamID uint64) (domain.PlayerSt
 	return domain.NewPlayerStats(ts), nil
 }
 
-func (s *Service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStat, error) {
+func (s *Service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
 	ctx, span := s.tracer.Start(ctx, "player.Service.GetWeaponStats")
 	defer span.End()
 
-	ts, err := s.player.GetTotalWeaponStats(ctx, steamID, f)
+	ts, err := s.player.GetWeaponBaseStats(ctx, steamID, f)
 	if err != nil {
 		return nil, err
 	}

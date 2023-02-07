@@ -11,7 +11,7 @@ func TestNewPlayerStats(t *testing.T) {
 	t.Parallel()
 
 	type args struct {
-		t *PlayerTotalStats
+		t *PlayerBaseStats
 	}
 	tests := []struct {
 		name string
@@ -21,7 +21,7 @@ func TestNewPlayerStats(t *testing.T) {
 		{
 			name: "success",
 			args: args{
-				t: &PlayerTotalStats{
+				t: &PlayerBaseStats{
 					Kills:              1337,
 					HeadshotKills:      567,
 					BlindKills:         59,
@@ -48,7 +48,7 @@ func TestNewPlayerStats(t *testing.T) {
 				},
 			},
 			want: PlayerStats{
-				Total: &PlayerTotalStats{
+				Base: &PlayerBaseStats{
 					Kills:              1337,
 					HeadshotKills:      567,
 					BlindKills:         59,

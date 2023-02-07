@@ -61,6 +61,53 @@ func (o *GetPlayerStatsOK) WriteResponse(rw http.ResponseWriter, producer runtim
 
 func (o *GetPlayerStatsOK) GetPlayerStatsResponder() {}
 
+// GetPlayerStatsBadRequestCode is the HTTP code returned for type GetPlayerStatsBadRequest
+const GetPlayerStatsBadRequestCode int = 400
+
+/*
+GetPlayerStatsBadRequest Bad Request
+
+swagger:response getPlayerStatsBadRequest
+*/
+type GetPlayerStatsBadRequest struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Error `json:"body,omitempty"`
+}
+
+// NewGetPlayerStatsBadRequest creates GetPlayerStatsBadRequest with default headers values
+func NewGetPlayerStatsBadRequest() *GetPlayerStatsBadRequest {
+
+	return &GetPlayerStatsBadRequest{}
+}
+
+// WithPayload adds the payload to the get player stats bad request response
+func (o *GetPlayerStatsBadRequest) WithPayload(payload *models.Error) *GetPlayerStatsBadRequest {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the get player stats bad request response
+func (o *GetPlayerStatsBadRequest) SetPayload(payload *models.Error) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *GetPlayerStatsBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(400)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+func (o *GetPlayerStatsBadRequest) GetPlayerStatsResponder() {}
+
 // GetPlayerStatsNotFoundCode is the HTTP code returned for type GetPlayerStatsNotFound
 const GetPlayerStatsNotFoundCode int = 404
 

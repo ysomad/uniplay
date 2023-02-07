@@ -10,17 +10,17 @@ func TestNewWeaponStats(t *testing.T) {
 	t.Parallel()
 
 	type args struct {
-		total []*WeaponTotalStat
+		total []*WeaponBaseStats
 	}
 	tests := []struct {
 		name string
 		args args
-		want []WeaponStat
+		want []WeaponStats
 	}{
 		{
 			name: "success",
 			args: args{
-				total: []*WeaponTotalStat{
+				total: []*WeaponBaseStats{
 					{
 						WeaponID:          1,
 						Weapon:            "ak-47",
@@ -89,9 +89,9 @@ func TestNewWeaponStats(t *testing.T) {
 					},
 				},
 			},
-			want: []WeaponStat{
+			want: []WeaponStats{
 				{
-					Total: &WeaponTotalStat{
+					Base: &WeaponBaseStats{
 						WeaponID:          1,
 						Weapon:            "ak-47",
 						Kills:             1337,
@@ -113,7 +113,7 @@ func TestNewWeaponStats(t *testing.T) {
 						LeftLegHits:       45,
 						RightLegHits:      88,
 					},
-					Accuracy: WeaponAccuracyStat{
+					Accuracy: WeaponAccuracyStats{
 						Total:   62.43,
 						Head:    32.36,
 						Chest:   12.4,
@@ -123,7 +123,7 @@ func TestNewWeaponStats(t *testing.T) {
 					},
 				},
 				{
-					Total: &WeaponTotalStat{
+					Base: &WeaponBaseStats{
 						WeaponID:          2,
 						Weapon:            "mp4a4",
 						Kills:             1337,
@@ -145,7 +145,7 @@ func TestNewWeaponStats(t *testing.T) {
 						LeftLegHits:       65,
 						RightLegHits:      54,
 					},
-					Accuracy: WeaponAccuracyStat{
+					Accuracy: WeaponAccuracyStats{
 						Total:   52.19,
 						Head:    84.29,
 						Chest:   4.84,
@@ -155,7 +155,7 @@ func TestNewWeaponStats(t *testing.T) {
 					},
 				},
 				{
-					Total: &WeaponTotalStat{
+					Base: &WeaponBaseStats{
 						WeaponID:          3,
 						Weapon:            "awp",
 						Kills:             1337,
@@ -177,7 +177,7 @@ func TestNewWeaponStats(t *testing.T) {
 						LeftLegHits:       45,
 						RightLegHits:      11,
 					},
-					Accuracy: WeaponAccuracyStat{
+					Accuracy: WeaponAccuracyStats{
 						Total:   13.35,
 						Head:    39.58,
 						Chest:   20.67,
@@ -311,7 +311,7 @@ func Test_calcAccuracy(t *testing.T) {
 	}
 }
 
-func Test_newWeaponAccuracyStat(t *testing.T) {
+func Test_newWeaponAccuracyStats(t *testing.T) {
 	t.Parallel()
 
 	type args struct {
@@ -328,7 +328,7 @@ func Test_newWeaponAccuracyStat(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want WeaponAccuracyStat
+		want WeaponAccuracyStats
 	}{
 		{
 			name: "success",
@@ -343,7 +343,7 @@ func Test_newWeaponAccuracyStat(t *testing.T) {
 				lLegHits:    45,
 				rLegHits:    88,
 			},
-			want: WeaponAccuracyStat{
+			want: WeaponAccuracyStats{
 				Total:   70.67,
 				Head:    28.58,
 				Neck:    11.67,
@@ -366,12 +366,12 @@ func Test_newWeaponAccuracyStat(t *testing.T) {
 				lLegHits:    0,
 				rLegHits:    0,
 			},
-			want: WeaponAccuracyStat{},
+			want: WeaponAccuracyStats{},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := newWeaponAccuracyStat(
+			got := newWeaponAccuracyStats(
 				tt.args.shots,
 				tt.args.headHits,
 				tt.args.neckHits,

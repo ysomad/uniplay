@@ -47,6 +47,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/PlayerStats'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
         "404":
           description: Not Found
           schema:
@@ -77,6 +81,7 @@ paths:
         required: false
         type: string
         format: uuid
+        x-nullable: false
       - name: weapon_id
         in: query
         description: Фильтр по оружию
@@ -94,6 +99,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/PlayerWeaponStats'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
         "404":
           description: Not Found
           schema:
@@ -274,12 +283,12 @@ definitions:
   PlayerStats:
     type: object
     required:
+    - base_stats
     - calculated_stats
     - round_stats
-    - total_stats
     properties:
-      total_stats:
-        $ref: '#/definitions/PlayerStats_total_stats'
+      base_stats:
+        $ref: '#/definitions/PlayerStats_base_stats'
       calculated_stats:
         $ref: '#/definitions/PlayerStats_calculated_stats'
       round_stats:
@@ -296,7 +305,7 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/WeaponClassList_inner'
-  PlayerStats_total_stats:
+  PlayerStats_base_stats:
     type: object
     properties:
       kills:
@@ -416,7 +425,7 @@ definitions:
         description: средне кол-во ослепленных игроков за раунд
     description: набор средних показателей за раунд
     x-nullable: false
-  PlayerWeaponStats_inner_total_stats:
+  PlayerWeaponStats_inner_base_stats:
     type: object
     properties:
       weapon_id:
@@ -510,10 +519,10 @@ definitions:
     type: object
     required:
     - accuracy_stats
-    - total_stats
+    - base_stats
     properties:
-      total_stats:
-        $ref: '#/definitions/PlayerWeaponStats_inner_total_stats'
+      base_stats:
+        $ref: '#/definitions/PlayerWeaponStats_inner_base_stats'
       accuracy_stats:
         $ref: '#/definitions/PlayerWeaponStats_inner_accuracy_stats'
     x-nullable: false

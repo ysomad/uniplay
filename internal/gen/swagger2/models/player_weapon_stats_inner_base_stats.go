@@ -12,10 +12,10 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// PlayerWeaponStatsInnerTotalStats player weapon stats inner total stats
+// PlayerWeaponStatsInnerBaseStats player weapon stats inner base stats
 //
-// swagger:model PlayerWeaponStats_inner_total_stats
-type PlayerWeaponStatsInnerTotalStats struct {
+// swagger:model PlayerWeaponStats_inner_base_stats
+type PlayerWeaponStatsInnerBaseStats struct {
 
 	// assists
 	Assists int32 `json:"assists,omitempty"`
@@ -81,18 +81,18 @@ type PlayerWeaponStatsInnerTotalStats struct {
 	WeaponID int32 `json:"weapon_id,omitempty"`
 }
 
-// Validate validates this player weapon stats inner total stats
-func (m *PlayerWeaponStatsInnerTotalStats) Validate(formats strfmt.Registry) error {
+// Validate validates this player weapon stats inner base stats
+func (m *PlayerWeaponStatsInnerBaseStats) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this player weapon stats inner total stats based on context it is used
-func (m *PlayerWeaponStatsInnerTotalStats) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this player weapon stats inner base stats based on context it is used
+func (m *PlayerWeaponStatsInnerBaseStats) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *PlayerWeaponStatsInnerTotalStats) MarshalBinary() ([]byte, error) {
+func (m *PlayerWeaponStatsInnerBaseStats) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -100,8 +100,8 @@ func (m *PlayerWeaponStatsInnerTotalStats) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *PlayerWeaponStatsInnerTotalStats) UnmarshalBinary(b []byte) error {
-	var res PlayerWeaponStatsInnerTotalStats
+func (m *PlayerWeaponStatsInnerBaseStats) UnmarshalBinary(b []byte) error {
+	var res PlayerWeaponStatsInnerBaseStats
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

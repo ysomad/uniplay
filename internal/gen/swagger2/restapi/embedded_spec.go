@@ -242,6 +242,12 @@ func init() {
               "$ref": "#/definitions/PlayerStats"
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
           "404": {
             "description": "Not Found",
             "schema": {
@@ -281,6 +287,7 @@ func init() {
           {
             "type": "string",
             "format": "uuid",
+            "x-nullable": false,
             "description": "Фильтр по матчу",
             "name": "match_id",
             "in": "query"
@@ -305,6 +312,12 @@ func init() {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/PlayerWeaponStats"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
             }
           },
           "404": {
@@ -395,84 +408,23 @@ func init() {
     "PlayerStats": {
       "type": "object",
       "required": [
+        "base_stats",
         "calculated_stats",
-        "round_stats",
-        "total_stats"
+        "round_stats"
       ],
       "properties": {
+        "base_stats": {
+          "$ref": "#/definitions/PlayerStats_base_stats"
+        },
         "calculated_stats": {
           "$ref": "#/definitions/PlayerStats_calculated_stats"
         },
         "round_stats": {
           "$ref": "#/definitions/PlayerStats_round_stats"
-        },
-        "total_stats": {
-          "$ref": "#/definitions/PlayerStats_total_stats"
         }
       }
     },
-    "PlayerStats_calculated_stats": {
-      "description": "высчитанная статистика на основе статистики по матчам",
-      "type": "object",
-      "properties": {
-        "headshot_percentage": {
-          "type": "number",
-          "format": "double"
-        },
-        "kill_death_ratio": {
-          "type": "number",
-          "format": "double"
-        },
-        "win_rate": {
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "x-nullable": false
-    },
-    "PlayerStats_round_stats": {
-      "description": "набор средних показателей за раунд",
-      "type": "object",
-      "properties": {
-        "assists": {
-          "description": "среднее кол-во ассистов за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "blinded_players": {
-          "description": "средне кол-во ослепленных игроков за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "blinded_times": {
-          "description": "среднее кол-во раз ослеплен за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "damage_dealt": {
-          "description": "средний урон за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "deaths": {
-          "description": "среднее кол-во смертей за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "grenade_damage_dealt": {
-          "description": "средний урон гранатами за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "kills": {
-          "description": "среднее кол-во убийств за раунд",
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "x-nullable": false
-    },
-    "PlayerStats_total_stats": {
+    "PlayerStats_base_stats": {
       "description": "статистика игрока по всем сыгранным матчам",
       "type": "object",
       "properties": {
@@ -570,6 +522,67 @@ func init() {
         }
       }
     },
+    "PlayerStats_calculated_stats": {
+      "description": "высчитанная статистика на основе статистики по матчам",
+      "type": "object",
+      "properties": {
+        "headshot_percentage": {
+          "type": "number",
+          "format": "double"
+        },
+        "kill_death_ratio": {
+          "type": "number",
+          "format": "double"
+        },
+        "win_rate": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "x-nullable": false
+    },
+    "PlayerStats_round_stats": {
+      "description": "набор средних показателей за раунд",
+      "type": "object",
+      "properties": {
+        "assists": {
+          "description": "среднее кол-во ассистов за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "blinded_players": {
+          "description": "средне кол-во ослепленных игроков за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "blinded_times": {
+          "description": "среднее кол-во раз ослеплен за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "damage_dealt": {
+          "description": "средний урон за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "deaths": {
+          "description": "среднее кол-во смертей за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "grenade_damage_dealt": {
+          "description": "средний урон гранатами за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "kills": {
+          "description": "среднее кол-во убийств за раунд",
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "x-nullable": false
+    },
     "PlayerWeaponStats": {
       "type": "array",
       "items": {
@@ -580,14 +593,14 @@ func init() {
       "type": "object",
       "required": [
         "accuracy_stats",
-        "total_stats"
+        "base_stats"
       ],
       "properties": {
         "accuracy_stats": {
           "$ref": "#/definitions/PlayerWeaponStats_inner_accuracy_stats"
         },
-        "total_stats": {
-          "$ref": "#/definitions/PlayerWeaponStats_inner_total_stats"
+        "base_stats": {
+          "$ref": "#/definitions/PlayerWeaponStats_inner_base_stats"
         }
       },
       "x-nullable": false
@@ -626,7 +639,7 @@ func init() {
       },
       "x-nullable": false
     },
-    "PlayerWeaponStats_inner_total_stats": {
+    "PlayerWeaponStats_inner_base_stats": {
       "type": "object",
       "properties": {
         "assists": {
@@ -1026,6 +1039,12 @@ func init() {
               "$ref": "#/definitions/PlayerStats"
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
           "404": {
             "description": "Not Found",
             "schema": {
@@ -1065,6 +1084,7 @@ func init() {
           {
             "type": "string",
             "format": "uuid",
+            "x-nullable": false,
             "description": "Фильтр по матчу",
             "name": "match_id",
             "in": "query"
@@ -1089,6 +1109,12 @@ func init() {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/PlayerWeaponStats"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
             }
           },
           "404": {
@@ -1179,84 +1205,23 @@ func init() {
     "PlayerStats": {
       "type": "object",
       "required": [
+        "base_stats",
         "calculated_stats",
-        "round_stats",
-        "total_stats"
+        "round_stats"
       ],
       "properties": {
+        "base_stats": {
+          "$ref": "#/definitions/PlayerStats_base_stats"
+        },
         "calculated_stats": {
           "$ref": "#/definitions/PlayerStats_calculated_stats"
         },
         "round_stats": {
           "$ref": "#/definitions/PlayerStats_round_stats"
-        },
-        "total_stats": {
-          "$ref": "#/definitions/PlayerStats_total_stats"
         }
       }
     },
-    "PlayerStats_calculated_stats": {
-      "description": "высчитанная статистика на основе статистики по матчам",
-      "type": "object",
-      "properties": {
-        "headshot_percentage": {
-          "type": "number",
-          "format": "double"
-        },
-        "kill_death_ratio": {
-          "type": "number",
-          "format": "double"
-        },
-        "win_rate": {
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "x-nullable": false
-    },
-    "PlayerStats_round_stats": {
-      "description": "набор средних показателей за раунд",
-      "type": "object",
-      "properties": {
-        "assists": {
-          "description": "среднее кол-во ассистов за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "blinded_players": {
-          "description": "средне кол-во ослепленных игроков за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "blinded_times": {
-          "description": "среднее кол-во раз ослеплен за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "damage_dealt": {
-          "description": "средний урон за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "deaths": {
-          "description": "среднее кол-во смертей за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "grenade_damage_dealt": {
-          "description": "средний урон гранатами за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "kills": {
-          "description": "среднее кол-во убийств за раунд",
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "x-nullable": false
-    },
-    "PlayerStats_total_stats": {
+    "PlayerStats_base_stats": {
       "description": "статистика игрока по всем сыгранным матчам",
       "type": "object",
       "properties": {
@@ -1354,6 +1319,67 @@ func init() {
         }
       }
     },
+    "PlayerStats_calculated_stats": {
+      "description": "высчитанная статистика на основе статистики по матчам",
+      "type": "object",
+      "properties": {
+        "headshot_percentage": {
+          "type": "number",
+          "format": "double"
+        },
+        "kill_death_ratio": {
+          "type": "number",
+          "format": "double"
+        },
+        "win_rate": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "x-nullable": false
+    },
+    "PlayerStats_round_stats": {
+      "description": "набор средних показателей за раунд",
+      "type": "object",
+      "properties": {
+        "assists": {
+          "description": "среднее кол-во ассистов за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "blinded_players": {
+          "description": "средне кол-во ослепленных игроков за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "blinded_times": {
+          "description": "среднее кол-во раз ослеплен за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "damage_dealt": {
+          "description": "средний урон за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "deaths": {
+          "description": "среднее кол-во смертей за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "grenade_damage_dealt": {
+          "description": "средний урон гранатами за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "kills": {
+          "description": "среднее кол-во убийств за раунд",
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "x-nullable": false
+    },
     "PlayerWeaponStats": {
       "type": "array",
       "items": {
@@ -1364,14 +1390,14 @@ func init() {
       "type": "object",
       "required": [
         "accuracy_stats",
-        "total_stats"
+        "base_stats"
       ],
       "properties": {
         "accuracy_stats": {
           "$ref": "#/definitions/PlayerWeaponStats_inner_accuracy_stats"
         },
-        "total_stats": {
-          "$ref": "#/definitions/PlayerWeaponStats_inner_total_stats"
+        "base_stats": {
+          "$ref": "#/definitions/PlayerWeaponStats_inner_base_stats"
         }
       },
       "x-nullable": false
@@ -1410,7 +1436,7 @@ func init() {
       },
       "x-nullable": false
     },
-    "PlayerWeaponStats_inner_total_stats": {
+    "PlayerWeaponStats_inner_base_stats": {
       "type": "object",
       "properties": {
         "assists": {

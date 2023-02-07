@@ -12,10 +12,10 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// PlayerStatsTotalStats статистика игрока по всем сыгранным матчам
+// PlayerStatsBaseStats статистика игрока по всем сыгранным матчам
 //
-// swagger:model PlayerStats_total_stats
-type PlayerStatsTotalStats struct {
+// swagger:model PlayerStats_base_stats
+type PlayerStatsBaseStats struct {
 
 	// assists
 	Assists int32 `json:"assists,omitempty"`
@@ -87,18 +87,18 @@ type PlayerStatsTotalStats struct {
 	Wins int32 `json:"wins,omitempty"`
 }
 
-// Validate validates this player stats total stats
-func (m *PlayerStatsTotalStats) Validate(formats strfmt.Registry) error {
+// Validate validates this player stats base stats
+func (m *PlayerStatsBaseStats) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this player stats total stats based on context it is used
-func (m *PlayerStatsTotalStats) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this player stats base stats based on context it is used
+func (m *PlayerStatsBaseStats) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *PlayerStatsTotalStats) MarshalBinary() ([]byte, error) {
+func (m *PlayerStatsBaseStats) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -106,8 +106,8 @@ func (m *PlayerStatsTotalStats) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *PlayerStatsTotalStats) UnmarshalBinary(b []byte) error {
-	var res PlayerStatsTotalStats
+func (m *PlayerStatsBaseStats) UnmarshalBinary(b []byte) error {
+	var res PlayerStatsBaseStats
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

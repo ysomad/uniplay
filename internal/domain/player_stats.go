@@ -2,24 +2,26 @@ package domain
 
 import (
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type PlayerStats struct {
-	Total *PlayerTotalStats
+	Base  *PlayerBaseStats
 	Calc  PlayerCalcStats
 	Round PlayerRoundStats
 }
 
-func NewPlayerStats(t *PlayerTotalStats) PlayerStats {
+func NewPlayerStats(t *PlayerBaseStats) PlayerStats {
 	return PlayerStats{
-		Total: t,
+		Base:  t,
 		Calc:  newPlayerCalcStats(t.Kills, t.Deaths, t.HeadshotKills, t.Wins, t.MatchesPlayed),
 		Round: newPlayerRoundStats(t.Kills, t.Deaths, t.DamageDealt, t.Assists, t.GrenadeDamageDealt, t.BlindedPlayers, t.BlindedTimes, t.RoundsPlayed),
 	}
 }
 
-// PlayerTotalStats is a set of total statistics of a player.
-type PlayerTotalStats struct {
+// PlayerBaseStats is a set of base statistics of a player.
+type PlayerBaseStats struct {
 	Kills              int32
 	HeadshotKills      int32
 	BlindKills         int32
@@ -95,4 +97,8 @@ func newPlayerRoundStats(kills, deaths, dmgDealt, assists, grenadeDmgDealt, blin
 		BlindedPlayers:     round(float64(blindedPlayers) / floatRoundsPlayed),
 		BlindedTimes:       round(float64(blindedTimes) / floatRoundsPlayed),
 	}
+}
+
+type PlayerStatsFilter struct {
+	MatchID uuid.UUID
 }
