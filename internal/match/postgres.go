@@ -417,6 +417,9 @@ func (p *Postgres) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.
 }
 
 func (p *Postgres) DeleteByID(ctx context.Context, matchID uuid.UUID) error {
+	ctx, span := p.tracer.Start(ctx, "match.Postgres.DeleteByID")
+	defer span.End()
+
 	txFunc := func(tx pgx.Tx) error {
 		if err := p.deletePlayerStats(ctx, tx, matchID); err != nil {
 			return err
@@ -426,7 +429,11 @@ func (p *Postgres) DeleteByID(ctx context.Context, matchID uuid.UUID) error {
 			return err
 		}
 
-		if err := p.deleteMatchFromHistory(ctx, tx, matchID); err != nil {
+		if err := p.deletePlayersMatch(ctx, tx, matchID); err != nil {
+			return err
+		}
+
+		if err := p.deleteTeamsMatch(ctx, tx, matchID); err != nil {
 			return err
 		}
 
@@ -478,8 +485,8 @@ func (p *Postgres) deleteWeaponStats(ctx context.Context, tx pgx.Tx, matchID uui
 	return nil
 }
 
-// deleteMatchFromHistory deletes match from player history of matches.
-func (p *Postgres) deleteMatchFromHistory(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
+// deletePlayersMatch deletes match from player history of matches.
+func (p *Postgres) deletePlayersMatch(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
 	sql, args, err := p.client.Builder.
 		Delete("player_match").
 		Where(sq.Eq{"match_id": matchID}).
@@ -512,6 +519,23 @@ func (p *Postgres) deleteMatch(ctx context.Context, tx pgx.Tx, matchID uuid.UUID
 
 	if ct.RowsAffected() <= 0 {
 		return domain.ErrMatchNotFound
+	}
+
+	return nil
+}
+
+// deleteTeamsMatch deletes match from team history.
+func (p *Postgres) deleteTeamsMatch(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
+	sql, args, err := p.client.Builder.
+		Delete("team_match").
+		Where(sq.Eq{"match_id": matchID}).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	if _, err := tx.Exec(ctx, sql, args...); err != nil {
+		return err
 	}
 
 	return nil
