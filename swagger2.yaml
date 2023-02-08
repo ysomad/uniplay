@@ -423,7 +423,7 @@ definitions:
       flashbang_assists:
         type: integer
         format: int32
-      mvp_count:
+      mvps:
         type: integer
         format: int32
       damage_taken:

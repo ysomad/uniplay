@@ -653,7 +653,7 @@ func init() {
           "type": "integer",
           "format": "int32"
         },
-        "mvp_count": {
+        "mvps": {
           "type": "integer",
           "format": "int32"
         },
@@ -1611,7 +1611,7 @@ func init() {
           "type": "integer",
           "format": "int32"
         },
-        "mvp_count": {
+        "mvps": {
           "type": "integer",
           "format": "int32"
         },

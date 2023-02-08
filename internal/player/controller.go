@@ -86,7 +86,7 @@ func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPla
 			Kills:              s.Base.Kills,
 			Loses:              s.Base.Loses,
 			MatchesPlayed:      s.Base.MatchesPlayed,
-			MvpCount:           s.Base.MVPCount,
+			Mvps:               s.Base.MVPCount,
 			NoscopeKills:       s.Base.NoScopeKills,
 			RoundsPlayed:       s.Base.RoundsPlayed,
 			ThroughSmokeKills:  s.Base.ThroughSmokeKills,
