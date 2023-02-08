@@ -87,7 +87,7 @@ func (p *Postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.Pl
 		InnerJoin("match m ON pm.match_id = m.id").
 		Where(sq.Eq{"ps.player_steam_id": steamID})
 
-	if (f.MatchID != uuid.UUID{}) {
+	if f.MatchID != uuid.Nil {
 		b = b.Where(sq.Eq{"ps.match_id": f.MatchID})
 	}
 
@@ -175,7 +175,7 @@ func (p *Postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f dom
 		b = b.Where(sq.Eq{"ws.weapon_id": f.WeaponID})
 	case f.ClassID != nil:
 		b = b.Where(sq.Eq{"w.class_id": f.ClassID})
-	case f.MatchID != uuid.UUID{}:
+	case f.MatchID != uuid.Nil:
 		b = b.Where(sq.Eq{"ws.match_id": f.MatchID})
 	}
 
