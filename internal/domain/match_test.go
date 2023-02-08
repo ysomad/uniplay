@@ -141,7 +141,7 @@ func TestNewMatchTeam(t *testing.T) {
 				State:      MatchStateWin,
 				Name:       "team1",
 				FlagCode:   "RU",
-				ScoreBoard: make([]MatchScoreBoardRow, 0, defaultTeamSize),
+				ScoreBoard: make([]*MatchScoreBoardRow, 0, defaultTeamSize),
 			},
 		},
 	}

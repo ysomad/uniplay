@@ -39,7 +39,7 @@ func (p *Postgres) Exists(ctx context.Context, matchID uuid.UUID) (bool, error) 
 	return matchFound, nil
 }
 
-func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]matchScoreBoardRow, error) {
+func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]*matchScoreBoardRow, error) {
 	ctx, span := p.tracer.Start(ctx, "match.Postgres.GetScoreBoardRowsByID")
 	defer span.End()
 
@@ -82,7 +82,7 @@ func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 		return nil, err
 	}
 
-	res, err := pgx.CollectRows(rows, pgx.RowToStructByPos[matchScoreBoardRow])
+	res, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByPos[matchScoreBoardRow])
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 	return res, nil
 }
 
-func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error {
+func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error { //nolint:gocognit // yes its T H I C C
 	ctx, span := p.tracer.Start(ctx, "match.Postgres.CreateWithStats")
 	defer span.End()
 

@@ -13,7 +13,7 @@ type matchRepository interface {
 	CreateWithStats(context.Context, *replayMatch, []*playerStat, []*weaponStat) error
 	Exists(ctx context.Context, matchID uuid.UUID) (found bool, err error)
 	DeleteByID(ctx context.Context, matchID uuid.UUID) error
-	GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]matchScoreBoardRow, error)
+	GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]*matchScoreBoardRow, error)
 }
 
 type Service struct {
@@ -110,22 +110,24 @@ func (s *Service) GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match,
 		// инициализировать команд матча
 		if match.Team1 == nil {
 			match.Team1 = t
-			match.Team1.ScoreBoard = append(match.Team1.ScoreBoard, r)
+			match.Team1.ScoreBoard = append(match.Team1.ScoreBoard, &r)
+
 			continue
 		}
 
 		if match.Team2 == nil {
 			match.Team2 = t
-			match.Team2.ScoreBoard = append(match.Team2.ScoreBoard, r)
+			match.Team2.ScoreBoard = append(match.Team2.ScoreBoard, &r)
+
 			continue
 		}
 
 		// Добавить строку в таблицу соответствующей команды
 		switch row.TeamID {
 		case match.Team1.ID:
-			match.Team1.ScoreBoard = append(match.Team1.ScoreBoard, r)
+			match.Team1.ScoreBoard = append(match.Team1.ScoreBoard, &r)
 		case match.Team2.ID:
-			match.Team2.ScoreBoard = append(match.Team2.ScoreBoard, r)
+			match.Team2.ScoreBoard = append(match.Team2.ScoreBoard, &r)
 		}
 	}
 

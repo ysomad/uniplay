@@ -25,7 +25,7 @@ type MatchTeam struct {
 	State      MatchState
 	Name       string
 	FlagCode   string
-	ScoreBoard []MatchScoreBoardRow
+	ScoreBoard []*MatchScoreBoardRow
 }
 
 func NewMatchTeam(id, score int32, state MatchState, name, flag string) *MatchTeam {
@@ -35,7 +35,7 @@ func NewMatchTeam(id, score int32, state MatchState, name, flag string) *MatchTe
 		State:      state,
 		Name:       name,
 		FlagCode:   flag,
-		ScoreBoard: make([]MatchScoreBoardRow, 0, defaultTeamSize),
+		ScoreBoard: make([]*MatchScoreBoardRow, 0, defaultTeamSize),
 	}
 }
 
