@@ -5,7 +5,6 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/events"
 
@@ -22,11 +21,8 @@ type replayMatch struct {
 }
 
 // setTeams set new team to a match from GameState.
-func (m *replayMatch) setTeams(gs demoinfocs.GameState) {
-	t := gs.TeamTerrorists()
+func (m *replayMatch) setTeams(t, ct *common.TeamState) {
 	m.team1 = newReplayTeam(t.ClanName(), t.Flag(), t.Team(), t.Members())
-
-	ct := gs.TeamCounterTerrorists()
 	m.team2 = newReplayTeam(ct.ClanName(), ct.Flag(), ct.Team(), ct.Members())
 }
 

@@ -27,7 +27,7 @@ type parser struct {
 	knifeRound     bool
 	stats          stats
 	match          *replayMatch
-	replayFilesize int64
+	replayFileSize int64
 }
 
 func newParser(r replay) *parser {
@@ -36,7 +36,7 @@ func newParser(r replay) *parser {
 		knifeRound:     false,
 		stats:          newStats(),
 		match:          new(replayMatch),
-		replayFilesize: r.size,
+		replayFileSize: r.size,
 	}
 }
 
@@ -56,7 +56,7 @@ func (p *parser) parseReplayHeader() error {
 		h.ClientName,
 		h.MapName,
 		h.PlaybackTime,
-		p.replayFilesize,
+		p.replayFileSize,
 	)
 	if err != nil {
 		return err
@@ -254,7 +254,10 @@ func (p *parser) matchStartedChangedHandler(e events.MatchStartedChanged) {
 		return
 	}
 
-	p.match.setTeams(p.p.GameState())
+	p.match.setTeams(
+		p.p.GameState().TeamTerrorists(),
+		p.p.GameState().TeamCounterTerrorists(),
+	)
 }
 
 func (p *parser) teamSideSwitchHandler(_ events.TeamSideSwitch) {

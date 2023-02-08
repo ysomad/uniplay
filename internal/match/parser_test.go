@@ -30,7 +30,7 @@ func Test_newParser(t *testing.T) {
 					weaponStats: map[uint64]map[common.EquipmentType]*weaponStat{},
 				},
 				match:          new(replayMatch),
-				replayFilesize: 555,
+				replayFileSize: 555,
 			},
 		},
 	}

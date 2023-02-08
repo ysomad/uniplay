@@ -46,6 +46,39 @@ func Test_replayMatch_swapTeamSides(t *testing.T) {
 	}
 }
 
+func Test_replayMatch_setTeams(t *testing.T) {
+	t.Parallel()
+
+	type args struct {
+		t  common.TeamState
+		ct common.TeamState
+	}
+	tests := []struct {
+		name        string
+		args        args
+		replayMatch *replayMatch
+		want        *replayMatch
+	}{
+		{
+			name: "success",
+			args: args{
+				t:  common.NewTeamState(common.TeamTerrorists, nil),
+				ct: common.NewTeamState(common.TeamCounterTerrorists, nil),
+			},
+			replayMatch: &replayMatch{},
+			want: &replayMatch{
+				team1: replayTeam{},
+				team2: replayTeam{},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// TODO: finish test
+		})
+	}
+}
+
 func Test_replayMatch_setTeamStates(t *testing.T) {
 	t.Parallel()
 
