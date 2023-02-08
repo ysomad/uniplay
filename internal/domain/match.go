@@ -7,6 +7,73 @@ import (
 	"github.com/google/uuid"
 )
 
+const defaultTeamSize = 5
+
+type Match struct {
+	ID         uuid.UUID
+	MapName    string
+	Team1      *MatchTeam
+	Team2      *MatchTeam
+	Rounds     int32
+	Duration   time.Duration
+	UploadedAt time.Time
+}
+
+type MatchTeam struct {
+	ID         int32
+	Score      int32
+	State      MatchState
+	Name       string
+	FlagCode   string
+	ScoreBoard []MatchScoreBoardRow
+}
+
+func NewMatchTeam(id, score int32, state MatchState, name, flag string) *MatchTeam {
+	return &MatchTeam{
+		ID:         id,
+		State:      state,
+		Name:       name,
+		FlagCode:   flag,
+		ScoreBoard: make([]MatchScoreBoardRow, 0, defaultTeamSize),
+	}
+}
+
+type MatchScoreBoardRow struct {
+	SteamID            string
+	PlayerName         string
+	Kills              int32
+	Deaths             int32
+	Assists            int32
+	MVPCount           int32
+	KillDeathRatio     float64
+	DamagePerRound     float64
+	HeadshotPercentage float64
+}
+
+func NewMatchScoreBoardRow(
+	steamID uint64,
+	playerName string,
+	kills int32,
+	hsKills int32,
+	deaths int32,
+	assists int32,
+	mvps int32,
+	dmgDealt int32,
+	roundsPlayed int32,
+) MatchScoreBoardRow {
+	return MatchScoreBoardRow{
+		SteamID:            fmt.Sprint(steamID),
+		PlayerName:         playerName,
+		Kills:              kills,
+		Deaths:             deaths,
+		Assists:            assists,
+		MVPCount:           mvps,
+		KillDeathRatio:     calculateKD(float64(kills), float64(deaths)),
+		DamagePerRound:     calculateADR(float64(dmgDealt), float64(roundsPlayed)),
+		HeadshotPercentage: calculateHSPercentage(float64(hsKills), float64(kills)),
+	}
+}
+
 type MatchState int8
 
 const (

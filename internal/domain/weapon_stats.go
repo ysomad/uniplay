@@ -1,9 +1,8 @@
 package domain
 
 import (
-	"math"
-
 	"github.com/google/uuid"
+	"github.com/ysomad/uniplay/internal/pkg/floatrounder"
 )
 
 type WeaponStats struct {
@@ -68,16 +67,13 @@ type WeaponAccuracyStats struct {
 	Legs    float64
 }
 
-// round rounds float64 to 2 decimal places.
-func round(n float64) float64 { return math.Round(n*100) / 100 }
-
 // calcAccuracy returns accuracy in percentage.
 func calcAccuracy(sum, num int32) float64 {
 	if sum <= 0 || num <= 0 {
 		return 0
 	}
 
-	return round(float64(sum) * 100 / float64(num))
+	return floatrounder.Round(float64(sum) * 100 / float64(num))
 }
 
 func newWeaponAccuracyStats(shots, headHits, neckHits, chestHits, stomachHits, lArmHits, rArmHits, lLegHits, rLegHits int32) WeaponAccuracyStats {

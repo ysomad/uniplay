@@ -145,6 +145,37 @@ paths:
           schema:
             $ref: '#/definitions/Error'
   /matches/{match_id}:
+    get:
+      tags:
+      - match
+      summary: Получение информации о матче
+      operationId: getMatch
+      produces:
+      - application/json
+      parameters:
+      - name: match_id
+        in: path
+        description: ID матча
+        required: true
+        type: string
+        format: uuid
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Match'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
     delete:
       tags:
       - match
@@ -270,15 +301,10 @@ definitions:
     type: object
     required:
     - match_id
-    - match_number
     properties:
       match_id:
         type: string
         format: uuid
-        x-isnullable: false
-      match_number:
-        type: number
-        format: int32
         x-isnullable: false
   PlayerStats:
     type: object
@@ -305,6 +331,68 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/WeaponClassList_inner'
+  Match:
+    type: object
+    required:
+    - duration
+    - id
+    - map_name
+    - rounds_played
+    - team1
+    - team2
+    - uploaded_at
+    properties:
+      id:
+        type: string
+        format: uuid
+        x-nullable: false
+      map_name:
+        type: string
+        x-nullable: false
+      rounds_played:
+        type: integer
+        format: int32
+        x-nullable: false
+      duration:
+        type: integer
+        format: int64
+        x-nullable: false
+      uploaded_at:
+        type: string
+        format: date-time
+        x-nullable: false
+      team1:
+        $ref: '#/definitions/MatchTeam'
+      team2:
+        $ref: '#/definitions/MatchTeam'
+  MatchTeam:
+    type: object
+    required:
+    - clan_name
+    - flag_code
+    - id
+    - score
+    - scoreboard
+    properties:
+      id:
+        type: integer
+        format: int32
+        x-nullable: false
+      clan_name:
+        type: string
+        x-nullable: false
+      flag_code:
+        type: string
+        x-nullable: false
+      score:
+        type: integer
+        format: int32
+        x-nullable: false
+      scoreboard:
+        type: array
+        items:
+          $ref: '#/definitions/MatchTeam_scoreboard'
+    x-nullable: false
   PlayerStats_base_stats:
     type: object
     properties:
@@ -564,4 +652,33 @@ definitions:
       class:
         type: string
         x-nullable: false
+    x-nullable: false
+  MatchTeam_scoreboard:
+    type: object
+    properties:
+      steam_id:
+        type: string
+      player_name:
+        type: string
+      kills:
+        type: integer
+        format: int32
+      deaths:
+        type: integer
+        format: int32
+      assists:
+        type: integer
+        format: int32
+      mvps:
+        type: integer
+        format: int32
+      kill_death_ratio:
+        type: number
+        format: double
+      damage_per_round:
+        type: number
+        format: double
+      headshot_percentage:
+        type: number
+        format: double
     x-nullable: false

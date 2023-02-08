@@ -60,6 +60,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 			return institution.GetInstitutionsNotImplemented()
 		})
 	}
+	if api.MatchGetMatchHandler == nil {
+		api.MatchGetMatchHandler = match.GetMatchHandlerFunc(func(params match.GetMatchParams) match.GetMatchResponder {
+			return match.GetMatchNotImplemented()
+		})
+	}
 	if api.PlayerGetPlayerStatsHandler == nil {
 		api.PlayerGetPlayerStatsHandler = player.GetPlayerStatsHandlerFunc(func(params player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
 			return player.GetPlayerStatsNotImplemented()

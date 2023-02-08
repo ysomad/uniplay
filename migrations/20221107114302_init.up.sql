@@ -1,14 +1,6 @@
 BEGIN
 ;
 
-CREATE TABLE IF NOT EXISTS university (
-    id smallserial PRIMARY KEY NOT NULL,
-    long_name varchar(320) NOT NULL,
-    short_name varchar(320) NOT NULL,
-    city varchar(64) NOT NULL,
-    logo_url varchar(2048) NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS player (
     id uuid PRIMARY KEY NOT NULL,
     steam_id numeric UNIQUE NOT NULL,
@@ -31,14 +23,17 @@ CREATE TABLE IF NOT EXISTS team_player (
 
 CREATE TABLE IF NOT EXISTS match (
     id uuid PRIMARY KEY NOT NULL,
-    number smallserial UNIQUE NOT NULL,
     map_name varchar(64) NOT NULL,
-    team1_id smallint NOT NULL REFERENCES team (id),
-    team1_score smallint NOT NULL,
-    team2_id smallint NOT NULL REFERENCES team (id),
-    team2_score smallint NOT NULL,
+    rounds smallint NOT NULL,
     duration interval NOT NULL,
     uploaded_at timestamptz NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS team_match (
+    team_id smallint NOT NULL REFERENCES team (id),
+    match_id uuid NOT NULL REFERENCES match (id),
+    match_state smallint NOT NULL,
+    score smallint NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS player_match_stat (

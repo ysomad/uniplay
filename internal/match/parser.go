@@ -42,10 +42,10 @@ func newParser(r replay) *parser {
 
 // parseReplayHeader parses replay header and generates match id from it.
 // Must be called before collectStats().
-func (p *parser) parseReplayHeader() (*domain.ReplayHeader, error) {
+func (p *parser) parseReplayHeader() error {
 	h, err := p.p.ParseHeader()
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	rh, err := domain.NewReplayHeader(
@@ -59,13 +59,13 @@ func (p *parser) parseReplayHeader() (*domain.ReplayHeader, error) {
 		p.replayFilesize,
 	)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	p.match.id = domain.NewMatchID(rh)
 	p.match.uploadedAt = time.Now()
 
-	return rh, nil
+	return nil
 }
 
 // collectStats collects player stats from the replay.

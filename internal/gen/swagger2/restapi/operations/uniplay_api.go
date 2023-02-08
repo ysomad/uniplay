@@ -58,6 +58,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		InstitutionGetInstitutionsHandler: institution.GetInstitutionsHandlerFunc(func(params institution.GetInstitutionsParams) institution.GetInstitutionsResponder {
 			return institution.GetInstitutionsNotImplemented()
 		}),
+		MatchGetMatchHandler: match.GetMatchHandlerFunc(func(params match.GetMatchParams) match.GetMatchResponder {
+			return match.GetMatchNotImplemented()
+		}),
 		PlayerGetPlayerStatsHandler: player.GetPlayerStatsHandlerFunc(func(params player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
 			return player.GetPlayerStatsNotImplemented()
 		}),
@@ -118,6 +121,8 @@ type UniplayAPI struct {
 	MatchDeleteMatchHandler match.DeleteMatchHandler
 	// InstitutionGetInstitutionsHandler sets the operation handler for the get institutions operation
 	InstitutionGetInstitutionsHandler institution.GetInstitutionsHandler
+	// MatchGetMatchHandler sets the operation handler for the get match operation
+	MatchGetMatchHandler match.GetMatchHandler
 	// PlayerGetPlayerStatsHandler sets the operation handler for the get player stats operation
 	PlayerGetPlayerStatsHandler player.GetPlayerStatsHandler
 	// TeamGetTeamListHandler sets the operation handler for the get team list operation
@@ -216,6 +221,9 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.InstitutionGetInstitutionsHandler == nil {
 		unregistered = append(unregistered, "institution.GetInstitutionsHandler")
+	}
+	if o.MatchGetMatchHandler == nil {
+		unregistered = append(unregistered, "match.GetMatchHandler")
 	}
 	if o.PlayerGetPlayerStatsHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerStatsHandler")
@@ -334,6 +342,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/institutions"] = institution.NewGetInstitutions(o.context, o.InstitutionGetInstitutionsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/matches/{match_id}"] = match.NewGetMatch(o.context, o.MatchGetMatchHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

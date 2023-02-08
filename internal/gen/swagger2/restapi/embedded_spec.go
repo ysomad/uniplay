@@ -165,6 +165,52 @@ func init() {
       }
     },
     "/matches/{match_id}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "match"
+        ],
+        "summary": "Получение информации о матче",
+        "operationId": "getMatch",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID матча",
+            "name": "match_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Match"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
       "delete": {
         "consumes": [
           "application/json"
@@ -369,18 +415,12 @@ func init() {
     "CreateMatchResponse": {
       "type": "object",
       "required": [
-        "match_id",
-        "match_number"
+        "match_id"
       ],
       "properties": {
         "match_id": {
           "type": "string",
           "format": "uuid",
-          "x-isnullable": false
-        },
-        "match_number": {
-          "type": "number",
-          "format": "int32",
           "x-isnullable": false
         }
       }
@@ -404,6 +444,127 @@ func init() {
           "x-nullable": false
         }
       }
+    },
+    "Match": {
+      "type": "object",
+      "required": [
+        "duration",
+        "id",
+        "map_name",
+        "rounds_played",
+        "team1",
+        "team2",
+        "uploaded_at"
+      ],
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "format": "int64",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "x-nullable": false
+        },
+        "map_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "rounds_played": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "team1": {
+          "$ref": "#/definitions/MatchTeam"
+        },
+        "team2": {
+          "$ref": "#/definitions/MatchTeam"
+        },
+        "uploaded_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": false
+        }
+      }
+    },
+    "MatchTeam": {
+      "type": "object",
+      "required": [
+        "clan_name",
+        "flag_code",
+        "id",
+        "score",
+        "scoreboard"
+      ],
+      "properties": {
+        "clan_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "flag_code": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "scoreboard": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MatchTeam_scoreboard"
+          }
+        }
+      },
+      "x-nullable": false
+    },
+    "MatchTeam_scoreboard": {
+      "type": "object",
+      "properties": {
+        "assists": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "damage_per_round": {
+          "type": "number",
+          "format": "double"
+        },
+        "deaths": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "headshot_percentage": {
+          "type": "number",
+          "format": "double"
+        },
+        "kill_death_ratio": {
+          "type": "number",
+          "format": "double"
+        },
+        "kills": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "mvps": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "player_name": {
+          "type": "string"
+        },
+        "steam_id": {
+          "type": "string"
+        }
+      },
+      "x-nullable": false
     },
     "PlayerStats": {
       "type": "object",
@@ -962,6 +1123,52 @@ func init() {
       }
     },
     "/matches/{match_id}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "match"
+        ],
+        "summary": "Получение информации о матче",
+        "operationId": "getMatch",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID матча",
+            "name": "match_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Match"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
       "delete": {
         "consumes": [
           "application/json"
@@ -1166,18 +1373,12 @@ func init() {
     "CreateMatchResponse": {
       "type": "object",
       "required": [
-        "match_id",
-        "match_number"
+        "match_id"
       ],
       "properties": {
         "match_id": {
           "type": "string",
           "format": "uuid",
-          "x-isnullable": false
-        },
-        "match_number": {
-          "type": "number",
-          "format": "int32",
           "x-isnullable": false
         }
       }
@@ -1201,6 +1402,127 @@ func init() {
           "x-nullable": false
         }
       }
+    },
+    "Match": {
+      "type": "object",
+      "required": [
+        "duration",
+        "id",
+        "map_name",
+        "rounds_played",
+        "team1",
+        "team2",
+        "uploaded_at"
+      ],
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "format": "int64",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "x-nullable": false
+        },
+        "map_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "rounds_played": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "team1": {
+          "$ref": "#/definitions/MatchTeam"
+        },
+        "team2": {
+          "$ref": "#/definitions/MatchTeam"
+        },
+        "uploaded_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": false
+        }
+      }
+    },
+    "MatchTeam": {
+      "type": "object",
+      "required": [
+        "clan_name",
+        "flag_code",
+        "id",
+        "score",
+        "scoreboard"
+      ],
+      "properties": {
+        "clan_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "flag_code": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "scoreboard": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MatchTeam_scoreboard"
+          }
+        }
+      },
+      "x-nullable": false
+    },
+    "MatchTeam_scoreboard": {
+      "type": "object",
+      "properties": {
+        "assists": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "damage_per_round": {
+          "type": "number",
+          "format": "double"
+        },
+        "deaths": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "headshot_percentage": {
+          "type": "number",
+          "format": "double"
+        },
+        "kill_death_ratio": {
+          "type": "number",
+          "format": "double"
+        },
+        "kills": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "mvps": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "player_name": {
+          "type": "string"
+        },
+        "steam_id": {
+          "type": "string"
+        }
+      },
+      "x-nullable": false
     },
     "PlayerStats": {
       "type": "object",
