@@ -120,7 +120,7 @@ func newPlayerRoundStats(kills, deaths, dmgDealt, assists, grenadeDmgDealt, blin
 		Kills:              floatrounder.Round(float64(kills) / floatRoundsPlayed),
 		Assists:            floatrounder.Round(float64(assists) / floatRoundsPlayed),
 		Deaths:             floatrounder.Round(float64(deaths) / floatRoundsPlayed),
-		DamageDealt:        floatrounder.Round(float64(dmgDealt) / floatRoundsPlayed),
+		DamageDealt:        calculateADR(float64(dmgDealt), floatRoundsPlayed),
 		GrenadeDamageDealt: floatrounder.Round(float64(grenadeDmgDealt) / floatRoundsPlayed),
 		BlindedPlayers:     floatrounder.Round(float64(blindedPlayers) / floatRoundsPlayed),
 		BlindedTimes:       floatrounder.Round(float64(blindedTimes) / floatRoundsPlayed),
