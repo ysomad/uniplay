@@ -39,30 +39,6 @@ func (p *Postgres) Exists(ctx context.Context, matchID uuid.UUID) (bool, error) 
 	return matchFound, nil
 }
 
-// type dbMatchScoreBoardRow struct {
-// 	steamID    uint64 `db:"steam_id"`
-// 	playerName string `db:"player_name"`
-
-// 	matchID         uuid.UUID     `db:"match_id"`
-// 	mapName         string        `db:"map_name"`
-// 	matchDuration   time.Duration `db:"match_duration"`
-// 	matchUploadedAt time.Time     `db:"match_uploaded_at"`
-
-// 	teamID         int32             `db:"team_id"`
-// 	teamName       string            `db:"team_name"`
-// 	teamFlagCode   string            `db:"team_flag_code"`
-// 	teamScore      int32             `db:"team_score"`
-// 	teamMatchState domain.MatchState `db:"team_match_state"`
-
-// 	kills         int32 `db:"kills"`
-// 	headshotKills int32 `db:"headshot_kills"`
-// 	deaths        int32 `db:"deaths"`
-// 	assists       int32 `db:"assists"`
-// 	damageDealt   int32 `db:"damage_dealt"`
-// 	roundsPlayed  int32 `db:"rounds_played"`
-// 	mvpCount      int32 `db:"mvp_count"`
-// }
-
 func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]matchScoreBoardRow, error) {
 	ctx, span := p.tracer.Start(ctx, "match.Postgres.GetScoreBoardRowsByID")
 	defer span.End()
@@ -110,31 +86,6 @@ func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 	if err != nil {
 		return nil, err
 	}
-
-	// res := make([]matchScoreBoardRow, len(sbRows))
-
-	// for i, row := range sbRows {
-	// 	res[i] = matchScoreBoardRow{
-	// 		matchID:         row.matchID,
-	// 		mapName:         row.mapName,
-	// 		steamID:         row.steamID,
-	// 		playerName:      row.playerName,
-	// 		teamID:          row.teamID,
-	// 		teamName:        row.teamName,
-	// 		teamFlagCode:    row.teamFlagCode,
-	// 		teamScore:       row.teamScore,
-	// 		teamMatchState:  row.teamMatchState,
-	// 		kills:           row.kills,
-	// 		headshotKills:   row.headshotKills,
-	// 		deaths:          row.deaths,
-	// 		assists:         row.assists,
-	// 		damageDealt:     row.damageDealt,
-	// 		roundsPlayed:    row.roundsPlayed,
-	// 		mvpCount:        row.mvpCount,
-	// 		matchDuration:   row.matchDuration,
-	// 		matchUploadedAt: row.matchUploadedAt,
-	// 	}
-	// }
 
 	return res, nil
 }
