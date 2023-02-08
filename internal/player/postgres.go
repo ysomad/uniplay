@@ -76,7 +76,7 @@ func (p *Postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.Pl
 			"sum(ps.blinded_times) as total_blinded_times",
 			"sum(ps.bombs_planted) as total_bombs_planted",
 			"sum(ps.bombs_defused) as total_bombs_defused",
-			"sum(m.team1_score) + sum(m.team2_score) as total_rounds_played",
+			"m.rounds as total_rounds_played",
 			"count(m.id) as total_matches_played",
 			"coalesce((case when pm.match_state = 1 then count(pm.*) end), 0) as total_wins",
 			"coalesce((case when pm.match_state = -1 then count(pm.*) end), 0) as total_loses",
@@ -91,7 +91,7 @@ func (p *Postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.Pl
 		b = b.Where(sq.Eq{"ps.match_id": f.MatchID})
 	}
 
-	sql, args, err := b.GroupBy("pm.match_state").ToSql()
+	sql, args, err := b.GroupBy("pm.match_state, m.rounds").ToSql()
 	if err != nil {
 		return nil, err
 	}

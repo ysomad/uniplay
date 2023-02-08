@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/ysomad/uniplay/internal/pkg/floatrounder"
 )
 
 type PlayerStats struct {
@@ -54,20 +55,47 @@ type PlayerCalcStats struct {
 	WinRate            float64
 }
 
+// calculateKD returns calculated and rounded kill death ratio.
+func calculateKD(kills, deaths float64) float64 {
+	if kills <= 0 || deaths <= 0 {
+		return 0
+	}
+
+	return floatrounder.Round(kills / deaths)
+}
+
+// calculateHSPercentage returns calculated and rounded headshort percentage.
+func calculateHSPercentage(hsKills, kills float64) float64 {
+	if kills <= 0 {
+		return 0
+	}
+
+	return floatrounder.Round(hsKills / kills * 100)
+}
+
 func newPlayerCalcStats(kills, deaths, hsKills, wins, matchesPlayed int32) PlayerCalcStats {
 	s := PlayerCalcStats{}
 	fKills := float64(kills)
 
 	if fKills > 0 && deaths > 0 {
-		s.KillDeathRatio = round(fKills / float64(deaths))
-		s.HeadshotPercentage = round(float64(hsKills) / fKills * 100)
+		s.KillDeathRatio = calculateKD(fKills, float64(deaths))
+		s.HeadshotPercentage = calculateHSPercentage(float64(hsKills), fKills)
 	}
 
 	if matchesPlayed > 0 && wins >= 0 {
-		s.WinRate = round(float64(wins) / float64(matchesPlayed) * 100)
+		s.WinRate = floatrounder.Round(float64(wins) / float64(matchesPlayed) * 100)
 	}
 
 	return s
+}
+
+// calculateADR returns calculated and rounded average damage per round.
+func calculateADR(dmgDealt, roundsPlayed float64) float64 {
+	if roundsPlayed <= 0 {
+		return 0
+	}
+
+	return floatrounder.Round(dmgDealt / roundsPlayed)
 }
 
 // PlayerRoundStats is a set of AVG player stats per round.
@@ -89,13 +117,13 @@ func newPlayerRoundStats(kills, deaths, dmgDealt, assists, grenadeDmgDealt, blin
 	floatRoundsPlayed := float64(roundsPlayed)
 
 	return PlayerRoundStats{
-		Kills:              round(float64(kills) / floatRoundsPlayed),
-		Assists:            round(float64(assists) / floatRoundsPlayed),
-		Deaths:             round(float64(deaths) / floatRoundsPlayed),
-		DamageDealt:        round(float64(dmgDealt) / floatRoundsPlayed),
-		GrenadeDamageDealt: round(float64(grenadeDmgDealt) / floatRoundsPlayed),
-		BlindedPlayers:     round(float64(blindedPlayers) / floatRoundsPlayed),
-		BlindedTimes:       round(float64(blindedTimes) / floatRoundsPlayed),
+		Kills:              floatrounder.Round(float64(kills) / floatRoundsPlayed),
+		Assists:            floatrounder.Round(float64(assists) / floatRoundsPlayed),
+		Deaths:             floatrounder.Round(float64(deaths) / floatRoundsPlayed),
+		DamageDealt:        floatrounder.Round(float64(dmgDealt) / floatRoundsPlayed),
+		GrenadeDamageDealt: floatrounder.Round(float64(grenadeDmgDealt) / floatRoundsPlayed),
+		BlindedPlayers:     floatrounder.Round(float64(blindedPlayers) / floatRoundsPlayed),
+		BlindedTimes:       floatrounder.Round(float64(blindedTimes) / floatRoundsPlayed),
 	}
 }
 

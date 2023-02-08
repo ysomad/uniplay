@@ -23,10 +23,6 @@ type CreateMatchResponse struct {
 	// Required: true
 	// Format: uuid
 	MatchID strfmt.UUID `json:"match_id"`
-
-	// match number
-	// Required: true
-	MatchNumber int32 `json:"match_number"`
 }
 
 // Validate validates this create match response
@@ -34,10 +30,6 @@ func (m *CreateMatchResponse) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateMatchID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateMatchNumber(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -54,15 +46,6 @@ func (m *CreateMatchResponse) validateMatchID(formats strfmt.Registry) error {
 	}
 
 	if err := validate.FormatOf("match_id", "body", "uuid", m.MatchID.String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *CreateMatchResponse) validateMatchNumber(formats strfmt.Registry) error {
-
-	if err := validate.Required("match_number", "body", int32(m.MatchNumber)); err != nil {
 		return err
 	}
 

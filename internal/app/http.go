@@ -42,6 +42,7 @@ func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
 func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 	api.MatchCreateMatchHandler = matchGen.CreateMatchHandlerFunc(d.match.CreateMatch)
 	api.MatchDeleteMatchHandler = matchGen.DeleteMatchHandlerFunc(d.match.DeleteMatch)
+	api.MatchGetMatchHandler = matchGen.GetMatchHandlerFunc(d.match.GetMatch)
 
 	api.CompendiumGetWeaponsHandler = compendiumGen.GetWeaponsHandlerFunc(d.compendium.GetWeapons)
 	api.CompendiumGetWeaponClassesHandler = compendiumGen.GetWeaponClassesHandlerFunc(d.compendium.GetWeaponClasses)

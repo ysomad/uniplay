@@ -65,8 +65,8 @@ type PlayerStatsBaseStats struct {
 	// matches played
 	MatchesPlayed int32 `json:"matches_played,omitempty"`
 
-	// mvp count
-	MvpCount int32 `json:"mvp_count,omitempty"`
+	// mvps
+	Mvps int32 `json:"mvps,omitempty"`
 
 	// noscope kills
 	NoscopeKills int32 `json:"noscope_kills,omitempty"`

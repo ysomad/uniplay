@@ -16,8 +16,9 @@ import (
 )
 
 type matchService interface {
-	CreateFromReplay(context.Context, replay) (collectStatsRes, error)
+	CreateFromReplay(context.Context, replay) (uuid.UUID, error)
 	DeleteByID(ctx context.Context, matchID uuid.UUID) error
+	GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match, error)
 }
 
 type Controller struct {
@@ -50,7 +51,7 @@ func (c *Controller) CreateMatch(p matchGen.CreateMatchParams) matchGen.CreateMa
 	}
 	defer r.Close()
 
-	res, err := c.match.CreateFromReplay(p.HTTPRequest.Context(), r)
+	matchID, err := c.match.CreateFromReplay(p.HTTPRequest.Context(), r)
 	if err != nil {
 		if errors.Is(err, domain.ErrMatchAlreadyExist) {
 			return matchGen.NewCreateMatchConflict().WithPayload(&models.Error{
@@ -65,12 +66,9 @@ func (c *Controller) CreateMatch(p matchGen.CreateMatchParams) matchGen.CreateMa
 		})
 	}
 
-	payload := &models.CreateMatchResponse{
-		MatchID:     strfmt.UUID(res.MatchID.String()),
-		MatchNumber: res.MatchNumber,
-	}
-
-	return matchGen.NewCreateMatchOK().WithPayload(payload)
+	return matchGen.NewCreateMatchOK().WithPayload(&models.CreateMatchResponse{
+		MatchID: strfmt.UUID(matchID.String()),
+	})
 }
 
 func (c *Controller) DeleteMatch(p matchGen.DeleteMatchParams) matchGen.DeleteMatchResponder {
@@ -97,4 +95,81 @@ func (c *Controller) DeleteMatch(p matchGen.DeleteMatchParams) matchGen.DeleteMa
 	}
 
 	return matchGen.NewDeleteMatchNoContent()
+}
+
+func (c *Controller) GetMatch(p matchGen.GetMatchParams) matchGen.GetMatchResponder {
+	matchID, err := uuid.Parse(p.MatchID.String())
+	if err != nil {
+		return matchGen.NewGetMatchInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	match, err := c.match.GetByID(p.HTTPRequest.Context(), matchID)
+	if err != nil {
+		if errors.Is(err, domain.ErrMatchNotFound) {
+			return matchGen.NewGetMatchNotFound().WithPayload(&models.Error{
+				Code:    domain.CodeMatchNotFound,
+				Message: err.Error(),
+			})
+		}
+
+		return matchGen.NewGetMatchInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	payload := models.Match{
+		ID:           strfmt.UUID(match.ID.String()),
+		MapName:      match.MapName,
+		RoundsPlayed: match.Rounds,
+		Team1: models.MatchTeam{
+			ID:         match.Team1.ID,
+			ClanName:   match.Team1.Name,
+			FlagCode:   match.Team1.FlagCode,
+			Score:      match.Team1.Score,
+			Scoreboard: make([]models.MatchTeamScoreboard, len(match.Team1.ScoreBoard)),
+		},
+		Team2: models.MatchTeam{
+			ID:         match.Team2.ID,
+			ClanName:   match.Team2.Name,
+			FlagCode:   match.Team2.FlagCode,
+			Score:      match.Team2.Score,
+			Scoreboard: make([]models.MatchTeamScoreboard, len(match.Team2.ScoreBoard)),
+		},
+		Duration:   int64(match.Duration),
+		UploadedAt: strfmt.DateTime(match.UploadedAt),
+	}
+
+	for i, row := range match.Team1.ScoreBoard {
+		payload.Team1.Scoreboard[i] = models.MatchTeamScoreboard{
+			Assists:            row.Assists,
+			DamagePerRound:     row.DamagePerRound,
+			Deaths:             row.Deaths,
+			HeadshotPercentage: row.HeadshotPercentage,
+			KillDeathRatio:     row.KillDeathRatio,
+			Kills:              row.Kills,
+			Mvps:               row.MVPCount,
+			PlayerName:         row.PlayerName,
+			SteamID:            row.SteamID,
+		}
+	}
+
+	for i, row := range match.Team2.ScoreBoard {
+		payload.Team2.Scoreboard[i] = models.MatchTeamScoreboard{
+			Assists:            row.Assists,
+			DamagePerRound:     row.DamagePerRound,
+			Deaths:             row.Deaths,
+			HeadshotPercentage: row.HeadshotPercentage,
+			KillDeathRatio:     row.KillDeathRatio,
+			Kills:              row.Kills,
+			Mvps:               row.MVPCount,
+			PlayerName:         row.PlayerName,
+			SteamID:            row.SteamID,
+		}
+	}
+
+	return matchGen.NewGetMatchOK().WithPayload(&payload)
 }

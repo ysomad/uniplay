@@ -39,8 +39,59 @@ func (p *Postgres) Exists(ctx context.Context, matchID uuid.UUID) (bool, error) 
 	return matchFound, nil
 }
 
-func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) (matchNumber int32, err error) {
-	ctx, span := p.tracer.Start(ctx, "match.Postgres.SaveStats")
+func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]*matchScoreBoardRow, error) {
+	ctx, span := p.tracer.Start(ctx, "match.Postgres.GetScoreBoardRowsByID")
+	defer span.End()
+
+	sql, args, err := p.client.Builder.
+		Select(
+			"m.id as match_id",
+			"m.map_name as map_name",
+			"pms.player_steam_id as steam_id",
+			"p.display_name as player_name",
+			"pm.team_id as team_id",
+			"t.clan_name as team_name",
+			"t.flag_code as team_flag_code",
+			"tm.score as team_score",
+			"tm.match_state as team_match_score",
+			"pms.kills as kills",
+			"pms.hs_kills as headshot_kills",
+			"pms.deaths as deaths",
+			"pms.assists as assists",
+			"pms.damage_dealt as damage_dealt",
+			"m.rounds as rounds_played",
+			"pms.mvp_count as mvp_count",
+			"m.duration as match_duration",
+			"m.uploaded_at as match_uploaded_at",
+		).
+		From("match m").
+		InnerJoin("player_match_stat pms ON m.id = pms.match_id").
+		InnerJoin("player p ON p.steam_id = pms.player_steam_id").
+		InnerJoin("player_match pm ON pms.player_steam_id = pm.player_steam_id AND m.id = pm.match_id").
+		InnerJoin("team_match tm ON pm.team_id = tm.team_id AND m.id = tm.match_id").
+		InnerJoin("team t ON tm.team_id = t.id").
+		Where(sq.Eq{"m.id": matchID}).
+		OrderBy("pms.kills DESC").
+		ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByPos[matchScoreBoardRow])
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
+func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error { //nolint:gocognit // yes its T H I C C
+	ctx, span := p.tracer.Start(ctx, "match.Postgres.CreateWithStats")
 	defer span.End()
 
 	txFunc := func(tx pgx.Tx) error {
@@ -62,8 +113,7 @@ func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps [
 			return err
 		}
 
-		matchNumber, err = p.saveMatch(ctx, tx, savedMatch)
-		if err != nil {
+		if err := p.saveMatch(ctx, tx, savedMatch); err != nil {
 			return err
 		}
 
@@ -79,14 +129,36 @@ func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps [
 			return err
 		}
 
+		if err := p.saveTeamsMatch(ctx, tx, savedMatch); err != nil {
+			return err
+		}
+
 		return nil
 	}
 
 	if err := pgx.BeginTxFunc(ctx, p.client.Pool, pgx.TxOptions{}, txFunc); err != nil {
-		return 0, err
+		return err
 	}
 
-	return matchNumber, nil
+	return nil
+}
+
+func (p *Postgres) saveTeamsMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
+	sql, args, err := p.client.Builder.
+		Insert("team_match").
+		Columns("team_id, match_id, match_state, score").
+		Values(m.team1.id, m.id, m.team1.matchState, m.team1.score).
+		Values(m.team2.id, m.id, m.team2.matchState, m.team2.score).
+		ToSql()
+	if err != nil {
+		return err
+	}
+
+	if _, err := tx.Exec(ctx, sql, args...); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (p *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, players []replayPlayer) error {
@@ -175,24 +247,21 @@ func (p *Postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []tea
 	return nil
 }
 
-func (p *Postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) (int32, error) {
+func (p *Postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
 	sql, args, err := p.client.Builder.
 		Insert("match").
-		Columns("id, map_name, team1_id, team1_score, team2_id, team2_score, duration, uploaded_at").
-		Values(m.id, m.mapName, m.team1.id, m.team1.score, m.team2.id, m.team2.score, m.duration, m.uploadedAt).
-		Suffix("RETURNING number").
+		Columns("id, map_name, rounds, duration, uploaded_at").
+		Values(m.id, m.mapName, m.team1.score+m.team2.score, m.duration, m.uploadedAt).
 		ToSql()
 	if err != nil {
-		return 0, err
+		return err
 	}
 
-	var matchNumber int32
-
-	if err := tx.QueryRow(ctx, sql, args...).Scan(&matchNumber); err != nil {
-		return 0, err
+	if _, err := tx.Exec(ctx, sql, args...); err != nil {
+		return err
 	}
 
-	return matchNumber, nil
+	return nil
 }
 
 // savePlayersMatch saves match and its state to player match history.
