@@ -36,7 +36,7 @@ type GetWeaponStatsParams struct {
 	/*Фильтр по классу оружия
 	  In: query
 	*/
-	ClassID *int32
+	ClassID *int16
 	/*Фильтр по матчу
 	  In: query
 	*/
@@ -49,7 +49,7 @@ type GetWeaponStatsParams struct {
 	/*Фильтр по оружию
 	  In: query
 	*/
-	WeaponID *int32
+	WeaponID *int16
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -102,9 +102,9 @@ func (o *GetWeaponStatsParams) bindClassID(rawData []string, hasKey bool, format
 		return nil
 	}
 
-	value, err := swag.ConvertInt32(raw)
+	value, err := swag.ConvertInt16(raw)
 	if err != nil {
-		return errors.InvalidType("class_id", "query", "int32", raw)
+		return errors.InvalidType("class_id", "query", "int16", raw)
 	}
 	o.ClassID = &value
 
@@ -176,9 +176,9 @@ func (o *GetWeaponStatsParams) bindWeaponID(rawData []string, hasKey bool, forma
 		return nil
 	}
 
-	value, err := swag.ConvertInt32(raw)
+	value, err := swag.ConvertInt16(raw)
 	if err != nil {
-		return errors.InvalidType("weapon_id", "query", "int32", raw)
+		return errors.InvalidType("weapon_id", "query", "int16", raw)
 	}
 	o.WeaponID = &value
 

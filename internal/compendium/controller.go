@@ -13,6 +13,7 @@ import (
 type compendiumService interface {
 	GetWeaponList(ctx context.Context) ([]domain.Weapon, error)
 	GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error)
+	GetMapList(ctx context.Context) ([]domain.Map, error)
 }
 
 type Controller struct {
@@ -69,4 +70,28 @@ func (c *Controller) GetWeaponClasses(p compendium.GetWeaponClassesParams) compe
 	}
 
 	return compendium.NewGetWeaponClassesOK().WithPayload(payload)
+}
+
+func (c *Controller) GetMaps(p compendium.GetMapsParams) compendium.GetMapsResponder {
+	maps, err := c.compendium.GetMapList(p.HTTPRequest.Context())
+	if err != nil {
+		return compendium.NewGetMapsInternalServerError().
+			WithPayload(&models.Error{
+				Code:    http.StatusInternalServerError,
+				Message: err.Error(),
+			})
+	}
+
+	payload := make(models.MapList, len(maps))
+
+	for i, m := range maps {
+		payload[i] = models.Map{
+			ID:           m.ID,
+			Name:         m.Name,
+			InternalName: m.InternalName,
+			IconURL:      m.IconURL,
+		}
+	}
+
+	return compendium.NewGetMapsOK().WithPayload(payload)
 }

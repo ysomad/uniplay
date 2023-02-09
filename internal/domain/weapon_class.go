@@ -1,6 +1,6 @@
 package domain
 
 type WeaponClass struct {
-	ID    int32
+	ID    int16
 	Class string
 }

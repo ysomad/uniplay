@@ -28,9 +28,9 @@ type Match struct {
 	// Format: uuid
 	ID strfmt.UUID `json:"id"`
 
-	// map name
+	// map
 	// Required: true
-	MapName string `json:"map_name"`
+	Map Map `json:"map"`
 
 	// rounds played
 	// Required: true
@@ -62,7 +62,7 @@ func (m *Match) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateMapName(formats); err != nil {
+	if err := m.validateMap(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -110,9 +110,14 @@ func (m *Match) validateID(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Match) validateMapName(formats strfmt.Registry) error {
+func (m *Match) validateMap(formats strfmt.Registry) error {
 
-	if err := validate.RequiredString("map_name", "body", m.MapName); err != nil {
+	if err := m.Map.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("map")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("map")
+		}
 		return err
 	}
 
@@ -173,6 +178,10 @@ func (m *Match) validateUploadedAt(formats strfmt.Registry) error {
 func (m *Match) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateMap(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateTeam1(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -184,6 +193,20 @@ func (m *Match) ContextValidate(ctx context.Context, formats strfmt.Registry) er
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Match) contextValidateMap(ctx context.Context, formats strfmt.Registry) error {
+
+	if err := m.Map.ContextValidate(ctx, formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("map")
+		} else if ce, ok := err.(*errors.CompositeError); ok {
+			return ce.ValidateName("map")
+		}
+		return err
+	}
+
 	return nil
 }
 

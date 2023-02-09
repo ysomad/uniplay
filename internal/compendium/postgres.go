@@ -64,3 +64,26 @@ func (p *Postgres) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass
 
 	return classes, nil
 }
+
+func (p *Postgres) GetMapList(ctx context.Context) ([]domain.Map, error) {
+	sql, args, err := p.client.Builder.
+		Select("id, name, internal_name, icon_url").
+		From("map").
+		ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	maps, err := pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Map])
+	if err != nil {
+		return nil, err
+	}
+
+	return maps, nil
+
+}

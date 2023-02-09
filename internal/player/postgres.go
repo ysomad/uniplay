@@ -116,7 +116,7 @@ func (p *Postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.Pl
 }
 
 type weaponBaseStats struct {
-	WeaponID          int32  `db:"weapon_id"`
+	WeaponID          int16  `db:"weapon_id"`
 	Weapon            string `db:"weapon"`
 	Kills             int32  `db:"total_kills"`
 	HeadshotKills     int32  `db:"total_hs_kills"`
@@ -171,9 +171,9 @@ func (p *Postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f dom
 		Where(sq.Eq{"ws.player_steam_id": steamID})
 
 	switch {
-	case f.WeaponID != nil:
+	case f.WeaponID != 0:
 		b = b.Where(sq.Eq{"ws.weapon_id": f.WeaponID})
-	case f.ClassID != nil:
+	case f.ClassID != 0:
 		b = b.Where(sq.Eq{"w.class_id": f.ClassID})
 	case f.MatchID != uuid.Nil:
 		b = b.Where(sq.Eq{"ws.match_id": f.MatchID})

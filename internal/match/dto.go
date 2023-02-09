@@ -4,12 +4,16 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
 	"github.com/ysomad/uniplay/internal/domain"
 )
 
 type matchScoreBoardRow struct {
 	MatchID         uuid.UUID
+	MapID           int16
 	MapName         string
+	MapInternalName string
+	MapIconURL      string
 	SteamID         uint64
 	PlayerName      string
 	TeamID          int32

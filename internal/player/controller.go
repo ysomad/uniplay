@@ -124,10 +124,7 @@ func (c *Controller) GetWeaponStats(p player.GetWeaponStatsParams) player.GetWea
 		})
 	}
 
-	filter := domain.WeaponStatsFilter{
-		WeaponID: p.WeaponID,
-		ClassID:  p.ClassID,
-	}
+	filter := domain.NewWeaponStatsFilter(p.WeaponID, p.ClassID)
 
 	if p.MatchID != nil {
 		filter.MatchID, err = uuid.Parse(p.MatchID.String())

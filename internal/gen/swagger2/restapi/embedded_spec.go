@@ -30,11 +30,34 @@ func init() {
   "host": "localhost:8080",
   "basePath": "/v1",
   "paths": {
-    "/compendiums/weapon-classes": {
+    "/compendiums/maps": {
       "get": {
-        "consumes": [
+        "produces": [
           "application/json"
         ],
+        "tags": [
+          "compendium"
+        ],
+        "summary": "Получение списка карт",
+        "operationId": "getMaps",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MapList"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/compendiums/weapon-classes": {
+      "get": {
         "produces": [
           "application/json"
         ],
@@ -61,9 +84,6 @@ func init() {
     },
     "/compendiums/weapons": {
       "get": {
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -340,14 +360,14 @@ func init() {
           },
           {
             "type": "integer",
-            "format": "int32",
+            "format": "int16",
             "description": "Фильтр по оружию",
             "name": "weapon_id",
             "in": "query"
           },
           {
             "type": "integer",
-            "format": "int32",
+            "format": "int16",
             "description": "Фильтр по классу оружия",
             "name": "class_id",
             "in": "query"
@@ -445,12 +465,49 @@ func init() {
         }
       }
     },
+    "Map": {
+      "type": "object",
+      "required": [
+        "icon_url",
+        "id",
+        "internal_name",
+        "name"
+      ],
+      "properties": {
+        "icon_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int16",
+          "x-nullable": false
+        },
+        "internal_name": {
+          "description": "Название карты, например, de_dust2",
+          "type": "string",
+          "x-nullable": false
+        },
+        "name": {
+          "description": "Название карты, например, Cobblestone",
+          "type": "string",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
+    "MapList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Map"
+      }
+    },
     "Match": {
       "type": "object",
       "required": [
         "duration",
         "id",
-        "map_name",
+        "map",
         "rounds_played",
         "team1",
         "team2",
@@ -467,9 +524,8 @@ func init() {
           "format": "uuid",
           "x-nullable": false
         },
-        "map_name": {
-          "type": "string",
-          "x-nullable": false
+        "map": {
+          "$ref": "#/definitions/Map"
         },
         "rounds_played": {
           "type": "integer",
@@ -884,7 +940,7 @@ func init() {
         },
         "weapon_id": {
           "type": "integer",
-          "format": "int32"
+          "format": "int16"
         }
       }
     },
@@ -907,7 +963,7 @@ func init() {
         },
         "id": {
           "type": "integer",
-          "format": "int32",
+          "format": "int16",
           "x-nullable": false
         }
       },
@@ -935,7 +991,7 @@ func init() {
         },
         "class_id": {
           "type": "integer",
-          "format": "int32",
+          "format": "int16",
           "x-nullable": false
         },
         "weapon": {
@@ -945,7 +1001,7 @@ func init() {
         },
         "weapon_id": {
           "type": "integer",
-          "format": "int32",
+          "format": "int16",
           "x-nullable": false
         }
       },
@@ -988,11 +1044,34 @@ func init() {
   "host": "localhost:8080",
   "basePath": "/v1",
   "paths": {
-    "/compendiums/weapon-classes": {
+    "/compendiums/maps": {
       "get": {
-        "consumes": [
+        "produces": [
           "application/json"
         ],
+        "tags": [
+          "compendium"
+        ],
+        "summary": "Получение списка карт",
+        "operationId": "getMaps",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MapList"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/compendiums/weapon-classes": {
+      "get": {
         "produces": [
           "application/json"
         ],
@@ -1019,9 +1098,6 @@ func init() {
     },
     "/compendiums/weapons": {
       "get": {
-        "consumes": [
-          "application/json"
-        ],
         "produces": [
           "application/json"
         ],
@@ -1298,14 +1374,14 @@ func init() {
           },
           {
             "type": "integer",
-            "format": "int32",
+            "format": "int16",
             "description": "Фильтр по оружию",
             "name": "weapon_id",
             "in": "query"
           },
           {
             "type": "integer",
-            "format": "int32",
+            "format": "int16",
             "description": "Фильтр по классу оружия",
             "name": "class_id",
             "in": "query"
@@ -1403,12 +1479,49 @@ func init() {
         }
       }
     },
+    "Map": {
+      "type": "object",
+      "required": [
+        "icon_url",
+        "id",
+        "internal_name",
+        "name"
+      ],
+      "properties": {
+        "icon_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int16",
+          "x-nullable": false
+        },
+        "internal_name": {
+          "description": "Название карты, например, de_dust2",
+          "type": "string",
+          "x-nullable": false
+        },
+        "name": {
+          "description": "Название карты, например, Cobblestone",
+          "type": "string",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
+    "MapList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Map"
+      }
+    },
     "Match": {
       "type": "object",
       "required": [
         "duration",
         "id",
-        "map_name",
+        "map",
         "rounds_played",
         "team1",
         "team2",
@@ -1425,9 +1538,8 @@ func init() {
           "format": "uuid",
           "x-nullable": false
         },
-        "map_name": {
-          "type": "string",
-          "x-nullable": false
+        "map": {
+          "$ref": "#/definitions/Map"
         },
         "rounds_played": {
           "type": "integer",
@@ -1842,7 +1954,7 @@ func init() {
         },
         "weapon_id": {
           "type": "integer",
-          "format": "int32"
+          "format": "int16"
         }
       }
     },
@@ -1865,7 +1977,7 @@ func init() {
         },
         "id": {
           "type": "integer",
-          "format": "int32",
+          "format": "int16",
           "x-nullable": false
         }
       },
@@ -1893,7 +2005,7 @@ func init() {
         },
         "class_id": {
           "type": "integer",
-          "format": "int32",
+          "format": "int16",
           "x-nullable": false
         },
         "weapon": {
@@ -1903,7 +2015,7 @@ func init() {
         },
         "weapon_id": {
           "type": "integer",
-          "format": "int32",
+          "format": "int16",
           "x-nullable": false
         }
       },

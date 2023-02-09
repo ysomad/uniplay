@@ -2,9 +2,8 @@ BEGIN
 ;
 
 CREATE TABLE IF NOT EXISTS map (    
-    id smallint PRIMARY KEY NOT NULL,
+    id varchar(16) PRIMARY KEY NOT NULL,
     name varchar(16) UNIQUE NOT NULL,
-    internal_name varchar(16) UNIQUE NOT NULL,
     icon_url varchar(255) NOT NULL
 );
 
@@ -47,7 +46,7 @@ CREATE TABLE IF NOT EXISTS team_player (
 
 CREATE TABLE IF NOT EXISTS match (
     id uuid PRIMARY KEY NOT NULL,
-    map_name varchar(64) NOT NULL,
+    map_name varchar(16) NOT NULL REFERENCES map (internal_name),
     rounds smallint NOT NULL,
     duration interval NOT NULL,
     uploaded_at timestamptz NOT NULL

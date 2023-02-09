@@ -1,8 +1,8 @@
 package domain
 
 type Weapon struct {
-	WeaponID int32
+	WeaponID int16
 	Weapon   string
-	ClassID  int32
+	ClassID  int16
 	Class    string
 }

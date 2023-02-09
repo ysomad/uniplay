@@ -58,6 +58,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		InstitutionGetInstitutionsHandler: institution.GetInstitutionsHandlerFunc(func(params institution.GetInstitutionsParams) institution.GetInstitutionsResponder {
 			return institution.GetInstitutionsNotImplemented()
 		}),
+		CompendiumGetMapsHandler: compendium.GetMapsHandlerFunc(func(params compendium.GetMapsParams) compendium.GetMapsResponder {
+			return compendium.GetMapsNotImplemented()
+		}),
 		MatchGetMatchHandler: match.GetMatchHandlerFunc(func(params match.GetMatchParams) match.GetMatchResponder {
 			return match.GetMatchNotImplemented()
 		}),
@@ -121,6 +124,8 @@ type UniplayAPI struct {
 	MatchDeleteMatchHandler match.DeleteMatchHandler
 	// InstitutionGetInstitutionsHandler sets the operation handler for the get institutions operation
 	InstitutionGetInstitutionsHandler institution.GetInstitutionsHandler
+	// CompendiumGetMapsHandler sets the operation handler for the get maps operation
+	CompendiumGetMapsHandler compendium.GetMapsHandler
 	// MatchGetMatchHandler sets the operation handler for the get match operation
 	MatchGetMatchHandler match.GetMatchHandler
 	// PlayerGetPlayerStatsHandler sets the operation handler for the get player stats operation
@@ -221,6 +226,9 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.InstitutionGetInstitutionsHandler == nil {
 		unregistered = append(unregistered, "institution.GetInstitutionsHandler")
+	}
+	if o.CompendiumGetMapsHandler == nil {
+		unregistered = append(unregistered, "compendium.GetMapsHandler")
 	}
 	if o.MatchGetMatchHandler == nil {
 		unregistered = append(unregistered, "match.GetMatchHandler")
@@ -342,6 +350,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/institutions"] = institution.NewGetInstitutions(o.context, o.InstitutionGetInstitutionsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/compendiums/maps"] = compendium.NewGetMaps(o.context, o.CompendiumGetMapsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
