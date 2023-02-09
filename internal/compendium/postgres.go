@@ -85,5 +85,4 @@ func (p *Postgres) GetMapList(ctx context.Context) ([]domain.Map, error) {
 	}
 
 	return maps, nil
-
 }

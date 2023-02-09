@@ -86,7 +86,6 @@ func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 		return nil, err
 	}
 
-	// TODO: отрефачить чтобы возвращался заполненный матч и строки для борда
 	res, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByPos[matchScoreBoardRow])
 	if err != nil {
 		return nil, err
