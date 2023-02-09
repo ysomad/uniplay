@@ -9,6 +9,7 @@ import (
 type compendiumRepository interface {
 	GetWeaponList(context.Context) ([]domain.Weapon, error)
 	GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
+	GetMapList(context.Context) ([]domain.Map, error)
 }
 
 type Service struct {
@@ -27,4 +28,8 @@ func (s *Service) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
 
 func (s *Service) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
 	return s.compendium.GetWeaponClassList(ctx)
+}
+
+func (s *Service) GetMapList(ctx context.Context) ([]domain.Map, error) {
+	return s.compendium.GetMapList(ctx)
 }

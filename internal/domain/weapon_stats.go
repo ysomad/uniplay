@@ -34,7 +34,7 @@ func NewWeaponStats(total []*WeaponBaseStats) []WeaponStats {
 }
 
 type WeaponBaseStats struct {
-	WeaponID          int32
+	WeaponID          int16
 	Weapon            string
 	Kills             int32
 	HeadshotKills     int32
@@ -95,7 +95,21 @@ func newWeaponAccuracyStats(shots, headHits, neckHits, chestHits, stomachHits, l
 }
 
 type WeaponStatsFilter struct {
-	WeaponID *int32
-	ClassID  *int32
+	WeaponID int16
+	ClassID  int16
 	MatchID  uuid.UUID
+}
+
+func NewWeaponStatsFilter(weaponID, classID *int16) WeaponStatsFilter {
+	f := WeaponStatsFilter{}
+
+	if weaponID != nil {
+		f.WeaponID = *weaponID
+	}
+
+	if classID != nil {
+		f.ClassID = *classID
+	}
+
+	return f
 }

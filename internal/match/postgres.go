@@ -46,7 +46,10 @@ func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 	sql, args, err := p.client.Builder.
 		Select(
 			"m.id as match_id",
-			"m.map_name as map_name",
+			"mp.id as map_id",
+			"mp.name as map_name",
+			"mp.internal_name as map_internal_name",
+			"mp.icon_url as map_icon_url",
 			"pms.player_steam_id as steam_id",
 			"p.display_name as player_name",
 			"pm.team_id as team_id",
@@ -65,6 +68,7 @@ func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 			"m.uploaded_at as match_uploaded_at",
 		).
 		From("match m").
+		InnerJoin("map mp ON m.map_name = mp.internal_name").
 		InnerJoin("player_match_stat pms ON m.id = pms.match_id").
 		InnerJoin("player p ON p.steam_id = pms.player_steam_id").
 		InnerJoin("player_match pm ON pms.player_steam_id = pm.player_steam_id AND m.id = pm.match_id").

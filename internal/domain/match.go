@@ -10,13 +10,13 @@ import (
 const defaultTeamSize = 5
 
 type Match struct {
-	ID         uuid.UUID
-	MapName    string
-	Team1      *MatchTeam
-	Team2      *MatchTeam
-	Rounds     int32
-	Duration   time.Duration
-	UploadedAt time.Time
+	ID           uuid.UUID
+	Map          Map
+	Team1        *MatchTeam
+	Team2        *MatchTeam
+	RoundsPlayed int32
+	Duration     time.Duration
+	UploadedAt   time.Time
 }
 
 type MatchTeam struct {

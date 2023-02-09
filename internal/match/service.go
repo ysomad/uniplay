@@ -79,11 +79,16 @@ func (s *Service) GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match,
 	}
 
 	match := domain.Match{
-		ID:         rows[0].MatchID,
-		MapName:    rows[0].MapName,
-		Rounds:     rows[0].RoundsPlayed,
-		Duration:   rows[0].MatchDuration,
-		UploadedAt: rows[0].MatchUploadedAt,
+		ID: rows[0].MatchID,
+		Map: domain.Map{
+			ID:           rows[0].MapID,
+			Name:         rows[0].MapName,
+			InternalName: rows[0].MapInternalName,
+			IconURL:      rows[0].MapIconURL,
+		},
+		RoundsPlayed: rows[0].RoundsPlayed,
+		Duration:     rows[0].MatchDuration,
+		UploadedAt:   rows[0].MatchUploadedAt,
 	}
 
 	for _, row := range rows {

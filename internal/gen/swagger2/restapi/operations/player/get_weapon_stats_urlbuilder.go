@@ -19,9 +19,9 @@ import (
 type GetWeaponStatsURL struct {
 	SteamID string
 
-	ClassID  *int32
+	ClassID  *int16
 	MatchID  *strfmt.UUID
-	WeaponID *int32
+	WeaponID *int16
 
 	_basePath string
 	// avoid unkeyed usage
@@ -66,7 +66,7 @@ func (o *GetWeaponStatsURL) Build() (*url.URL, error) {
 
 	var classIDQ string
 	if o.ClassID != nil {
-		classIDQ = swag.FormatInt32(*o.ClassID)
+		classIDQ = swag.FormatInt16(*o.ClassID)
 	}
 	if classIDQ != "" {
 		qs.Set("class_id", classIDQ)
@@ -82,7 +82,7 @@ func (o *GetWeaponStatsURL) Build() (*url.URL, error) {
 
 	var weaponIDQ string
 	if o.WeaponID != nil {
-		weaponIDQ = swag.FormatInt32(*o.WeaponID)
+		weaponIDQ = swag.FormatInt16(*o.WeaponID)
 	}
 	if weaponIDQ != "" {
 		qs.Set("weapon_id", weaponIDQ)

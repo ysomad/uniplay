@@ -78,7 +78,7 @@ type PlayerWeaponStatsInnerBaseStats struct {
 	Weapon string `json:"weapon,omitempty"`
 
 	// weapon id
-	WeaponID int32 `json:"weapon_id,omitempty"`
+	WeaponID int16 `json:"weapon_id,omitempty"`
 }
 
 // Validate validates this player weapon stats inner base stats

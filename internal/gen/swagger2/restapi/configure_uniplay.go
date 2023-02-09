@@ -60,6 +60,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 			return institution.GetInstitutionsNotImplemented()
 		})
 	}
+	if api.CompendiumGetMapsHandler == nil {
+		api.CompendiumGetMapsHandler = compendium.GetMapsHandlerFunc(func(params compendium.GetMapsParams) compendium.GetMapsResponder {
+			return compendium.GetMapsNotImplemented()
+		})
+	}
 	if api.MatchGetMatchHandler == nil {
 		api.MatchGetMatchHandler = match.GetMatchHandlerFunc(func(params match.GetMatchParams) match.GetMatchResponder {
 			return match.GetMatchNotImplemented()

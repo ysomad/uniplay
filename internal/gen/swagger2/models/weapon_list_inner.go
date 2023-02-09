@@ -25,7 +25,7 @@ type WeaponListInner struct {
 
 	// class id
 	// Required: true
-	ClassID int32 `json:"class_id"`
+	ClassID int16 `json:"class_id"`
 
 	// название оружия
 	// Required: true
@@ -33,7 +33,7 @@ type WeaponListInner struct {
 
 	// weapon id
 	// Required: true
-	WeaponID int32 `json:"weapon_id"`
+	WeaponID int16 `json:"weapon_id"`
 }
 
 // Validate validates this weapon list inner
@@ -73,7 +73,7 @@ func (m *WeaponListInner) validateClass(formats strfmt.Registry) error {
 
 func (m *WeaponListInner) validateClassID(formats strfmt.Registry) error {
 
-	if err := validate.Required("class_id", "body", int32(m.ClassID)); err != nil {
+	if err := validate.Required("class_id", "body", int16(m.ClassID)); err != nil {
 		return err
 	}
 
@@ -91,7 +91,7 @@ func (m *WeaponListInner) validateWeapon(formats strfmt.Registry) error {
 
 func (m *WeaponListInner) validateWeaponID(formats strfmt.Registry) error {
 
-	if err := validate.Required("weapon_id", "body", int32(m.WeaponID)); err != nil {
+	if err := validate.Required("weapon_id", "body", int16(m.WeaponID)); err != nil {
 		return err
 	}
 
