@@ -23,14 +23,6 @@ type Map struct {
 	// Required: true
 	IconURL string `json:"icon_url"`
 
-	// id
-	// Required: true
-	ID int16 `json:"id"`
-
-	// Название карты, например, de_dust2
-	// Required: true
-	InternalName string `json:"internal_name"`
-
 	// Название карты, например, Cobblestone
 	// Required: true
 	Name string `json:"name"`
@@ -41,14 +33,6 @@ func (m *Map) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateIconURL(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateInternalName(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -65,24 +49,6 @@ func (m *Map) Validate(formats strfmt.Registry) error {
 func (m *Map) validateIconURL(formats strfmt.Registry) error {
 
 	if err := validate.RequiredString("icon_url", "body", m.IconURL); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Map) validateID(formats strfmt.Registry) error {
-
-	if err := validate.Required("id", "body", int16(m.ID)); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Map) validateInternalName(formats strfmt.Registry) error {
-
-	if err := validate.RequiredString("internal_name", "body", m.InternalName); err != nil {
 		return err
 	}
 

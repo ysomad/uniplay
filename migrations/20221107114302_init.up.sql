@@ -2,27 +2,26 @@ BEGIN
 ;
 
 CREATE TABLE IF NOT EXISTS map (    
-    id varchar(16) PRIMARY KEY NOT NULL,
-    name varchar(16) UNIQUE NOT NULL,
+    name varchar(16) PRIMARY KEY NOT NULL,
     icon_url varchar(255) NOT NULL
 );
 
-INSERT INTO map(id, name, internal_name, icon_url)
+INSERT INTO map(name, icon_url)
 VALUES 
-    (1, 'Agency', 'cs_agency', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:Cs_agency.png'),
-    (2, 'Office', 'cs_office', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:Cs_office.png'),
-    (3, 'Ancient', 'de_ancient', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_ancient.png'),
-    (4, 'Anubis', 'de_anubis', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_anubis.png'),
-    (5, 'Cache', 'de_cache', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_cache.png'),
-    (6, 'Dust II', 'de_dust2', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_dust2.png'),
-    (7, 'Inferno', 'de_inferno', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_inferno.png'),
-    (8, 'Mirage', 'de_mirage', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_mirage.png'),
-    (9, 'Nuke', 'de_nuke', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_nuke.png'),
-    (10, 'Overpass', 'de_overpass', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_overpass.png'),
-    (11, 'Train', 'de_train', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_train.png'),
-    (12, 'Tuscan', 'de_tuscan', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_tuscan.png'),
-    (13, 'Vertigo', 'de_vertigo', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_vertigo.png'),
-    (14, 'Cobblestone', 'de_cbble', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_cbble.png');
+    ('cs_agency', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:Cs_agency.png'),
+    ('cs_office', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:Cs_office.png'),
+    ('de_ancient', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_ancient.png'),
+    ('de_anubis', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_anubis.png'),
+    ('de_cache', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_cache.png'),
+    ('de_dust2', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_dust2.png'),
+    ('de_inferno', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_inferno.png'),
+    ('de_mirage', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_mirage.png'),
+    ('de_nuke', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_nuke.png'),
+    ('de_overpass', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_overpass.png'),
+    ('de_train', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_train.png'),
+    ('de_tuscan', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_tuscan.png'),
+    ('de_vertigo', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_vertigo.png'),
+    ('de_cbble', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_cbble.png');
 
 CREATE TABLE IF NOT EXISTS player (
     id uuid PRIMARY KEY NOT NULL,
@@ -33,7 +32,7 @@ CREATE TABLE IF NOT EXISTS player (
 CREATE TABLE IF NOT EXISTS team (
     id smallserial PRIMARY KEY NOT NULL,
     clan_name varchar(64) UNIQUE NOT NULL,
-    flag_code char(2) NOT NULL,
+    flag_code varchar(2) NOT NULL,
     captain_steam_id numeric REFERENCES player (steam_id)
 );
 
@@ -46,7 +45,7 @@ CREATE TABLE IF NOT EXISTS team_player (
 
 CREATE TABLE IF NOT EXISTS match (
     id uuid PRIMARY KEY NOT NULL,
-    map_name varchar(16) NOT NULL REFERENCES map (internal_name),
+    map varchar(16) NOT NULL REFERENCES map (name),
     rounds smallint NOT NULL,
     duration interval NOT NULL,
     uploaded_at timestamptz NOT NULL

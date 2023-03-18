@@ -86,10 +86,8 @@ func (c *Controller) GetMaps(p compendium.GetMapsParams) compendium.GetMapsRespo
 
 	for i, m := range maps {
 		payload[i] = models.Map{
-			ID:           m.ID,
-			Name:         m.Name,
-			InternalName: m.InternalName,
-			IconURL:      m.IconURL,
+			Name:    m.Name,
+			IconURL: m.IconURL,
 		}
 	}
 

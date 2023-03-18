@@ -81,10 +81,8 @@ func (s *Service) GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match,
 	match := domain.Match{
 		ID: rows[0].MatchID,
 		Map: domain.Map{
-			ID:           rows[0].MapID,
-			Name:         rows[0].MapName,
-			InternalName: rows[0].MapInternalName,
-			IconURL:      rows[0].MapIconURL,
+			Name:    rows[0].MapName,
+			IconURL: rows[0].MapIconURL,
 		},
 		RoundsPlayed: rows[0].RoundsPlayed,
 		Duration:     rows[0].MatchDuration,

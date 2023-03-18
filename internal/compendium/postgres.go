@@ -67,7 +67,7 @@ func (p *Postgres) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass
 
 func (p *Postgres) GetMapList(ctx context.Context) ([]domain.Map, error) {
 	sql, args, err := p.client.Builder.
-		Select("id, name, internal_name, icon_url").
+		Select("name, icon_url").
 		From("map").
 		ToSql()
 	if err != nil {

@@ -124,10 +124,8 @@ func (c *Controller) GetMatch(p matchGen.GetMatchParams) matchGen.GetMatchRespon
 	payload := models.Match{
 		ID: strfmt.UUID(match.ID.String()),
 		Map: models.Map{
-			ID:           match.Map.ID,
-			Name:         match.Map.Name,
-			InternalName: match.Map.InternalName,
-			IconURL:      match.Map.IconURL,
+			Name:    match.Map.Name,
+			IconURL: match.Map.IconURL,
 		},
 		RoundsPlayed: match.RoundsPlayed,
 		Team1: models.MatchTeam{
