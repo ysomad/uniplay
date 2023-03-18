@@ -3,25 +3,33 @@ package player
 import (
 	"context"
 
+	"go.opentelemetry.io/otel/trace"
+
 	"github.com/ysomad/uniplay/internal/domain"
-	"github.com/ysomad/uniplay/internal/pkg/otel"
 )
 
+type playerRepository interface {
+	GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error)
+	GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error)
+}
+
 type Service struct {
+	tracer trace.Tracer
 	player playerRepository
 }
 
-func NewService(r playerRepository) *Service {
+func NewService(t trace.Tracer, r playerRepository) *Service {
 	return &Service{
+		tracer: t,
 		player: r,
 	}
 }
 
-func (s *Service) GetStats(ctx context.Context, steamID uint64) (domain.PlayerStats, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "player.Service.GetStats")
+func (s *Service) GetStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (domain.PlayerStats, error) {
+	ctx, span := s.tracer.Start(ctx, "player.Service.GetStats")
 	defer span.End()
 
-	ts, err := s.player.GetTotalStats(ctx, steamID)
+	ts, err := s.player.GetBaseStats(ctx, steamID, f)
 	if err != nil {
 		return domain.PlayerStats{}, err
 	}
@@ -29,11 +37,11 @@ func (s *Service) GetStats(ctx context.Context, steamID uint64) (domain.PlayerSt
 	return domain.NewPlayerStats(ts), nil
 }
 
-func (s *Service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStat, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "player.Service.GetWeaponStats")
+func (s *Service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
+	ctx, span := s.tracer.Start(ctx, "player.Service.GetWeaponStats")
 	defer span.End()
 
-	ts, err := s.player.GetTotalWeaponStats(ctx, steamID, f)
+	ts, err := s.player.GetWeaponBaseStats(ctx, steamID, f)
 	if err != nil {
 		return nil, err
 	}

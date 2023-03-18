@@ -46,10 +46,8 @@ linters:
   enable:
     - asciicheck
     - bodyclose
-    - cyclop
     - depguard
     - dogsled
-    - dupl
     - durationcheck
     - errcheck
     - errorlint
@@ -67,7 +65,6 @@ linters:
     - godox
     - goerr113
     - gofmt
-    - gofumpt
     - goimports
     - gomodguard
     - goprintffuncname

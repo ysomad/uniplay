@@ -1,12 +1,79 @@
 package domain
 
 import (
-	"errors"
 	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 )
+
+const defaultTeamSize = 5
+
+type Match struct {
+	ID           uuid.UUID
+	Map          Map
+	Team1        *MatchTeam
+	Team2        *MatchTeam
+	RoundsPlayed int32
+	Duration     time.Duration
+	UploadedAt   time.Time
+}
+
+type MatchTeam struct {
+	ID         int32
+	Score      int32
+	State      MatchState
+	Name       string
+	FlagCode   string
+	ScoreBoard []*MatchScoreBoardRow
+}
+
+func NewMatchTeam(id, score int32, state MatchState, name, flag string) *MatchTeam {
+	return &MatchTeam{
+		ID:         id,
+		Score:      score,
+		State:      state,
+		Name:       name,
+		FlagCode:   flag,
+		ScoreBoard: make([]*MatchScoreBoardRow, 0, defaultTeamSize),
+	}
+}
+
+type MatchScoreBoardRow struct {
+	SteamID            string
+	PlayerName         string
+	Kills              int32
+	Deaths             int32
+	Assists            int32
+	MVPCount           int32
+	KillDeathRatio     float64
+	DamagePerRound     float64
+	HeadshotPercentage float64
+}
+
+func NewMatchScoreBoardRow(
+	steamID uint64,
+	playerName string,
+	kills int32,
+	hsKills int32,
+	deaths int32,
+	assists int32,
+	mvps int32,
+	dmgDealt int32,
+	roundsPlayed int32,
+) MatchScoreBoardRow {
+	return MatchScoreBoardRow{
+		SteamID:            fmt.Sprint(steamID),
+		PlayerName:         playerName,
+		Kills:              kills,
+		Deaths:             deaths,
+		Assists:            assists,
+		MVPCount:           mvps,
+		KillDeathRatio:     calculateKD(float64(kills), float64(deaths)),
+		DamagePerRound:     calculateADR(float64(dmgDealt), float64(roundsPlayed)),
+		HeadshotPercentage: calculateHSPercentage(float64(hsKills), float64(kills)),
+	}
+}
 
 type MatchState int8
 
@@ -30,42 +97,17 @@ func NewMatchState(teamScore, opponentScore int8) MatchState {
 	return MatchStateDraw
 }
 
-var (
-	errInvalidServerName     = errors.New("invalid server name")
-	errInvalidClientName     = errors.New("invalid client name")
-	errInvalidMatchDuration  = fmt.Errorf("match must last more than %s", minMatchDuration.String())
-	errInvalidPlaybackTicks  = errors.New("invalid amount of playback ticks")
-	errInvalidPlaybackFrames = errors.New("invalid amount of playback frames")
-	errInvalidSignonLength   = errors.New("invalid signon length")
-)
-
 // NewMatchID returns match id generated from meta data received from replay header.
-func NewMatchID(server, client, mapName string, matchDuration time.Duration, ticks, frames, signonLen int) (uuid.UUID, error) {
-	if server == "" {
-		return uuid.UUID{}, errInvalidServerName
-	}
-
-	if client == "" {
-		return uuid.UUID{}, errInvalidClientName
-	}
-
-	if matchDuration < minMatchDuration {
-		return uuid.UUID{}, errInvalidMatchDuration
-	}
-
-	if ticks <= 0 {
-		return uuid.UUID{}, errInvalidPlaybackTicks
-	}
-
-	if frames <= 0 {
-		return uuid.UUID{}, errInvalidPlaybackFrames
-	}
-
-	if signonLen <= 0 {
-		return uuid.UUID{}, errInvalidSignonLength
-	}
-
-	s := fmt.Sprintf("%s,%s,%s,%d,%d,%d,%d", server, client, mapName, matchDuration, ticks, frames, signonLen)
-
-	return uuid.NewMD5(uuid.UUID{}, []byte(s)), nil
+func NewMatchID(h *ReplayHeader) uuid.UUID {
+	return uuid.NewMD5(uuid.UUID{}, []byte(fmt.Sprintf(
+		"%d,%d,%d,%s,%s,%s,%d,%d",
+		h.playbackTicks,
+		h.playbackFrames,
+		h.signonLength,
+		h.server,
+		h.client,
+		h.mapName,
+		h.playbackTime,
+		h.filesize,
+	)))
 }

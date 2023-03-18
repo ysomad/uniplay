@@ -30,6 +30,7 @@ type (
 	PG struct {
 		MaxConns int32  `yaml:"max_connections" env-required:"true"`
 		URL      string `env:"PG_URL" env-required:"true"`
+		DBName   string `env:"PG_DB_NAME" env-required:"true"`
 	}
 
 	Jaeger struct {

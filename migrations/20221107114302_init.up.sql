@@ -1,38 +1,65 @@
 BEGIN
 ;
 
+CREATE TABLE IF NOT EXISTS map (    
+    name varchar(16) PRIMARY KEY NOT NULL,
+    icon_url varchar(255) NOT NULL
+);
+
+INSERT INTO map(name, icon_url)
+VALUES 
+    ('cs_agency', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:Cs_agency.png'),
+    ('cs_office', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:Cs_office.png'),
+    ('de_ancient', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_ancient.png'),
+    ('de_anubis', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_anubis.png'),
+    ('de_cache', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_cache.png'),
+    ('de_dust2', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_dust2.png'),
+    ('de_inferno', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_inferno.png'),
+    ('de_mirage', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_mirage.png'),
+    ('de_nuke', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_nuke.png'),
+    ('de_overpass', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_overpass.png'),
+    ('de_train', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_train.png'),
+    ('de_tuscan', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_tuscan.png'),
+    ('de_vertigo', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_vertigo.png'),
+    ('de_cbble', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_cbble.png');
+
+CREATE TABLE IF NOT EXISTS player (
+    id uuid PRIMARY KEY NOT NULL,
+    steam_id numeric UNIQUE NOT NULL,
+    display_name varchar(64) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS team (
     id smallserial PRIMARY KEY NOT NULL,
     clan_name varchar(64) UNIQUE NOT NULL,
-    flag_code char(2) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS player (
-    steam_id bigint PRIMARY KEY NOT NULL,
-    avatar_uri varchar(2048),
-    display_name varchar(24)
+    flag_code varchar(2) NOT NULL,
+    captain_steam_id numeric REFERENCES player (steam_id)
 );
 
 CREATE TABLE IF NOT EXISTS team_player (
     team_id smallint NOT NULL REFERENCES team (id),
-    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    player_steam_id numeric NOT NULL REFERENCES player (steam_id),
     is_active boolean NOT NULL DEFAULT false,
     PRIMARY KEY (team_id, player_steam_id)
 );
 
 CREATE TABLE IF NOT EXISTS match (
     id uuid PRIMARY KEY NOT NULL,
-    map_name varchar(64) NOT NULL,
-    team1_id smallint NOT NULL REFERENCES team (id),
-    team1_score smallint NOT NULL,
-    team2_id smallint NOT NULL REFERENCES team (id),
-    team2_score smallint NOT NULL,
+    map varchar(16) NOT NULL REFERENCES map (name),
+    rounds smallint NOT NULL,
     duration interval NOT NULL,
     uploaded_at timestamptz NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS team_match (
+    team_id smallint NOT NULL REFERENCES team (id),
+    match_id uuid NOT NULL REFERENCES match (id),
+    match_state smallint NOT NULL,
+    score smallint NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS player_match_stat (
-    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    player_steam_id numeric NOT NULL REFERENCES player (steam_id),
     match_id uuid NOT NULL REFERENCES match (id),
     kills smallint NOT NULL,
     hs_kills smallint NOT NULL,
@@ -54,7 +81,7 @@ CREATE TABLE IF NOT EXISTS player_match_stat (
 );
 
 CREATE TABLE IF NOT EXISTS player_match (
-    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    player_steam_id numeric NOT NULL REFERENCES player (steam_id),
     match_id uuid NOT NULL REFERENCES match (id),
     team_id smallint NOT NULL REFERENCES team (id),
     match_state smallint NOT NULL
@@ -72,7 +99,7 @@ CREATE TABLE IF NOT EXISTS weapon (
 );
 
 CREATE TABLE IF NOT EXISTS player_match_weapon_stat (
-    player_steam_id bigint NOT NULL REFERENCES player (steam_id),
+    player_steam_id numeric NOT NULL REFERENCES player (steam_id),
     match_id uuid NOT NULL REFERENCES match (id),
     weapon_id smallint NOT NULL REFERENCES weapon (id),
     kills smallint NOT NULL,

@@ -6,28 +6,28 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
-	"go.uber.org/zap"
+	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
 
-	"github.com/ysomad/uniplay/internal/pkg/otel"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-type PGStorage struct {
-	log    *zap.Logger
+type Postgres struct {
+	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPGStorage(l *zap.Logger, c *pgclient.Client) *PGStorage {
-	return &PGStorage{
-		log:    l,
+func NewPostgres(t trace.Tracer, c *pgclient.Client) *Postgres {
+	return &Postgres{
+		tracer: t,
 		client: c,
 	}
 }
 
-type playerTotalStat struct {
+type playerBaseStats struct {
 	Kills              int32         `db:"total_kills"`
 	HeadshotKills      int32         `db:"total_hs_kills"`
 	BlindKills         int32         `db:"total_blind_kills"`
@@ -53,11 +53,11 @@ type playerTotalStat struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (s *PGStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.PlayerTotalStats, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "player.PGStorage.GetTotalStats")
+func (p *Postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error) {
+	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetBaseStats")
 	defer span.End()
 
-	sql, args, err := s.client.Builder.
+	b := p.client.Builder.
 		Select(
 			"sum(ps.kills) as total_kills",
 			"sum(ps.hs_kills) as total_hs_kills",
@@ -76,7 +76,7 @@ func (s *PGStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.
 			"sum(ps.blinded_times) as total_blinded_times",
 			"sum(ps.bombs_planted) as total_bombs_planted",
 			"sum(ps.bombs_defused) as total_bombs_defused",
-			"sum(m.team1_score) + sum(m.team2_score) as total_rounds_played",
+			"m.rounds as total_rounds_played",
 			"count(m.id) as total_matches_played",
 			"coalesce((case when pm.match_state = 1 then count(pm.*) end), 0) as total_wins",
 			"coalesce((case when pm.match_state = -1 then count(pm.*) end), 0) as total_loses",
@@ -85,19 +85,23 @@ func (s *PGStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.
 		From("player_match_stat ps").
 		InnerJoin("player_match pm ON ps.player_steam_id = pm.player_steam_id").
 		InnerJoin("match m ON pm.match_id = m.id").
-		Where(sq.Eq{"ps.player_steam_id": steamID}).
-		GroupBy("pm.match_state").
-		ToSql()
+		Where(sq.Eq{"ps.player_steam_id": steamID})
+
+	if f.MatchID != uuid.Nil {
+		b = b.Where(sq.Eq{"ps.match_id": f.MatchID})
+	}
+
+	sql, args, err := b.GroupBy("pm.match_state, m.rounds").ToSql()
 	if err != nil {
 		return nil, err
 	}
 
-	rows, err := s.client.Pool.Query(ctx, sql, args...)
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
 
-	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[playerTotalStat])
+	stats, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[playerBaseStats])
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, domain.ErrPlayerNotFound
@@ -106,13 +110,13 @@ func (s *PGStorage) GetTotalStats(ctx context.Context, steamID uint64) (*domain.
 		return nil, err
 	}
 
-	res := domain.PlayerTotalStats(stats)
+	res := domain.PlayerBaseStats(stats)
 
 	return &res, nil
 }
 
-type weaponTotalStat struct {
-	WeaponID          int32  `db:"weapon_id"`
+type weaponBaseStats struct {
+	WeaponID          int16  `db:"weapon_id"`
 	Weapon            string `db:"weapon"`
 	Kills             int32  `db:"total_kills"`
 	HeadshotKills     int32  `db:"total_hs_kills"`
@@ -135,11 +139,11 @@ type weaponTotalStat struct {
 	RightLegHits      int32  `db:"total_r_leg_hits"`
 }
 
-func (s *PGStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponTotalStat, error) {
-	_, span := otel.StartTrace(ctx, libraryName, "player.PGStorage.GetTotalWeaponStats")
+func (p *Postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
+	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetWeaponBaseStats")
 	defer span.End()
 
-	b := s.client.Builder.
+	b := p.client.Builder.
 		Select(
 			"ws.weapon_id",
 			"w.weapon",
@@ -167,10 +171,12 @@ func (s *PGStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 		Where(sq.Eq{"ws.player_steam_id": steamID})
 
 	switch {
-	case f.WeaponID != nil:
+	case f.WeaponID != 0:
 		b = b.Where(sq.Eq{"ws.weapon_id": f.WeaponID})
-	case f.ClassID != nil:
+	case f.ClassID != 0:
 		b = b.Where(sq.Eq{"w.class_id": f.ClassID})
+	case f.MatchID != uuid.Nil:
+		b = b.Where(sq.Eq{"ws.match_id": f.MatchID})
 	}
 
 	sql, args, err := b.
@@ -181,12 +187,12 @@ func (s *PGStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 		return nil, err
 	}
 
-	rows, err := s.client.Pool.Query(ctx, sql, args...)
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
 
-	weaponStats, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[weaponTotalStat])
+	weaponStats, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[weaponBaseStats])
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
 			return nil, domain.ErrPlayerNotFound
@@ -195,10 +201,10 @@ func (s *PGStorage) GetTotalWeaponStats(ctx context.Context, steamID uint64, f d
 		return nil, err
 	}
 
-	res := make([]*domain.WeaponTotalStat, len(weaponStats))
+	res := make([]*domain.WeaponBaseStats, len(weaponStats))
 
 	for i, s := range weaponStats {
-		res[i] = &domain.WeaponTotalStat{
+		res[i] = &domain.WeaponBaseStats{
 			WeaponID:          s.WeaponID,
 			Weapon:            s.Weapon,
 			Kills:             s.Kills,

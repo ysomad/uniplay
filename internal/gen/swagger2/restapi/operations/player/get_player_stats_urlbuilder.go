@@ -10,11 +10,15 @@ import (
 	"net/url"
 	golangswaggerpaths "path"
 	"strings"
+
+	"github.com/go-openapi/strfmt"
 )
 
 // GetPlayerStatsURL generates an URL for the get player stats operation
 type GetPlayerStatsURL struct {
 	SteamID string
+
+	MatchID *strfmt.UUID
 
 	_basePath string
 	// avoid unkeyed usage
@@ -54,6 +58,18 @@ func (o *GetPlayerStatsURL) Build() (*url.URL, error) {
 		_basePath = "/v1"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var matchIDQ string
+	if o.MatchID != nil {
+		matchIDQ = o.MatchID.String()
+	}
+	if matchIDQ != "" {
+		qs.Set("match_id", matchIDQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

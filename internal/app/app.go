@@ -3,72 +3,67 @@ package app
 import (
 	"context"
 	"log"
-	"os"
 
+	"github.com/IBM/pgxpoolprometheus"
+	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"
 
-	"github.com/exaring/otelpgx"
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
+	"github.com/ysomad/uniplay/internal/match"
 	"github.com/ysomad/uniplay/internal/player"
-	"github.com/ysomad/uniplay/internal/replay"
 
 	"github.com/ysomad/uniplay/internal/pkg/logger"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
 func Run(conf *config.Config) {
-	l, err := logger.New(os.Stderr, conf.Log.Level)
+	l, err := logger.New(conf.Log.Level)
 	if err != nil {
 		log.Fatalf("logger.New: %s", err.Error())
 	}
 
-	// tracing
-	jaegerExp, err := newJaegerExporter(conf.Jaeger)
+	otel, err := newOpenTelemetry(conf)
 	if err != nil {
-		l.Fatal("newJaegerExporter", zap.Error(err))
+		l.Fatal("otel.New", zap.Error(err))
 	}
-
-	shutdownTraceProvider := newTraceProvider(conf.App, jaegerExp)
-
-	defer func() {
-		if err = shutdownTraceProvider(context.Background()); err != nil {
-			l.Fatal("shutdownTraceProvider", zap.Error(err))
-		}
-	}()
-
-	// postgres
-	pgTracer := otelpgx.NewTracer(otelpgx.WithTrimSQLInSpanName())
 
 	pgClient, err := pgclient.New(
 		conf.PG.URL,
 		pgclient.WithMaxConns(conf.PG.MaxConns),
-		pgclient.WithQueryTracer(pgTracer),
+		pgclient.WithQueryTracer(otel.PgxTracer),
 	)
 	if err != nil {
 		l.Fatal("pgclient.New", zap.Error(err))
 	}
 
-	// replay
-	replayRepo := replay.NewPGStorage(l, pgClient)
-	replayService := replay.NewService(l, replayRepo)
-	replayController := replay.NewController(l, replayService)
+	// pgx metrics
+	pgxCollector := pgxpoolprometheus.NewCollector(pgClient.Pool, map[string]string{"db_name": conf.PG.DBName})
+
+	if err = prometheus.Register(pgxCollector); err != nil {
+		l.Fatal("prometheus.Register", zap.Error(err))
+	}
+
+	// match
+	matchPostgres := match.NewPostgres(otel.AppTracer, pgClient)
+	matchService := match.NewService(otel.AppTracer, matchPostgres)
+	matchController := match.NewController(matchService)
 
 	// compendium
-	compendiumRepo := compendium.NewPGStorage(l, pgClient)
-	compendiumService := compendium.NewService(compendiumRepo)
-	compendiumController := compendium.NewController(l, compendiumService)
+	compendiumPostgres := compendium.NewPostgres(pgClient)
+	compendiumService := compendium.NewService(compendiumPostgres)
+	compendiumController := compendium.NewController(compendiumService)
 
 	// player
-	playerRepo := player.NewPGStorage(l, pgClient)
-	playerService := player.NewService(playerRepo)
-	playerController := player.NewController(l, playerService)
+	playerPostgres := player.NewPostgres(otel.AppTracer, pgClient)
+	playerService := player.NewService(otel.AppTracer, playerPostgres)
+	playerController := player.NewController(playerService)
 
 	// go-swagger
 	api, err := newAPI(apiDeps{
-		replay:     replayController,
 		compendium: compendiumController,
 		player:     playerController,
+		match:      matchController,
 	})
 	if err != nil {
 		l.Fatal("newAPI", zap.Error(err))
@@ -87,5 +82,11 @@ func Run(conf *config.Config) {
 
 	if err = srv.Serve(); err != nil {
 		l.Fatal("srv.Serve", zap.Error(err))
+	}
+
+	for _, f := range otel.CleanupFuncs {
+		if err = f(context.Background()); err != nil {
+			l.Fatal("cleanupFuncs", zap.Error(err))
+		}
 	}
 }

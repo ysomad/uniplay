@@ -11,7 +11,7 @@ func TestNewPlayerStats(t *testing.T) {
 	t.Parallel()
 
 	type args struct {
-		t *PlayerTotalStats
+		t *PlayerBaseStats
 	}
 	tests := []struct {
 		name string
@@ -21,7 +21,7 @@ func TestNewPlayerStats(t *testing.T) {
 		{
 			name: "success",
 			args: args{
-				t: &PlayerTotalStats{
+				t: &PlayerBaseStats{
 					Kills:              1337,
 					HeadshotKills:      567,
 					BlindKills:         59,
@@ -48,7 +48,7 @@ func TestNewPlayerStats(t *testing.T) {
 				},
 			},
 			want: PlayerStats{
-				Total: &PlayerTotalStats{
+				Base: &PlayerBaseStats{
 					Kills:              1337,
 					HeadshotKills:      567,
 					BlindKills:         59,
@@ -300,6 +300,141 @@ func Test_newPlayerRoundStats(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := newPlayerRoundStats(tt.args.kills, tt.args.deaths, tt.args.dmgDealt, tt.args.assists, tt.args.grenadeDmgDealt, tt.args.blindedPlayers, tt.args.blindedTimes, tt.args.roundsPlayed)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func Test_calculateKD(t *testing.T) {
+	t.Parallel()
+
+	type args struct {
+		kills  float64
+		deaths float64
+	}
+	tests := []struct {
+		name string
+		args args
+		want float64
+	}{
+		{
+			name: "0 kills",
+			args: args{
+				kills:  0,
+				deaths: 223,
+			},
+			want: 0,
+		},
+		{
+			name: "0 deaths",
+			args: args{
+				kills:  13,
+				deaths: 0,
+			},
+			want: 0,
+		},
+		{
+			name: "success",
+			args: args{
+				kills:  35,
+				deaths: 23,
+			},
+			want: 1.52,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := calculateKD(tt.args.kills, tt.args.deaths)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func Test_calculateHSPercentage(t *testing.T) {
+	t.Parallel()
+
+	type args struct {
+		hsKills float64
+		kills   float64
+	}
+	tests := []struct {
+		name string
+		args args
+		want float64
+	}{
+		{
+			name: "0 kills",
+			args: args{
+				hsKills: 231,
+				kills:   0,
+			},
+			want: 0,
+		},
+		{
+			name: "0 hs kills",
+			args: args{
+				hsKills: 0,
+				kills:   231,
+			},
+			want: 0,
+		},
+		{
+			name: "success",
+			args: args{
+				hsKills: 35,
+				kills:   35,
+			},
+			want: 100,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := calculateHSPercentage(tt.args.hsKills, tt.args.kills)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func Test_calculateADR(t *testing.T) {
+	t.Parallel()
+
+	type args struct {
+		dmgDealt     float64
+		roundsPlayed float64
+	}
+	tests := []struct {
+		name string
+		args args
+		want float64
+	}{
+		{
+			name: "0 rounds played",
+			args: args{
+				dmgDealt:     231,
+				roundsPlayed: 0,
+			},
+			want: 0,
+		},
+		{
+			name: "0 damage dealt",
+			args: args{
+				dmgDealt:     0,
+				roundsPlayed: 23,
+			},
+			want: 0,
+		},
+		{
+			name: "success",
+			args: args{
+				dmgDealt:     1567,
+				roundsPlayed: 5,
+			},
+			want: 313.4,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := calculateADR(tt.args.dmgDealt, tt.args.roundsPlayed)
 			assert.Equal(t, tt.want, got)
 		})
 	}

@@ -1,19 +1,22 @@
 package domain
 
-import "math"
+import (
+	"github.com/google/uuid"
+	"github.com/ysomad/uniplay/internal/pkg/floatrounder"
+)
 
-type WeaponStat struct {
-	Total    *WeaponTotalStat
-	Accuracy WeaponAccuracyStat
+type WeaponStats struct {
+	Base     *WeaponBaseStats
+	Accuracy WeaponAccuracyStats
 }
 
-func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
-	res := make([]WeaponStat, len(total))
+func NewWeaponStats(total []*WeaponBaseStats) []WeaponStats {
+	res := make([]WeaponStats, len(total))
 
 	for i, s := range total {
-		res[i] = WeaponStat{
-			Total: s,
-			Accuracy: newWeaponAccuracyStat(
+		res[i] = WeaponStats{
+			Base: s,
+			Accuracy: newWeaponAccuracyStats(
 				s.Shots,
 				s.HeadHits,
 				s.NeckHits,
@@ -30,8 +33,8 @@ func NewWeaponStats(total []*WeaponTotalStat) []WeaponStat {
 	return res
 }
 
-type WeaponTotalStat struct {
-	WeaponID          int32
+type WeaponBaseStats struct {
+	WeaponID          int16
 	Weapon            string
 	Kills             int32
 	HeadshotKills     int32
@@ -54,7 +57,7 @@ type WeaponTotalStat struct {
 	RightLegHits      int32
 }
 
-type WeaponAccuracyStat struct {
+type WeaponAccuracyStats struct {
 	Total   float64
 	Head    float64
 	Neck    float64
@@ -64,26 +67,23 @@ type WeaponAccuracyStat struct {
 	Legs    float64
 }
 
-// round rounds float64 to 2 decimal places.
-func round(n float64) float64 { return math.Round(n*100) / 100 }
-
 // calcAccuracy returns accuracy in percentage.
 func calcAccuracy(sum, num int32) float64 {
 	if sum <= 0 || num <= 0 {
 		return 0
 	}
 
-	return round(float64(sum) * 100 / float64(num))
+	return floatrounder.Round(float64(sum) * 100 / float64(num))
 }
 
-func newWeaponAccuracyStat(shots, headHits, neckHits, chestHits, stomachHits, lArmHits, rArmHits, lLegHits, rLegHits int32) WeaponAccuracyStat {
+func newWeaponAccuracyStats(shots, headHits, neckHits, chestHits, stomachHits, lArmHits, rArmHits, lLegHits, rLegHits int32) WeaponAccuracyStats {
 	hits := headHits + neckHits + chestHits + stomachHits + lArmHits + rArmHits + lLegHits + rLegHits
 
 	if hits <= 0 {
-		return WeaponAccuracyStat{}
+		return WeaponAccuracyStats{}
 	}
 
-	return WeaponAccuracyStat{
+	return WeaponAccuracyStats{
 		Total:   calcAccuracy(hits, shots),
 		Head:    calcAccuracy(headHits, hits),
 		Neck:    calcAccuracy(neckHits, hits),
@@ -95,5 +95,21 @@ func newWeaponAccuracyStat(shots, headHits, neckHits, chestHits, stomachHits, lA
 }
 
 type WeaponStatsFilter struct {
-	WeaponID, ClassID *int32
+	WeaponID int16
+	ClassID  int16
+	MatchID  uuid.UUID
+}
+
+func NewWeaponStatsFilter(weaponID, classID *int16) WeaponStatsFilter {
+	f := WeaponStatsFilter{}
+
+	if weaponID != nil {
+		f.WeaponID = *weaponID
+	}
+
+	if classID != nil {
+		f.ClassID = *classID
+	}
+
+	return f
 }

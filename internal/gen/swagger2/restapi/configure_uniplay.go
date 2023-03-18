@@ -11,8 +11,10 @@ import (
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
-	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/replay"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/team"
 )
 
 //go:generate swagger generate server --target ../../swagger2 --name Uniplay --spec ../../../../swagger2.yaml --principal interface{} --exclude-main --strict-responders
@@ -41,11 +43,41 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	// You may change here the memory limit for this multipart form parser. Below is the default (32 MB).
-	// replay.UploadReplayMaxParseMemory = 32 << 20
+	// match.CreateMatchMaxParseMemory = 32 << 20
 
+	if api.MatchCreateMatchHandler == nil {
+		api.MatchCreateMatchHandler = match.CreateMatchHandlerFunc(func(params match.CreateMatchParams) match.CreateMatchResponder {
+			return match.CreateMatchNotImplemented()
+		})
+	}
+	if api.MatchDeleteMatchHandler == nil {
+		api.MatchDeleteMatchHandler = match.DeleteMatchHandlerFunc(func(params match.DeleteMatchParams) match.DeleteMatchResponder {
+			return match.DeleteMatchNotImplemented()
+		})
+	}
+	if api.InstitutionGetInstitutionsHandler == nil {
+		api.InstitutionGetInstitutionsHandler = institution.GetInstitutionsHandlerFunc(func(params institution.GetInstitutionsParams) institution.GetInstitutionsResponder {
+			return institution.GetInstitutionsNotImplemented()
+		})
+	}
+	if api.CompendiumGetMapsHandler == nil {
+		api.CompendiumGetMapsHandler = compendium.GetMapsHandlerFunc(func(params compendium.GetMapsParams) compendium.GetMapsResponder {
+			return compendium.GetMapsNotImplemented()
+		})
+	}
+	if api.MatchGetMatchHandler == nil {
+		api.MatchGetMatchHandler = match.GetMatchHandlerFunc(func(params match.GetMatchParams) match.GetMatchResponder {
+			return match.GetMatchNotImplemented()
+		})
+	}
 	if api.PlayerGetPlayerStatsHandler == nil {
 		api.PlayerGetPlayerStatsHandler = player.GetPlayerStatsHandlerFunc(func(params player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
 			return player.GetPlayerStatsNotImplemented()
+		})
+	}
+	if api.TeamGetTeamListHandler == nil {
+		api.TeamGetTeamListHandler = team.GetTeamListHandlerFunc(func(params team.GetTeamListParams) team.GetTeamListResponder {
+			return team.GetTeamListNotImplemented()
 		})
 	}
 	if api.CompendiumGetWeaponClassesHandler == nil {
@@ -61,11 +93,6 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 	if api.CompendiumGetWeaponsHandler == nil {
 		api.CompendiumGetWeaponsHandler = compendium.GetWeaponsHandlerFunc(func(params compendium.GetWeaponsParams) compendium.GetWeaponsResponder {
 			return compendium.GetWeaponsNotImplemented()
-		})
-	}
-	if api.ReplayUploadReplayHandler == nil {
-		api.ReplayUploadReplayHandler = replay.UploadReplayHandlerFunc(func(params replay.UploadReplayParams) replay.UploadReplayResponder {
-			return replay.UploadReplayNotImplemented()
 		})
 	}
 

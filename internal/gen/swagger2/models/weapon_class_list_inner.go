@@ -25,7 +25,7 @@ type WeaponClassListInner struct {
 
 	// id
 	// Required: true
-	ID int32 `json:"id"`
+	ID int16 `json:"id"`
 }
 
 // Validate validates this weapon class list inner
@@ -57,7 +57,7 @@ func (m *WeaponClassListInner) validateClass(formats strfmt.Registry) error {
 
 func (m *WeaponClassListInner) validateID(formats strfmt.Registry) error {
 
-	if err := validate.Required("id", "body", int32(m.ID)); err != nil {
+	if err := validate.Required("id", "body", int16(m.ID)); err != nil {
 		return err
 	}
 

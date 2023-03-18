@@ -23,9 +23,9 @@ type PlayerWeaponStatsInner struct {
 	// Required: true
 	AccuracyStats PlayerWeaponStatsInnerAccuracyStats `json:"accuracy_stats"`
 
-	// total stats
+	// base stats
 	// Required: true
-	TotalStats *PlayerWeaponStatsInnerTotalStats `json:"total_stats"`
+	BaseStats *PlayerWeaponStatsInnerBaseStats `json:"base_stats"`
 }
 
 // Validate validates this player weapon stats inner
@@ -36,7 +36,7 @@ func (m *PlayerWeaponStatsInner) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateTotalStats(formats); err != nil {
+	if err := m.validateBaseStats(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -60,18 +60,18 @@ func (m *PlayerWeaponStatsInner) validateAccuracyStats(formats strfmt.Registry) 
 	return nil
 }
 
-func (m *PlayerWeaponStatsInner) validateTotalStats(formats strfmt.Registry) error {
+func (m *PlayerWeaponStatsInner) validateBaseStats(formats strfmt.Registry) error {
 
-	if err := validate.Required("total_stats", "body", m.TotalStats); err != nil {
+	if err := validate.Required("base_stats", "body", m.BaseStats); err != nil {
 		return err
 	}
 
-	if m.TotalStats != nil {
-		if err := m.TotalStats.Validate(formats); err != nil {
+	if m.BaseStats != nil {
+		if err := m.BaseStats.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("total_stats")
+				return ve.ValidateName("base_stats")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("total_stats")
+				return ce.ValidateName("base_stats")
 			}
 			return err
 		}
@@ -88,7 +88,7 @@ func (m *PlayerWeaponStatsInner) ContextValidate(ctx context.Context, formats st
 		res = append(res, err)
 	}
 
-	if err := m.contextValidateTotalStats(ctx, formats); err != nil {
+	if err := m.contextValidateBaseStats(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -112,14 +112,14 @@ func (m *PlayerWeaponStatsInner) contextValidateAccuracyStats(ctx context.Contex
 	return nil
 }
 
-func (m *PlayerWeaponStatsInner) contextValidateTotalStats(ctx context.Context, formats strfmt.Registry) error {
+func (m *PlayerWeaponStatsInner) contextValidateBaseStats(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.TotalStats != nil {
-		if err := m.TotalStats.ContextValidate(ctx, formats); err != nil {
+	if m.BaseStats != nil {
+		if err := m.BaseStats.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("total_stats")
+				return ve.ValidateName("base_stats")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("total_stats")
+				return ce.ValidateName("base_stats")
 			}
 			return err
 		}

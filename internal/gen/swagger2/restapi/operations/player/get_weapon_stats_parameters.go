@@ -13,6 +13,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // NewGetWeaponStatsParams creates a new GetWeaponStatsParams object
@@ -35,8 +36,12 @@ type GetWeaponStatsParams struct {
 	/*Фильтр по классу оружия
 	  In: query
 	*/
-	ClassID *int32
-	/*player steam ID
+	ClassID *int16
+	/*Фильтр по матчу
+	  In: query
+	*/
+	MatchID *strfmt.UUID
+	/*Steam ID игрока
 	  Required: true
 	  In: path
 	*/
@@ -44,7 +49,7 @@ type GetWeaponStatsParams struct {
 	/*Фильтр по оружию
 	  In: query
 	*/
-	WeaponID *int32
+	WeaponID *int16
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -60,6 +65,11 @@ func (o *GetWeaponStatsParams) BindRequest(r *http.Request, route *middleware.Ma
 
 	qClassID, qhkClassID, _ := qs.GetOK("class_id")
 	if err := o.bindClassID(qClassID, qhkClassID, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qMatchID, qhkMatchID, _ := qs.GetOK("match_id")
+	if err := o.bindMatchID(qMatchID, qhkMatchID, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -92,12 +102,49 @@ func (o *GetWeaponStatsParams) bindClassID(rawData []string, hasKey bool, format
 		return nil
 	}
 
-	value, err := swag.ConvertInt32(raw)
+	value, err := swag.ConvertInt16(raw)
 	if err != nil {
-		return errors.InvalidType("class_id", "query", "int32", raw)
+		return errors.InvalidType("class_id", "query", "int16", raw)
 	}
 	o.ClassID = &value
 
+	return nil
+}
+
+// bindMatchID binds and validates parameter MatchID from query.
+func (o *GetWeaponStatsParams) bindMatchID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	// Format: uuid
+	value, err := formats.Parse("uuid", raw)
+	if err != nil {
+		return errors.InvalidType("match_id", "query", "strfmt.UUID", raw)
+	}
+	o.MatchID = (value.(*strfmt.UUID))
+
+	if err := o.validateMatchID(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateMatchID carries on validations for parameter MatchID
+func (o *GetWeaponStatsParams) validateMatchID(formats strfmt.Registry) error {
+
+	if err := validate.FormatOf("match_id", "query", "uuid", o.MatchID.String(), formats); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -129,9 +176,9 @@ func (o *GetWeaponStatsParams) bindWeaponID(rawData []string, hasKey bool, forma
 		return nil
 	}
 
-	value, err := swag.ConvertInt32(raw)
+	value, err := swag.ConvertInt16(raw)
 	if err != nil {
-		return errors.InvalidType("weapon_id", "query", "int32", raw)
+		return errors.InvalidType("weapon_id", "query", "int16", raw)
 	}
 	o.WeaponID = &value
 

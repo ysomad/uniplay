@@ -110,17 +110,54 @@ func TestNewMatchState(t *testing.T) {
 	}
 }
 
+func TestNewMatchTeam(t *testing.T) {
+	t.Parallel()
+
+	type args struct {
+		id    int32
+		score int32
+		state MatchState
+		name  string
+		flag  string
+	}
+
+	tests := []struct {
+		name string
+		args args
+		want *MatchTeam
+	}{
+		{
+			name: "success",
+			args: args{
+				id:    23,
+				score: 15,
+				state: MatchStateWin,
+				name:  "team1",
+				flag:  "RU",
+			},
+			want: &MatchTeam{
+				ID:         23,
+				Score:      15,
+				State:      MatchStateWin,
+				Name:       "team1",
+				FlagCode:   "RU",
+				ScoreBoard: make([]*MatchScoreBoardRow, 0, defaultTeamSize),
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := NewMatchTeam(tt.args.id, tt.args.score, tt.args.state, tt.name, tt.args.flag)
+			assert.ObjectsAreEqual(tt.want, got)
+		})
+	}
+}
+
 func TestNewMatchID(t *testing.T) {
 	t.Parallel()
 
 	type args struct {
-		server        string
-		client        string
-		mapName       string
-		matchDuration time.Duration
-		ticks         int
-		frames        int
-		signonLen     int
+		h *ReplayHeader
 	}
 
 	tests := []struct {
@@ -131,104 +168,22 @@ func TestNewMatchID(t *testing.T) {
 		{
 			name: "success",
 			args: args{
-				server:        "server",
-				client:        "client",
-				mapName:       "de_dust2",
-				matchDuration: time.Minute * 25,
-				ticks:         int(time.Minute * 25 * 128), // 128 server tickrate
-				frames:        int(time.Minute * 25 * 128),
-				signonLen:     1337,
+				h: &ReplayHeader{
+					server:         "server",
+					client:         "client",
+					mapName:        "de_dust2",
+					playbackTime:   time.Minute * 25,
+					playbackTicks:  int(time.Minute * 25 * 128), // 128 server tickrate
+					playbackFrames: int(time.Minute * 25 * 128),
+					signonLength:   1337,
+					filesize:       5,
+				},
 			},
-			wantErr: false,
-		},
-		{
-			name: "invalid server",
-			args: args{
-				server:        "",
-				client:        "client",
-				mapName:       "de_dust2",
-				matchDuration: time.Minute * 25,
-				ticks:         int(time.Minute * 25 * 128),
-				frames:        int(time.Minute * 25 * 128),
-				signonLen:     1337,
-			},
-			wantErr: true,
-		},
-		{
-			name: "invalid client",
-			args: args{
-				server:        "server",
-				client:        "",
-				mapName:       "de_dust2",
-				matchDuration: time.Minute * 25,
-				ticks:         int(time.Minute * 25 * 128),
-				frames:        int(time.Minute * 25 * 128),
-				signonLen:     1337,
-			},
-			wantErr: true,
-		},
-		{
-			name: "match too short",
-			args: args{
-				server:        "server",
-				client:        "client",
-				mapName:       "de_dust2",
-				matchDuration: time.Minute * 3,
-				ticks:         int(time.Minute * 3 * 128),
-				frames:        int(time.Minute * 3 * 128),
-				signonLen:     1337,
-			},
-			wantErr: true,
-		},
-		{
-			name: "invalid amount of ticks",
-			args: args{
-				server:        "server",
-				client:        "client",
-				mapName:       "de_dust2",
-				matchDuration: time.Minute * 25,
-				ticks:         0,
-				frames:        int(time.Minute * 25 * 128),
-				signonLen:     1337,
-			},
-			wantErr: true,
-		},
-		{
-			name: "invalid amount of frames",
-			args: args{
-				server:        "server",
-				client:        "client",
-				mapName:       "de_dust2",
-				matchDuration: time.Minute * 25,
-				ticks:         int(time.Minute * 25 * 128),
-				frames:        0,
-				signonLen:     1337,
-			},
-			wantErr: true,
-		},
-		{
-			name: "invalid amount of signon length",
-			args: args{
-				server:        "server",
-				client:        "client",
-				mapName:       "de_dust2",
-				matchDuration: time.Minute * 25,
-				ticks:         int(time.Minute * 25 * 128),
-				frames:        int(time.Minute * 24),
-				signonLen:     0,
-			},
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := NewMatchID(tt.args.server, tt.args.client, tt.args.mapName, tt.args.matchDuration, tt.args.ticks, tt.args.frames, tt.args.signonLen)
-			if err != nil {
-				assert.Empty(t, got)
-				assert.Equal(t, tt.wantErr, true)
-				return
-			}
-
+			got := NewMatchID(tt.args.h)
 			assert.NotEmpty(t, got)
 		})
 	}

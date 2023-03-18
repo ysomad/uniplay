@@ -6,20 +6,30 @@ import (
 	"github.com/ysomad/uniplay/internal/domain"
 )
 
-type service struct {
+type compendiumRepository interface {
+	GetWeaponList(context.Context) ([]domain.Weapon, error)
+	GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
+	GetMapList(context.Context) ([]domain.Map, error)
+}
+
+type Service struct {
 	compendium compendiumRepository
 }
 
-func NewService(r compendiumRepository) *service {
-	return &service{
+func NewService(r compendiumRepository) *Service {
+	return &Service{
 		compendium: r,
 	}
 }
 
-func (s *service) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
+func (s *Service) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
 	return s.compendium.GetWeaponList(ctx)
 }
 
-func (s *service) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
+func (s *Service) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
 	return s.compendium.GetWeaponClassList(ctx)
+}
+
+func (s *Service) GetMapList(ctx context.Context) ([]domain.Map, error) {
+	return s.compendium.GetMapList(ctx)
 }
