@@ -469,22 +469,10 @@ func init() {
       "type": "object",
       "required": [
         "icon_url",
-        "id",
-        "internal_name",
         "name"
       ],
       "properties": {
         "icon_url": {
-          "type": "string",
-          "x-nullable": false
-        },
-        "id": {
-          "type": "integer",
-          "format": "int16",
-          "x-nullable": false
-        },
-        "internal_name": {
-          "description": "Название карты, например, de_dust2",
           "type": "string",
           "x-nullable": false
         },
@@ -1483,22 +1471,10 @@ func init() {
       "type": "object",
       "required": [
         "icon_url",
-        "id",
-        "internal_name",
         "name"
       ],
       "properties": {
         "icon_url": {
-          "type": "string",
-          "x-nullable": false
-        },
-        "id": {
-          "type": "integer",
-          "format": "int16",
-          "x-nullable": false
-        },
-        "internal_name": {
-          "description": "Название карты, например, de_dust2",
           "type": "string",
           "x-nullable": false
         },
