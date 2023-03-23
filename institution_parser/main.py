@@ -25,7 +25,7 @@ def main() -> None:
     last_page = int(last_page_div.text)
 
     with open('migration.sql', 'w') as outfile:
-        outfile.write("""INSERT INTO university(long_name, short_name, city, logo_url)
+        outfile.write("""INSERT INTO institution(long_name, short_name, city, logo_url)
 VALUES""")
 
         for current_page in range(1, last_page+1):
