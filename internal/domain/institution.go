@@ -10,3 +10,26 @@ type Institution struct {
 type InstitutionFilter struct {
 	ShortName string
 }
+
+type InstitutionPagination struct {
+	PageSize int32
+	Offset   int32
+}
+
+const (
+	defaultInstitutionPageSize = 50
+	maxInstitutionPageSize     = 250
+)
+
+func NewInstitutionPagination(psize, offset int32) InstitutionPagination {
+	p := InstitutionPagination{
+		PageSize: psize,
+		Offset:   offset,
+	}
+
+	if psize > maxInstitutionPageSize || psize <= 0 {
+		p.PageSize = defaultInstitutionPageSize
+	}
+
+	return p
+}

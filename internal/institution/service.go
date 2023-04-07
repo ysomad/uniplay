@@ -7,7 +7,7 @@ import (
 )
 
 type institutionRepository interface {
-	GetInstitutionList(context.Context, domain.InstitutionFilter) ([]domain.Institution, error)
+	GetInstitutionList(context.Context, domain.InstitutionFilter, domain.InstitutionPagination) ([]domain.Institution, error)
 }
 
 type Service struct {
@@ -20,6 +20,6 @@ func NewService(r institutionRepository) *Service {
 	}
 }
 
-func (s *Service) GetInstitutionList(ctx context.Context, f domain.InstitutionFilter) ([]domain.Institution, error) {
-	return s.institution.GetInstitutionList(ctx, f)
+func (s *Service) GetInstitutionList(ctx context.Context, f domain.InstitutionFilter, p domain.InstitutionPagination) ([]domain.Institution, error) {
+	return s.institution.GetInstitutionList(ctx, f, p)
 }

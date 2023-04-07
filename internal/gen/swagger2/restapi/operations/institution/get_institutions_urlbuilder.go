@@ -9,10 +9,14 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+
+	"github.com/go-openapi/swag"
 )
 
 // GetInstitutionsURL generates an URL for the get institutions operation
 type GetInstitutionsURL struct {
+	Offset    *int32
+	PageSize  *int32
 	ShortName *string
 
 	_basePath string
@@ -48,6 +52,22 @@ func (o *GetInstitutionsURL) Build() (*url.URL, error) {
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
 	qs := make(url.Values)
+
+	var offsetQ string
+	if o.Offset != nil {
+		offsetQ = swag.FormatInt32(*o.Offset)
+	}
+	if offsetQ != "" {
+		qs.Set("offset", offsetQ)
+	}
+
+	var pageSizeQ string
+	if o.PageSize != nil {
+		pageSizeQ = swag.FormatInt32(*o.PageSize)
+	}
+	if pageSizeQ != "" {
+		qs.Set("page_size", pageSizeQ)
+	}
 
 	var shortNameQ string
 	if o.ShortName != nil {

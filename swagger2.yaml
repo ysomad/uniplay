@@ -238,6 +238,18 @@ paths:
         required: false
         type: string
         x-nullable: false
+      - name: page_size
+        in: query
+        required: false
+        type: integer
+        format: int32
+        x-nullable: false
+      - name: offset
+        in: query
+        required: false
+        type: integer
+        format: int32
+        x-nullable: false
       responses:
         "200":
           description: OK

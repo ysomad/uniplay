@@ -125,6 +125,20 @@ func init() {
             "description": "Фильтр по сокращенному имени уч. заведения, например, НАТК",
             "name": "short_name",
             "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-nullable": false,
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-nullable": false,
+            "name": "offset",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1157,6 +1171,20 @@ func init() {
             "x-nullable": false,
             "description": "Фильтр по сокращенному имени уч. заведения, например, НАТК",
             "name": "short_name",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-nullable": false,
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-nullable": false,
+            "name": "offset",
             "in": "query"
           }
         ],

@@ -11,7 +11,7 @@ import (
 )
 
 type institutionService interface {
-	GetInstitutionList(context.Context, domain.InstitutionFilter) ([]domain.Institution, error)
+	GetInstitutionList(context.Context, domain.InstitutionFilter, domain.InstitutionPagination) ([]domain.Institution, error)
 }
 
 type Controller struct {
@@ -25,12 +25,26 @@ func NewController(s institutionService) *Controller {
 }
 
 func (c *Controller) GetInstitutions(p institution.GetInstitutionsParams) institution.GetInstitutionsResponder {
-	filter := domain.InstitutionFilter{}
-	if p.ShortName != nil {
+	var (
+		filter   domain.InstitutionFilter
+		pageSize int32
+		offset   int32
+	)
+
+	switch {
+	case p.ShortName != nil:
 		filter.ShortName = *p.ShortName
+	case p.PageSize != nil:
+		pageSize = *p.PageSize
+	case p.Offset != nil:
+		offset = *p.Offset
 	}
 
-	institutions, err := c.institution.GetInstitutionList(p.HTTPRequest.Context(), filter)
+	institutions, err := c.institution.GetInstitutionList(
+		p.HTTPRequest.Context(),
+		filter,
+		domain.NewInstitutionPagination(pageSize, offset),
+	)
 	if err != nil {
 		return institution.NewGetInstitutionsInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,

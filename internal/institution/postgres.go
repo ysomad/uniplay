@@ -23,7 +23,7 @@ func NewPostgres(t trace.Tracer, c *pgclient.Client) *Postgres {
 	}
 }
 
-func (p *Postgres) GetInstitutionList(ctx context.Context, f domain.InstitutionFilter) ([]domain.Institution, error) {
+func (p *Postgres) GetInstitutionList(ctx context.Context, f domain.InstitutionFilter, pagination domain.InstitutionPagination) ([]domain.Institution, error) {
 	b := p.client.Builder.
 		Select("id, name, short_name, logo_url").
 		From("institution")
@@ -32,7 +32,10 @@ func (p *Postgres) GetInstitutionList(ctx context.Context, f domain.InstitutionF
 		b = b.Where(sq.Eq{"short_name": f.ShortName})
 	}
 
-	sql, args, err := b.ToSql()
+	sql, args, err := b.
+		Limit(uint64(pagination.PageSize)).
+		Offset(uint64(pagination.Offset)).
+		ToSql()
 	if err != nil {
 		return nil, err
 	}

@@ -12,6 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
 )
 
 // NewGetInstitutionsParams creates a new GetInstitutionsParams object
@@ -31,6 +32,14 @@ type GetInstitutionsParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*
+	  In: query
+	*/
+	Offset *int32
+	/*
+	  In: query
+	*/
+	PageSize *int32
 	/*Фильтр по сокращенному имени уч. заведения, например, НАТК
 	  In: query
 	*/
@@ -48,6 +57,16 @@ func (o *GetInstitutionsParams) BindRequest(r *http.Request, route *middleware.M
 
 	qs := runtime.Values(r.URL.Query())
 
+	qOffset, qhkOffset, _ := qs.GetOK("offset")
+	if err := o.bindOffset(qOffset, qhkOffset, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qPageSize, qhkPageSize, _ := qs.GetOK("page_size")
+	if err := o.bindPageSize(qPageSize, qhkPageSize, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	qShortName, qhkShortName, _ := qs.GetOK("short_name")
 	if err := o.bindShortName(qShortName, qhkShortName, route.Formats); err != nil {
 		res = append(res, err)
@@ -55,6 +74,52 @@ func (o *GetInstitutionsParams) BindRequest(r *http.Request, route *middleware.M
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindOffset binds and validates parameter Offset from query.
+func (o *GetInstitutionsParams) bindOffset(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	value, err := swag.ConvertInt32(raw)
+	if err != nil {
+		return errors.InvalidType("offset", "query", "int32", raw)
+	}
+	o.Offset = &value
+
+	return nil
+}
+
+// bindPageSize binds and validates parameter PageSize from query.
+func (o *GetInstitutionsParams) bindPageSize(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	value, err := swag.ConvertInt32(raw)
+	if err != nil {
+		return errors.InvalidType("page_size", "query", "int32", raw)
+	}
+	o.PageSize = &value
+
 	return nil
 }
 
