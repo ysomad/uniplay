@@ -118,11 +118,20 @@ func init() {
         ],
         "summary": "Получение списка учебных заведений",
         "operationId": "getInstitutions",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "Фильтр по сокращенному имени уч. заведения, например, НАТК",
+            "name": "short_name",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/WeaponList"
+              "$ref": "#/definitions/InstitutionList"
             }
           },
           "500": {
@@ -465,6 +474,35 @@ func init() {
         }
       }
     },
+    "InstitutionList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/InstitutionList_inner"
+      }
+    },
+    "InstitutionList_inner": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "logo_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "short_name": {
+          "type": "string",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
     "Map": {
       "type": "object",
       "required": [
@@ -535,13 +573,6 @@ func init() {
     },
     "MatchTeam": {
       "type": "object",
-      "required": [
-        "clan_name",
-        "flag_code",
-        "id",
-        "score",
-        "scoreboard"
-      ],
       "properties": {
         "clan_name": {
           "type": "string",
@@ -1120,11 +1151,20 @@ func init() {
         ],
         "summary": "Получение списка учебных заведений",
         "operationId": "getInstitutions",
+        "parameters": [
+          {
+            "type": "string",
+            "x-nullable": false,
+            "description": "Фильтр по сокращенному имени уч. заведения, например, НАТК",
+            "name": "short_name",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/WeaponList"
+              "$ref": "#/definitions/InstitutionList"
             }
           },
           "500": {
@@ -1467,6 +1507,35 @@ func init() {
         }
       }
     },
+    "InstitutionList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/InstitutionList_inner"
+      }
+    },
+    "InstitutionList_inner": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "logo_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "short_name": {
+          "type": "string",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
     "Map": {
       "type": "object",
       "required": [
@@ -1537,13 +1606,6 @@ func init() {
     },
     "MatchTeam": {
       "type": "object",
-      "required": [
-        "clan_name",
-        "flag_code",
-        "id",
-        "score",
-        "scoreboard"
-      ],
       "properties": {
         "clan_name": {
           "type": "string",

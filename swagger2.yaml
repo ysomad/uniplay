@@ -231,12 +231,18 @@ paths:
       operationId: getInstitutions
       produces:
       - application/json
-      parameters: []
+      parameters:
+      - name: short_name
+        in: query
+        description: "Фильтр по сокращенному имени уч. заведения, например, НАТК"
+        required: false
+        type: string
+        x-nullable: false
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/WeaponList'
+            $ref: '#/definitions/InstitutionList'
         "500":
           description: Internal Server Error
           schema:
@@ -305,7 +311,7 @@ definitions:
       code:
         type: integer
         format: int32
-        description: код ошибки, равен статусу или >= 600
+        description: "код ошибки, равен статусу или >= 600"
         x-nullable: false
       message:
         type: string
@@ -357,7 +363,7 @@ definitions:
     properties:
       name:
         type: string
-        description: Название карты, например, Cobblestone
+        description: "Название карты, например, Cobblestone"
         x-nullable: false
       icon_url:
         type: string
@@ -398,12 +404,6 @@ definitions:
         $ref: '#/definitions/MatchTeam'
   MatchTeam:
     type: object
-    required:
-    - clan_name
-    - flag_code
-    - id
-    - score
-    - scoreboard
     properties:
       id:
         type: integer
@@ -424,6 +424,10 @@ definitions:
         items:
           $ref: '#/definitions/MatchTeam_scoreboard'
     x-nullable: false
+  InstitutionList:
+    type: array
+    items:
+      $ref: '#/definitions/InstitutionList_inner'
   PlayerStats_base_stats:
     type: object
     properties:
@@ -712,4 +716,21 @@ definitions:
       headshot_percentage:
         type: number
         format: double
+    x-nullable: false
+  InstitutionList_inner:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        x-nullable: false
+      name:
+        type: string
+        x-nullable: false
+      short_name:
+        type: string
+        x-nullable: false
+      logo_url:
+        type: string
+        x-nullable: false
     x-nullable: false

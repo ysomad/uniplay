@@ -27,7 +27,7 @@ type GetInstitutionsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.WeaponList `json:"body,omitempty"`
+	Payload models.InstitutionList `json:"body,omitempty"`
 }
 
 // NewGetInstitutionsOK creates GetInstitutionsOK with default headers values
@@ -37,13 +37,13 @@ func NewGetInstitutionsOK() *GetInstitutionsOK {
 }
 
 // WithPayload adds the payload to the get institutions o k response
-func (o *GetInstitutionsOK) WithPayload(payload models.WeaponList) *GetInstitutionsOK {
+func (o *GetInstitutionsOK) WithPayload(payload models.InstitutionList) *GetInstitutionsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get institutions o k response
-func (o *GetInstitutionsOK) SetPayload(payload models.WeaponList) {
+func (o *GetInstitutionsOK) SetPayload(payload models.InstitutionList) {
 	o.Payload = payload
 }
 
@@ -54,7 +54,7 @@ func (o *GetInstitutionsOK) WriteResponse(rw http.ResponseWriter, producer runti
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = models.WeaponList{}
+		payload = models.InstitutionList{}
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

@@ -6,3 +6,7 @@ type Institution struct {
 	ShortName string
 	LogoURL   string
 }
+
+type InstitutionFilter struct {
+	ShortName string
+}

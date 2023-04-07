@@ -13,7 +13,11 @@ import (
 
 // GetInstitutionsURL generates an URL for the get institutions operation
 type GetInstitutionsURL struct {
+	ShortName *string
+
 	_basePath string
+	// avoid unkeyed usage
+	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
@@ -42,6 +46,18 @@ func (o *GetInstitutionsURL) Build() (*url.URL, error) {
 		_basePath = "/v1"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var shortNameQ string
+	if o.ShortName != nil {
+		shortNameQ = *o.ShortName
+	}
+	if shortNameQ != "" {
+		qs.Set("short_name", shortNameQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }
