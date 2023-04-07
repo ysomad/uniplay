@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS player_match_weapon_stat (
 
 CREATE TABLE IF NOT EXISTS institution (
     id smallserial PRIMARY KEY NOT NULL,
-    name varchar(255) NOT NULL,
+    name varchar(255) UNIQUE NOT NULL,
     short_name varchar(255) NOT NULL,
     city varchar(128) NOT NULL,
     logo_url varchar(2048) NOT NULL

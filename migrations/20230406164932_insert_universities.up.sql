@@ -174,8 +174,6 @@ VALUES
 	('Международный институт рынка', 'МИР', 'Самара', 'https://vuzopedia.ru/storage/app/uploads/public/cab/32e/399/thumb__74_74_0_0_auto.png'),
 	('Тольяттинская академия управления', 'ТАУ', 'Тольятти', 'https://vuzopedia.ru/storage/app/uploads/public/1ef/ad6/072/thumb__74_74_0_0_auto.png'),
 	('Южный федеральный университет', 'ЮФУ', 'Ростов-на-Дону', 'https://vuzopedia.ru/storage/app/uploads/public/791/100/bf4/thumb__74_74_0_0_auto.png'),
-	('Тольяттинская академия управления', 'ТАУ', 'Тольятти', 'https://vuzopedia.ru/storage/app/uploads/public/1ef/ad6/072/thumb__74_74_0_0_auto.png'),
-	('Южный федеральный университет', 'ЮФУ', 'Ростов-на-Дону', 'https://vuzopedia.ru/storage/app/uploads/public/791/100/bf4/thumb__74_74_0_0_auto.png'),
 	('Самарский государственный экономический университет', 'СГЭУ', 'Самара', 'https://vuzopedia.ru/storage/app/uploads/public/4b5/dfb/181/thumb__74_74_0_0_auto.png'),
 	('Донской государственный аграрный университет', 'ДГАУ', 'Ростов-на-Дону', 'https://vuzopedia.ru/storage/app/uploads/public/f8e/ba8/93c/thumb__74_74_0_0_auto.png'),
 	('Южно-Российский государственный политехнический университет им. М.И. Платова', 'ЮРГПУ', 'Ростов-на-Дону', 'https://vuzopedia.ru/storage/app/uploads/public/2cd/755/549/thumb__74_74_0_0_auto.jpg'),
