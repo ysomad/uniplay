@@ -130,6 +130,7 @@ func init() {
             "type": "integer",
             "format": "int32",
             "x-nullable": false,
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
             "name": "page_size",
             "in": "query"
           },
@@ -137,7 +138,8 @@ func init() {
             "type": "integer",
             "format": "int32",
             "x-nullable": false,
-            "name": "offset",
+            "description": "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса.",
+            "name": "last_id",
             "in": "query"
           }
         ],
@@ -489,12 +491,21 @@ func init() {
       }
     },
     "InstitutionList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/InstitutionList_inner"
+      "type": "object",
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-omitempty": false
+        },
+        "institutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InstitutionList_institutions"
+          }
+        }
       }
     },
-    "InstitutionList_inner": {
+    "InstitutionList_institutions": {
       "type": "object",
       "properties": {
         "id": {
@@ -515,6 +526,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "x-go-name": "InstitutionListItem",
       "x-nullable": false
     },
     "Map": {
@@ -1177,6 +1189,7 @@ func init() {
             "type": "integer",
             "format": "int32",
             "x-nullable": false,
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
             "name": "page_size",
             "in": "query"
           },
@@ -1184,7 +1197,8 @@ func init() {
             "type": "integer",
             "format": "int32",
             "x-nullable": false,
-            "name": "offset",
+            "description": "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса.",
+            "name": "last_id",
             "in": "query"
           }
         ],
@@ -1536,12 +1550,21 @@ func init() {
       }
     },
     "InstitutionList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/InstitutionList_inner"
+      "type": "object",
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-omitempty": false
+        },
+        "institutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InstitutionList_institutions"
+          }
+        }
       }
     },
-    "InstitutionList_inner": {
+    "InstitutionList_institutions": {
       "type": "object",
       "properties": {
         "id": {
@@ -1562,6 +1585,7 @@ func init() {
           "x-nullable": false
         }
       },
+      "x-go-name": "InstitutionListItem",
       "x-nullable": false
     },
     "Map": {

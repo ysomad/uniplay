@@ -15,7 +15,7 @@ import (
 
 // GetInstitutionsURL generates an URL for the get institutions operation
 type GetInstitutionsURL struct {
-	Offset    *int32
+	LastID    *int32
 	PageSize  *int32
 	ShortName *string
 
@@ -53,12 +53,12 @@ func (o *GetInstitutionsURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	var offsetQ string
-	if o.Offset != nil {
-		offsetQ = swag.FormatInt32(*o.Offset)
+	var lastIDQ string
+	if o.LastID != nil {
+		lastIDQ = swag.FormatInt32(*o.LastID)
 	}
-	if offsetQ != "" {
-		qs.Set("offset", offsetQ)
+	if lastIDQ != "" {
+		qs.Set("last_id", lastIDQ)
 	}
 
 	var pageSizeQ string

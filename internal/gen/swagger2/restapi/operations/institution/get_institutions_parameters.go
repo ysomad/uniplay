@@ -32,11 +32,11 @@ type GetInstitutionsParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*
+	/*Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса.
 	  In: query
 	*/
-	Offset *int32
-	/*
+	LastID *int32
+	/*Количество значений на странице. Минимум — 1, максимум — 500.
 	  In: query
 	*/
 	PageSize *int32
@@ -57,8 +57,8 @@ func (o *GetInstitutionsParams) BindRequest(r *http.Request, route *middleware.M
 
 	qs := runtime.Values(r.URL.Query())
 
-	qOffset, qhkOffset, _ := qs.GetOK("offset")
-	if err := o.bindOffset(qOffset, qhkOffset, route.Formats); err != nil {
+	qLastID, qhkLastID, _ := qs.GetOK("last_id")
+	if err := o.bindLastID(qLastID, qhkLastID, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -77,8 +77,8 @@ func (o *GetInstitutionsParams) BindRequest(r *http.Request, route *middleware.M
 	return nil
 }
 
-// bindOffset binds and validates parameter Offset from query.
-func (o *GetInstitutionsParams) bindOffset(rawData []string, hasKey bool, formats strfmt.Registry) error {
+// bindLastID binds and validates parameter LastID from query.
+func (o *GetInstitutionsParams) bindLastID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
@@ -93,9 +93,9 @@ func (o *GetInstitutionsParams) bindOffset(rawData []string, hasKey bool, format
 
 	value, err := swag.ConvertInt32(raw)
 	if err != nil {
-		return errors.InvalidType("offset", "query", "int32", raw)
+		return errors.InvalidType("last_id", "query", "int32", raw)
 	}
-	o.Offset = &value
+	o.LastID = &value
 
 	return nil
 }

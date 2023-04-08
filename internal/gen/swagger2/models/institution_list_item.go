@@ -12,10 +12,10 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// InstitutionListInner institution list inner
+// InstitutionListItem institution list item
 //
-// swagger:model InstitutionList_inner
-type InstitutionListInner struct {
+// swagger:model InstitutionListItem
+type InstitutionListItem struct {
 
 	// id
 	ID int32 `json:"id,omitempty"`
@@ -30,18 +30,18 @@ type InstitutionListInner struct {
 	ShortName string `json:"short_name,omitempty"`
 }
 
-// Validate validates this institution list inner
-func (m *InstitutionListInner) Validate(formats strfmt.Registry) error {
+// Validate validates this institution list item
+func (m *InstitutionListItem) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this institution list inner based on context it is used
-func (m *InstitutionListInner) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this institution list item based on context it is used
+func (m *InstitutionListItem) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *InstitutionListInner) MarshalBinary() ([]byte, error) {
+func (m *InstitutionListItem) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -49,8 +49,8 @@ func (m *InstitutionListInner) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *InstitutionListInner) UnmarshalBinary(b []byte) error {
-	var res InstitutionListInner
+func (m *InstitutionListItem) UnmarshalBinary(b []byte) error {
+	var res InstitutionListItem
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

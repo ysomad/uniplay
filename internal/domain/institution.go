@@ -1,7 +1,7 @@
 package domain
 
 type Institution struct {
-	ID        int16
+	ID        int32
 	Name      string
 	ShortName string
 	LogoURL   string

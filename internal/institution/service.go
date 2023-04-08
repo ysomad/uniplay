@@ -4,10 +4,11 @@ import (
 	"context"
 
 	"github.com/ysomad/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/pkg/paging"
 )
 
 type institutionRepository interface {
-	GetInstitutionList(context.Context, domain.InstitutionFilter, domain.InstitutionPagination) ([]domain.Institution, error)
+	GetInstitutionList(context.Context, domain.InstitutionFilter, paging.IntSeek[int32]) (paging.InfList[domain.Institution], error)
 }
 
 type Service struct {
@@ -20,6 +21,6 @@ func NewService(r institutionRepository) *Service {
 	}
 }
 
-func (s *Service) GetInstitutionList(ctx context.Context, f domain.InstitutionFilter, p domain.InstitutionPagination) ([]domain.Institution, error) {
+func (s *Service) GetInstitutionList(ctx context.Context, f domain.InstitutionFilter, p paging.IntSeek[int32]) (paging.InfList[domain.Institution], error) {
 	return s.institution.GetInstitutionList(ctx, f, p)
 }

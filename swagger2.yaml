@@ -240,12 +240,14 @@ paths:
         x-nullable: false
       - name: page_size
         in: query
+        description: "Количество значений на странице. Минимум — 1, максимум — 500."
         required: false
         type: integer
         format: int32
         x-nullable: false
-      - name: offset
+      - name: last_id
         in: query
+        description: "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса."
         required: false
         type: integer
         format: int32
@@ -437,9 +439,15 @@ definitions:
           $ref: '#/definitions/MatchTeam_scoreboard'
     x-nullable: false
   InstitutionList:
-    type: array
-    items:
-      $ref: '#/definitions/InstitutionList_inner'
+    type: object
+    properties:
+      institutions:
+        type: array
+        items:
+          $ref: '#/definitions/InstitutionList_institutions'
+      has_next:
+        type: boolean
+        x-omitempty: false
   PlayerStats_base_stats:
     type: object
     properties:
@@ -729,7 +737,7 @@ definitions:
         type: number
         format: double
     x-nullable: false
-  InstitutionList_inner:
+  InstitutionList_institutions:
     type: object
     properties:
       id:
@@ -745,4 +753,5 @@ definitions:
       logo_url:
         type: string
         x-nullable: false
+    x-go-name: InstitutionListItem
     x-nullable: false
