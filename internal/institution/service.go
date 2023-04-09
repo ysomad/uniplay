@@ -7,20 +7,20 @@ import (
 	"github.com/ysomad/uniplay/internal/pkg/paging"
 )
 
-type institutionRepository interface {
-	GetInstitutionList(context.Context, domain.InstitutionFilter, paging.IntSeek[int32]) (paging.InfList[domain.Institution], error)
+type repository interface {
+	GetList(context.Context, getListParams) (paging.InfList[domain.Institution], error)
 }
 
-type Service struct {
-	institution institutionRepository
+type service struct {
+	institution repository
 }
 
-func NewService(r institutionRepository) *Service {
-	return &Service{
+func NewService(r repository) *service {
+	return &service{
 		institution: r,
 	}
 }
 
-func (s *Service) GetInstitutionList(ctx context.Context, f domain.InstitutionFilter, p paging.IntSeek[int32]) (paging.InfList[domain.Institution], error) {
-	return s.institution.GetInstitutionList(ctx, f, p)
+func (s *service) GetList(ctx context.Context, p getListParams) (paging.InfList[domain.Institution], error) {
+	return s.institution.GetList(ctx, p)
 }

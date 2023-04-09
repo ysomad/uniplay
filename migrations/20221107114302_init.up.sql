@@ -128,7 +128,15 @@ CREATE TABLE IF NOT EXISTS institution (
     name varchar(255) UNIQUE NOT NULL,
     short_name varchar(255) NOT NULL,
     city varchar(128) NOT NULL,
+    type smallint NOT NULL,
     logo_url varchar(2048) NOT NULL
 );
+
+ALTER TABLE institution ADD COLUMN ts tsvector
+GENERATED ALWAYS AS
+    (setweight(to_tsvector('russian', coalesce(name, '')), 'A') ||
+    setweight(to_tsvector('russian', coalesce(short_name, '')), 'B')) STORED;
+
+CREATE INDEX institution_gin_idx ON institution USING GIN (ts);
 
 COMMIT;

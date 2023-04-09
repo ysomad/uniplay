@@ -121,15 +121,30 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "x-nullable": false,
-            "description": "Фильтр по сокращенному имени уч. заведения, например, НАТК",
-            "name": "short_name",
+            "description": "Поиск по названиям и аббревиатурам уч. заведений",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Фильтр по городу",
+            "name": "city",
+            "in": "query"
+          },
+          {
+            "enum": [
+              1,
+              2
+            ],
+            "type": "integer",
+            "format": "int32",
+            "description": "Тип учебного заведения:\n * 1 - ВУЗы\n * 2 - ССУЗы\n",
+            "name": "type",
             "in": "query"
           },
           {
             "type": "integer",
             "format": "int32",
-            "x-nullable": false,
             "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
             "name": "page_size",
             "in": "query"
@@ -137,7 +152,6 @@ func init() {
           {
             "type": "integer",
             "format": "int32",
-            "x-nullable": false,
             "description": "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса.",
             "name": "last_id",
             "in": "query"
@@ -508,6 +522,9 @@ func init() {
     "InstitutionList_institutions": {
       "type": "object",
       "properties": {
+        "city": {
+          "type": "string"
+        },
         "id": {
           "type": "integer",
           "format": "int32",
@@ -524,6 +541,14 @@ func init() {
         "short_name": {
           "type": "string",
           "x-nullable": false
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32",
+          "enum": [
+            1,
+            2
+          ]
         }
       },
       "x-go-name": "InstitutionListItem",
@@ -1180,15 +1205,30 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "x-nullable": false,
-            "description": "Фильтр по сокращенному имени уч. заведения, например, НАТК",
-            "name": "short_name",
+            "description": "Поиск по названиям и аббревиатурам уч. заведений",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Фильтр по городу",
+            "name": "city",
+            "in": "query"
+          },
+          {
+            "enum": [
+              1,
+              2
+            ],
+            "type": "integer",
+            "format": "int32",
+            "description": "Тип учебного заведения:\n * 1 - ВУЗы\n * 2 - ССУЗы\n",
+            "name": "type",
             "in": "query"
           },
           {
             "type": "integer",
             "format": "int32",
-            "x-nullable": false,
             "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
             "name": "page_size",
             "in": "query"
@@ -1196,7 +1236,6 @@ func init() {
           {
             "type": "integer",
             "format": "int32",
-            "x-nullable": false,
             "description": "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса.",
             "name": "last_id",
             "in": "query"
@@ -1567,6 +1606,9 @@ func init() {
     "InstitutionList_institutions": {
       "type": "object",
       "properties": {
+        "city": {
+          "type": "string"
+        },
         "id": {
           "type": "integer",
           "format": "int32",
@@ -1583,6 +1625,14 @@ func init() {
         "short_name": {
           "type": "string",
           "x-nullable": false
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32",
+          "enum": [
+            1,
+            2
+          ]
         }
       },
       "x-go-name": "InstitutionListItem",

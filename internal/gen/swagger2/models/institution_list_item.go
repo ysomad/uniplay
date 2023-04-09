@@ -7,15 +7,21 @@ package models
 
 import (
 	"context"
+	"encoding/json"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // InstitutionListItem institution list item
 //
 // swagger:model InstitutionListItem
 type InstitutionListItem struct {
+
+	// city
+	City string `json:"city,omitempty"`
 
 	// id
 	ID int32 `json:"id,omitempty"`
@@ -28,10 +34,56 @@ type InstitutionListItem struct {
 
 	// short name
 	ShortName string `json:"short_name,omitempty"`
+
+	// type
+	// Enum: [1 2]
+	Type int32 `json:"type,omitempty"`
 }
 
 // Validate validates this institution list item
 func (m *InstitutionListItem) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+var institutionListItemTypeTypePropEnum []interface{}
+
+func init() {
+	var res []int32
+	if err := json.Unmarshal([]byte(`[1,2]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		institutionListItemTypeTypePropEnum = append(institutionListItemTypeTypePropEnum, v)
+	}
+}
+
+// prop value enum
+func (m *InstitutionListItem) validateTypeEnum(path, location string, value int32) error {
+	if err := validate.EnumCase(path, location, value, institutionListItemTypeTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *InstitutionListItem) validateType(formats strfmt.Registry) error {
+	if swag.IsZero(m.Type) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := m.validateTypeEnum("type", "body", m.Type); err != nil {
+		return err
+	}
+
 	return nil
 }
 

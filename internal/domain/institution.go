@@ -1,35 +1,38 @@
 package domain
 
+type InstType int8
+
+func (t InstType) Int() int8 { return int8(t) }
+
+const (
+	InstTypeUniversity InstType = 1
+	InstTypeCollege    InstType = 2
+)
+
 type Institution struct {
 	ID        int32
+	Type      InstType
 	Name      string
 	ShortName string
+	City      string
 	LogoURL   string
 }
 
 type InstitutionFilter struct {
-	ShortName string
+	Type InstType
+	City string
 }
 
-type InstitutionPagination struct {
-	PageSize int32
-	Offset   int32
-}
+func NewInstitutionFilter(city *string, itype *int32) InstitutionFilter {
+	f := InstitutionFilter{}
 
-const (
-	defaultInstitutionPageSize = 50
-	maxInstitutionPageSize     = 250
-)
-
-func NewInstitutionPagination(psize, offset int32) InstitutionPagination {
-	p := InstitutionPagination{
-		PageSize: psize,
-		Offset:   offset,
+	if itype != nil {
+		f.Type = InstType(*itype)
 	}
 
-	if psize > maxInstitutionPageSize || psize <= 0 {
-		p.PageSize = defaultInstitutionPageSize
+	if city != nil {
+		f.City = *city
 	}
 
-	return p
+	return f
 }

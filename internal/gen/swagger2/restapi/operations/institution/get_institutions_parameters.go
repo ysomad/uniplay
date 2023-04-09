@@ -13,6 +13,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // NewGetInstitutionsParams creates a new GetInstitutionsParams object
@@ -32,6 +33,10 @@ type GetInstitutionsParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
+	/*Фильтр по городу
+	  In: query
+	*/
+	City *string
 	/*Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса.
 	  In: query
 	*/
@@ -40,10 +45,17 @@ type GetInstitutionsParams struct {
 	  In: query
 	*/
 	PageSize *int32
-	/*Фильтр по сокращенному имени уч. заведения, например, НАТК
+	/*Поиск по названиям и аббревиатурам уч. заведений
 	  In: query
 	*/
-	ShortName *string
+	Search *string
+	/*Тип учебного заведения:
+	* 1 - ВУЗы
+	* 2 - ССУЗы
+
+	 In: query
+	*/
+	Type *int32
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -57,6 +69,11 @@ func (o *GetInstitutionsParams) BindRequest(r *http.Request, route *middleware.M
 
 	qs := runtime.Values(r.URL.Query())
 
+	qCity, qhkCity, _ := qs.GetOK("city")
+	if err := o.bindCity(qCity, qhkCity, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
 	qLastID, qhkLastID, _ := qs.GetOK("last_id")
 	if err := o.bindLastID(qLastID, qhkLastID, route.Formats); err != nil {
 		res = append(res, err)
@@ -67,13 +84,36 @@ func (o *GetInstitutionsParams) BindRequest(r *http.Request, route *middleware.M
 		res = append(res, err)
 	}
 
-	qShortName, qhkShortName, _ := qs.GetOK("short_name")
-	if err := o.bindShortName(qShortName, qhkShortName, route.Formats); err != nil {
+	qSearch, qhkSearch, _ := qs.GetOK("search")
+	if err := o.bindSearch(qSearch, qhkSearch, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qType, qhkType, _ := qs.GetOK("type")
+	if err := o.bindType(qType, qhkType, route.Formats); err != nil {
 		res = append(res, err)
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+// bindCity binds and validates parameter City from query.
+func (o *GetInstitutionsParams) bindCity(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+	o.City = &raw
+
 	return nil
 }
 
@@ -123,8 +163,8 @@ func (o *GetInstitutionsParams) bindPageSize(rawData []string, hasKey bool, form
 	return nil
 }
 
-// bindShortName binds and validates parameter ShortName from query.
-func (o *GetInstitutionsParams) bindShortName(rawData []string, hasKey bool, formats strfmt.Registry) error {
+// bindSearch binds and validates parameter Search from query.
+func (o *GetInstitutionsParams) bindSearch(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
@@ -136,7 +176,44 @@ func (o *GetInstitutionsParams) bindShortName(rawData []string, hasKey bool, for
 	if raw == "" { // empty values pass all other validations
 		return nil
 	}
-	o.ShortName = &raw
+	o.Search = &raw
+
+	return nil
+}
+
+// bindType binds and validates parameter Type from query.
+func (o *GetInstitutionsParams) bindType(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+
+	value, err := swag.ConvertInt32(raw)
+	if err != nil {
+		return errors.InvalidType("type", "query", "int32", raw)
+	}
+	o.Type = &value
+
+	if err := o.validateType(formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateType carries on validations for parameter Type
+func (o *GetInstitutionsParams) validateType(formats strfmt.Registry) error {
+
+	if err := validate.EnumCase("type", "query", *o.Type, []interface{}{1, 2}, true); err != nil {
+		return err
+	}
 
 	return nil
 }

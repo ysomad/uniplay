@@ -15,9 +15,11 @@ import (
 
 // GetInstitutionsURL generates an URL for the get institutions operation
 type GetInstitutionsURL struct {
-	LastID    *int32
-	PageSize  *int32
-	ShortName *string
+	City     *string
+	LastID   *int32
+	PageSize *int32
+	Search   *string
+	Type     *int32
 
 	_basePath string
 	// avoid unkeyed usage
@@ -53,6 +55,14 @@ func (o *GetInstitutionsURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
+	var cityQ string
+	if o.City != nil {
+		cityQ = *o.City
+	}
+	if cityQ != "" {
+		qs.Set("city", cityQ)
+	}
+
 	var lastIDQ string
 	if o.LastID != nil {
 		lastIDQ = swag.FormatInt32(*o.LastID)
@@ -69,12 +79,20 @@ func (o *GetInstitutionsURL) Build() (*url.URL, error) {
 		qs.Set("page_size", pageSizeQ)
 	}
 
-	var shortNameQ string
-	if o.ShortName != nil {
-		shortNameQ = *o.ShortName
+	var searchQ string
+	if o.Search != nil {
+		searchQ = *o.Search
 	}
-	if shortNameQ != "" {
-		qs.Set("short_name", shortNameQ)
+	if searchQ != "" {
+		qs.Set("search", searchQ)
+	}
+
+	var typeVarQ string
+	if o.Type != nil {
+		typeVarQ = swag.FormatInt32(*o.Type)
+	}
+	if typeVarQ != "" {
+		qs.Set("type", typeVarQ)
 	}
 
 	_result.RawQuery = qs.Encode()

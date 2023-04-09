@@ -1,7 +1,6 @@
 package institution
 
 import (
-	"context"
 	"net/http"
 
 	"github.com/ysomad/uniplay/internal/domain"
@@ -11,28 +10,25 @@ import (
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 )
 
-type institutionService interface {
-	GetInstitutionList(context.Context, domain.InstitutionFilter, paging.IntSeek[int32]) (paging.InfList[domain.Institution], error)
-}
-
 type Controller struct {
-	institution institutionService
+	institution *service
 }
 
-func NewController(s institutionService) *Controller {
+func NewController(s *service) *Controller {
 	return &Controller{
 		institution: s,
 	}
 }
 
 func (c *Controller) GetInstitutions(p institution.GetInstitutionsParams) institution.GetInstitutionsResponder {
-	var filter domain.InstitutionFilter
-
-	if p.ShortName != nil {
-		filter.ShortName = *p.ShortName
-	}
-
-	list, err := c.institution.GetInstitutionList(p.HTTPRequest.Context(), filter, paging.NewIntSeek(p.LastID, p.PageSize))
+	list, err := c.institution.GetList(
+		p.HTTPRequest.Context(),
+		newGetListParams(
+			p.Search,
+			domain.NewInstitutionFilter(p.City, p.Type),
+			paging.NewIntSeek(p.LastID, p.PageSize),
+		),
+	)
 	if err != nil {
 		return institution.NewGetInstitutionsInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
@@ -51,6 +47,8 @@ func (c *Controller) GetInstitutions(p institution.GetInstitutionsParams) instit
 			Name:      inst.Name,
 			ShortName: inst.ShortName,
 			LogoURL:   inst.LogoURL,
+			City:      inst.City,
+			Type:      int32(inst.Type),
 		}
 	}
 
