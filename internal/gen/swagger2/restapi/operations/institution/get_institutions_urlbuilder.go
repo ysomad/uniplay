@@ -9,11 +9,21 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
+
+	"github.com/go-openapi/swag"
 )
 
 // GetInstitutionsURL generates an URL for the get institutions operation
 type GetInstitutionsURL struct {
+	City     *string
+	LastID   *int32
+	PageSize *int32
+	Search   *string
+	Type     *int32
+
 	_basePath string
+	// avoid unkeyed usage
+	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
@@ -42,6 +52,50 @@ func (o *GetInstitutionsURL) Build() (*url.URL, error) {
 		_basePath = "/v1"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var cityQ string
+	if o.City != nil {
+		cityQ = *o.City
+	}
+	if cityQ != "" {
+		qs.Set("city", cityQ)
+	}
+
+	var lastIDQ string
+	if o.LastID != nil {
+		lastIDQ = swag.FormatInt32(*o.LastID)
+	}
+	if lastIDQ != "" {
+		qs.Set("last_id", lastIDQ)
+	}
+
+	var pageSizeQ string
+	if o.PageSize != nil {
+		pageSizeQ = swag.FormatInt32(*o.PageSize)
+	}
+	if pageSizeQ != "" {
+		qs.Set("page_size", pageSizeQ)
+	}
+
+	var searchQ string
+	if o.Search != nil {
+		searchQ = *o.Search
+	}
+	if searchQ != "" {
+		qs.Set("search", searchQ)
+	}
+
+	var typeVarQ string
+	if o.Type != nil {
+		typeVarQ = swag.FormatInt32(*o.Type)
+	}
+	if typeVarQ != "" {
+		qs.Set("type", typeVarQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

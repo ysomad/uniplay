@@ -12,7 +12,6 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // MatchTeam match team
@@ -21,45 +20,24 @@ import (
 type MatchTeam struct {
 
 	// clan name
-	// Required: true
-	ClanName string `json:"clan_name"`
+	ClanName string `json:"clan_name,omitempty"`
 
 	// flag code
-	// Required: true
-	FlagCode string `json:"flag_code"`
+	FlagCode string `json:"flag_code,omitempty"`
 
 	// id
-	// Required: true
-	ID int32 `json:"id"`
+	ID int32 `json:"id,omitempty"`
 
 	// score
-	// Required: true
-	Score int32 `json:"score"`
+	Score int32 `json:"score,omitempty"`
 
 	// scoreboard
-	// Required: true
 	Scoreboard []MatchTeamScoreboard `json:"scoreboard"`
 }
 
 // Validate validates this match team
 func (m *MatchTeam) Validate(formats strfmt.Registry) error {
 	var res []error
-
-	if err := m.validateClanName(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateFlagCode(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateScore(formats); err != nil {
-		res = append(res, err)
-	}
 
 	if err := m.validateScoreboard(formats); err != nil {
 		res = append(res, err)
@@ -71,46 +49,9 @@ func (m *MatchTeam) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *MatchTeam) validateClanName(formats strfmt.Registry) error {
-
-	if err := validate.RequiredString("clan_name", "body", m.ClanName); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *MatchTeam) validateFlagCode(formats strfmt.Registry) error {
-
-	if err := validate.RequiredString("flag_code", "body", m.FlagCode); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *MatchTeam) validateID(formats strfmt.Registry) error {
-
-	if err := validate.Required("id", "body", int32(m.ID)); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *MatchTeam) validateScore(formats strfmt.Registry) error {
-
-	if err := validate.Required("score", "body", int32(m.Score)); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (m *MatchTeam) validateScoreboard(formats strfmt.Registry) error {
-
-	if err := validate.Required("scoreboard", "body", m.Scoreboard); err != nil {
-		return err
+	if swag.IsZero(m.Scoreboard) { // not required
+		return nil
 	}
 
 	for i := 0; i < len(m.Scoreboard); i++ {

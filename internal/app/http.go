@@ -9,20 +9,23 @@ import (
 
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
+	"github.com/ysomad/uniplay/internal/institution"
 	"github.com/ysomad/uniplay/internal/match"
 	"github.com/ysomad/uniplay/internal/player"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations"
 	compendiumGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
+	institutionGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 	matchGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	playerGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
 )
 
 type apiDeps struct {
-	match      *match.Controller
-	compendium *compendium.Controller
-	player     *player.Controller
+	match       *match.Controller
+	compendium  *compendium.Controller
+	player      *player.Controller
+	institution *institution.Controller
 }
 
 func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
@@ -50,6 +53,8 @@ func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 
 	api.PlayerGetPlayerStatsHandler = playerGen.GetPlayerStatsHandlerFunc(d.player.GetPlayerStats)
 	api.PlayerGetWeaponStatsHandler = playerGen.GetWeaponStatsHandlerFunc(d.player.GetWeaponStats)
+
+	api.InstitutionGetInstitutionsHandler = institutionGen.GetInstitutionsHandlerFunc(d.institution.GetInstitutions)
 }
 
 func newServer(conf config.HTTP, api *operations.UniplayAPI) *restapi.Server {

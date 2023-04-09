@@ -118,11 +118,50 @@ func init() {
         ],
         "summary": "Получение списка учебных заведений",
         "operationId": "getInstitutions",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Поиск по названиям и аббревиатурам уч. заведений",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Фильтр по городу",
+            "name": "city",
+            "in": "query"
+          },
+          {
+            "enum": [
+              1,
+              2
+            ],
+            "type": "integer",
+            "format": "int32",
+            "description": "Тип учебного заведения:\n * 1 - ВУЗы\n * 2 - ССУЗы\n",
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса.",
+            "name": "last_id",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/WeaponList"
+              "$ref": "#/definitions/InstitutionList"
             }
           },
           "500": {
@@ -465,6 +504,56 @@ func init() {
         }
       }
     },
+    "InstitutionList": {
+      "type": "object",
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-omitempty": false
+        },
+        "institutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InstitutionList_institutions"
+          }
+        }
+      }
+    },
+    "InstitutionList_institutions": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "logo_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "short_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32",
+          "enum": [
+            1,
+            2
+          ]
+        }
+      },
+      "x-go-name": "InstitutionListItem",
+      "x-nullable": false
+    },
     "Map": {
       "type": "object",
       "required": [
@@ -535,13 +624,6 @@ func init() {
     },
     "MatchTeam": {
       "type": "object",
-      "required": [
-        "clan_name",
-        "flag_code",
-        "id",
-        "score",
-        "scoreboard"
-      ],
       "properties": {
         "clan_name": {
           "type": "string",
@@ -1120,11 +1202,50 @@ func init() {
         ],
         "summary": "Получение списка учебных заведений",
         "operationId": "getInstitutions",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Поиск по названиям и аббревиатурам уч. заведений",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Фильтр по городу",
+            "name": "city",
+            "in": "query"
+          },
+          {
+            "enum": [
+              1,
+              2
+            ],
+            "type": "integer",
+            "format": "int32",
+            "description": "Тип учебного заведения:\n * 1 - ВУЗы\n * 2 - ССУЗы\n",
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса.",
+            "name": "last_id",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/WeaponList"
+              "$ref": "#/definitions/InstitutionList"
             }
           },
           "500": {
@@ -1467,6 +1588,56 @@ func init() {
         }
       }
     },
+    "InstitutionList": {
+      "type": "object",
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-omitempty": false
+        },
+        "institutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InstitutionList_institutions"
+          }
+        }
+      }
+    },
+    "InstitutionList_institutions": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "logo_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "short_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32",
+          "enum": [
+            1,
+            2
+          ]
+        }
+      },
+      "x-go-name": "InstitutionListItem",
+      "x-nullable": false
+    },
     "Map": {
       "type": "object",
       "required": [
@@ -1537,13 +1708,6 @@ func init() {
     },
     "MatchTeam": {
       "type": "object",
-      "required": [
-        "clan_name",
-        "flag_code",
-        "id",
-        "score",
-        "scoreboard"
-      ],
       "properties": {
         "clan_name": {
           "type": "string",
