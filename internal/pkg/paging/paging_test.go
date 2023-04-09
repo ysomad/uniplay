@@ -15,13 +15,13 @@ func TestNewIntSeek(t *testing.T) {
 		pageSize *int32
 	}
 
-	type testCase[T constraints.Signed] struct {
+	type test[T constraints.Signed] struct {
 		name string
 		args args[T]
 		want IntSeek[T]
 	}
 
-	tests := []testCase[int32]{
+	tests := []test[int32]{
 		{
 			name: "success",
 			args: args[int32]{
@@ -81,6 +81,177 @@ func TestNewIntSeek(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got := NewIntSeek(tt.args.lastID, tt.args.pageSize)
 			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestNewInfList(t *testing.T) {
+	type args[T any] struct {
+		items    []T
+		pageSize int32
+	}
+
+	type test[T any] struct {
+		name    string
+		args    args[T]
+		want    InfList[T]
+		wantErr bool
+	}
+
+	tests := []test[string]{
+		{
+			name: "has next page 1",
+			args: args[string]{
+				items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+					"item 4",
+					"item 5",
+					"item 6",
+				},
+				pageSize: 5,
+			},
+			want: InfList[string]{
+				Items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+					"item 4",
+					"item 5",
+				},
+				HasNext: true,
+			},
+			wantErr: false,
+		},
+		{
+			name: "has next page 2",
+			args: args[string]{
+				items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+					"item 4",
+					"item 5",
+					"item 6",
+					"item 7",
+					"item 8",
+					"item 9",
+					"item 10",
+					"item 11",
+				},
+				pageSize: 10,
+			},
+			want: InfList[string]{
+				Items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+					"item 4",
+					"item 5",
+					"item 6",
+					"item 7",
+					"item 8",
+					"item 9",
+					"item 10",
+				},
+				HasNext: true,
+			},
+			wantErr: false,
+		},
+		{
+			name: "does not have next page 1",
+			args: args[string]{
+				items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+					"item 4",
+					"item 5",
+				},
+				pageSize: 5,
+			},
+			want: InfList[string]{
+				Items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+					"item 4",
+					"item 5",
+				},
+				HasNext: false,
+			},
+			wantErr: false,
+		},
+		{
+			name: "does not have next page 2",
+			args: args[string]{
+				items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+				},
+				pageSize: 5,
+			},
+			want: InfList[string]{
+				Items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+				},
+				HasNext: false,
+			},
+			wantErr: false,
+		},
+		{
+			name: "does not have next page 2",
+			args: args[string]{
+				items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+				},
+				pageSize: 5,
+			},
+			want: InfList[string]{
+				Items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+				},
+				HasNext: false,
+			},
+			wantErr: false,
+		},
+		{
+			name: "items has length more than pageSize + 1",
+			args: args[string]{
+				items: []string{
+					"item 1",
+					"item 2",
+					"item 3",
+					"item 4",
+					"item 5",
+					"item 6",
+					"item 7",
+					"item 8",
+					"item 9",
+					"item 10",
+					"item 11",
+					"item 12",
+				},
+				pageSize: 10,
+			},
+			want:    InfList[string]{},
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := NewInfList(tt.args.items, tt.args.pageSize)
+			assert.Equal(t, tt.want, got)
+			assert.Equal(t, tt.wantErr, (err != nil))
 		})
 	}
 }

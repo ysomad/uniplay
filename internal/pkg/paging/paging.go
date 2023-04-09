@@ -1,7 +1,7 @@
 package paging
 
 import (
-	"time"
+	"errors"
 
 	"golang.org/x/exp/constraints"
 )
@@ -40,31 +40,37 @@ func NewIntSeek[T constraints.Signed](lastID *T, psize *int32) IntSeek[T] {
 	return s
 }
 
-// Seek is set of params for seek(keyset) pagination using uuids
-// or other non-sortable primary keys.
-type Seek struct {
-	PageToken token
-	PageSize  int32
-}
-
-func (s Seek) DecodedToken() (string, time.Time, error) { return s.PageToken.Decode() }
-
 // InfList is a list of objects for infinity scroll pagination.
 type InfList[T any] struct {
 	Items   []T
 	HasNext bool
 }
 
-func NewInfList[T any](items []T, pageSize int32) InfList[T] {
-	itemCount := len(items)
-	hasNext := itemCount == int(pageSize+1)
+var (
+	errInvalidArgs = errors.New("paging: length of items should not equal more than pageSize + 1")
+)
 
-	if hasNext {
-		items = items[:itemCount-1]
+func NewInfList[T any](items []T, pageSize int32) (InfList[T], error) {
+	if len(items) > int(pageSize) && len(items)-int(pageSize) != 1 {
+		return InfList[T]{}, errInvalidArgs
+	}
+
+	if len(items) != int(pageSize+1) {
+		return InfList[T]{
+			Items:   items,
+			HasNext: false,
+		}, nil
 	}
 
 	return InfList[T]{
-		Items:   items,
-		HasNext: hasNext,
-	}
+		Items:   items[:len(items)-1],
+		HasNext: true,
+	}, nil
+}
+
+// Seek is set of params for seek(keyset) pagination using uuids
+// or other non-sortable primary keys.
+type Seek struct {
+	PageToken token
+	PageSize  int32
 }

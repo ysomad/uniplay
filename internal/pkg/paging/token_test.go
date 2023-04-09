@@ -16,8 +16,8 @@ var (
 	testToken token
 )
 
-func generateTestToken(uuid string, t time.Time) token {
-	return token(base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s,%s", uuid, t.Format(time.RFC3339Nano)))))
+func generateTestToken(pk string, t time.Time) token {
+	return token(base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s,%s", pk, t.Format(time.RFC3339Nano)))))
 }
 
 func TestMain(m *testing.M) {
@@ -103,6 +103,20 @@ func TestToken_Decode(t *testing.T) {
 			wantPK:       testPK,
 			wantTime:     testTime,
 			wantErr:      false,
+		},
+		{
+			name:         "invalid token 2",
+			encodedToken: "MTIzNDUsYXNkZmcsMTIzNCx3ZXJ0",
+			wantPK:       "",
+			wantTime:     time.Time{},
+			wantErr:      true,
+		},
+		{
+			name:         "invalid token time",
+			encodedToken: "cGssMjAyMy0wNC0wOVQwNjMzOjU0KzAwOjAw",
+			wantPK:       "",
+			wantTime:     time.Time{},
+			wantErr:      true,
 		},
 	}
 
