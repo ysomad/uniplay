@@ -52,5 +52,5 @@ func (pg *Postgres) GetInstitutionList(ctx context.Context, f domain.Institution
 		return paging.InfList[domain.Institution]{}, err
 	}
 
-	return paging.NewInfList(institutions, p.PageSize), nil
+	return paging.NewInfList(institutions, p.PageSize)
 }
