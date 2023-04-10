@@ -19,7 +19,7 @@ type GetInstitutionsURL struct {
 	LastID   *int32
 	PageSize *int32
 	Search   *string
-	Type     *int32
+	Type     *int8
 
 	_basePath string
 	// avoid unkeyed usage
@@ -89,7 +89,7 @@ func (o *GetInstitutionsURL) Build() (*url.URL, error) {
 
 	var typeVarQ string
 	if o.Type != nil {
-		typeVarQ = swag.FormatInt32(*o.Type)
+		typeVarQ = swag.FormatInt8(*o.Type)
 	}
 	if typeVarQ != "" {
 		qs.Set("type", typeVarQ)

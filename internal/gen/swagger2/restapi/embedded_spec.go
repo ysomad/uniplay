@@ -137,7 +137,7 @@ func init() {
               2
             ],
             "type": "integer",
-            "format": "int32",
+            "format": "int8",
             "description": "Тип учебного заведения:\n * 1 - ВУЗы\n * 2 - ССУЗы\n",
             "name": "type",
             "in": "query"
@@ -1221,7 +1221,7 @@ func init() {
               2
             ],
             "type": "integer",
-            "format": "int32",
+            "format": "int8",
             "description": "Тип учебного заведения:\n * 1 - ВУЗы\n * 2 - ССУЗы\n",
             "name": "type",
             "in": "query"

@@ -13,19 +13,19 @@ type playerRepository interface {
 	GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error)
 }
 
-type Service struct {
+type service struct {
 	tracer trace.Tracer
 	player playerRepository
 }
 
-func NewService(t trace.Tracer, r playerRepository) *Service {
-	return &Service{
+func NewService(t trace.Tracer, r playerRepository) *service {
+	return &service{
 		tracer: t,
 		player: r,
 	}
 }
 
-func (s *Service) GetStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (domain.PlayerStats, error) {
+func (s *service) GetStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (domain.PlayerStats, error) {
 	ctx, span := s.tracer.Start(ctx, "player.Service.GetStats")
 	defer span.End()
 
@@ -37,7 +37,7 @@ func (s *Service) GetStats(ctx context.Context, steamID uint64, f domain.PlayerS
 	return domain.NewPlayerStats(ts), nil
 }
 
-func (s *Service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
+func (s *service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
 	ctx, span := s.tracer.Start(ctx, "player.Service.GetWeaponStats")
 	defer span.End()
 

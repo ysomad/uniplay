@@ -55,7 +55,7 @@ type GetInstitutionsParams struct {
 
 	 In: query
 	*/
-	Type *int32
+	Type *int8
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -195,9 +195,9 @@ func (o *GetInstitutionsParams) bindType(rawData []string, hasKey bool, formats 
 		return nil
 	}
 
-	value, err := swag.ConvertInt32(raw)
+	value, err := swag.ConvertInt8(raw)
 	if err != nil {
-		return errors.InvalidType("type", "query", "int32", raw)
+		return errors.InvalidType("type", "query", "int8", raw)
 	}
 	o.Type = &value
 

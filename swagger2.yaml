@@ -250,7 +250,7 @@ paths:
            * 2 - ССУЗы
         required: false
         type: integer
-        format: int32
+        format: int8
         enum:
         - 1
         - 2

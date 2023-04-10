@@ -16,19 +16,19 @@ type matchRepository interface {
 	GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]*matchScoreBoardRow, error)
 }
 
-type Service struct {
+type service struct {
 	tracer trace.Tracer
 	match  matchRepository
 }
 
-func NewService(t trace.Tracer, m matchRepository) *Service {
-	return &Service{
+func NewService(t trace.Tracer, m matchRepository) *service {
+	return &service{
 		tracer: t,
 		match:  m,
 	}
 }
 
-func (s *Service) CreateFromReplay(ctx context.Context, r replay) (uuid.UUID, error) {
+func (s *service) CreateFromReplay(ctx context.Context, r replay) (uuid.UUID, error) {
 	ctx, span := s.tracer.Start(ctx, "match.Service.CreateFromReplay")
 	defer span.End()
 
@@ -61,11 +61,11 @@ func (s *Service) CreateFromReplay(ctx context.Context, r replay) (uuid.UUID, er
 }
 
 // DeleteByID deletes match and all stats associated with it, including player match history.
-func (s *Service) DeleteByID(ctx context.Context, matchID uuid.UUID) error {
+func (s *service) DeleteByID(ctx context.Context, matchID uuid.UUID) error {
 	return s.match.DeleteByID(ctx, matchID)
 }
 
-func (s *Service) GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match, error) {
+func (s *service) GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match, error) {
 	ctx, span := s.tracer.Start(ctx, "match.Service.GetByID")
 	defer span.End()
 

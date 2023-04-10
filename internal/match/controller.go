@@ -1,7 +1,6 @@
 package match
 
 import (
-	"context"
 	"errors"
 	"net/http"
 
@@ -15,19 +14,13 @@ import (
 	"github.com/ysomad/uniplay/internal/domain"
 )
 
-type matchService interface {
-	CreateFromReplay(context.Context, replay) (uuid.UUID, error)
-	DeleteByID(ctx context.Context, matchID uuid.UUID) error
-	GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match, error)
-}
-
 type Controller struct {
-	match matchService
+	match *service
 }
 
-func NewController(m matchService) *Controller {
+func NewController(s *service) *Controller {
 	return &Controller{
-		match: m,
+		match: s,
 	}
 }
 

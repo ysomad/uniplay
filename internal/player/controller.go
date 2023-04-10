@@ -1,7 +1,6 @@
 package player
 
 import (
-	"context"
 	"errors"
 	"net/http"
 	"strconv"
@@ -14,18 +13,13 @@ import (
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
 )
 
-type playerService interface {
-	GetStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (domain.PlayerStats, error)
-	GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error)
-}
-
 type Controller struct {
-	player playerService
+	player *service
 }
 
-func NewController(p playerService) *Controller {
+func NewController(s *service) *Controller {
 	return &Controller{
-		player: p,
+		player: s,
 	}
 }
 

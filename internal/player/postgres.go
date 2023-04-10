@@ -15,13 +15,13 @@ import (
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-type Postgres struct {
+type postgres struct {
 	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPostgres(t trace.Tracer, c *pgclient.Client) *Postgres {
-	return &Postgres{
+func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
+	return &postgres{
 		tracer: t,
 		client: c,
 	}
@@ -53,7 +53,7 @@ type playerBaseStats struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (p *Postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error) {
+func (p *postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error) {
 	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetBaseStats")
 	defer span.End()
 
@@ -139,7 +139,7 @@ type weaponBaseStats struct {
 	RightLegHits      int32  `db:"total_r_leg_hits"`
 }
 
-func (p *Postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
+func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
 	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetWeaponBaseStats")
 	defer span.End()
 
