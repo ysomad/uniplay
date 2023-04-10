@@ -8,17 +8,17 @@ import (
 	"github.com/ysomad/uniplay/internal/domain"
 )
 
-type playerRepository interface {
+type repository interface {
 	GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error)
 	GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error)
 }
 
 type service struct {
 	tracer trace.Tracer
-	player playerRepository
+	player repository
 }
 
-func NewService(t trace.Tracer, r playerRepository) *service {
+func NewService(t trace.Tracer, r repository) *service {
 	return &service{
 		tracer: t,
 		player: r,

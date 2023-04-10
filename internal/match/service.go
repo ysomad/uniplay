@@ -9,7 +9,7 @@ import (
 	"github.com/ysomad/uniplay/internal/domain"
 )
 
-type matchRepository interface {
+type repository interface {
 	CreateWithStats(context.Context, *replayMatch, []*playerStat, []*weaponStat) error
 	Exists(ctx context.Context, matchID uuid.UUID) (found bool, err error)
 	DeleteByID(ctx context.Context, matchID uuid.UUID) error
@@ -18,10 +18,10 @@ type matchRepository interface {
 
 type service struct {
 	tracer trace.Tracer
-	match  matchRepository
+	match  repository
 }
 
-func NewService(t trace.Tracer, m matchRepository) *service {
+func NewService(t trace.Tracer, m repository) *service {
 	return &service{
 		tracer: t,
 		match:  m,

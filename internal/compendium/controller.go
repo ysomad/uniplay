@@ -1,28 +1,19 @@
 package compendium
 
 import (
-	"context"
 	"net/http"
-
-	"github.com/ysomad/uniplay/internal/domain"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
 )
 
-type compendiumService interface {
-	GetWeaponList(ctx context.Context) ([]domain.Weapon, error)
-	GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error)
-	GetMapList(ctx context.Context) ([]domain.Map, error)
-}
-
 type Controller struct {
-	compendium compendiumService
+	compendium *service
 }
 
-func NewController(c compendiumService) *Controller {
+func NewController(s *service) *Controller {
 	return &Controller{
-		compendium: c,
+		compendium: s,
 	}
 }
 
