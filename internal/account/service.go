@@ -10,30 +10,18 @@ type repository interface {
 	Save(context.Context, *domain.Account) error
 }
 
-type hashVerifier interface {
-	Hash(plain string) (string, error)
-	Verify(plain, hash string) (bool, error)
-}
-
 type service struct {
-	account  repository
-	password hashVerifier
+	account repository
 }
 
-func NewService(r repository, h hashVerifier) *service {
+func NewService(r repository) *service {
 	return &service{
-		account:  r,
-		password: h,
+		account: r,
 	}
 }
 
 func (s *service) Create(ctx context.Context, email, password string) (*domain.Account, error) {
-	hash, err := s.password.Hash(password)
-	if err != nil {
-		return nil, err
-	}
-
-	acc, err := domain.NewAccount(email, hash)
+	acc, err := domain.NewAccount(email, password)
 	if err != nil {
 		return nil, err
 	}

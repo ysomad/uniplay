@@ -15,7 +15,6 @@ import (
 	"github.com/ysomad/uniplay/internal/match"
 	"github.com/ysomad/uniplay/internal/player"
 
-	"github.com/ysomad/uniplay/internal/pkg/argon2"
 	"github.com/ysomad/uniplay/internal/pkg/logger"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
@@ -47,8 +46,6 @@ func Run(conf *config.Config) { //nolint:funlen // main func
 		l.Fatal("prometheus.Register", zap.Error(err))
 	}
 
-	argon2ID := argon2.New()
-
 	// match
 	matchPostgres := match.NewPostgres(otel.AppTracer, pgClient)
 	matchService := match.NewService(otel.AppTracer, matchPostgres)
@@ -61,7 +58,7 @@ func Run(conf *config.Config) { //nolint:funlen // main func
 
 	// account
 	accountPostgres := account.NewPostgres(otel.AppTracer, pgClient)
-	accountService := account.NewService(accountPostgres, argon2ID)
+	accountService := account.NewService(accountPostgres)
 	accountController := account.NewController(accountService)
 
 	// player
