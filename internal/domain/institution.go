@@ -23,7 +23,7 @@ type InstitutionFilter struct {
 	City string
 }
 
-func NewInstitutionFilter(city *string, itype *int32) InstitutionFilter {
+func NewInstitutionFilter(city *string, itype *int8) InstitutionFilter {
 	f := InstitutionFilter{}
 
 	if itype != nil {

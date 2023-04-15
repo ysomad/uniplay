@@ -7,6 +7,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 
+	"github.com/ysomad/uniplay/internal/account"
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
 	"github.com/ysomad/uniplay/internal/institution"
@@ -15,6 +16,7 @@ import (
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations"
+	accountGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/account"
 	compendiumGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
 	institutionGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 	matchGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
@@ -24,6 +26,7 @@ import (
 type apiDeps struct {
 	match       *match.Controller
 	compendium  *compendium.Controller
+	account     *account.Controller
 	player      *player.Controller
 	institution *institution.Controller
 }
@@ -51,6 +54,10 @@ func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 	api.CompendiumGetWeaponClassesHandler = compendiumGen.GetWeaponClassesHandlerFunc(d.compendium.GetWeaponClasses)
 	api.CompendiumGetMapsHandler = compendiumGen.GetMapsHandlerFunc(d.compendium.GetMaps)
 
+	api.AccountCreateAccountHandler = accountGen.CreateAccountHandlerFunc(d.account.CreateAccount)
+
+	api.PlayerGetPlayerHandler = playerGen.GetPlayerHandlerFunc(d.player.GetPlayer)
+	api.PlayerUpdatePlayerHandler = playerGen.UpdatePlayerHandlerFunc(d.player.UpdatePlayer)
 	api.PlayerGetPlayerStatsHandler = playerGen.GetPlayerStatsHandlerFunc(d.player.GetPlayerStats)
 	api.PlayerGetWeaponStatsHandler = playerGen.GetWeaponStatsHandlerFunc(d.player.GetWeaponStats)
 

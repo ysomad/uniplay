@@ -8,6 +8,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgtype/zeronull"
 	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
@@ -15,16 +16,99 @@ import (
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-type Postgres struct {
+type postgres struct {
 	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPostgres(t trace.Tracer, c *pgclient.Client) *Postgres {
-	return &Postgres{
+func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
+	return &postgres{
 		tracer: t,
 		client: c,
 	}
+}
+
+type dbPlayer struct {
+	SteamID     domain.SteamID `db:"steam_id"`
+	TeamID      zeronull.Int4  `db:"team_id"`
+	DisplayName string         `db:"display_name"`
+	FirstName   zeronull.Text  `db:"first_name"`
+	LastName    zeronull.Text  `db:"last_name"`
+	AvatarURL   zeronull.Text  `db:"avatar_url"`
+}
+
+func (p *postgres) FindBySteamID(ctx context.Context, steamID domain.SteamID) (domain.Player, error) {
+	sql, args, err := p.client.Builder.
+		Select("steam_id, team_id, display_name, first_name, last_name, avatar_url").
+		From("player").
+		Where(sq.Eq{"steam_id": steamID}).
+		ToSql()
+	if err != nil {
+		return domain.Player{}, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return domain.Player{}, err
+	}
+
+	player, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[dbPlayer])
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return domain.Player{}, domain.ErrPlayerNotFound
+		}
+
+		return domain.Player{}, err
+	}
+
+	return domain.Player{
+		SteamID:     player.SteamID,
+		TeamID:      int32(player.TeamID),
+		DisplayName: player.DisplayName,
+		FirstName:   string(player.FirstName),
+		LastName:    string(player.LastName),
+		AvatarURL:   string(player.AvatarURL),
+	}, nil
+}
+
+func (p *postgres) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, up updateParams) (domain.Player, error) {
+	sql, args, err := p.client.Builder.
+		Update("player").
+		SetMap(map[string]any{
+			"team_id":    up.teamID,
+			"first_name": up.firstName,
+			"last_name":  up.lastName,
+			"avatar_url": up.avatarURL,
+		}).
+		Where(sq.Eq{"steam_id": steamID}).
+		Suffix("RETURNING steam_id, team_id, display_name, first_name, last_name, avatar_url").
+		ToSql()
+	if err != nil {
+		return domain.Player{}, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return domain.Player{}, err
+	}
+
+	player, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[dbPlayer])
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return domain.Player{}, domain.ErrPlayerNotFound
+		}
+
+		return domain.Player{}, err
+	}
+
+	return domain.Player{
+		SteamID:     player.SteamID,
+		TeamID:      int32(player.TeamID),
+		DisplayName: player.DisplayName,
+		FirstName:   string(player.FirstName),
+		LastName:    string(player.LastName),
+		AvatarURL:   string(player.AvatarURL),
+	}, nil
 }
 
 type playerBaseStats struct {
@@ -53,7 +137,7 @@ type playerBaseStats struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (p *Postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error) {
+func (p *postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error) {
 	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetBaseStats")
 	defer span.End()
 
@@ -139,7 +223,7 @@ type weaponBaseStats struct {
 	RightLegHits      int32  `db:"total_r_leg_hits"`
 }
 
-func (p *Postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
+func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
 	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetWeaponBaseStats")
 	defer span.End()
 

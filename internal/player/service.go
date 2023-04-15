@@ -8,24 +8,34 @@ import (
 	"github.com/ysomad/uniplay/internal/domain"
 )
 
-type playerRepository interface {
+type repository interface {
+	FindBySteamID(context.Context, domain.SteamID) (domain.Player, error)
+	UpdateBySteamID(context.Context, domain.SteamID, updateParams) (domain.Player, error)
 	GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error)
 	GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error)
 }
 
-type Service struct {
+type service struct {
 	tracer trace.Tracer
-	player playerRepository
+	player repository
 }
 
-func NewService(t trace.Tracer, r playerRepository) *Service {
-	return &Service{
+func NewService(t trace.Tracer, r repository) *service {
+	return &service{
 		tracer: t,
 		player: r,
 	}
 }
 
-func (s *Service) GetStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (domain.PlayerStats, error) {
+func (s *service) GetBySteamID(ctx context.Context, steamID domain.SteamID) (domain.Player, error) {
+	return s.player.FindBySteamID(ctx, steamID)
+}
+
+func (s *service) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, p updateParams) (domain.Player, error) {
+	return s.player.UpdateBySteamID(ctx, steamID, p)
+}
+
+func (s *service) GetStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (domain.PlayerStats, error) {
 	ctx, span := s.tracer.Start(ctx, "player.Service.GetStats")
 	defer span.End()
 
@@ -37,7 +47,7 @@ func (s *Service) GetStats(ctx context.Context, steamID uint64, f domain.PlayerS
 	return domain.NewPlayerStats(ts), nil
 }
 
-func (s *Service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
+func (s *service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
 	ctx, span := s.tracer.Start(ctx, "player.Service.GetWeaponStats")
 	defer span.End()
 

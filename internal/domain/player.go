@@ -1,5 +1,10 @@
 package domain
 
-import "github.com/google/uuid"
-
-func NewPlayerID() (uuid.UUID, error) { return uuid.NewRandom() }
+type Player struct {
+	SteamID     SteamID
+	TeamID      int32
+	DisplayName string
+	FirstName   string
+	LastName    string
+	AvatarURL   string
+}

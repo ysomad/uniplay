@@ -19,11 +19,11 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/account"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
-	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/team"
 )
 
 // NewUniplayAPI creates a new Uniplay instance
@@ -49,6 +49,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
+		AccountCreateAccountHandler: account.CreateAccountHandlerFunc(func(params account.CreateAccountParams) account.CreateAccountResponder {
+			return account.CreateAccountNotImplemented()
+		}),
 		MatchCreateMatchHandler: match.CreateMatchHandlerFunc(func(params match.CreateMatchParams) match.CreateMatchResponder {
 			return match.CreateMatchNotImplemented()
 		}),
@@ -64,11 +67,11 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		MatchGetMatchHandler: match.GetMatchHandlerFunc(func(params match.GetMatchParams) match.GetMatchResponder {
 			return match.GetMatchNotImplemented()
 		}),
+		PlayerGetPlayerHandler: player.GetPlayerHandlerFunc(func(params player.GetPlayerParams) player.GetPlayerResponder {
+			return player.GetPlayerNotImplemented()
+		}),
 		PlayerGetPlayerStatsHandler: player.GetPlayerStatsHandlerFunc(func(params player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
 			return player.GetPlayerStatsNotImplemented()
-		}),
-		TeamGetTeamListHandler: team.GetTeamListHandlerFunc(func(params team.GetTeamListParams) team.GetTeamListResponder {
-			return team.GetTeamListNotImplemented()
 		}),
 		CompendiumGetWeaponClassesHandler: compendium.GetWeaponClassesHandlerFunc(func(params compendium.GetWeaponClassesParams) compendium.GetWeaponClassesResponder {
 			return compendium.GetWeaponClassesNotImplemented()
@@ -78,6 +81,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		}),
 		CompendiumGetWeaponsHandler: compendium.GetWeaponsHandlerFunc(func(params compendium.GetWeaponsParams) compendium.GetWeaponsResponder {
 			return compendium.GetWeaponsNotImplemented()
+		}),
+		PlayerUpdatePlayerHandler: player.UpdatePlayerHandlerFunc(func(params player.UpdatePlayerParams) player.UpdatePlayerResponder {
+			return player.UpdatePlayerNotImplemented()
 		}),
 	}
 }
@@ -118,6 +124,8 @@ type UniplayAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
+	// AccountCreateAccountHandler sets the operation handler for the create account operation
+	AccountCreateAccountHandler account.CreateAccountHandler
 	// MatchCreateMatchHandler sets the operation handler for the create match operation
 	MatchCreateMatchHandler match.CreateMatchHandler
 	// MatchDeleteMatchHandler sets the operation handler for the delete match operation
@@ -128,16 +136,18 @@ type UniplayAPI struct {
 	CompendiumGetMapsHandler compendium.GetMapsHandler
 	// MatchGetMatchHandler sets the operation handler for the get match operation
 	MatchGetMatchHandler match.GetMatchHandler
+	// PlayerGetPlayerHandler sets the operation handler for the get player operation
+	PlayerGetPlayerHandler player.GetPlayerHandler
 	// PlayerGetPlayerStatsHandler sets the operation handler for the get player stats operation
 	PlayerGetPlayerStatsHandler player.GetPlayerStatsHandler
-	// TeamGetTeamListHandler sets the operation handler for the get team list operation
-	TeamGetTeamListHandler team.GetTeamListHandler
 	// CompendiumGetWeaponClassesHandler sets the operation handler for the get weapon classes operation
 	CompendiumGetWeaponClassesHandler compendium.GetWeaponClassesHandler
 	// PlayerGetWeaponStatsHandler sets the operation handler for the get weapon stats operation
 	PlayerGetWeaponStatsHandler player.GetWeaponStatsHandler
 	// CompendiumGetWeaponsHandler sets the operation handler for the get weapons operation
 	CompendiumGetWeaponsHandler compendium.GetWeaponsHandler
+	// PlayerUpdatePlayerHandler sets the operation handler for the update player operation
+	PlayerUpdatePlayerHandler player.UpdatePlayerHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -218,6 +228,9 @@ func (o *UniplayAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.AccountCreateAccountHandler == nil {
+		unregistered = append(unregistered, "account.CreateAccountHandler")
+	}
 	if o.MatchCreateMatchHandler == nil {
 		unregistered = append(unregistered, "match.CreateMatchHandler")
 	}
@@ -233,11 +246,11 @@ func (o *UniplayAPI) Validate() error {
 	if o.MatchGetMatchHandler == nil {
 		unregistered = append(unregistered, "match.GetMatchHandler")
 	}
+	if o.PlayerGetPlayerHandler == nil {
+		unregistered = append(unregistered, "player.GetPlayerHandler")
+	}
 	if o.PlayerGetPlayerStatsHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerStatsHandler")
-	}
-	if o.TeamGetTeamListHandler == nil {
-		unregistered = append(unregistered, "team.GetTeamListHandler")
 	}
 	if o.CompendiumGetWeaponClassesHandler == nil {
 		unregistered = append(unregistered, "compendium.GetWeaponClassesHandler")
@@ -247,6 +260,9 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.CompendiumGetWeaponsHandler == nil {
 		unregistered = append(unregistered, "compendium.GetWeaponsHandler")
+	}
+	if o.PlayerUpdatePlayerHandler == nil {
+		unregistered = append(unregistered, "player.UpdatePlayerHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -341,6 +357,10 @@ func (o *UniplayAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/accounts"] = account.NewCreateAccount(o.context, o.AccountCreateAccountHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/matches"] = match.NewCreateMatch(o.context, o.MatchCreateMatchHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
@@ -361,11 +381,11 @@ func (o *UniplayAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/players/{steam_id}/stats"] = player.NewGetPlayerStats(o.context, o.PlayerGetPlayerStatsHandler)
+	o.handlers["GET"]["/players/{steam_id}"] = player.NewGetPlayer(o.context, o.PlayerGetPlayerHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/teams"] = team.NewGetTeamList(o.context, o.TeamGetTeamListHandler)
+	o.handlers["GET"]["/players/{steam_id}/stats"] = player.NewGetPlayerStats(o.context, o.PlayerGetPlayerStatsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -378,6 +398,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/compendiums/weapons"] = compendium.NewGetWeapons(o.context, o.CompendiumGetWeaponsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/players/{steam_id}"] = player.NewUpdatePlayer(o.context, o.PlayerUpdatePlayerHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

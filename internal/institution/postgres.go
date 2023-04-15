@@ -27,6 +27,9 @@ func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
 }
 
 func (pg *postgres) GetList(ctx context.Context, p getListParams) (paging.InfList[domain.Institution], error) {
+	ctx, span := pg.tracer.Start(ctx, "institution.Postgres.GetList")
+	defer span.End()
+
 	b := pg.client.Builder.
 		Select("id, type, name, short_name, city, logo_url").
 		From("institution")
@@ -54,9 +57,6 @@ func (pg *postgres) GetList(ctx context.Context, p getListParams) (paging.InfLis
 	if err != nil {
 		return paging.InfList[domain.Institution]{}, err
 	}
-
-	fmt.Println(sql)
-	fmt.Println(args)
 
 	rows, err := pg.client.Pool.Query(ctx, sql, args...)
 	if err != nil {

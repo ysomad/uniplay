@@ -30,6 +30,57 @@ func init() {
   "host": "localhost:8080",
   "basePath": "/v1",
   "paths": {
+    "/accounts": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Регистрация аккаунта",
+        "operationId": "createAccount",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AccountCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/compendiums/maps": {
       "get": {
         "produces": [
@@ -137,7 +188,7 @@ func init() {
               2
             ],
             "type": "integer",
-            "format": "int32",
+            "format": "int8",
             "description": "Тип учебного заведения:\n * 1 - ВУЗы\n * 2 - ССУЗы\n",
             "name": "type",
             "in": "query"
@@ -311,6 +362,106 @@ func init() {
         }
       }
     },
+    "/players/{steam_id}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение профиля игрока",
+        "operationId": "getPlayer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Редактирование профиля игрока",
+        "operationId": "updatePlayer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdatePlayerRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -392,7 +543,6 @@ func init() {
           {
             "type": "string",
             "format": "uuid",
-            "x-nullable": false,
             "description": "Фильтр по матчу",
             "name": "match_id",
             "in": "query"
@@ -439,38 +589,51 @@ func init() {
           }
         }
       }
-    },
-    "/teams": {
-      "get": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "team"
-        ],
-        "summary": "Получение списка команд",
-        "operationId": "getTeamList",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/WeaponList"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
     }
   },
   "definitions": {
+    "Account": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "datetime",
+          "x-nullable": false
+        },
+        "email": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "is_verified": {
+          "type": "boolean",
+          "x-nullable": false
+        }
+      }
+    },
+    "AccountCreateRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-nullable": false
+        },
+        "password": {
+          "type": "string",
+          "maxLength": 256,
+          "minLength": 8,
+          "x-nullable": false
+        }
+      }
+    },
     "CreateMatchResponse": {
       "type": "object",
       "required": [
@@ -691,6 +854,36 @@ func init() {
         }
       },
       "x-nullable": false
+    },
+    "Player": {
+      "type": "object",
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "display_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "steam_id": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
     },
     "PlayerStats": {
       "type": "object",
@@ -1014,6 +1207,39 @@ func init() {
         }
       }
     },
+    "UpdatePlayerRequest": {
+      "type": "object",
+      "required": [
+        "avatar_url",
+        "first_name",
+        "last_name",
+        "team_id"
+      ],
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "format": "uri",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 2,
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 2,
+          "x-nullable": false
+        },
+        "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
+    },
     "WeaponClassList": {
       "type": "array",
       "items": {
@@ -1080,16 +1306,16 @@ func init() {
   },
   "tags": [
     {
+      "description": "Аккаунт",
+      "name": "account"
+    },
+    {
       "description": "Профиль игрока",
       "name": "player"
     },
     {
       "description": "Матч",
       "name": "match"
-    },
-    {
-      "description": "Команда",
-      "name": "team"
     },
     {
       "description": "Учебное заведение",
@@ -1114,6 +1340,57 @@ func init() {
   "host": "localhost:8080",
   "basePath": "/v1",
   "paths": {
+    "/accounts": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Регистрация аккаунта",
+        "operationId": "createAccount",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AccountCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/compendiums/maps": {
       "get": {
         "produces": [
@@ -1221,7 +1498,7 @@ func init() {
               2
             ],
             "type": "integer",
-            "format": "int32",
+            "format": "int8",
             "description": "Тип учебного заведения:\n * 1 - ВУЗы\n * 2 - ССУЗы\n",
             "name": "type",
             "in": "query"
@@ -1395,6 +1672,106 @@ func init() {
         }
       }
     },
+    "/players/{steam_id}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение профиля игрока",
+        "operationId": "getPlayer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Редактирование профиля игрока",
+        "operationId": "updatePlayer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdatePlayerRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -1476,7 +1853,6 @@ func init() {
           {
             "type": "string",
             "format": "uuid",
-            "x-nullable": false,
             "description": "Фильтр по матчу",
             "name": "match_id",
             "in": "query"
@@ -1523,38 +1899,51 @@ func init() {
           }
         }
       }
-    },
-    "/teams": {
-      "get": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "team"
-        ],
-        "summary": "Получение списка команд",
-        "operationId": "getTeamList",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/WeaponList"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
     }
   },
   "definitions": {
+    "Account": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "datetime",
+          "x-nullable": false
+        },
+        "email": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "is_verified": {
+          "type": "boolean",
+          "x-nullable": false
+        }
+      }
+    },
+    "AccountCreateRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-nullable": false
+        },
+        "password": {
+          "type": "string",
+          "maxLength": 256,
+          "minLength": 8,
+          "x-nullable": false
+        }
+      }
+    },
     "CreateMatchResponse": {
       "type": "object",
       "required": [
@@ -1775,6 +2164,36 @@ func init() {
         }
       },
       "x-nullable": false
+    },
+    "Player": {
+      "type": "object",
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "display_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "steam_id": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
     },
     "PlayerStats": {
       "type": "object",
@@ -2098,6 +2517,39 @@ func init() {
         }
       }
     },
+    "UpdatePlayerRequest": {
+      "type": "object",
+      "required": [
+        "avatar_url",
+        "first_name",
+        "last_name",
+        "team_id"
+      ],
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "format": "uri",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 2,
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 2,
+          "x-nullable": false
+        },
+        "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
+    },
     "WeaponClassList": {
       "type": "array",
       "items": {
@@ -2164,16 +2616,16 @@ func init() {
   },
   "tags": [
     {
+      "description": "Аккаунт",
+      "name": "account"
+    },
+    {
       "description": "Профиль игрока",
       "name": "player"
     },
     {
       "description": "Матч",
       "name": "match"
-    },
-    {
-      "description": "Команда",
-      "name": "team"
     },
     {
       "description": "Учебное заведение",

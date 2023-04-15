@@ -44,15 +44,17 @@ func New(column string, ftype Type, value any) Filter {
 	}
 }
 
-// SetOperator sets operator for linking filters
+// SetOperator sets operator for linking filters.
 func (f *Filter) SetOperator(operator Op) *Filter {
 	f.operator = operator
+
 	return f
 }
 
-// WithFilter adds filters
+// WithFilter adds filters.
 func (f *Filter) WithFilters(filters ...Filter) *Filter {
 	f.filters = append(f.filters, filters...)
+
 	return f
 }
 
@@ -118,16 +120,20 @@ func (f Filter) Attach(b sq.SelectBuilder) sq.SelectBuilder {
 
 func and(conditions []sq.Sqlizer) sq.And {
 	res := sq.And{}
+
 	for _, c := range conditions {
 		res = append(res, c)
 	}
+
 	return res
 }
 
 func or(conditions []sq.Sqlizer) sq.Or {
 	res := sq.Or{}
+
 	for _, c := range conditions {
 		res = append(res, c)
 	}
+
 	return res
 }

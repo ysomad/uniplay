@@ -1,7 +1,5 @@
 package config
 
-import "time"
-
 type Config struct {
 	App    App    `yaml:"app"`
 	HTTP   HTTP   `yaml:"http"`
@@ -23,8 +21,7 @@ type (
 	}
 
 	Log struct {
-		Level   string         `yaml:"level" env-required:"true"`
-		TimeLoc *time.Location `yaml:"time_location" env-default:"Etc/UTC"`
+		Level string `yaml:"level" env-required:"true"`
 	}
 
 	PG struct {

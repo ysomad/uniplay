@@ -13,19 +13,19 @@ import (
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-type Postgres struct {
+type postgres struct {
 	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPostgres(t trace.Tracer, c *pgclient.Client) *Postgres {
-	return &Postgres{
+func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
+	return &postgres{
 		tracer: t,
 		client: c,
 	}
 }
 
-func (p *Postgres) Exists(ctx context.Context, matchID uuid.UUID) (bool, error) {
+func (p *postgres) Exists(ctx context.Context, matchID uuid.UUID) (bool, error) {
 	ctx, span := p.tracer.Start(ctx, "match.Postgres.Exists")
 	defer span.End()
 
@@ -39,7 +39,7 @@ func (p *Postgres) Exists(ctx context.Context, matchID uuid.UUID) (bool, error) 
 	return matchFound, nil
 }
 
-func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]*matchScoreBoardRow, error) {
+func (p *postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]*matchScoreBoardRow, error) {
 	ctx, span := p.tracer.Start(ctx, "match.Postgres.GetScoreBoardRowsByID")
 	defer span.End()
 
@@ -84,15 +84,10 @@ func (p *Postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 		return nil, err
 	}
 
-	res, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByPos[matchScoreBoardRow])
-	if err != nil {
-		return nil, err
-	}
-
-	return res, nil
+	return pgx.CollectRows(rows, pgx.RowToAddrOfStructByPos[matchScoreBoardRow])
 }
 
-func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error { //nolint:gocognit // yes its T H I C C
+func (p *postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error { //nolint:gocognit // yes its T H I C C
 	ctx, span := p.tracer.Start(ctx, "match.Postgres.CreateWithStats")
 	defer span.End()
 
@@ -145,7 +140,7 @@ func (p *Postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps [
 	return nil
 }
 
-func (p *Postgres) saveTeamsMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
+func (p *postgres) saveTeamsMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
 	sql, args, err := p.client.Builder.
 		Insert("team_match").
 		Columns("team_id, match_id, match_state, score").
@@ -163,13 +158,13 @@ func (p *Postgres) saveTeamsMatch(ctx context.Context, tx pgx.Tx, m *replayMatch
 	return nil
 }
 
-func (p *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, players []replayPlayer) error {
+func (p *postgres) savePlayers(ctx context.Context, tx pgx.Tx, players []replayPlayer) error {
 	b := p.client.Builder.
 		Insert("player").
-		Columns("id, steam_id, display_name")
+		Columns("steam_id, display_name")
 
 	for _, p := range players {
-		b = b.Values(p.id, p.steamID, p.displayName)
+		b = b.Values(p.steamID, p.displayName)
 	}
 
 	sql, args, err := b.Suffix("ON CONFLICT(steam_id) DO NOTHING").ToSql()
@@ -187,7 +182,7 @@ func (p *Postgres) savePlayers(ctx context.Context, tx pgx.Tx, players []replayP
 var errNoTeamIDsFound = errors.New("no team ids found")
 
 // saveTeams saves match teams, if team with given clan name already exist, returns its id in match.
-func (p *Postgres) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*replayMatch, error) {
+func (p *postgres) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*replayMatch, error) {
 	sql, args, err := p.client.Builder.
 		Insert("team").
 		Columns("clan_name, flag_code").
@@ -226,7 +221,7 @@ func (p *Postgres) saveTeams(ctx context.Context, tx pgx.Tx, m *replayMatch) (*r
 }
 
 // saveTeamPlayers saves players to teams in which they was playing last game.
-func (p *Postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
+func (p *postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
 	b := p.client.Builder.
 		Insert("team_player").
 		Columns("team_id, player_steam_id")
@@ -249,7 +244,7 @@ func (p *Postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []tea
 	return nil
 }
 
-func (p *Postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
+func (p *postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
 	sql, args, err := p.client.Builder.
 		Insert("match").
 		Columns("id, map, rounds, duration, uploaded_at").
@@ -267,7 +262,7 @@ func (p *Postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) err
 }
 
 // savePlayersMatch saves match and its state to player match history.
-func (p *Postgres) savePlayersMatch(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
+func (p *postgres) savePlayersMatch(ctx context.Context, tx pgx.Tx, players []teamPlayer) error {
 	b := p.client.Builder.
 		Insert("player_match").
 		Columns("player_steam_id, match_id, team_id, match_state")
@@ -289,7 +284,7 @@ func (p *Postgres) savePlayersMatch(ctx context.Context, tx pgx.Tx, players []te
 }
 
 // savePlayerStats saves players statistic from specific match.
-func (p *Postgres) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []*playerStat) error {
+func (p *postgres) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, stats []*playerStat) error {
 	b := p.client.Builder.
 		Insert("player_match_stat").
 		Columns(
@@ -351,7 +346,7 @@ func (p *Postgres) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.
 }
 
 // saveWeaponsStat saves players weapon statistic of specific match.
-func (p *Postgres) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []*weaponStat) error {
+func (p *postgres) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.UUID, ws []*weaponStat) error {
 	b := p.client.Builder.
 		Insert("player_match_weapon_stat").
 		Columns(
@@ -418,7 +413,7 @@ func (p *Postgres) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.
 	return nil
 }
 
-func (p *Postgres) DeleteByID(ctx context.Context, matchID uuid.UUID) error {
+func (p *postgres) DeleteByID(ctx context.Context, matchID uuid.UUID) error {
 	ctx, span := p.tracer.Start(ctx, "match.Postgres.DeleteByID")
 	defer span.End()
 
@@ -454,7 +449,7 @@ func (p *Postgres) DeleteByID(ctx context.Context, matchID uuid.UUID) error {
 }
 
 // deletePlayerStats deletes all players stats associated with match.
-func (p *Postgres) deletePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
+func (p *postgres) deletePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
 	sql, args, err := p.client.Builder.
 		Delete("player_match_stat").
 		Where(sq.Eq{"match_id": matchID}).
@@ -471,7 +466,7 @@ func (p *Postgres) deletePlayerStats(ctx context.Context, tx pgx.Tx, matchID uui
 }
 
 // deleteWeaponStats deletes all players weapon stats associated with match.
-func (p *Postgres) deleteWeaponStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
+func (p *postgres) deleteWeaponStats(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
 	sql, args, err := p.client.Builder.
 		Delete("player_match_weapon_stat").
 		Where(sq.Eq{"match_id": matchID}).
@@ -488,7 +483,7 @@ func (p *Postgres) deleteWeaponStats(ctx context.Context, tx pgx.Tx, matchID uui
 }
 
 // deletePlayersMatch deletes match from player history of matches.
-func (p *Postgres) deletePlayersMatch(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
+func (p *postgres) deletePlayersMatch(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
 	sql, args, err := p.client.Builder.
 		Delete("player_match").
 		Where(sq.Eq{"match_id": matchID}).
@@ -505,7 +500,7 @@ func (p *Postgres) deletePlayersMatch(ctx context.Context, tx pgx.Tx, matchID uu
 }
 
 // deleteMatch deletes match by id.
-func (p *Postgres) deleteMatch(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
+func (p *postgres) deleteMatch(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
 	sql, args, err := p.client.Builder.
 		Delete("match").
 		Where(sq.Eq{"id": matchID}).
@@ -527,7 +522,7 @@ func (p *Postgres) deleteMatch(ctx context.Context, tx pgx.Tx, matchID uuid.UUID
 }
 
 // deleteTeamsMatch deletes match from team history.
-func (p *Postgres) deleteTeamsMatch(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
+func (p *postgres) deleteTeamsMatch(ctx context.Context, tx pgx.Tx, matchID uuid.UUID) error {
 	sql, args, err := p.client.Builder.
 		Delete("team_match").
 		Where(sq.Eq{"match_id": matchID}).

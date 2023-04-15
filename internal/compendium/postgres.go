@@ -9,17 +9,17 @@ import (
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-type Postgres struct {
+type postgres struct {
 	client *pgclient.Client
 }
 
-func NewPostgres(c *pgclient.Client) *Postgres {
-	return &Postgres{
+func NewPostgres(c *pgclient.Client) *postgres {
+	return &postgres{
 		client: c,
 	}
 }
 
-func (p *Postgres) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
+func (p *postgres) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
 	sql, args, err := p.client.Builder.
 		Select("w.id as weapon_id, w.weapon, wc.id as class_id, wc.class").
 		From("weapon w").
@@ -35,15 +35,10 @@ func (p *Postgres) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
 		return nil, err
 	}
 
-	weapons, err := pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Weapon])
-	if err != nil {
-		return nil, err
-	}
-
-	return weapons, nil
+	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Weapon])
 }
 
-func (p *Postgres) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
+func (p *postgres) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
 	sql, args, err := p.client.Builder.
 		Select("id, class").
 		From("weapon_class").
@@ -57,15 +52,10 @@ func (p *Postgres) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass
 		return nil, err
 	}
 
-	classes, err := pgx.CollectRows(rows, pgx.RowToStructByPos[domain.WeaponClass])
-	if err != nil {
-		return nil, err
-	}
-
-	return classes, nil
+	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.WeaponClass])
 }
 
-func (p *Postgres) GetMapList(ctx context.Context) ([]domain.Map, error) {
+func (p *postgres) GetMapList(ctx context.Context) ([]domain.Map, error) {
 	sql, args, err := p.client.Builder.
 		Select("name, icon_url").
 		From("map").
@@ -79,10 +69,5 @@ func (p *Postgres) GetMapList(ctx context.Context) ([]domain.Map, error) {
 		return nil, err
 	}
 
-	maps, err := pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Map])
-	if err != nil {
-		return nil, err
-	}
-
-	return maps, nil
+	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Map])
 }

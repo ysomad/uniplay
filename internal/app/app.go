@@ -8,6 +8,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"
 
+	"github.com/ysomad/uniplay/internal/account"
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
 	"github.com/ysomad/uniplay/internal/institution"
@@ -18,7 +19,7 @@ import (
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-func Run(conf *config.Config) {
+func Run(conf *config.Config) { //nolint:funlen // main func
 	l, err := logger.New(conf.Log.Level)
 	if err != nil {
 		log.Fatalf("logger.New: %s", err.Error())
@@ -55,6 +56,11 @@ func Run(conf *config.Config) {
 	compendiumService := compendium.NewService(compendiumPostgres)
 	compendiumController := compendium.NewController(compendiumService)
 
+	// account
+	accountPostgres := account.NewPostgres(otel.AppTracer, pgClient)
+	accountService := account.NewService(accountPostgres)
+	accountController := account.NewController(accountService)
+
 	// player
 	playerPostgres := player.NewPostgres(otel.AppTracer, pgClient)
 	playerService := player.NewService(otel.AppTracer, playerPostgres)
@@ -68,6 +74,7 @@ func Run(conf *config.Config) {
 	// go-swagger
 	api, err := newAPI(apiDeps{
 		compendium:  compendiumController,
+		account:     accountController,
 		player:      playerController,
 		match:       matchController,
 		institution: institutionController,

@@ -10,14 +10,14 @@ import (
 	"github.com/go-openapi/runtime"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/account"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
-	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/team"
 )
 
-//go:generate swagger generate server --target ../../swagger2 --name Uniplay --spec ../../../../swagger2.yaml --principal interface{} --exclude-main --strict-responders
+//go:generate swagger generate server --target ../../swagger2 --name Uniplay --spec ../../../../swagger2.json --principal interface{} --exclude-main --strict-responders
 
 func configureFlags(api *operations.UniplayAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -45,6 +45,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 	// You may change here the memory limit for this multipart form parser. Below is the default (32 MB).
 	// match.CreateMatchMaxParseMemory = 32 << 20
 
+	if api.AccountCreateAccountHandler == nil {
+		api.AccountCreateAccountHandler = account.CreateAccountHandlerFunc(func(params account.CreateAccountParams) account.CreateAccountResponder {
+			return account.CreateAccountNotImplemented()
+		})
+	}
 	if api.MatchCreateMatchHandler == nil {
 		api.MatchCreateMatchHandler = match.CreateMatchHandlerFunc(func(params match.CreateMatchParams) match.CreateMatchResponder {
 			return match.CreateMatchNotImplemented()
@@ -70,14 +75,14 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 			return match.GetMatchNotImplemented()
 		})
 	}
+	if api.PlayerGetPlayerHandler == nil {
+		api.PlayerGetPlayerHandler = player.GetPlayerHandlerFunc(func(params player.GetPlayerParams) player.GetPlayerResponder {
+			return player.GetPlayerNotImplemented()
+		})
+	}
 	if api.PlayerGetPlayerStatsHandler == nil {
 		api.PlayerGetPlayerStatsHandler = player.GetPlayerStatsHandlerFunc(func(params player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
 			return player.GetPlayerStatsNotImplemented()
-		})
-	}
-	if api.TeamGetTeamListHandler == nil {
-		api.TeamGetTeamListHandler = team.GetTeamListHandlerFunc(func(params team.GetTeamListParams) team.GetTeamListResponder {
-			return team.GetTeamListNotImplemented()
 		})
 	}
 	if api.CompendiumGetWeaponClassesHandler == nil {
@@ -93,6 +98,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 	if api.CompendiumGetWeaponsHandler == nil {
 		api.CompendiumGetWeaponsHandler = compendium.GetWeaponsHandlerFunc(func(params compendium.GetWeaponsParams) compendium.GetWeaponsResponder {
 			return compendium.GetWeaponsNotImplemented()
+		})
+	}
+	if api.PlayerUpdatePlayerHandler == nil {
+		api.PlayerUpdatePlayerHandler = player.UpdatePlayerHandlerFunc(func(params player.UpdatePlayerParams) player.UpdatePlayerResponder {
+			return player.UpdatePlayerNotImplemented()
 		})
 	}
 
