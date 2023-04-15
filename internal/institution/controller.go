@@ -7,7 +7,7 @@ import (
 	"github.com/ysomad/uniplay/internal/pkg/paging"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
-	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
+	gen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 )
 
 type Controller struct {
@@ -20,7 +20,7 @@ func NewController(s *service) *Controller {
 	}
 }
 
-func (c *Controller) GetInstitutions(p institution.GetInstitutionsParams) institution.GetInstitutionsResponder {
+func (c *Controller) GetInstitutions(p gen.GetInstitutionsParams) gen.GetInstitutionsResponder {
 	list, err := c.institution.GetList(
 		p.HTTPRequest.Context(),
 		newGetListParams(
@@ -30,7 +30,7 @@ func (c *Controller) GetInstitutions(p institution.GetInstitutionsParams) instit
 		),
 	)
 	if err != nil {
-		return institution.NewGetInstitutionsInternalServerError().WithPayload(&models.Error{
+		return gen.NewGetInstitutionsInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		})
@@ -52,5 +52,5 @@ func (c *Controller) GetInstitutions(p institution.GetInstitutionsParams) instit
 		}
 	}
 
-	return institution.NewGetInstitutionsOK().WithPayload(&payload)
+	return gen.NewGetInstitutionsOK().WithPayload(&payload)
 }

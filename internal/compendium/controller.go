@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
-	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
+	gen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
 )
 
 type Controller struct {
@@ -17,10 +17,10 @@ func NewController(s *service) *Controller {
 	}
 }
 
-func (c *Controller) GetWeapons(p compendium.GetWeaponsParams) compendium.GetWeaponsResponder {
+func (c *Controller) GetWeapons(p gen.GetWeaponsParams) gen.GetWeaponsResponder {
 	weapons, err := c.compendium.GetWeaponList(p.HTTPRequest.Context())
 	if err != nil {
-		return compendium.NewGetWeaponsInternalServerError().
+		return gen.NewGetWeaponsInternalServerError().
 			WithPayload(&models.Error{
 				Code:    http.StatusInternalServerError,
 				Message: err.Error(),
@@ -38,13 +38,13 @@ func (c *Controller) GetWeapons(p compendium.GetWeaponsParams) compendium.GetWea
 		}
 	}
 
-	return compendium.NewGetWeaponsOK().WithPayload(payload)
+	return gen.NewGetWeaponsOK().WithPayload(payload)
 }
 
-func (c *Controller) GetWeaponClasses(p compendium.GetWeaponClassesParams) compendium.GetWeaponClassesResponder {
+func (c *Controller) GetWeaponClasses(p gen.GetWeaponClassesParams) gen.GetWeaponClassesResponder {
 	classes, err := c.compendium.GetWeaponClassList(p.HTTPRequest.Context())
 	if err != nil {
-		return compendium.NewGetWeaponClassesInternalServerError().
+		return gen.NewGetWeaponClassesInternalServerError().
 			WithPayload(&models.Error{
 				Code:    http.StatusInternalServerError,
 				Message: err.Error(),
@@ -60,13 +60,13 @@ func (c *Controller) GetWeaponClasses(p compendium.GetWeaponClassesParams) compe
 		}
 	}
 
-	return compendium.NewGetWeaponClassesOK().WithPayload(payload)
+	return gen.NewGetWeaponClassesOK().WithPayload(payload)
 }
 
-func (c *Controller) GetMaps(p compendium.GetMapsParams) compendium.GetMapsResponder {
+func (c *Controller) GetMaps(p gen.GetMapsParams) gen.GetMapsResponder {
 	maps, err := c.compendium.GetMapList(p.HTTPRequest.Context())
 	if err != nil {
-		return compendium.NewGetMapsInternalServerError().
+		return gen.NewGetMapsInternalServerError().
 			WithPayload(&models.Error{
 				Code:    http.StatusInternalServerError,
 				Message: err.Error(),
@@ -82,5 +82,5 @@ func (c *Controller) GetMaps(p compendium.GetMapsParams) compendium.GetMapsRespo
 		}
 	}
 
-	return compendium.NewGetMapsOK().WithPayload(payload)
+	return gen.NewGetMapsOK().WithPayload(payload)
 }

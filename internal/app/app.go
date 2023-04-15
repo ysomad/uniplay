@@ -8,12 +8,14 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"go.uber.org/zap"
 
+	"github.com/ysomad/uniplay/internal/account"
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
 	"github.com/ysomad/uniplay/internal/institution"
 	"github.com/ysomad/uniplay/internal/match"
 	"github.com/ysomad/uniplay/internal/player"
 
+	"github.com/ysomad/uniplay/internal/pkg/argon2"
 	"github.com/ysomad/uniplay/internal/pkg/logger"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
@@ -45,6 +47,8 @@ func Run(conf *config.Config) {
 		l.Fatal("prometheus.Register", zap.Error(err))
 	}
 
+	argon2ID := argon2.New()
+
 	// match
 	matchPostgres := match.NewPostgres(otel.AppTracer, pgClient)
 	matchService := match.NewService(otel.AppTracer, matchPostgres)
@@ -54,6 +58,11 @@ func Run(conf *config.Config) {
 	compendiumPostgres := compendium.NewPostgres(pgClient)
 	compendiumService := compendium.NewService(compendiumPostgres)
 	compendiumController := compendium.NewController(compendiumService)
+
+	// account
+	accountPostgres := account.NewPostgres(otel.AppTracer, pgClient)
+	accountService := account.NewService(accountPostgres, argon2ID)
+	accountController := account.NewController(accountService)
 
 	// player
 	playerPostgres := player.NewPostgres(otel.AppTracer, pgClient)
@@ -68,6 +77,7 @@ func Run(conf *config.Config) {
 	// go-swagger
 	api, err := newAPI(apiDeps{
 		compendium:  compendiumController,
+		account:     accountController,
 		player:      playerController,
 		match:       matchController,
 		institution: institutionController,

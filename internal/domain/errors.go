@@ -6,17 +6,23 @@ import "errors"
 `Match` - >= 800
 `Player` - >= 700
 `Team` - >= 900
-`WeaponStats` - >= 1000
+Account - >= 1000
 */
 
 const (
-	CodePlayerNotFound    = 700
-	CodeMatchAlreadyExist = 800
-	CodeMatchNotFound     = 801
+	CodePlayerNotFound = 700
+
+	CodeMatchNotFound     = 800
+	CodeMatchAlreadyExist = 801
+
+	CodeAccountEmailTaken = 1000
 )
 
 var (
+	ErrPlayerNotFound = errors.New("player not found")
+
 	ErrMatchAlreadyExist = errors.New("match already exist")
 	ErrMatchNotFound     = errors.New("match not found")
-	ErrPlayerNotFound    = errors.New("player not found")
+
+	ErrAccountEmailTaken = errors.New("account with given email already exist")
 )

@@ -35,12 +35,7 @@ func (p *postgres) GetWeaponList(ctx context.Context) ([]domain.Weapon, error) {
 		return nil, err
 	}
 
-	weapons, err := pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Weapon])
-	if err != nil {
-		return nil, err
-	}
-
-	return weapons, nil
+	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Weapon])
 }
 
 func (p *postgres) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass, error) {
@@ -57,12 +52,7 @@ func (p *postgres) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass
 		return nil, err
 	}
 
-	classes, err := pgx.CollectRows(rows, pgx.RowToStructByPos[domain.WeaponClass])
-	if err != nil {
-		return nil, err
-	}
-
-	return classes, nil
+	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.WeaponClass])
 }
 
 func (p *postgres) GetMapList(ctx context.Context) ([]domain.Map, error) {
@@ -79,10 +69,5 @@ func (p *postgres) GetMapList(ctx context.Context) ([]domain.Map, error) {
 		return nil, err
 	}
 
-	maps, err := pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Map])
-	if err != nil {
-		return nil, err
-	}
-
-	return maps, nil
+	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Map])
 }

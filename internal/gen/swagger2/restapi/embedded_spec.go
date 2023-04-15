@@ -30,6 +30,57 @@ func init() {
   "host": "localhost:8080",
   "basePath": "/v1",
   "paths": {
+    "/accounts": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Регистрация аккаунта",
+        "operationId": "createAccount",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AccountCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/compendiums/maps": {
       "get": {
         "produces": [
@@ -377,6 +428,7 @@ func init() {
           {
             "name": "payload",
             "in": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/UpdatePlayerRequest"
             }
@@ -540,6 +592,48 @@ func init() {
     }
   },
   "definitions": {
+    "Account": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "datetime",
+          "x-nullable": false
+        },
+        "email": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "is_verified": {
+          "type": "boolean",
+          "x-nullable": false
+        }
+      }
+    },
+    "AccountCreateRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-nullable": false
+        },
+        "password": {
+          "type": "string",
+          "maxLength": 256,
+          "minLength": 8,
+          "x-nullable": false
+        }
+      }
+    },
     "CreateMatchResponse": {
       "type": "object",
       "required": [
@@ -1211,6 +1305,10 @@ func init() {
     }
   },
   "tags": [
+    {
+      "description": "Аккаунт",
+      "name": "account"
+    },
     {
       "description": "Профиль игрока",
       "name": "player"
@@ -1242,6 +1340,57 @@ func init() {
   "host": "localhost:8080",
   "basePath": "/v1",
   "paths": {
+    "/accounts": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "account"
+        ],
+        "summary": "Регистрация аккаунта",
+        "operationId": "createAccount",
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AccountCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/compendiums/maps": {
       "get": {
         "produces": [
@@ -1589,6 +1738,7 @@ func init() {
           {
             "name": "payload",
             "in": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/UpdatePlayerRequest"
             }
@@ -1752,6 +1902,48 @@ func init() {
     }
   },
   "definitions": {
+    "Account": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "datetime",
+          "x-nullable": false
+        },
+        "email": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "is_verified": {
+          "type": "boolean",
+          "x-nullable": false
+        }
+      }
+    },
+    "AccountCreateRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-nullable": false
+        },
+        "password": {
+          "type": "string",
+          "maxLength": 256,
+          "minLength": 8,
+          "x-nullable": false
+        }
+      }
+    },
     "CreateMatchResponse": {
       "type": "object",
       "required": [
@@ -2423,6 +2615,10 @@ func init() {
     }
   },
   "tags": [
+    {
+      "description": "Аккаунт",
+      "name": "account"
+    },
     {
       "description": "Профиль игрока",
       "name": "player"

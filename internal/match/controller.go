@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
-	matchGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
+	gen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 
 	"github.com/ysomad/uniplay/internal/domain"
 )
@@ -27,10 +27,10 @@ func NewController(s *service) *Controller {
 
 const msgReplayFileNotFound = "replay file not found in request"
 
-func (c *Controller) CreateMatch(p matchGen.CreateMatchParams) matchGen.CreateMatchResponder {
+func (c *Controller) CreateMatch(p gen.CreateMatchParams) gen.CreateMatchResponder {
 	formFile, ok := p.Replay.(*runtime.File)
 	if !ok {
-		return matchGen.NewCreateMatchInternalServerError().WithPayload(&models.Error{
+		return gen.NewCreateMatchInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: msgReplayFileNotFound,
 		})
@@ -38,7 +38,7 @@ func (c *Controller) CreateMatch(p matchGen.CreateMatchParams) matchGen.CreateMa
 
 	r, err := newReplay(formFile.Data, formFile.Header)
 	if err != nil {
-		return matchGen.NewCreateMatchBadRequest().WithPayload(&models.Error{
+		return gen.NewCreateMatchBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
 			Message: err.Error(),
 		})
@@ -48,27 +48,27 @@ func (c *Controller) CreateMatch(p matchGen.CreateMatchParams) matchGen.CreateMa
 	matchID, err := c.match.CreateFromReplay(p.HTTPRequest.Context(), r)
 	if err != nil {
 		if errors.Is(err, domain.ErrMatchAlreadyExist) {
-			return matchGen.NewCreateMatchConflict().WithPayload(&models.Error{
+			return gen.NewCreateMatchConflict().WithPayload(&models.Error{
 				Code:    domain.CodeMatchAlreadyExist,
 				Message: err.Error(),
 			})
 		}
 
-		return matchGen.NewCreateMatchInternalServerError().WithPayload(&models.Error{
+		return gen.NewCreateMatchInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		})
 	}
 
-	return matchGen.NewCreateMatchOK().WithPayload(&models.CreateMatchResponse{
+	return gen.NewCreateMatchOK().WithPayload(&models.CreateMatchResponse{
 		MatchID: strfmt.UUID(matchID.String()),
 	})
 }
 
-func (c *Controller) DeleteMatch(p matchGen.DeleteMatchParams) matchGen.DeleteMatchResponder {
+func (c *Controller) DeleteMatch(p gen.DeleteMatchParams) gen.DeleteMatchResponder {
 	matchID, err := uuid.Parse(p.MatchID.String())
 	if err != nil {
-		return matchGen.NewDeleteMatchInternalServerError().WithPayload(&models.Error{
+		return gen.NewDeleteMatchInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		})
@@ -76,25 +76,25 @@ func (c *Controller) DeleteMatch(p matchGen.DeleteMatchParams) matchGen.DeleteMa
 
 	if err := c.match.DeleteByID(p.HTTPRequest.Context(), matchID); err != nil {
 		if errors.Is(err, domain.ErrMatchNotFound) {
-			return matchGen.NewDeleteMatchNotFound().WithPayload(&models.Error{
+			return gen.NewDeleteMatchNotFound().WithPayload(&models.Error{
 				Code:    domain.CodeMatchNotFound,
 				Message: err.Error(),
 			})
 		}
 
-		return matchGen.NewDeleteMatchInternalServerError().WithPayload(&models.Error{
+		return gen.NewDeleteMatchInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		})
 	}
 
-	return matchGen.NewDeleteMatchNoContent()
+	return gen.NewDeleteMatchNoContent()
 }
 
-func (c *Controller) GetMatch(p matchGen.GetMatchParams) matchGen.GetMatchResponder {
+func (c *Controller) GetMatch(p gen.GetMatchParams) gen.GetMatchResponder {
 	matchID, err := uuid.Parse(p.MatchID.String())
 	if err != nil {
-		return matchGen.NewGetMatchInternalServerError().WithPayload(&models.Error{
+		return gen.NewGetMatchInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		})
@@ -103,13 +103,13 @@ func (c *Controller) GetMatch(p matchGen.GetMatchParams) matchGen.GetMatchRespon
 	match, err := c.match.GetByID(p.HTTPRequest.Context(), matchID)
 	if err != nil {
 		if errors.Is(err, domain.ErrMatchNotFound) {
-			return matchGen.NewGetMatchNotFound().WithPayload(&models.Error{
+			return gen.NewGetMatchNotFound().WithPayload(&models.Error{
 				Code:    domain.CodeMatchNotFound,
 				Message: err.Error(),
 			})
 		}
 
-		return matchGen.NewGetMatchInternalServerError().WithPayload(&models.Error{
+		return gen.NewGetMatchInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		})
@@ -168,5 +168,5 @@ func (c *Controller) GetMatch(p matchGen.GetMatchParams) matchGen.GetMatchRespon
 		}
 	}
 
-	return matchGen.NewGetMatchOK().WithPayload(&payload)
+	return gen.NewGetMatchOK().WithPayload(&payload)
 }

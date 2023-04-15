@@ -1,6 +1,14 @@
 BEGIN
 ;
 
+CREATE TABLE IF NOT EXISTS account (
+    id uuid PRIMARY KEY NOT NULL,
+    email varchar(255) UNIQUE NOT NULL,
+    password varchar(4096) NOT NULL,
+    is_verified boolean DEFAULT false,
+    created_at timestamptz NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS map (    
     name varchar(16) PRIMARY KEY NOT NULL,
     icon_url varchar(255) NOT NULL

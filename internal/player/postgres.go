@@ -8,6 +8,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgtype/zeronull"
 	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
@@ -29,36 +30,11 @@ func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
 
 type dbPlayer struct {
 	SteamID     domain.SteamID `db:"steam_id"`
-	TeamID      *int32         `db:"team_id"`
+	TeamID      zeronull.Int4  `db:"team_id"`
 	DisplayName string         `db:"display_name"`
-	FirstName   *string        `db:"first_name"`
-	LastName    *string        `db:"last_name"`
-	AvatarURL   *string        `db:"avatar_url"`
-}
-
-func (dbp dbPlayer) toDomain() domain.Player {
-	p := domain.Player{
-		SteamID:     dbp.SteamID,
-		DisplayName: dbp.DisplayName,
-	}
-
-	if dbp.TeamID != nil {
-		p.TeamID = *dbp.TeamID
-	}
-
-	if dbp.FirstName != nil {
-		p.FirstName = *dbp.FirstName
-	}
-
-	if dbp.LastName != nil {
-		p.LastName = *dbp.LastName
-	}
-
-	if dbp.AvatarURL != nil {
-		p.AvatarURL = *dbp.AvatarURL
-	}
-
-	return p
+	FirstName   zeronull.Text  `db:"first_name"`
+	LastName    zeronull.Text  `db:"last_name"`
+	AvatarURL   zeronull.Text  `db:"avatar_url"`
 }
 
 func (p *postgres) FindBySteamID(ctx context.Context, steamID domain.SteamID) (domain.Player, error) {
@@ -85,7 +61,14 @@ func (p *postgres) FindBySteamID(ctx context.Context, steamID domain.SteamID) (d
 		return domain.Player{}, err
 	}
 
-	return player.toDomain(), nil
+	return domain.Player{
+		SteamID:     player.SteamID,
+		TeamID:      int32(player.TeamID),
+		DisplayName: player.DisplayName,
+		FirstName:   string(player.FirstName),
+		LastName:    string(player.LastName),
+		AvatarURL:   string(player.AvatarURL),
+	}, nil
 }
 
 func (pg *postgres) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, p updateParams) (domain.Player, error) {
@@ -118,7 +101,14 @@ func (pg *postgres) UpdateBySteamID(ctx context.Context, steamID domain.SteamID,
 		return domain.Player{}, err
 	}
 
-	return player.toDomain(), nil
+	return domain.Player{
+		SteamID:     player.SteamID,
+		TeamID:      int32(player.TeamID),
+		DisplayName: player.DisplayName,
+		FirstName:   string(player.FirstName),
+		LastName:    string(player.LastName),
+		AvatarURL:   string(player.AvatarURL),
+	}, nil
 }
 
 type playerBaseStats struct {

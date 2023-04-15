@@ -19,6 +19,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/account"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/compendium"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
@@ -48,6 +49,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
+		AccountCreateAccountHandler: account.CreateAccountHandlerFunc(func(params account.CreateAccountParams) account.CreateAccountResponder {
+			return account.CreateAccountNotImplemented()
+		}),
 		MatchCreateMatchHandler: match.CreateMatchHandlerFunc(func(params match.CreateMatchParams) match.CreateMatchResponder {
 			return match.CreateMatchNotImplemented()
 		}),
@@ -120,6 +124,8 @@ type UniplayAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
+	// AccountCreateAccountHandler sets the operation handler for the create account operation
+	AccountCreateAccountHandler account.CreateAccountHandler
 	// MatchCreateMatchHandler sets the operation handler for the create match operation
 	MatchCreateMatchHandler match.CreateMatchHandler
 	// MatchDeleteMatchHandler sets the operation handler for the delete match operation
@@ -222,6 +228,9 @@ func (o *UniplayAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.AccountCreateAccountHandler == nil {
+		unregistered = append(unregistered, "account.CreateAccountHandler")
+	}
 	if o.MatchCreateMatchHandler == nil {
 		unregistered = append(unregistered, "match.CreateMatchHandler")
 	}
@@ -345,6 +354,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/accounts"] = account.NewCreateAccount(o.context, o.AccountCreateAccountHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
