@@ -26,9 +26,9 @@ const (
 func Do(op operation, dir, connString string) {
 	m, err := connect(dir, connString)
 	if err != nil {
-		m.Close()
 		log.Fatalf("migrate: postgres connect error: %s", err.Error())
 	}
+	defer m.Close()
 
 	switch op {
 	case Up:
@@ -38,16 +38,12 @@ func Do(op operation, dir, connString string) {
 	}
 
 	if err != nil && !errors.Is(err, migrate.ErrNoChange) {
-		m.Close()
 		log.Fatalf("migrate: %s error: %s", op, err.Error())
 	}
 
 	if errors.Is(err, migrate.ErrNoChange) {
-		m.Close()
 		log.Printf("migrate: %s no change", op)
 	}
-
-	m.Close()
 }
 
 func connect(dir, connString string) (*migrate.Migrate, error) {
