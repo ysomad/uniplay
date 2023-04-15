@@ -71,14 +71,14 @@ func (p *postgres) FindBySteamID(ctx context.Context, steamID domain.SteamID) (d
 	}, nil
 }
 
-func (pg *postgres) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, p updateParams) (domain.Player, error) {
-	sql, args, err := pg.client.Builder.
+func (p *postgres) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, up updateParams) (domain.Player, error) {
+	sql, args, err := p.client.Builder.
 		Update("player").
 		SetMap(map[string]any{
-			"team_id":    p.teamID,
-			"first_name": p.firstName,
-			"last_name":  p.lastName,
-			"avatar_url": p.avatarURL,
+			"team_id":    up.teamID,
+			"first_name": up.firstName,
+			"last_name":  up.lastName,
+			"avatar_url": up.avatarURL,
 		}).
 		Where(sq.Eq{"steam_id": steamID}).
 		Suffix("RETURNING steam_id, team_id, display_name, first_name, last_name, avatar_url").
@@ -87,7 +87,7 @@ func (pg *postgres) UpdateBySteamID(ctx context.Context, steamID domain.SteamID,
 		return domain.Player{}, err
 	}
 
-	rows, err := pg.client.Pool.Query(ctx, sql, args...)
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return domain.Player{}, err
 	}

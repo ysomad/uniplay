@@ -24,7 +24,7 @@ func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
 	}
 }
 
-func (p *postgres) Save(ctx context.Context, a domain.Account) error {
+func (p *postgres) Save(ctx context.Context, a *domain.Account) error {
 	sql, args, err := p.client.Builder.
 		Insert("account").
 		Columns("id, email, password, is_verified, created_at").

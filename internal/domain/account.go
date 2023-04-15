@@ -14,10 +14,12 @@ type Account struct {
 	CreatedAt time.Time
 }
 
-func NewAccount(email, hashedPassword string) (a Account, err error) {
+func NewAccount(email, hashedPassword string) (a *Account, err error) {
+	a = &Account{}
+
 	a.ID, err = uuid.NewRandom()
 	if err != nil {
-		return Account{}, err
+		return nil, err
 	}
 
 	a.Email = email

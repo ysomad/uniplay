@@ -27,11 +27,13 @@ func NewIntSeek[T constraints.Signed](lastID *T, psize *int32) IntSeek[T] {
 
 	if psize == nil || *psize < minPageSize {
 		s.PageSize = defaultPageSize
+
 		return s
 	}
 
 	if *psize > maxPageSize {
 		s.PageSize = maxPageSize
+
 		return s
 	}
 

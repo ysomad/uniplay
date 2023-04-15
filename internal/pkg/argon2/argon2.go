@@ -34,6 +34,7 @@ func New() *argon2ID {
 
 func (a *argon2ID) Hash(plain string) (string, error) {
 	salt := make([]byte, a.saltLen)
+
 	_, err := rand.Read(salt)
 	if err != nil {
 		return "", err

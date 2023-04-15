@@ -20,7 +20,7 @@ import (
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-func Run(conf *config.Config) {
+func Run(conf *config.Config) { //nolint:funlen // main func
 	l, err := logger.New(conf.Log.Level)
 	if err != nil {
 		log.Fatalf("logger.New: %s", err.Error())
