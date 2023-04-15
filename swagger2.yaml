@@ -10,8 +10,6 @@ tags:
   description: Профиль игрока
 - name: match
   description: Матч
-- name: team
-  description: Команда
 - name: institution
   description: Учебное заведение
 - name: compendium
@@ -20,6 +18,72 @@ schemes:
 - http
 - https
 paths:
+  /players/{steam_id}:
+    get:
+      tags:
+      - player
+      summary: Получение профиля игрока
+      operationId: getPlayer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: steam_id
+        in: path
+        description: Steam ID игрока
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Player'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+      - player
+      summary: Редактирование профиля игрока
+      operationId: updatePlayer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: steam_id
+        in: path
+        description: Steam ID игрока
+        required: true
+        type: string
+      - in: body
+        name: payload
+        required: false
+        schema:
+          $ref: '#/definitions/UpdatePlayerRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Player'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
   /players/{steam_id}/stats:
     get:
       tags:
@@ -81,7 +145,6 @@ paths:
         required: false
         type: string
         format: uuid
-        x-nullable: false
       - name: weapon_id
         in: query
         description: Фильтр по оружию
@@ -199,26 +262,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/Error'
-  /teams:
-    get:
-      tags:
-      - team
-      summary: Получение списка команд
-      operationId: getTeamList
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters: []
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/WeaponList'
         "500":
           description: Internal Server Error
           schema:
@@ -354,6 +397,54 @@ definitions:
         type: string
         format: uuid
         x-isnullable: false
+  Player:
+    type: object
+    properties:
+      steam_id:
+        type: string
+        x-nullable: false
+      team_id:
+        type: integer
+        format: int32
+        x-nullable: false
+      display_name:
+        type: string
+        x-nullable: false
+      avatar_url:
+        type: string
+        x-nullable: false
+      first_name:
+        type: string
+        x-nullable: false
+      last_name:
+        type: string
+        x-nullable: false
+  UpdatePlayerRequest:
+    type: object
+    required:
+    - avatar_url
+    - first_name
+    - last_name
+    - team_id
+    properties:
+      team_id:
+        type: integer
+        format: int32
+        x-nullable: false
+      avatar_url:
+        type: string
+        format: uri
+        x-nullable: false
+      first_name:
+        type: string
+        minLength: 2
+        maxLength: 32
+        x-nullable: false
+      last_name:
+        type: string
+        minLength: 2
+        maxLength: 32
+        x-nullable: false
   PlayerStats:
     type: object
     required:

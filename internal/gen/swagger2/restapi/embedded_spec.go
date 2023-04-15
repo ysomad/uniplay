@@ -311,6 +311,105 @@ func init() {
         }
       }
     },
+    "/players/{steam_id}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение профиля игрока",
+        "operationId": "getPlayer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Редактирование профиля игрока",
+        "operationId": "updatePlayer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdatePlayerRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -392,7 +491,6 @@ func init() {
           {
             "type": "string",
             "format": "uuid",
-            "x-nullable": false,
             "description": "Фильтр по матчу",
             "name": "match_id",
             "in": "query"
@@ -429,35 +527,6 @@ func init() {
             "description": "Not Found",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/teams": {
-      "get": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "team"
-        ],
-        "summary": "Получение списка команд",
-        "operationId": "getTeamList",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/WeaponList"
             }
           },
           "500": {
@@ -691,6 +760,36 @@ func init() {
         }
       },
       "x-nullable": false
+    },
+    "Player": {
+      "type": "object",
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "display_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "steam_id": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
     },
     "PlayerStats": {
       "type": "object",
@@ -1014,6 +1113,39 @@ func init() {
         }
       }
     },
+    "UpdatePlayerRequest": {
+      "type": "object",
+      "required": [
+        "avatar_url",
+        "first_name",
+        "last_name",
+        "team_id"
+      ],
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "format": "uri",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 2,
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 2,
+          "x-nullable": false
+        },
+        "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
+    },
     "WeaponClassList": {
       "type": "array",
       "items": {
@@ -1086,10 +1218,6 @@ func init() {
     {
       "description": "Матч",
       "name": "match"
-    },
-    {
-      "description": "Команда",
-      "name": "team"
     },
     {
       "description": "Учебное заведение",
@@ -1395,6 +1523,105 @@ func init() {
         }
       }
     },
+    "/players/{steam_id}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение профиля игрока",
+        "operationId": "getPlayer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Редактирование профиля игрока",
+        "operationId": "updatePlayer",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdatePlayerRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -1476,7 +1703,6 @@ func init() {
           {
             "type": "string",
             "format": "uuid",
-            "x-nullable": false,
             "description": "Фильтр по матчу",
             "name": "match_id",
             "in": "query"
@@ -1513,35 +1739,6 @@ func init() {
             "description": "Not Found",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/teams": {
-      "get": {
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "team"
-        ],
-        "summary": "Получение списка команд",
-        "operationId": "getTeamList",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/WeaponList"
             }
           },
           "500": {
@@ -1775,6 +1972,36 @@ func init() {
         }
       },
       "x-nullable": false
+    },
+    "Player": {
+      "type": "object",
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "display_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "steam_id": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
     },
     "PlayerStats": {
       "type": "object",
@@ -2098,6 +2325,39 @@ func init() {
         }
       }
     },
+    "UpdatePlayerRequest": {
+      "type": "object",
+      "required": [
+        "avatar_url",
+        "first_name",
+        "last_name",
+        "team_id"
+      ],
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "format": "uri",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 2,
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 2,
+          "x-nullable": false
+        },
+        "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
+    },
     "WeaponClassList": {
       "type": "array",
       "items": {
@@ -2170,10 +2430,6 @@ func init() {
     {
       "description": "Матч",
       "name": "match"
-    },
-    {
-      "description": "Команда",
-      "name": "team"
     },
     {
       "description": "Учебное заведение",

@@ -23,23 +23,26 @@ VALUES
     ('de_vertigo', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_vertigo.png'),
     ('de_cbble', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_cbble.png');
 
-CREATE TABLE IF NOT EXISTS player (
-    id uuid PRIMARY KEY NOT NULL,
-    steam_id numeric UNIQUE NOT NULL,
-    display_name varchar(64) NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS team (
     id smallserial PRIMARY KEY NOT NULL,
     clan_name varchar(64) UNIQUE NOT NULL,
-    flag_code varchar(2) NOT NULL,
-    captain_steam_id numeric REFERENCES player (steam_id)
+    flag_code varchar(2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS player (
+    steam_id numeric PRIMARY KEY NOT NULL,
+    team_id smallint REFERENCES team (id),
+    display_name varchar(64) NOT NULL,
+    avatar_url varchar(2048),
+    first_name varchar(32),
+    last_name varchar(32)
 );
 
 CREATE TABLE IF NOT EXISTS team_player (
     team_id smallint NOT NULL REFERENCES team (id),
     player_steam_id numeric NOT NULL REFERENCES player (steam_id),
     is_active boolean NOT NULL DEFAULT false,
+    is_captain boolean NOT NULL DEFAULT false,
     PRIMARY KEY (team_id, player_steam_id)
 );
 

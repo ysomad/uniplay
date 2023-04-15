@@ -10,7 +10,7 @@ import (
 	"github.com/ysomad/uniplay/internal/domain"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
-	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
+	playerGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
 )
 
 type Controller struct {
@@ -23,12 +23,85 @@ func NewController(s *service) *Controller {
 	}
 }
 
-func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
+func (c *Controller) GetPlayer(p playerGen.GetPlayerParams) playerGen.GetPlayerResponder {
+	steamID, err := domain.NewSteamID(p.SteamID)
+	if err != nil {
+		return playerGen.NewGetPlayerInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	pl, err := c.player.GetBySteamID(p.HTTPRequest.Context(), steamID)
+	if err != nil {
+		if errors.Is(err, domain.ErrPlayerNotFound) {
+			return playerGen.NewGetPlayerNotFound().WithPayload(&models.Error{
+				Code:    domain.CodePlayerNotFound,
+				Message: err.Error(),
+			})
+		}
+
+		return playerGen.NewGetPlayerInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	return playerGen.NewGetPlayerOK().WithPayload(&models.Player{
+		SteamID:     pl.SteamID.String(),
+		TeamID:      pl.TeamID,
+		DisplayName: pl.DisplayName,
+		FirstName:   pl.FirstName,
+		LastName:    pl.LastName,
+		AvatarURL:   pl.AvatarURL,
+	})
+}
+
+func (c *Controller) UpdatePlayer(p playerGen.UpdatePlayerParams) playerGen.UpdatePlayerResponder {
+	steamID, err := domain.NewSteamID(p.SteamID)
+	if err != nil {
+		return playerGen.NewUpdatePlayerInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	pl, err := c.player.UpdateBySteamID(p.HTTPRequest.Context(), steamID, updateParams{
+		teamID:    p.Payload.TeamID,
+		firstName: p.Payload.FirstName,
+		lastName:  p.Payload.LastName,
+		avatarURL: p.Payload.AvatarURL.String(),
+	})
+	if err != nil {
+		if errors.Is(err, domain.ErrPlayerNotFound) {
+			return playerGen.NewUpdatePlayerNotFound().WithPayload(&models.Error{
+				Code:    domain.CodePlayerNotFound,
+				Message: err.Error(),
+			})
+		}
+
+		return playerGen.NewUpdatePlayerInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	return playerGen.NewUpdatePlayerOK().WithPayload(&models.Player{
+		SteamID:     pl.SteamID.String(),
+		DisplayName: pl.DisplayName,
+		FirstName:   pl.FirstName,
+		LastName:    pl.LastName,
+		TeamID:      pl.TeamID,
+		AvatarURL:   pl.AvatarURL,
+	})
+}
+
+func (c *Controller) GetPlayerStats(p playerGen.GetPlayerStatsParams) playerGen.GetPlayerStatsResponder {
 	var err error
 
 	steamID, err := strconv.ParseUint(p.SteamID, 10, 64)
 	if err != nil {
-		return player.NewGetPlayerStatsBadRequest().WithPayload(&models.Error{
+		return playerGen.NewGetPlayerStatsBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
 			Message: err.Error(),
 		})
@@ -39,7 +112,7 @@ func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPla
 	if p.MatchID != nil {
 		filter.MatchID, err = uuid.Parse(p.MatchID.String())
 		if err != nil {
-			return player.NewGetPlayerStatsBadRequest().WithPayload(&models.Error{
+			return playerGen.NewGetPlayerStatsBadRequest().WithPayload(&models.Error{
 				Code:    http.StatusBadRequest,
 				Message: err.Error(),
 			})
@@ -49,13 +122,13 @@ func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPla
 	s, err := c.player.GetStats(p.HTTPRequest.Context(), steamID, filter)
 	if err != nil {
 		if errors.Is(err, domain.ErrPlayerNotFound) {
-			return player.NewGetPlayerStatsNotFound().WithPayload(&models.Error{
+			return playerGen.NewGetPlayerStatsNotFound().WithPayload(&models.Error{
 				Code:    domain.CodePlayerNotFound,
 				Message: err.Error(),
 			})
 		}
 
-		return player.NewGetPlayerStatsInternalServerError().WithPayload(&models.Error{
+		return playerGen.NewGetPlayerStatsInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		})
@@ -104,15 +177,15 @@ func (c *Controller) GetPlayerStats(p player.GetPlayerStatsParams) player.GetPla
 		},
 	}
 
-	return player.NewGetPlayerStatsOK().WithPayload(payload)
+	return playerGen.NewGetPlayerStatsOK().WithPayload(payload)
 }
 
-func (c *Controller) GetWeaponStats(p player.GetWeaponStatsParams) player.GetWeaponStatsResponder {
+func (c *Controller) GetWeaponStats(p playerGen.GetWeaponStatsParams) playerGen.GetWeaponStatsResponder {
 	var err error
 
 	steamID, err := strconv.ParseUint(p.SteamID, 10, 64)
 	if err != nil {
-		return player.NewGetWeaponStatsBadRequest().WithPayload(&models.Error{
+		return playerGen.NewGetWeaponStatsBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
 			Message: err.Error(),
 		})
@@ -123,7 +196,7 @@ func (c *Controller) GetWeaponStats(p player.GetWeaponStatsParams) player.GetWea
 	if p.MatchID != nil {
 		filter.MatchID, err = uuid.Parse(p.MatchID.String())
 		if err != nil {
-			return player.NewGetWeaponStatsBadRequest().WithPayload(&models.Error{
+			return playerGen.NewGetWeaponStatsBadRequest().WithPayload(&models.Error{
 				Code:    http.StatusBadRequest,
 				Message: err.Error(),
 			})
@@ -133,13 +206,13 @@ func (c *Controller) GetWeaponStats(p player.GetWeaponStatsParams) player.GetWea
 	weaponStats, err := c.player.GetWeaponStats(p.HTTPRequest.Context(), steamID, filter)
 	if err != nil {
 		if errors.Is(err, domain.ErrPlayerNotFound) {
-			return player.NewGetWeaponStatsNotFound().WithPayload(&models.Error{
+			return playerGen.NewGetWeaponStatsNotFound().WithPayload(&models.Error{
 				Code:    domain.CodePlayerNotFound,
 				Message: err.Error(),
 			})
 		}
 
-		return player.NewGetWeaponStatsInternalServerError().WithPayload(&models.Error{
+		return playerGen.NewGetWeaponStatsInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		})
@@ -184,5 +257,5 @@ func (c *Controller) GetWeaponStats(p player.GetWeaponStatsParams) player.GetWea
 		}
 	}
 
-	return player.NewGetWeaponStatsOK().WithPayload(payload)
+	return playerGen.NewGetWeaponStatsOK().WithPayload(payload)
 }

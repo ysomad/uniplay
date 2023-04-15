@@ -55,9 +55,6 @@ func (pg *postgres) GetList(ctx context.Context, p getListParams) (paging.InfLis
 		return paging.InfList[domain.Institution]{}, err
 	}
 
-	fmt.Println(sql)
-	fmt.Println(args)
-
 	rows, err := pg.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
 		return paging.InfList[domain.Institution]{}, err

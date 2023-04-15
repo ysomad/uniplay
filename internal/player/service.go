@@ -9,6 +9,8 @@ import (
 )
 
 type repository interface {
+	FindBySteamID(context.Context, domain.SteamID) (domain.Player, error)
+	UpdateBySteamID(context.Context, domain.SteamID, updateParams) (domain.Player, error)
 	GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error)
 	GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error)
 }
@@ -23,6 +25,14 @@ func NewService(t trace.Tracer, r repository) *service {
 		tracer: t,
 		player: r,
 	}
+}
+
+func (s *service) GetBySteamID(ctx context.Context, steamID domain.SteamID) (domain.Player, error) {
+	return s.player.FindBySteamID(ctx, steamID)
+}
+
+func (s *service) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, p updateParams) (domain.Player, error) {
+	return s.player.UpdateBySteamID(ctx, steamID, p)
 }
 
 func (s *service) GetStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (domain.PlayerStats, error) {

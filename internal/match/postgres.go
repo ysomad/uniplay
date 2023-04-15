@@ -84,12 +84,7 @@ func (p *postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 		return nil, err
 	}
 
-	res, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByPos[matchScoreBoardRow])
-	if err != nil {
-		return nil, err
-	}
-
-	return res, nil
+	return pgx.CollectRows(rows, pgx.RowToAddrOfStructByPos[matchScoreBoardRow])
 }
 
 func (p *postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error { //nolint:gocognit // yes its T H I C C
@@ -166,10 +161,10 @@ func (p *postgres) saveTeamsMatch(ctx context.Context, tx pgx.Tx, m *replayMatch
 func (p *postgres) savePlayers(ctx context.Context, tx pgx.Tx, players []replayPlayer) error {
 	b := p.client.Builder.
 		Insert("player").
-		Columns("id, steam_id, display_name")
+		Columns("steam_id, display_name")
 
 	for _, p := range players {
-		b = b.Values(p.id, p.steamID, p.displayName)
+		b = b.Values(p.steamID, p.displayName)
 	}
 
 	sql, args, err := b.Suffix("ON CONFLICT(steam_id) DO NOTHING").ToSql()

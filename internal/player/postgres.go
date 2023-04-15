@@ -27,6 +27,100 @@ func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
 	}
 }
 
+type dbPlayer struct {
+	SteamID     domain.SteamID `db:"steam_id"`
+	TeamID      *int32         `db:"team_id"`
+	DisplayName string         `db:"display_name"`
+	FirstName   *string        `db:"first_name"`
+	LastName    *string        `db:"last_name"`
+	AvatarURL   *string        `db:"avatar_url"`
+}
+
+func (dbp dbPlayer) toDomain() domain.Player {
+	p := domain.Player{
+		SteamID:     dbp.SteamID,
+		DisplayName: dbp.DisplayName,
+	}
+
+	if dbp.TeamID != nil {
+		p.TeamID = *dbp.TeamID
+	}
+
+	if dbp.FirstName != nil {
+		p.FirstName = *dbp.FirstName
+	}
+
+	if dbp.LastName != nil {
+		p.LastName = *dbp.LastName
+	}
+
+	if dbp.AvatarURL != nil {
+		p.AvatarURL = *dbp.AvatarURL
+	}
+
+	return p
+}
+
+func (p *postgres) FindBySteamID(ctx context.Context, steamID domain.SteamID) (domain.Player, error) {
+	sql, args, err := p.client.Builder.
+		Select("steam_id, team_id, display_name, first_name, last_name, avatar_url").
+		From("player").
+		Where(sq.Eq{"steam_id": steamID}).
+		ToSql()
+	if err != nil {
+		return domain.Player{}, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return domain.Player{}, err
+	}
+
+	player, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[dbPlayer])
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return domain.Player{}, domain.ErrPlayerNotFound
+		}
+
+		return domain.Player{}, err
+	}
+
+	return player.toDomain(), nil
+}
+
+func (pg *postgres) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, p updateParams) (domain.Player, error) {
+	sql, args, err := pg.client.Builder.
+		Update("player").
+		SetMap(map[string]any{
+			"team_id":    p.teamID,
+			"first_name": p.firstName,
+			"last_name":  p.lastName,
+			"avatar_url": p.avatarURL,
+		}).
+		Where(sq.Eq{"steam_id": steamID}).
+		Suffix("RETURNING steam_id, team_id, display_name, first_name, last_name, avatar_url").
+		ToSql()
+	if err != nil {
+		return domain.Player{}, err
+	}
+
+	rows, err := pg.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return domain.Player{}, err
+	}
+
+	player, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[dbPlayer])
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return domain.Player{}, domain.ErrPlayerNotFound
+		}
+
+		return domain.Player{}, err
+	}
+
+	return player.toDomain(), nil
+}
+
 type playerBaseStats struct {
 	Kills              int32         `db:"total_kills"`
 	HeadshotKills      int32         `db:"total_hs_kills"`

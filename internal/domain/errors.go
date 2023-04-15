@@ -3,17 +3,16 @@ package domain
 import "errors"
 
 /*
-`Match` - >= 600
-`Metric` - >= 700
-`Player` - >= 800
+`Match` - >= 800
+`Player` - >= 700
 `Team` - >= 900
 `WeaponStats` - >= 1000
 */
 
 const (
-	CodeMatchAlreadyExist = 600
-	CodeMatchNotFound     = 601
-	CodePlayerNotFound    = 800
+	CodePlayerNotFound    = 700
+	CodeMatchAlreadyExist = 800
+	CodeMatchNotFound     = 801
 )
 
 var (
