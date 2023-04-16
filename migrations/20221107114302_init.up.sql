@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS team (
 CREATE TABLE IF NOT EXISTS player (
     steam_id numeric PRIMARY KEY NOT NULL,
     team_id smallint REFERENCES team (id),
-    display_name varchar(64) NOT NULL,
+    display_name varchar(64),
     avatar_url varchar(2048),
     first_name varchar(32),
     last_name varchar(32)

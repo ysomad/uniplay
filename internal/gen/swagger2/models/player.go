@@ -8,8 +8,10 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // Player player
@@ -30,7 +32,8 @@ type Player struct {
 	LastName string `json:"last_name,omitempty"`
 
 	// steam id
-	SteamID string `json:"steam_id,omitempty"`
+	// Required: true
+	SteamID string `json:"steam_id"`
 
 	// team id
 	TeamID int32 `json:"team_id,omitempty"`
@@ -38,6 +41,24 @@ type Player struct {
 
 // Validate validates this player
 func (m *Player) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateSteamID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *Player) validateSteamID(formats strfmt.Registry) error {
+
+	if err := validate.RequiredString("steam_id", "body", m.SteamID); err != nil {
+		return err
+	}
+
 	return nil
 }
 

@@ -434,6 +434,11 @@ definitions:
         x-isnullable: false
   Account:
     type: object
+    required:
+    - created_at
+    - email
+    - id
+    - is_verified
     properties:
       id:
         type: string
@@ -465,6 +470,8 @@ definitions:
         x-nullable: false
   Player:
     type: object
+    required:
+    - steam_id
     properties:
       steam_id:
         type: string

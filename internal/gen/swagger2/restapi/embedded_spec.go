@@ -594,6 +594,12 @@ func init() {
   "definitions": {
     "Account": {
       "type": "object",
+      "required": [
+        "created_at",
+        "email",
+        "id",
+        "is_verified"
+      ],
       "properties": {
         "created_at": {
           "type": "string",
@@ -862,6 +868,9 @@ func init() {
     },
     "Player": {
       "type": "object",
+      "required": [
+        "steam_id"
+      ],
       "properties": {
         "avatar_url": {
           "type": "string",
@@ -1909,6 +1918,12 @@ func init() {
   "definitions": {
     "Account": {
       "type": "object",
+      "required": [
+        "created_at",
+        "email",
+        "id",
+        "is_verified"
+      ],
       "properties": {
         "created_at": {
           "type": "string",
@@ -2177,6 +2192,9 @@ func init() {
     },
     "Player": {
       "type": "object",
+      "required": [
+        "steam_id"
+      ],
       "properties": {
         "avatar_url": {
           "type": "string",

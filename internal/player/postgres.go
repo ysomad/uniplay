@@ -31,7 +31,7 @@ func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
 type dbPlayer struct {
 	SteamID     domain.SteamID `db:"steam_id"`
 	TeamID      zeronull.Int4  `db:"team_id"`
-	DisplayName string         `db:"display_name"`
+	DisplayName zeronull.Text  `db:"display_name"`
 	FirstName   zeronull.Text  `db:"first_name"`
 	LastName    zeronull.Text  `db:"last_name"`
 	AvatarURL   zeronull.Text  `db:"avatar_url"`
@@ -64,7 +64,7 @@ func (p *postgres) FindBySteamID(ctx context.Context, steamID domain.SteamID) (d
 	return domain.Player{
 		SteamID:     player.SteamID,
 		TeamID:      int32(player.TeamID),
-		DisplayName: player.DisplayName,
+		DisplayName: string(player.DisplayName),
 		FirstName:   string(player.FirstName),
 		LastName:    string(player.LastName),
 		AvatarURL:   string(player.AvatarURL),
@@ -104,7 +104,7 @@ func (p *postgres) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, 
 	return domain.Player{
 		SteamID:     player.SteamID,
 		TeamID:      int32(player.TeamID),
-		DisplayName: player.DisplayName,
+		DisplayName: string(player.DisplayName),
 		FirstName:   string(player.FirstName),
 		LastName:    string(player.LastName),
 		AvatarURL:   string(player.AvatarURL),
