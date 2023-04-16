@@ -119,6 +119,39 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
+  /players/{steam_id}/matches:
+    get:
+      tags:
+      - player
+      summary: Получение матчей игрока
+      operationId: getPlayerMatches
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: steam_id
+        in: path
+        description: Steam ID игрока
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/PlayerStats'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
   /players/{steam_id}/stats:
     get:
       tags:
@@ -407,6 +440,29 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
+  /compendiums/cities:
+    get:
+      tags:
+      - compendium
+      summary: Получение списка городов
+      operationId: getCities
+      produces:
+      - application/json
+      parameters:
+      - name: search
+        in: query
+        description: Поиск по названию города
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/CityList'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
   Error:
     type: object
@@ -618,6 +674,19 @@ definitions:
       has_next:
         type: boolean
         x-omitempty: false
+  City:
+    type: object
+    required:
+    - name
+    properties:
+      name:
+        type: string
+        x-nullable: false
+    x-nullable: false
+  CityList:
+    type: array
+    items:
+      $ref: '#/definitions/City'
   PlayerStats_base_stats:
     type: object
     properties:

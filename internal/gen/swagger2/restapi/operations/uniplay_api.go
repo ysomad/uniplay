@@ -58,6 +58,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		MatchDeleteMatchHandler: match.DeleteMatchHandlerFunc(func(params match.DeleteMatchParams) match.DeleteMatchResponder {
 			return match.DeleteMatchNotImplemented()
 		}),
+		CompendiumGetCitiesHandler: compendium.GetCitiesHandlerFunc(func(params compendium.GetCitiesParams) compendium.GetCitiesResponder {
+			return compendium.GetCitiesNotImplemented()
+		}),
 		InstitutionGetInstitutionsHandler: institution.GetInstitutionsHandlerFunc(func(params institution.GetInstitutionsParams) institution.GetInstitutionsResponder {
 			return institution.GetInstitutionsNotImplemented()
 		}),
@@ -69,6 +72,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		}),
 		PlayerGetPlayerHandler: player.GetPlayerHandlerFunc(func(params player.GetPlayerParams) player.GetPlayerResponder {
 			return player.GetPlayerNotImplemented()
+		}),
+		PlayerGetPlayerMatchesHandler: player.GetPlayerMatchesHandlerFunc(func(params player.GetPlayerMatchesParams) player.GetPlayerMatchesResponder {
+			return player.GetPlayerMatchesNotImplemented()
 		}),
 		PlayerGetPlayerStatsHandler: player.GetPlayerStatsHandlerFunc(func(params player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
 			return player.GetPlayerStatsNotImplemented()
@@ -130,6 +136,8 @@ type UniplayAPI struct {
 	MatchCreateMatchHandler match.CreateMatchHandler
 	// MatchDeleteMatchHandler sets the operation handler for the delete match operation
 	MatchDeleteMatchHandler match.DeleteMatchHandler
+	// CompendiumGetCitiesHandler sets the operation handler for the get cities operation
+	CompendiumGetCitiesHandler compendium.GetCitiesHandler
 	// InstitutionGetInstitutionsHandler sets the operation handler for the get institutions operation
 	InstitutionGetInstitutionsHandler institution.GetInstitutionsHandler
 	// CompendiumGetMapsHandler sets the operation handler for the get maps operation
@@ -138,6 +146,8 @@ type UniplayAPI struct {
 	MatchGetMatchHandler match.GetMatchHandler
 	// PlayerGetPlayerHandler sets the operation handler for the get player operation
 	PlayerGetPlayerHandler player.GetPlayerHandler
+	// PlayerGetPlayerMatchesHandler sets the operation handler for the get player matches operation
+	PlayerGetPlayerMatchesHandler player.GetPlayerMatchesHandler
 	// PlayerGetPlayerStatsHandler sets the operation handler for the get player stats operation
 	PlayerGetPlayerStatsHandler player.GetPlayerStatsHandler
 	// CompendiumGetWeaponClassesHandler sets the operation handler for the get weapon classes operation
@@ -237,6 +247,9 @@ func (o *UniplayAPI) Validate() error {
 	if o.MatchDeleteMatchHandler == nil {
 		unregistered = append(unregistered, "match.DeleteMatchHandler")
 	}
+	if o.CompendiumGetCitiesHandler == nil {
+		unregistered = append(unregistered, "compendium.GetCitiesHandler")
+	}
 	if o.InstitutionGetInstitutionsHandler == nil {
 		unregistered = append(unregistered, "institution.GetInstitutionsHandler")
 	}
@@ -248,6 +261,9 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.PlayerGetPlayerHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerHandler")
+	}
+	if o.PlayerGetPlayerMatchesHandler == nil {
+		unregistered = append(unregistered, "player.GetPlayerMatchesHandler")
 	}
 	if o.PlayerGetPlayerStatsHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerStatsHandler")
@@ -369,6 +385,10 @@ func (o *UniplayAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/compendiums/cities"] = compendium.NewGetCities(o.context, o.CompendiumGetCitiesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/institutions"] = institution.NewGetInstitutions(o.context, o.InstitutionGetInstitutionsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -382,6 +402,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/players/{steam_id}"] = player.NewGetPlayer(o.context, o.PlayerGetPlayerHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/players/{steam_id}/matches"] = player.NewGetPlayerMatches(o.context, o.PlayerGetPlayerMatchesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

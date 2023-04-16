@@ -10,6 +10,7 @@ type repository interface {
 	GetWeaponList(context.Context) ([]domain.Weapon, error)
 	GetWeaponClassList(context.Context) ([]domain.WeaponClass, error)
 	GetMapList(context.Context) ([]domain.Map, error)
+	GetCityList(ctx context.Context, searchQuery string) ([]domain.City, error)
 }
 
 type service struct {
@@ -32,4 +33,8 @@ func (s *service) GetWeaponClassList(ctx context.Context) ([]domain.WeaponClass,
 
 func (s *service) GetMapList(ctx context.Context) ([]domain.Map, error) {
 	return s.compendium.GetMapList(ctx)
+}
+
+func (s *service) GetCityList(ctx context.Context, searchQuerty string) ([]domain.City, error) {
+	return s.compendium.GetCityList(ctx, searchQuerty)
 }

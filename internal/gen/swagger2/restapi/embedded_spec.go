@@ -81,6 +81,40 @@ func init() {
         }
       }
     },
+    "/compendiums/cities": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "compendium"
+        ],
+        "summary": "Получение списка городов",
+        "operationId": "getCities",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Поиск по названию города",
+            "name": "search",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CityList"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/compendiums/maps": {
       "get": {
         "produces": [
@@ -462,6 +496,56 @@ func init() {
         }
       }
     },
+    "/players/{steam_id}/matches": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение матчей игрока",
+        "operationId": "getPlayerMatches",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlayerStats"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -638,6 +722,25 @@ func init() {
           "minLength": 8,
           "x-nullable": false
         }
+      }
+    },
+    "City": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
+    "CityList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/City"
       }
     },
     "CreateMatchResponse": {
@@ -1405,6 +1508,40 @@ func init() {
         }
       }
     },
+    "/compendiums/cities": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "compendium"
+        ],
+        "summary": "Получение списка городов",
+        "operationId": "getCities",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Поиск по названию города",
+            "name": "search",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CityList"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/compendiums/maps": {
       "get": {
         "produces": [
@@ -1786,6 +1923,56 @@ func init() {
         }
       }
     },
+    "/players/{steam_id}/matches": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение матчей игрока",
+        "operationId": "getPlayerMatches",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlayerStats"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -1962,6 +2149,25 @@ func init() {
           "minLength": 8,
           "x-nullable": false
         }
+      }
+    },
+    "City": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
+    "CityList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/City"
       }
     },
     "CreateMatchResponse": {

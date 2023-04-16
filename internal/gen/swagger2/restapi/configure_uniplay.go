@@ -60,6 +60,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 			return match.DeleteMatchNotImplemented()
 		})
 	}
+	if api.CompendiumGetCitiesHandler == nil {
+		api.CompendiumGetCitiesHandler = compendium.GetCitiesHandlerFunc(func(params compendium.GetCitiesParams) compendium.GetCitiesResponder {
+			return compendium.GetCitiesNotImplemented()
+		})
+	}
 	if api.InstitutionGetInstitutionsHandler == nil {
 		api.InstitutionGetInstitutionsHandler = institution.GetInstitutionsHandlerFunc(func(params institution.GetInstitutionsParams) institution.GetInstitutionsResponder {
 			return institution.GetInstitutionsNotImplemented()
@@ -78,6 +83,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 	if api.PlayerGetPlayerHandler == nil {
 		api.PlayerGetPlayerHandler = player.GetPlayerHandlerFunc(func(params player.GetPlayerParams) player.GetPlayerResponder {
 			return player.GetPlayerNotImplemented()
+		})
+	}
+	if api.PlayerGetPlayerMatchesHandler == nil {
+		api.PlayerGetPlayerMatchesHandler = player.GetPlayerMatchesHandlerFunc(func(params player.GetPlayerMatchesParams) player.GetPlayerMatchesResponder {
+			return player.GetPlayerMatchesNotImplemented()
 		})
 	}
 	if api.PlayerGetPlayerStatsHandler == nil {

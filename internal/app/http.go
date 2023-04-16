@@ -78,6 +78,7 @@ func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 	api.CompendiumGetWeaponsHandler = compendiumGen.GetWeaponsHandlerFunc(d.compendium.GetWeapons)
 	api.CompendiumGetWeaponClassesHandler = compendiumGen.GetWeaponClassesHandlerFunc(d.compendium.GetWeaponClasses)
 	api.CompendiumGetMapsHandler = compendiumGen.GetMapsHandlerFunc(d.compendium.GetMaps)
+	api.CompendiumGetCitiesHandler = compendiumGen.GetCitiesHandlerFunc(d.compendium.GetCities)
 
 	api.AccountCreateAccountHandler = accountGen.CreateAccountHandlerFunc(d.account.CreateAccount)
 

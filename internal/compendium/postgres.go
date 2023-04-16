@@ -2,7 +2,9 @@ package compendium
 
 import (
 	"context"
+	"fmt"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
 
 	"github.com/ysomad/uniplay/internal/domain"
@@ -70,4 +72,28 @@ func (p *postgres) GetMapList(ctx context.Context) ([]domain.Map, error) {
 	}
 
 	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Map])
+}
+
+func (p *postgres) GetCityList(ctx context.Context, searchQuery string) ([]domain.City, error) {
+	b := p.client.Builder.
+		Select("name").
+		From("city")
+
+	if searchQuery != "" {
+		b = b.Where(sq.Expr("ts @@ phraseto_tsquery('russian', ?)", searchQuery))
+	}
+
+	sql, args, err := b.
+		OrderBy(fmt.Sprintf("ts_rank(ts, to_tsquery('russian', '%s')) DESC", searchQuery)).
+		ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.City])
 }
