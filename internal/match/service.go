@@ -74,6 +74,8 @@ func (s *service) GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match,
 		return domain.Match{}, err
 	}
 
+	// TODO: MOVE TO REPOSITORY
+
 	if len(rows) < 1 {
 		return domain.Match{}, domain.ErrMatchNotFound
 	}
@@ -93,6 +95,8 @@ func (s *service) GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match,
 		r := domain.NewMatchScoreBoardRow(
 			row.SteamID,
 			row.PlayerName,
+			row.PlayerAvatarURL,
+			row.PlayerCaptain,
 			row.Kills,
 			row.HeadshotKills,
 			row.Deaths,

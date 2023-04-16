@@ -49,7 +49,6 @@ CREATE TABLE IF NOT EXISTS player (
 CREATE TABLE IF NOT EXISTS team_player (
     team_id smallint NOT NULL REFERENCES team (id),
     player_steam_id numeric NOT NULL REFERENCES player (steam_id),
-    is_active boolean NOT NULL DEFAULT false,
     is_captain boolean NOT NULL DEFAULT false,
     PRIMARY KEY (team_id, player_steam_id)
 );

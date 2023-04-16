@@ -3,10 +3,12 @@ package match
 import (
 	"context"
 	"errors"
+	"time"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgtype/zeronull"
 	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
@@ -39,6 +41,30 @@ func (p *postgres) Exists(ctx context.Context, matchID uuid.UUID) (bool, error) 
 	return matchFound, nil
 }
 
+type dbMatchScoreBoardRow struct {
+	MatchID         uuid.UUID         `db:"match_id"`
+	MapName         string            `db:"map_name"`
+	MapIconURL      string            `db:"map_icon_url"`
+	SteamID         uint64            `db:"steam_id"`
+	PlayerName      string            `db:"player_name"`
+	PlayerAvatarURL zeronull.Text     `db:"avatar_url"`
+	PlayerCaptain   bool              `db:"is_player_captain"`
+	TeamID          int32             `db:"team_id"`
+	TeamName        string            `db:"team_name"`
+	TeamFlagCode    string            `db:"team_flag_code"`
+	TeamScore       int32             `db:"team_score"`
+	TeamMatchState  domain.MatchState `db:"team_match_state"`
+	Kills           int32             `db:"kills"`
+	HeadshotKills   int32             `db:"headshot_kills"`
+	Deaths          int32             `db:"deaths"`
+	Assists         int32             `db:"assists"`
+	DamageDealt     int32             `db:"damage_dealt"`
+	RoundsPlayed    int32             `db:"rounds_played"`
+	MVPCount        int32             `db:"mvp_count"`
+	MatchDuration   time.Duration     `db:"match_duration"`
+	MatchUploadedAt time.Time         `db:"match_uploaded_at"`
+}
+
 func (p *postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]*matchScoreBoardRow, error) {
 	ctx, span := p.tracer.Start(ctx, "match.Postgres.GetScoreBoardRowsByID")
 	defer span.End()
@@ -50,11 +76,13 @@ func (p *postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 			"mp.icon_url as map_icon_url",
 			"pms.player_steam_id as steam_id",
 			"p.display_name as player_name",
+			"p.avatar_url as avatar_url",
+			"tp.is_captain as is_player_captain",
 			"pm.team_id as team_id",
 			"t.clan_name as team_name",
 			"t.flag_code as team_flag_code",
 			"tm.score as team_score",
-			"tm.match_state as team_match_score",
+			"tm.match_state as team_match_state",
 			"pms.kills as kills",
 			"pms.hs_kills as headshot_kills",
 			"pms.deaths as deaths",
@@ -72,6 +100,7 @@ func (p *postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 		InnerJoin("player_match pm ON pms.player_steam_id = pm.player_steam_id AND m.id = pm.match_id").
 		InnerJoin("team_match tm ON pm.team_id = tm.team_id AND m.id = tm.match_id").
 		InnerJoin("team t ON tm.team_id = t.id").
+		InnerJoin("team_player tp ON tp.player_steam_id = pms.player_steam_id AND tp.team_id = pm.team_id").
 		Where(sq.Eq{"m.id": matchID}).
 		OrderBy("pms.kills DESC").
 		ToSql()
@@ -84,7 +113,41 @@ func (p *postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 		return nil, err
 	}
 
-	return pgx.CollectRows(rows, pgx.RowToAddrOfStructByPos[matchScoreBoardRow])
+	res, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[dbMatchScoreBoardRow])
+	if err != nil {
+		return nil, err
+	}
+
+	sbRows := make([]*matchScoreBoardRow, len(res))
+
+	for i, row := range res {
+		sbRows[i] = &matchScoreBoardRow{
+			MatchID:         row.MatchID,
+			MapName:         row.MapName,
+			MapIconURL:      row.MapIconURL,
+			SteamID:         row.SteamID,
+			PlayerName:      row.PlayerName,
+			PlayerAvatarURL: string(row.PlayerAvatarURL),
+			PlayerCaptain:   row.PlayerCaptain,
+			TeamID:          row.TeamID,
+			TeamName:        row.TeamName,
+			TeamFlagCode:    row.TeamFlagCode,
+			TeamScore:       row.TeamScore,
+			TeamMatchState:  row.TeamMatchState,
+			Kills:           row.Kills,
+			HeadshotKills:   row.HeadshotKills,
+			Deaths:          row.Deaths,
+			Assists:         row.Assists,
+			DamageDealt:     row.DamageDealt,
+			RoundsPlayed:    row.RoundsPlayed,
+			MVPCount:        row.MVPCount,
+			MatchDuration:   row.MatchDuration,
+			MatchUploadedAt: row.MatchUploadedAt,
+		}
+
+	}
+
+	return sbRows, nil
 }
 
 func (p *postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error { //nolint:gocognit // yes its T H I C C

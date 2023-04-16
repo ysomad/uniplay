@@ -373,7 +373,7 @@ func init() {
         "tags": [
           "player"
         ],
-        "summary": "Получение профиля игрока",
+        "summary": "Получение информации об игроке",
         "operationId": "getPlayer",
         "parameters": [
           {
@@ -415,7 +415,7 @@ func init() {
         "tags": [
           "player"
         ],
-        "summary": "Редактирование профиля игрока",
+        "summary": "Редактирование информации об игроке",
         "operationId": "updatePlayer",
         "parameters": [
           {
@@ -744,15 +744,6 @@ func init() {
     },
     "Match": {
       "type": "object",
-      "required": [
-        "duration",
-        "id",
-        "map",
-        "rounds_played",
-        "team1",
-        "team2",
-        "uploaded_at"
-      ],
       "properties": {
         "duration": {
           "type": "integer",
@@ -817,6 +808,11 @@ func init() {
     },
     "MatchTeam_scoreboard": {
       "type": "object",
+      "required": [
+        "is_player_captain",
+        "player_name",
+        "steam_id"
+      ],
       "properties": {
         "assists": {
           "type": "integer",
@@ -834,6 +830,10 @@ func init() {
           "type": "number",
           "format": "double"
         },
+        "is_player_captain": {
+          "type": "boolean",
+          "x-nullable": false
+        },
         "kill_death_ratio": {
           "type": "number",
           "format": "double"
@@ -846,11 +846,16 @@ func init() {
           "type": "integer",
           "format": "int32"
         },
-        "player_name": {
+        "player_avatar_url": {
           "type": "string"
         },
+        "player_name": {
+          "type": "string",
+          "x-nullable": false
+        },
         "steam_id": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": false
         }
       },
       "x-nullable": false
@@ -1310,7 +1315,7 @@ func init() {
       "name": "account"
     },
     {
-      "description": "Профиль игрока",
+      "description": "Игрок",
       "name": "player"
     },
     {
@@ -1683,7 +1688,7 @@ func init() {
         "tags": [
           "player"
         ],
-        "summary": "Получение профиля игрока",
+        "summary": "Получение информации об игроке",
         "operationId": "getPlayer",
         "parameters": [
           {
@@ -1725,7 +1730,7 @@ func init() {
         "tags": [
           "player"
         ],
-        "summary": "Редактирование профиля игрока",
+        "summary": "Редактирование информации об игроке",
         "operationId": "updatePlayer",
         "parameters": [
           {
@@ -2054,15 +2059,6 @@ func init() {
     },
     "Match": {
       "type": "object",
-      "required": [
-        "duration",
-        "id",
-        "map",
-        "rounds_played",
-        "team1",
-        "team2",
-        "uploaded_at"
-      ],
       "properties": {
         "duration": {
           "type": "integer",
@@ -2127,6 +2123,11 @@ func init() {
     },
     "MatchTeam_scoreboard": {
       "type": "object",
+      "required": [
+        "is_player_captain",
+        "player_name",
+        "steam_id"
+      ],
       "properties": {
         "assists": {
           "type": "integer",
@@ -2144,6 +2145,10 @@ func init() {
           "type": "number",
           "format": "double"
         },
+        "is_player_captain": {
+          "type": "boolean",
+          "x-nullable": false
+        },
         "kill_death_ratio": {
           "type": "number",
           "format": "double"
@@ -2156,11 +2161,16 @@ func init() {
           "type": "integer",
           "format": "int32"
         },
-        "player_name": {
+        "player_avatar_url": {
           "type": "string"
         },
+        "player_name": {
+          "type": "string",
+          "x-nullable": false
+        },
         "steam_id": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": false
         }
       },
       "x-nullable": false
@@ -2620,7 +2630,7 @@ func init() {
       "name": "account"
     },
     {
-      "description": "Профиль игрока",
+      "description": "Игрок",
       "name": "player"
     },
     {

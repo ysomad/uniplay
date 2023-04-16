@@ -17,7 +17,7 @@ import (
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
 )
 
-//go:generate swagger generate server --target ../../swagger2 --name Uniplay --spec ../../../../swagger2.json --principal interface{} --exclude-main --strict-responders
+//go:generate swagger generate server --target ../../swagger2 --name Uniplay --spec ../../../../swagger2.yaml --principal interface{} --exclude-main --strict-responders
 
 func configureFlags(api *operations.UniplayAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }

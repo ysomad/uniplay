@@ -32,7 +32,7 @@ func NewUpdatePlayer(ctx *middleware.Context, handler UpdatePlayerHandler) *Upda
 /*
 	UpdatePlayer swagger:route PUT /players/{steam_id} player updatePlayer
 
-Редактирование профиля игрока
+Редактирование информации об игроке
 */
 type UpdatePlayer struct {
 	Context *middleware.Context
