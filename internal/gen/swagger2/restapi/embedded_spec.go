@@ -522,7 +522,7 @@ func init() {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/PlayerStats"
+              "$ref": "#/definitions/PlayerMatchList"
             }
           },
           "400": {
@@ -778,10 +778,14 @@ func init() {
     },
     "InstitutionList": {
       "type": "object",
+      "required": [
+        "has_next",
+        "institutions"
+      ],
       "properties": {
         "has_next": {
           "type": "boolean",
-          "x-omitempty": false
+          "x-nullable": false
         },
         "institutions": {
           "type": "array",
@@ -793,9 +797,18 @@ func init() {
     },
     "InstitutionList_institutions": {
       "type": "object",
+      "required": [
+        "city",
+        "id",
+        "logo_url",
+        "name",
+        "short_name",
+        "type"
+      ],
       "properties": {
         "city": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": false
         },
         "id": {
           "type": "integer",
@@ -820,7 +833,8 @@ func init() {
           "enum": [
             1,
             2
-          ]
+          ],
+          "x-nullable": false
         }
       },
       "x-go-name": "InstitutionListItem",
@@ -996,6 +1010,102 @@ func init() {
           "x-nullable": false
         },
         "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
+    },
+    "PlayerMatch": {
+      "type": "object",
+      "required": [
+        "id",
+        "map",
+        "match_state",
+        "match_stats",
+        "score",
+        "uploaded_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "x-nullable": false
+        },
+        "map": {
+          "$ref": "#/definitions/Map"
+        },
+        "match_state": {
+          "description": "Состояние матча:\n * -1 - Проигрыш\n * 0 - Ничья\n * 1 - Победа\n",
+          "type": "integer",
+          "format": "int8",
+          "x-nullable": false
+        },
+        "match_stats": {
+          "$ref": "#/definitions/PlayerMatch_match_stats"
+        },
+        "score": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "uploaded_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
+    "PlayerMatchList": {
+      "type": "object",
+      "required": [
+        "has_next",
+        "matches"
+      ],
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-nullable": false
+        },
+        "matches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlayerMatch"
+          }
+        }
+      }
+    },
+    "PlayerMatch_match_stats": {
+      "type": "object",
+      "required": [
+        "assists",
+        "damage_per_round",
+        "deaths",
+        "headshot_percentage",
+        "kills"
+      ],
+      "properties": {
+        "assists": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "damage_per_round": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "deaths": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "headshot_percentage": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "kills": {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
@@ -1949,7 +2059,7 @@ func init() {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/PlayerStats"
+              "$ref": "#/definitions/PlayerMatchList"
             }
           },
           "400": {
@@ -2205,10 +2315,14 @@ func init() {
     },
     "InstitutionList": {
       "type": "object",
+      "required": [
+        "has_next",
+        "institutions"
+      ],
       "properties": {
         "has_next": {
           "type": "boolean",
-          "x-omitempty": false
+          "x-nullable": false
         },
         "institutions": {
           "type": "array",
@@ -2220,9 +2334,18 @@ func init() {
     },
     "InstitutionList_institutions": {
       "type": "object",
+      "required": [
+        "city",
+        "id",
+        "logo_url",
+        "name",
+        "short_name",
+        "type"
+      ],
       "properties": {
         "city": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": false
         },
         "id": {
           "type": "integer",
@@ -2247,7 +2370,8 @@ func init() {
           "enum": [
             1,
             2
-          ]
+          ],
+          "x-nullable": false
         }
       },
       "x-go-name": "InstitutionListItem",
@@ -2423,6 +2547,102 @@ func init() {
           "x-nullable": false
         },
         "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
+    },
+    "PlayerMatch": {
+      "type": "object",
+      "required": [
+        "id",
+        "map",
+        "match_state",
+        "match_stats",
+        "score",
+        "uploaded_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "x-nullable": false
+        },
+        "map": {
+          "$ref": "#/definitions/Map"
+        },
+        "match_state": {
+          "description": "Состояние матча:\n * -1 - Проигрыш\n * 0 - Ничья\n * 1 - Победа\n",
+          "type": "integer",
+          "format": "int8",
+          "x-nullable": false
+        },
+        "match_stats": {
+          "$ref": "#/definitions/PlayerMatch_match_stats"
+        },
+        "score": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "uploaded_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
+    "PlayerMatchList": {
+      "type": "object",
+      "required": [
+        "has_next",
+        "matches"
+      ],
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-nullable": false
+        },
+        "matches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlayerMatch"
+          }
+        }
+      }
+    },
+    "PlayerMatch_match_stats": {
+      "type": "object",
+      "required": [
+        "assists",
+        "damage_per_round",
+        "deaths",
+        "headshot_percentage",
+        "kills"
+      ],
+      "properties": {
+        "assists": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "damage_per_round": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "deaths": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "headshot_percentage": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "kills": {
           "type": "integer",
           "format": "int32",
           "x-nullable": false

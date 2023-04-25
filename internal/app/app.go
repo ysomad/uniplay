@@ -6,6 +6,7 @@ import (
 
 	"github.com/IBM/pgxpoolprometheus"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/rs/cors"
 	"go.uber.org/zap"
 
 	"github.com/ysomad/uniplay/internal/account"
@@ -92,7 +93,8 @@ func Run(conf *config.Config) { //nolint:funlen // main func
 	}()
 
 	h := newHandler(api)
-	srv.SetHandler(h)
+	corsHandler := cors.Default().Handler(h) // TODO: remove in prod
+	srv.SetHandler(corsHandler)
 
 	if err = srv.Serve(); err != nil {
 		l.Fatal("srv.Serve", zap.Error(err))

@@ -27,7 +27,7 @@ type GetPlayerMatchesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.PlayerStats `json:"body,omitempty"`
+	Payload *models.PlayerMatchList `json:"body,omitempty"`
 }
 
 // NewGetPlayerMatchesOK creates GetPlayerMatchesOK with default headers values
@@ -37,13 +37,13 @@ func NewGetPlayerMatchesOK() *GetPlayerMatchesOK {
 }
 
 // WithPayload adds the payload to the get player matches o k response
-func (o *GetPlayerMatchesOK) WithPayload(payload *models.PlayerStats) *GetPlayerMatchesOK {
+func (o *GetPlayerMatchesOK) WithPayload(payload *models.PlayerMatchList) *GetPlayerMatchesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get player matches o k response
-func (o *GetPlayerMatchesOK) SetPayload(payload *models.PlayerStats) {
+func (o *GetPlayerMatchesOK) SetPayload(payload *models.PlayerMatchList) {
 	o.Payload = payload
 }
 

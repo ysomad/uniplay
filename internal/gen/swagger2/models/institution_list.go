@@ -12,6 +12,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // InstitutionList institution list
@@ -20,15 +21,21 @@ import (
 type InstitutionList struct {
 
 	// has next
+	// Required: true
 	HasNext bool `json:"has_next"`
 
 	// institutions
+	// Required: true
 	Institutions []InstitutionListItem `json:"institutions"`
 }
 
 // Validate validates this institution list
 func (m *InstitutionList) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateHasNext(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.validateInstitutions(formats); err != nil {
 		res = append(res, err)
@@ -40,9 +47,19 @@ func (m *InstitutionList) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *InstitutionList) validateHasNext(formats strfmt.Registry) error {
+
+	if err := validate.Required("has_next", "body", bool(m.HasNext)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (m *InstitutionList) validateInstitutions(formats strfmt.Registry) error {
-	if swag.IsZero(m.Institutions) { // not required
-		return nil
+
+	if err := validate.Required("institutions", "body", m.Institutions); err != nil {
+		return err
 	}
 
 	for i := 0; i < len(m.Institutions); i++ {

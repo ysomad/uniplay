@@ -139,7 +139,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/PlayerStats'
+            $ref: '#/definitions/PlayerMatchList'
         "400":
           description: Bad Request
           schema:
@@ -666,6 +666,9 @@ definitions:
     x-nullable: false
   InstitutionList:
     type: object
+    required:
+    - has_next
+    - institutions
     properties:
       institutions:
         type: array
@@ -673,7 +676,7 @@ definitions:
           $ref: '#/definitions/InstitutionList_institutions'
       has_next:
         type: boolean
-        x-omitempty: false
+        x-nullable: false
   City:
     type: object
     required:
@@ -687,6 +690,54 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/City'
+  PlayerMatch:
+    type: object
+    required:
+    - id
+    - map
+    - match_state
+    - match_stats
+    - score
+    - uploaded_at
+    properties:
+      id:
+        type: string
+        format: uuid
+        x-nullable: false
+      map:
+        $ref: '#/definitions/Map'
+      score:
+        type: string
+        x-nullable: false
+      match_stats:
+        $ref: '#/definitions/PlayerMatch_match_stats'
+      match_state:
+        type: integer
+        format: int8
+        description: |
+          Состояние матча:
+           * -1 - Проигрыш
+           * 0 - Ничья
+           * 1 - Победа
+        x-nullable: false
+      uploaded_at:
+        type: string
+        format: date-time
+        x-nullable: false
+    x-nullable: false
+  PlayerMatchList:
+    type: object
+    required:
+    - has_next
+    - matches
+    properties:
+      matches:
+        type: array
+        items:
+          $ref: '#/definitions/PlayerMatch'
+      has_next:
+        type: boolean
+        x-nullable: false
   PlayerStats_base_stats:
     type: object
     properties:
@@ -989,6 +1040,13 @@ definitions:
     x-nullable: false
   InstitutionList_institutions:
     type: object
+    required:
+    - city
+    - id
+    - logo_url
+    - name
+    - short_name
+    - type
     properties:
       id:
         type: integer
@@ -1005,11 +1063,42 @@ definitions:
         x-nullable: false
       city:
         type: string
+        x-nullable: false
       type:
         type: integer
         format: int32
         enum:
         - 1
         - 2
+        x-nullable: false
     x-go-name: InstitutionListItem
     x-nullable: false
+  PlayerMatch_match_stats:
+    type: object
+    required:
+    - assists
+    - damage_per_round
+    - deaths
+    - headshot_percentage
+    - kills
+    properties:
+      kills:
+        type: integer
+        format: int32
+        x-nullable: false
+      deaths:
+        type: integer
+        format: int32
+        x-nullable: false
+      assists:
+        type: integer
+        format: int32
+        x-nullable: false
+      headshot_percentage:
+        type: integer
+        format: int32
+        x-nullable: false
+      damage_per_round:
+        type: integer
+        format: int32
+        x-nullable: false
