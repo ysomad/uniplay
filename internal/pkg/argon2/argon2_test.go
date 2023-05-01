@@ -164,7 +164,7 @@ func Test_decode(t *testing.T) {
 		{
 			name: "corrupted key",
 			args: args{
-				hash: "$argon2id$v=19$m=65536,t=1,p=2$mbmLJMzdBa1rGVJGCT+mxA$$XXXXXaGVsbG8=",
+				hash: "$argon2id$v=19$m=65536,t=1,p=2$mbmLJMzdBa1rGVJGCT+mxA$XXXXXaGVsbG8=",
 			},
 			wantParams: Params{},
 			wantSalt:   nil,
