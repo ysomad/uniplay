@@ -61,7 +61,7 @@ gen-swagger:
 	rm -rf ./internal/gen/swagger2/*
 	swagger generate server \
 	-t internal/gen/swagger2 \
-	-f swagger2.json \
+	-f swagger2.yaml \
 	-A uniplay \
 	--exclude-main \
 	--strict-responders \

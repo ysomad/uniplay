@@ -40,8 +40,10 @@ func NewMatchTeam(id, score int32, state MatchState, name, flag string) *MatchTe
 }
 
 type MatchScoreBoardRow struct {
-	SteamID            uint64
+	SteamID            SteamID
 	PlayerName         string
+	PlayerAvatarURL    string
+	PlayerCaptain      bool
 	Kills              int32
 	Deaths             int32
 	Assists            int32
@@ -54,6 +56,8 @@ type MatchScoreBoardRow struct {
 func NewMatchScoreBoardRow(
 	steamID uint64,
 	playerName string,
+	playerAvatarURL string,
+	playerCaptain bool,
 	kills int32,
 	hsKills int32,
 	deaths int32,
@@ -63,8 +67,10 @@ func NewMatchScoreBoardRow(
 	roundsPlayed int32,
 ) MatchScoreBoardRow {
 	return MatchScoreBoardRow{
-		SteamID:            steamID,
+		SteamID:            SteamID(steamID),
 		PlayerName:         playerName,
+		PlayerAvatarURL:    playerAvatarURL,
+		PlayerCaptain:      playerCaptain,
 		Kills:              kills,
 		Deaths:             deaths,
 		Assists:            assists,

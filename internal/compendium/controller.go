@@ -84,3 +84,27 @@ func (c *Controller) GetMaps(p gen.GetMapsParams) gen.GetMapsResponder {
 
 	return gen.NewGetMapsOK().WithPayload(payload)
 }
+
+func (c *Controller) GetCities(p gen.GetCitiesParams) gen.GetCitiesResponder {
+	var searchQuery string
+
+	if p.Search != nil {
+		searchQuery = *p.Search
+	}
+
+	cities, err := c.compendium.GetCityList(p.HTTPRequest.Context(), searchQuery)
+	if err != nil {
+		return gen.NewGetCitiesInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	payload := make(models.CityList, len(cities))
+
+	for i, c := range cities {
+		payload[i] = models.City(c)
+	}
+
+	return gen.NewGetCitiesOK().WithPayload(payload)
+}

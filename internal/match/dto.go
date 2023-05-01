@@ -14,6 +14,8 @@ type matchScoreBoardRow struct {
 	MapIconURL      string
 	SteamID         uint64
 	PlayerName      string
+	PlayerAvatarURL string
+	PlayerCaptain   bool
 	TeamID          int32
 	TeamName        string
 	TeamFlagCode    string

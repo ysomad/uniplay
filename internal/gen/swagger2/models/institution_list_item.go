@@ -21,28 +21,54 @@ import (
 type InstitutionListItem struct {
 
 	// city
-	City string `json:"city,omitempty"`
+	// Required: true
+	City string `json:"city"`
 
 	// id
-	ID int32 `json:"id,omitempty"`
+	// Required: true
+	ID int32 `json:"id"`
 
 	// logo url
-	LogoURL string `json:"logo_url,omitempty"`
+	// Required: true
+	LogoURL string `json:"logo_url"`
 
 	// name
-	Name string `json:"name,omitempty"`
+	// Required: true
+	Name string `json:"name"`
 
 	// short name
-	ShortName string `json:"short_name,omitempty"`
+	// Required: true
+	ShortName string `json:"short_name"`
 
 	// type
+	// Required: true
 	// Enum: [1 2]
-	Type int32 `json:"type,omitempty"`
+	Type int32 `json:"type"`
 }
 
 // Validate validates this institution list item
 func (m *InstitutionListItem) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateCity(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateLogoURL(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateName(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateShortName(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.validateType(formats); err != nil {
 		res = append(res, err)
@@ -51,6 +77,51 @@ func (m *InstitutionListItem) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *InstitutionListItem) validateCity(formats strfmt.Registry) error {
+
+	if err := validate.RequiredString("city", "body", m.City); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *InstitutionListItem) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Required("id", "body", int32(m.ID)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *InstitutionListItem) validateLogoURL(formats strfmt.Registry) error {
+
+	if err := validate.RequiredString("logo_url", "body", m.LogoURL); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *InstitutionListItem) validateName(formats strfmt.Registry) error {
+
+	if err := validate.RequiredString("name", "body", m.Name); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *InstitutionListItem) validateShortName(formats strfmt.Registry) error {
+
+	if err := validate.RequiredString("short_name", "body", m.ShortName); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -75,8 +146,9 @@ func (m *InstitutionListItem) validateTypeEnum(path, location string, value int3
 }
 
 func (m *InstitutionListItem) validateType(formats strfmt.Registry) error {
-	if swag.IsZero(m.Type) { // not required
-		return nil
+
+	if err := validate.Required("type", "body", int32(m.Type)); err != nil {
+		return err
 	}
 
 	// value enum

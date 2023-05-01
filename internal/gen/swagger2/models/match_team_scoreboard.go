@@ -8,8 +8,10 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // MatchTeamScoreboard match team scoreboard
@@ -29,6 +31,10 @@ type MatchTeamScoreboard struct {
 	// headshot percentage
 	HeadshotPercentage float64 `json:"headshot_percentage,omitempty"`
 
+	// is player captain
+	// Required: true
+	IsPlayerCaptain bool `json:"is_player_captain"`
+
 	// kill death ratio
 	KillDeathRatio float64 `json:"kill_death_ratio,omitempty"`
 
@@ -38,15 +44,64 @@ type MatchTeamScoreboard struct {
 	// mvps
 	Mvps int32 `json:"mvps,omitempty"`
 
+	// player avatar url
+	PlayerAvatarURL string `json:"player_avatar_url,omitempty"`
+
 	// player name
-	PlayerName string `json:"player_name,omitempty"`
+	// Required: true
+	PlayerName string `json:"player_name"`
 
 	// steam id
-	SteamID string `json:"steam_id,omitempty"`
+	// Required: true
+	SteamID string `json:"steam_id"`
 }
 
 // Validate validates this match team scoreboard
 func (m *MatchTeamScoreboard) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateIsPlayerCaptain(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePlayerName(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSteamID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *MatchTeamScoreboard) validateIsPlayerCaptain(formats strfmt.Registry) error {
+
+	if err := validate.Required("is_player_captain", "body", bool(m.IsPlayerCaptain)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *MatchTeamScoreboard) validatePlayerName(formats strfmt.Registry) error {
+
+	if err := validate.RequiredString("player_name", "body", m.PlayerName); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *MatchTeamScoreboard) validateSteamID(formats strfmt.Registry) error {
+
+	if err := validate.RequiredString("steam_id", "body", m.SteamID); err != nil {
+		return err
+	}
+
 	return nil
 }
 

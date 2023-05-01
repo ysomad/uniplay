@@ -20,17 +20,21 @@ import (
 type Account struct {
 
 	// created at
+	// Required: true
 	// Format: datetime
-	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
+	CreatedAt strfmt.DateTime `json:"created_at"`
 
 	// email
-	Email string `json:"email,omitempty"`
+	// Required: true
+	Email string `json:"email"`
 
 	// id
-	ID string `json:"id,omitempty"`
+	// Required: true
+	ID string `json:"id"`
 
 	// is verified
-	IsVerified bool `json:"is_verified,omitempty"`
+	// Required: true
+	IsVerified bool `json:"is_verified"`
 }
 
 // Validate validates this account
@@ -41,6 +45,18 @@ func (m *Account) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateEmail(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateIsVerified(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -48,11 +64,39 @@ func (m *Account) Validate(formats strfmt.Registry) error {
 }
 
 func (m *Account) validateCreatedAt(formats strfmt.Registry) error {
-	if swag.IsZero(m.CreatedAt) { // not required
-		return nil
+
+	if err := validate.Required("created_at", "body", strfmt.DateTime(m.CreatedAt)); err != nil {
+		return err
 	}
 
 	if err := validate.FormatOf("created_at", "body", "datetime", m.CreatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Account) validateEmail(formats strfmt.Registry) error {
+
+	if err := validate.RequiredString("email", "body", m.Email); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Account) validateID(formats strfmt.Registry) error {
+
+	if err := validate.RequiredString("id", "body", m.ID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Account) validateIsVerified(formats strfmt.Registry) error {
+
+	if err := validate.Required("is_verified", "body", bool(m.IsVerified)); err != nil {
 		return err
 	}
 

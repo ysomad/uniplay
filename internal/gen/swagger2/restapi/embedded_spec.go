@@ -81,6 +81,40 @@ func init() {
         }
       }
     },
+    "/compendiums/cities": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "compendium"
+        ],
+        "summary": "Получение списка городов",
+        "operationId": "getCities",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Поиск по названию города",
+            "name": "search",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CityList"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/compendiums/maps": {
       "get": {
         "produces": [
@@ -373,7 +407,7 @@ func init() {
         "tags": [
           "player"
         ],
-        "summary": "Получение профиля игрока",
+        "summary": "Получение информации об игроке",
         "operationId": "getPlayer",
         "parameters": [
           {
@@ -415,7 +449,7 @@ func init() {
         "tags": [
           "player"
         ],
-        "summary": "Редактирование профиля игрока",
+        "summary": "Редактирование информации об игроке",
         "operationId": "updatePlayer",
         "parameters": [
           {
@@ -449,6 +483,56 @@ func init() {
           },
           "422": {
             "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/players/{steam_id}/matches": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение матчей игрока",
+        "operationId": "getPlayerMatches",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlayerMatchList"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -594,6 +678,12 @@ func init() {
   "definitions": {
     "Account": {
       "type": "object",
+      "required": [
+        "created_at",
+        "email",
+        "id",
+        "is_verified"
+      ],
       "properties": {
         "created_at": {
           "type": "string",
@@ -634,6 +724,25 @@ func init() {
         }
       }
     },
+    "City": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
+    "CityList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/City"
+      }
+    },
     "CreateMatchResponse": {
       "type": "object",
       "required": [
@@ -669,10 +778,14 @@ func init() {
     },
     "InstitutionList": {
       "type": "object",
+      "required": [
+        "has_next",
+        "institutions"
+      ],
       "properties": {
         "has_next": {
           "type": "boolean",
-          "x-omitempty": false
+          "x-nullable": false
         },
         "institutions": {
           "type": "array",
@@ -684,9 +797,18 @@ func init() {
     },
     "InstitutionList_institutions": {
       "type": "object",
+      "required": [
+        "city",
+        "id",
+        "logo_url",
+        "name",
+        "short_name",
+        "type"
+      ],
       "properties": {
         "city": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": false
         },
         "id": {
           "type": "integer",
@@ -711,7 +833,8 @@ func init() {
           "enum": [
             1,
             2
-          ]
+          ],
+          "x-nullable": false
         }
       },
       "x-go-name": "InstitutionListItem",
@@ -744,15 +867,6 @@ func init() {
     },
     "Match": {
       "type": "object",
-      "required": [
-        "duration",
-        "id",
-        "map",
-        "rounds_played",
-        "team1",
-        "team2",
-        "uploaded_at"
-      ],
       "properties": {
         "duration": {
           "type": "integer",
@@ -817,6 +931,11 @@ func init() {
     },
     "MatchTeam_scoreboard": {
       "type": "object",
+      "required": [
+        "is_player_captain",
+        "player_name",
+        "steam_id"
+      ],
       "properties": {
         "assists": {
           "type": "integer",
@@ -834,6 +953,10 @@ func init() {
           "type": "number",
           "format": "double"
         },
+        "is_player_captain": {
+          "type": "boolean",
+          "x-nullable": false
+        },
         "kill_death_ratio": {
           "type": "number",
           "format": "double"
@@ -846,17 +969,25 @@ func init() {
           "type": "integer",
           "format": "int32"
         },
-        "player_name": {
+        "player_avatar_url": {
           "type": "string"
         },
+        "player_name": {
+          "type": "string",
+          "x-nullable": false
+        },
         "steam_id": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": false
         }
       },
       "x-nullable": false
     },
     "Player": {
       "type": "object",
+      "required": [
+        "steam_id"
+      ],
       "properties": {
         "avatar_url": {
           "type": "string",
@@ -879,6 +1010,102 @@ func init() {
           "x-nullable": false
         },
         "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
+    },
+    "PlayerMatch": {
+      "type": "object",
+      "required": [
+        "id",
+        "map",
+        "match_state",
+        "match_stats",
+        "score",
+        "uploaded_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "x-nullable": false
+        },
+        "map": {
+          "$ref": "#/definitions/Map"
+        },
+        "match_state": {
+          "description": "Состояние матча:\n * -1 - Проигрыш\n * 0 - Ничья\n * 1 - Победа\n",
+          "type": "integer",
+          "format": "int8",
+          "x-nullable": false
+        },
+        "match_stats": {
+          "$ref": "#/definitions/PlayerMatch_match_stats"
+        },
+        "score": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "uploaded_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
+    "PlayerMatchList": {
+      "type": "object",
+      "required": [
+        "has_next",
+        "matches"
+      ],
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-nullable": false
+        },
+        "matches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlayerMatch"
+          }
+        }
+      }
+    },
+    "PlayerMatch_match_stats": {
+      "type": "object",
+      "required": [
+        "assists",
+        "damage_per_round",
+        "deaths",
+        "headshot_percentage",
+        "kills"
+      ],
+      "properties": {
+        "assists": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "damage_per_round": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "deaths": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "headshot_percentage": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "kills": {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
@@ -1310,7 +1537,7 @@ func init() {
       "name": "account"
     },
     {
-      "description": "Профиль игрока",
+      "description": "Игрок",
       "name": "player"
     },
     {
@@ -1391,6 +1618,40 @@ func init() {
         }
       }
     },
+    "/compendiums/cities": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "compendium"
+        ],
+        "summary": "Получение списка городов",
+        "operationId": "getCities",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Поиск по названию города",
+            "name": "search",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CityList"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/compendiums/maps": {
       "get": {
         "produces": [
@@ -1683,7 +1944,7 @@ func init() {
         "tags": [
           "player"
         ],
-        "summary": "Получение профиля игрока",
+        "summary": "Получение информации об игроке",
         "operationId": "getPlayer",
         "parameters": [
           {
@@ -1725,7 +1986,7 @@ func init() {
         "tags": [
           "player"
         ],
-        "summary": "Редактирование профиля игрока",
+        "summary": "Редактирование информации об игроке",
         "operationId": "updatePlayer",
         "parameters": [
           {
@@ -1759,6 +2020,56 @@ func init() {
           },
           "422": {
             "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/players/{steam_id}/matches": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение матчей игрока",
+        "operationId": "getPlayerMatches",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlayerMatchList"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -1904,6 +2215,12 @@ func init() {
   "definitions": {
     "Account": {
       "type": "object",
+      "required": [
+        "created_at",
+        "email",
+        "id",
+        "is_verified"
+      ],
       "properties": {
         "created_at": {
           "type": "string",
@@ -1944,6 +2261,25 @@ func init() {
         }
       }
     },
+    "City": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
+    "CityList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/City"
+      }
+    },
     "CreateMatchResponse": {
       "type": "object",
       "required": [
@@ -1979,10 +2315,14 @@ func init() {
     },
     "InstitutionList": {
       "type": "object",
+      "required": [
+        "has_next",
+        "institutions"
+      ],
       "properties": {
         "has_next": {
           "type": "boolean",
-          "x-omitempty": false
+          "x-nullable": false
         },
         "institutions": {
           "type": "array",
@@ -1994,9 +2334,18 @@ func init() {
     },
     "InstitutionList_institutions": {
       "type": "object",
+      "required": [
+        "city",
+        "id",
+        "logo_url",
+        "name",
+        "short_name",
+        "type"
+      ],
       "properties": {
         "city": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": false
         },
         "id": {
           "type": "integer",
@@ -2021,7 +2370,8 @@ func init() {
           "enum": [
             1,
             2
-          ]
+          ],
+          "x-nullable": false
         }
       },
       "x-go-name": "InstitutionListItem",
@@ -2054,15 +2404,6 @@ func init() {
     },
     "Match": {
       "type": "object",
-      "required": [
-        "duration",
-        "id",
-        "map",
-        "rounds_played",
-        "team1",
-        "team2",
-        "uploaded_at"
-      ],
       "properties": {
         "duration": {
           "type": "integer",
@@ -2127,6 +2468,11 @@ func init() {
     },
     "MatchTeam_scoreboard": {
       "type": "object",
+      "required": [
+        "is_player_captain",
+        "player_name",
+        "steam_id"
+      ],
       "properties": {
         "assists": {
           "type": "integer",
@@ -2144,6 +2490,10 @@ func init() {
           "type": "number",
           "format": "double"
         },
+        "is_player_captain": {
+          "type": "boolean",
+          "x-nullable": false
+        },
         "kill_death_ratio": {
           "type": "number",
           "format": "double"
@@ -2156,17 +2506,25 @@ func init() {
           "type": "integer",
           "format": "int32"
         },
-        "player_name": {
+        "player_avatar_url": {
           "type": "string"
         },
+        "player_name": {
+          "type": "string",
+          "x-nullable": false
+        },
         "steam_id": {
-          "type": "string"
+          "type": "string",
+          "x-nullable": false
         }
       },
       "x-nullable": false
     },
     "Player": {
       "type": "object",
+      "required": [
+        "steam_id"
+      ],
       "properties": {
         "avatar_url": {
           "type": "string",
@@ -2189,6 +2547,102 @@ func init() {
           "x-nullable": false
         },
         "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
+    },
+    "PlayerMatch": {
+      "type": "object",
+      "required": [
+        "id",
+        "map",
+        "match_state",
+        "match_stats",
+        "score",
+        "uploaded_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "x-nullable": false
+        },
+        "map": {
+          "$ref": "#/definitions/Map"
+        },
+        "match_state": {
+          "description": "Состояние матча:\n * -1 - Проигрыш\n * 0 - Ничья\n * 1 - Победа\n",
+          "type": "integer",
+          "format": "int8",
+          "x-nullable": false
+        },
+        "match_stats": {
+          "$ref": "#/definitions/PlayerMatch_match_stats"
+        },
+        "score": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "uploaded_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": false
+        }
+      },
+      "x-nullable": false
+    },
+    "PlayerMatchList": {
+      "type": "object",
+      "required": [
+        "has_next",
+        "matches"
+      ],
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-nullable": false
+        },
+        "matches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlayerMatch"
+          }
+        }
+      }
+    },
+    "PlayerMatch_match_stats": {
+      "type": "object",
+      "required": [
+        "assists",
+        "damage_per_round",
+        "deaths",
+        "headshot_percentage",
+        "kills"
+      ],
+      "properties": {
+        "assists": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "damage_per_round": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "deaths": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "headshot_percentage": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "kills": {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
@@ -2620,7 +3074,7 @@ func init() {
       "name": "account"
     },
     {
-      "description": "Профиль игрока",
+      "description": "Игрок",
       "name": "player"
     },
     {

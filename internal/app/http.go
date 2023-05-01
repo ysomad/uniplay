@@ -1,9 +1,12 @@
 package app
 
 import (
+	"io"
 	"net/http"
 
 	"github.com/go-openapi/loads"
+	"github.com/go-openapi/runtime"
+	jsoniter "github.com/json-iterator/go"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 
@@ -31,6 +34,24 @@ type apiDeps struct {
 	institution *institution.Controller
 }
 
+func jsonConsumer() runtime.Consumer {
+	return runtime.ConsumerFunc(func(r io.Reader, data any) error {
+		dec := jsoniter.NewDecoder(r)
+		dec.UseNumber()
+
+		return dec.Decode(data)
+	})
+}
+
+func jsonProducer() runtime.Producer {
+	return runtime.ProducerFunc(func(w io.Writer, data any) error {
+		enc := jsoniter.NewEncoder(w)
+		enc.SetEscapeHTML(false)
+
+		return enc.Encode(data)
+	})
+}
+
 func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
 	spec, err := loads.Embedded(restapi.SwaggerJSON, restapi.FlatSwaggerJSON)
 	if err != nil {
@@ -39,6 +60,10 @@ func newAPI(d apiDeps) (*operations.UniplayAPI, error) {
 
 	api := operations.NewUniplayAPI(spec)
 	api.UseSwaggerUI()
+
+	// use jsoniter insted of encoding/json
+	api.JSONConsumer = jsonConsumer()
+	api.JSONProducer = jsonProducer()
 
 	attachHandlers(api, d)
 
@@ -53,6 +78,7 @@ func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 	api.CompendiumGetWeaponsHandler = compendiumGen.GetWeaponsHandlerFunc(d.compendium.GetWeapons)
 	api.CompendiumGetWeaponClassesHandler = compendiumGen.GetWeaponClassesHandlerFunc(d.compendium.GetWeaponClasses)
 	api.CompendiumGetMapsHandler = compendiumGen.GetMapsHandlerFunc(d.compendium.GetMaps)
+	api.CompendiumGetCitiesHandler = compendiumGen.GetCitiesHandlerFunc(d.compendium.GetCities)
 
 	api.AccountCreateAccountHandler = accountGen.CreateAccountHandlerFunc(d.account.CreateAccount)
 

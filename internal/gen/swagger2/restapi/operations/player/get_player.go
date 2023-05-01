@@ -32,7 +32,7 @@ func NewGetPlayer(ctx *middleware.Context, handler GetPlayerHandler) *GetPlayer 
 /*
 	GetPlayer swagger:route GET /players/{steam_id} player getPlayer
 
-Получение профиля игрока
+Получение информации об игроке
 */
 type GetPlayer struct {
 	Context *middleware.Context

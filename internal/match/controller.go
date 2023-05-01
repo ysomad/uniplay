@@ -3,7 +3,6 @@ package match
 import (
 	"errors"
 	"net/http"
-	"strconv"
 
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
@@ -142,7 +141,7 @@ func (c *Controller) GetMatch(p gen.GetMatchParams) gen.GetMatchResponder {
 
 	for i, row := range match.Team1.ScoreBoard {
 		payload.Team1.Scoreboard[i] = models.MatchTeamScoreboard{
-			SteamID:            strconv.FormatUint(row.SteamID, 10),
+			SteamID:            row.SteamID.String(),
 			Assists:            row.Assists,
 			DamagePerRound:     row.DamagePerRound,
 			Deaths:             row.Deaths,
@@ -151,12 +150,14 @@ func (c *Controller) GetMatch(p gen.GetMatchParams) gen.GetMatchResponder {
 			Kills:              row.Kills,
 			Mvps:               row.MVPCount,
 			PlayerName:         row.PlayerName,
+			PlayerAvatarURL:    row.PlayerAvatarURL,
+			IsPlayerCaptain:    row.PlayerCaptain,
 		}
 	}
 
 	for i, row := range match.Team2.ScoreBoard {
 		payload.Team2.Scoreboard[i] = models.MatchTeamScoreboard{
-			SteamID:            strconv.FormatUint(row.SteamID, 10),
+			SteamID:            row.SteamID.String(),
 			Assists:            row.Assists,
 			DamagePerRound:     row.DamagePerRound,
 			Deaths:             row.Deaths,
@@ -165,6 +166,8 @@ func (c *Controller) GetMatch(p gen.GetMatchParams) gen.GetMatchResponder {
 			Kills:              row.Kills,
 			Mvps:               row.MVPCount,
 			PlayerName:         row.PlayerName,
+			PlayerAvatarURL:    row.PlayerAvatarURL,
+			IsPlayerCaptain:    row.PlayerCaptain,
 		}
 	}
 

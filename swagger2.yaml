@@ -1,0 +1,1104 @@
+---
+swagger: "2.0"
+info:
+  version: 0.0.1
+  title: Uniplay private API
+host: localhost:8080
+basePath: /v1
+tags:
+- name: account
+  description: Аккаунт
+- name: player
+  description: Игрок
+- name: match
+  description: Матч
+- name: institution
+  description: Учебное заведение
+- name: compendium
+  description: Справочник
+schemes:
+- http
+- https
+paths:
+  /accounts:
+    post:
+      tags:
+      - account
+      summary: Регистрация аккаунта
+      operationId: createAccount
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/AccountCreateRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Account'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /players/{steam_id}:
+    get:
+      tags:
+      - player
+      summary: Получение информации об игроке
+      operationId: getPlayer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: steam_id
+        in: path
+        description: Steam ID игрока
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Player'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+      - player
+      summary: Редактирование информации об игроке
+      operationId: updatePlayer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: steam_id
+        in: path
+        description: Steam ID игрока
+        required: true
+        type: string
+      - in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/UpdatePlayerRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Player'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /players/{steam_id}/matches:
+    get:
+      tags:
+      - player
+      summary: Получение матчей игрока
+      operationId: getPlayerMatches
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: steam_id
+        in: path
+        description: Steam ID игрока
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/PlayerMatchList'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /players/{steam_id}/stats:
+    get:
+      tags:
+      - player
+      summary: Получение статистики игрока
+      operationId: getPlayerStats
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: steam_id
+        in: path
+        description: Steam ID игрока
+        required: true
+        type: string
+      - name: match_id
+        in: query
+        description: Фильтр по матчу
+        required: false
+        type: string
+        format: uuid
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/PlayerStats'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /players/{steam_id}/weapons:
+    get:
+      tags:
+      - player
+      summary: Получение статистики игрока по оружию
+      operationId: getWeaponStats
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: steam_id
+        in: path
+        description: Steam ID игрока
+        required: true
+        type: string
+      - name: match_id
+        in: query
+        description: Фильтр по матчу
+        required: false
+        type: string
+        format: uuid
+      - name: weapon_id
+        in: query
+        description: Фильтр по оружию
+        required: false
+        type: integer
+        format: int16
+      - name: class_id
+        in: query
+        description: Фильтр по классу оружия
+        required: false
+        type: integer
+        format: int16
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/PlayerWeaponStats'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /matches:
+    post:
+      tags:
+      - match
+      summary: Создание матча из записи
+      operationId: createMatch
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: replay
+        in: formData
+        description: файл записи матча с расширением .dem
+        required: true
+        type: file
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/CreateMatchResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /matches/{match_id}:
+    get:
+      tags:
+      - match
+      summary: Получение информации о матче
+      operationId: getMatch
+      produces:
+      - application/json
+      parameters:
+      - name: match_id
+        in: path
+        description: ID матча
+        required: true
+        type: string
+        format: uuid
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Match'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+      - match
+      summary: Удаление матча
+      operationId: deleteMatch
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: match_id
+        in: path
+        description: ID матча
+        required: true
+        type: string
+        format: uuid
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /institutions:
+    get:
+      tags:
+      - institution
+      summary: Получение списка учебных заведений
+      operationId: getInstitutions
+      produces:
+      - application/json
+      parameters:
+      - name: search
+        in: query
+        description: Поиск по названиям и аббревиатурам уч. заведений
+        required: false
+        type: string
+      - name: city
+        in: query
+        description: Фильтр по городу
+        required: false
+        type: string
+      - name: type
+        in: query
+        description: |
+          Тип учебного заведения:
+           * 1 - ВУЗы
+           * 2 - ССУЗы
+        required: false
+        type: integer
+        format: int8
+        enum:
+        - 1
+        - 2
+      - name: page_size
+        in: query
+        description: "Количество значений на странице. Минимум — 1, максимум — 500."
+        required: false
+        type: integer
+        format: int32
+      - name: last_id
+        in: query
+        description: "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса."
+        required: false
+        type: integer
+        format: int32
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/InstitutionList'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /compendiums/weapons:
+    get:
+      tags:
+      - compendium
+      summary: Получение списка оружий
+      operationId: getWeapons
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/WeaponList'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /compendiums/weapon-classes:
+    get:
+      tags:
+      - compendium
+      summary: Получение списка классов оружий
+      operationId: getWeaponClasses
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/WeaponClassList'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /compendiums/maps:
+    get:
+      tags:
+      - compendium
+      summary: Получение списка карт
+      operationId: getMaps
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/MapList'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /compendiums/cities:
+    get:
+      tags:
+      - compendium
+      summary: Получение списка городов
+      operationId: getCities
+      produces:
+      - application/json
+      parameters:
+      - name: search
+        in: query
+        description: Поиск по названию города
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/CityList'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Error:
+    type: object
+    required:
+    - code
+    - message
+    properties:
+      code:
+        type: integer
+        format: int32
+        description: "код ошибки, равен статусу или >= 600"
+        x-nullable: false
+      message:
+        type: string
+        description: сообщение ошибки
+        x-nullable: false
+  CreateMatchResponse:
+    type: object
+    required:
+    - match_id
+    properties:
+      match_id:
+        type: string
+        format: uuid
+        x-isnullable: false
+  Account:
+    type: object
+    required:
+    - created_at
+    - email
+    - id
+    - is_verified
+    properties:
+      id:
+        type: string
+        x-nullable: false
+      email:
+        type: string
+        x-nullable: false
+      is_verified:
+        type: boolean
+        x-nullable: false
+      created_at:
+        type: string
+        format: datetime
+        x-nullable: false
+  AccountCreateRequest:
+    type: object
+    required:
+    - email
+    - password
+    properties:
+      email:
+        type: string
+        format: email
+        x-nullable: false
+      password:
+        type: string
+        minLength: 8
+        maxLength: 256
+        x-nullable: false
+  Player:
+    type: object
+    required:
+    - steam_id
+    properties:
+      steam_id:
+        type: string
+        x-nullable: false
+      team_id:
+        type: integer
+        format: int32
+        x-nullable: false
+      display_name:
+        type: string
+        x-nullable: false
+      avatar_url:
+        type: string
+        x-nullable: false
+      first_name:
+        type: string
+        x-nullable: false
+      last_name:
+        type: string
+        x-nullable: false
+  UpdatePlayerRequest:
+    type: object
+    required:
+    - avatar_url
+    - first_name
+    - last_name
+    - team_id
+    properties:
+      team_id:
+        type: integer
+        format: int32
+        x-nullable: false
+      avatar_url:
+        type: string
+        format: uri
+        x-nullable: false
+      first_name:
+        type: string
+        minLength: 2
+        maxLength: 32
+        x-nullable: false
+      last_name:
+        type: string
+        minLength: 2
+        maxLength: 32
+        x-nullable: false
+  PlayerStats:
+    type: object
+    required:
+    - base_stats
+    - calculated_stats
+    - round_stats
+    properties:
+      base_stats:
+        $ref: '#/definitions/PlayerStats_base_stats'
+      calculated_stats:
+        $ref: '#/definitions/PlayerStats_calculated_stats'
+      round_stats:
+        $ref: '#/definitions/PlayerStats_round_stats'
+  PlayerWeaponStats:
+    type: array
+    items:
+      $ref: '#/definitions/PlayerWeaponStats_inner'
+  WeaponList:
+    type: array
+    items:
+      $ref: '#/definitions/WeaponList_inner'
+  WeaponClassList:
+    type: array
+    items:
+      $ref: '#/definitions/WeaponClassList_inner'
+  MapList:
+    type: array
+    items:
+      $ref: '#/definitions/Map'
+  Map:
+    type: object
+    required:
+    - icon_url
+    - name
+    properties:
+      name:
+        type: string
+        description: "Название карты, например, Cobblestone"
+        x-nullable: false
+      icon_url:
+        type: string
+        x-nullable: false
+    x-nullable: false
+  Match:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        x-nullable: false
+      map:
+        $ref: '#/definitions/Map'
+      rounds_played:
+        type: integer
+        format: int32
+        x-nullable: false
+      duration:
+        type: integer
+        format: int64
+        x-nullable: false
+      uploaded_at:
+        type: string
+        format: date-time
+        x-nullable: false
+      team1:
+        $ref: '#/definitions/MatchTeam'
+      team2:
+        $ref: '#/definitions/MatchTeam'
+  MatchTeam:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        x-nullable: false
+      clan_name:
+        type: string
+        x-nullable: false
+      flag_code:
+        type: string
+        x-nullable: false
+      score:
+        type: integer
+        format: int32
+        x-nullable: false
+      scoreboard:
+        type: array
+        items:
+          $ref: '#/definitions/MatchTeam_scoreboard'
+    x-nullable: false
+  InstitutionList:
+    type: object
+    required:
+    - has_next
+    - institutions
+    properties:
+      institutions:
+        type: array
+        items:
+          $ref: '#/definitions/InstitutionList_institutions'
+      has_next:
+        type: boolean
+        x-nullable: false
+  City:
+    type: object
+    required:
+    - name
+    properties:
+      name:
+        type: string
+        x-nullable: false
+    x-nullable: false
+  CityList:
+    type: array
+    items:
+      $ref: '#/definitions/City'
+  PlayerMatch:
+    type: object
+    required:
+    - id
+    - map
+    - match_state
+    - match_stats
+    - score
+    - uploaded_at
+    properties:
+      id:
+        type: string
+        format: uuid
+        x-nullable: false
+      map:
+        $ref: '#/definitions/Map'
+      score:
+        type: string
+        x-nullable: false
+      match_stats:
+        $ref: '#/definitions/PlayerMatch_match_stats'
+      match_state:
+        type: integer
+        format: int8
+        description: |
+          Состояние матча:
+           * -1 - Проигрыш
+           * 0 - Ничья
+           * 1 - Победа
+        x-nullable: false
+      uploaded_at:
+        type: string
+        format: date-time
+        x-nullable: false
+    x-nullable: false
+  PlayerMatchList:
+    type: object
+    required:
+    - has_next
+    - matches
+    properties:
+      matches:
+        type: array
+        items:
+          $ref: '#/definitions/PlayerMatch'
+      has_next:
+        type: boolean
+        x-nullable: false
+  PlayerStats_base_stats:
+    type: object
+    properties:
+      kills:
+        type: integer
+        format: int32
+      headshot_kills:
+        type: integer
+        format: int32
+      blind_kills:
+        type: integer
+        format: int32
+      wallbang_kills:
+        type: integer
+        format: int32
+      noscope_kills:
+        type: integer
+        format: int32
+      through_smoke_kills:
+        type: integer
+        format: int32
+      deaths:
+        type: integer
+        format: int32
+      assists:
+        type: integer
+        format: int32
+      flashbang_assists:
+        type: integer
+        format: int32
+      mvps:
+        type: integer
+        format: int32
+      damage_taken:
+        type: integer
+        format: int32
+      damage_dealt:
+        type: integer
+        format: int32
+      grenade_damage_dealt:
+        type: integer
+        format: int32
+      blinded_players:
+        type: integer
+        format: int32
+      blinded_times:
+        type: integer
+        format: int32
+      bombs_planted:
+        type: integer
+        format: int32
+      bombs_defused:
+        type: integer
+        format: int32
+      rounds_played:
+        type: integer
+        format: int32
+      matches_played:
+        type: integer
+        format: int32
+      wins:
+        type: integer
+        format: int32
+      loses:
+        type: integer
+        format: int32
+      draws:
+        type: integer
+        format: int32
+      time_played:
+        type: integer
+        format: int64
+    description: статистика игрока по всем сыгранным матчам
+  PlayerStats_calculated_stats:
+    type: object
+    properties:
+      kill_death_ratio:
+        type: number
+        format: double
+      headshot_percentage:
+        type: number
+        format: double
+      win_rate:
+        type: number
+        format: double
+    description: высчитанная статистика на основе статистики по матчам
+    x-nullable: false
+  PlayerStats_round_stats:
+    type: object
+    properties:
+      damage_dealt:
+        type: number
+        format: double
+        description: средний урон за раунд
+      grenade_damage_dealt:
+        type: number
+        format: double
+        description: средний урон гранатами за раунд
+      kills:
+        type: number
+        format: double
+        description: среднее кол-во убийств за раунд
+      assists:
+        type: number
+        format: double
+        description: среднее кол-во ассистов за раунд
+      deaths:
+        type: number
+        format: double
+        description: среднее кол-во смертей за раунд
+      blinded_times:
+        type: number
+        format: double
+        description: среднее кол-во раз ослеплен за раунд
+      blinded_players:
+        type: number
+        format: double
+        description: средне кол-во ослепленных игроков за раунд
+    description: набор средних показателей за раунд
+    x-nullable: false
+  PlayerWeaponStats_inner_base_stats:
+    type: object
+    properties:
+      weapon_id:
+        type: integer
+        format: int16
+      weapon:
+        type: string
+      kills:
+        type: integer
+        format: int32
+      deaths:
+        type: integer
+        format: int32
+      headshot_kills:
+        type: integer
+        format: int32
+      blind_kills:
+        type: integer
+        format: int32
+      wallbang_kills:
+        type: integer
+        format: int32
+      noscope_kills:
+        type: integer
+        format: int32
+      through_smoke_kills:
+        type: integer
+        format: int32
+      assists:
+        type: integer
+        format: int32
+      damage_taken:
+        type: integer
+        format: int32
+      damage_dealt:
+        type: integer
+        format: int32
+      shots:
+        type: integer
+        format: int32
+      head_hits:
+        type: integer
+        format: int32
+      neck_hits:
+        type: integer
+        format: int32
+      chest_hits:
+        type: integer
+        format: int32
+      stomach_hits:
+        type: integer
+        format: int32
+      left_arm_hits:
+        type: integer
+        format: int32
+      right_arm_hits:
+        type: integer
+        format: int32
+      left_leg_hits:
+        type: integer
+        format: int32
+      right_leg_hits:
+        type: integer
+        format: int32
+  PlayerWeaponStats_inner_accuracy_stats:
+    type: object
+    properties:
+      total:
+        type: number
+        format: double
+      head:
+        type: number
+        format: double
+      neck:
+        type: number
+        format: double
+      chest:
+        type: number
+        format: double
+      stomach:
+        type: number
+        format: double
+      arms:
+        type: number
+        format: double
+      legs:
+        type: number
+        format: double
+    x-nullable: false
+  PlayerWeaponStats_inner:
+    type: object
+    required:
+    - accuracy_stats
+    - base_stats
+    properties:
+      base_stats:
+        $ref: '#/definitions/PlayerWeaponStats_inner_base_stats'
+      accuracy_stats:
+        $ref: '#/definitions/PlayerWeaponStats_inner_accuracy_stats'
+    x-nullable: false
+  WeaponList_inner:
+    type: object
+    required:
+    - class
+    - class_id
+    - weapon
+    - weapon_id
+    properties:
+      weapon_id:
+        type: integer
+        format: int16
+        x-nullable: false
+      weapon:
+        type: string
+        description: название оружия
+        x-nullable: false
+      class_id:
+        type: integer
+        format: int16
+        x-nullable: false
+      class:
+        type: string
+        description: имя класса оружия
+        x-nullable: false
+    x-nullable: false
+  WeaponClassList_inner:
+    type: object
+    required:
+    - class
+    - id
+    properties:
+      id:
+        type: integer
+        format: int16
+        x-nullable: false
+      class:
+        type: string
+        x-nullable: false
+    x-nullable: false
+  MatchTeam_scoreboard:
+    type: object
+    required:
+    - is_player_captain
+    - player_name
+    - steam_id
+    properties:
+      steam_id:
+        type: string
+        x-nullable: false
+      player_name:
+        type: string
+        x-nullable: false
+      player_avatar_url:
+        type: string
+      is_player_captain:
+        type: boolean
+        x-nullable: false
+      kills:
+        type: integer
+        format: int32
+      deaths:
+        type: integer
+        format: int32
+      assists:
+        type: integer
+        format: int32
+      mvps:
+        type: integer
+        format: int32
+      kill_death_ratio:
+        type: number
+        format: double
+      damage_per_round:
+        type: number
+        format: double
+      headshot_percentage:
+        type: number
+        format: double
+    x-nullable: false
+  InstitutionList_institutions:
+    type: object
+    required:
+    - city
+    - id
+    - logo_url
+    - name
+    - short_name
+    - type
+    properties:
+      id:
+        type: integer
+        format: int32
+        x-nullable: false
+      name:
+        type: string
+        x-nullable: false
+      short_name:
+        type: string
+        x-nullable: false
+      logo_url:
+        type: string
+        x-nullable: false
+      city:
+        type: string
+        x-nullable: false
+      type:
+        type: integer
+        format: int32
+        enum:
+        - 1
+        - 2
+        x-nullable: false
+    x-go-name: InstitutionListItem
+    x-nullable: false
+  PlayerMatch_match_stats:
+    type: object
+    required:
+    - assists
+    - damage_per_round
+    - deaths
+    - headshot_percentage
+    - kills
+    properties:
+      kills:
+        type: integer
+        format: int32
+        x-nullable: false
+      deaths:
+        type: integer
+        format: int32
+        x-nullable: false
+      assists:
+        type: integer
+        format: int32
+        x-nullable: false
+      headshot_percentage:
+        type: integer
+        format: int32
+        x-nullable: false
+      damage_per_round:
+        type: integer
+        format: int32
+        x-nullable: false
