@@ -16,56 +16,64 @@ var (
 	errInvalidHash         = errors.New("argon2: hash is not in the correct format")
 	errIncompatibleVariant = errors.New("argon2: incompatible variant of argon2")
 	errIncompatibleVersion = errors.New("argon2: incompatible version of argon2")
+	errInvalidSaltLength   = errors.New("argon2: invalid params salt length")
 )
 
 var DefaultParams = Params{ //nolint:gochecknoglobals // it has to be here to use the package
-	memory:      64 * 1024,
-	iterations:  1,
-	parallelism: 2,
-	saltLength:  16,
-	keyLength:   32,
+	Memory:      64 * 1024,
+	Iterations:  1,
+	Parallelism: 2,
+	SaltLength:  16,
+	KeyLength:   32,
 }
 
 type Params struct {
-	// The amount of memory used by the algorithm (in kibibytes).
-	memory uint32
+	// The amount of Memory used by the algorithm (in kibibytes).
+	Memory uint32
 
-	// The number of iterations over the memory.
-	iterations uint32
+	// The number of Iterations over the memory.
+	Iterations uint32
 
 	// The number of threads (or lanes) used by the algorithm.
 	// Recommended value is between 1 and runtime.NumCPU().
-	parallelism uint8
+	Parallelism uint8
 
 	// Length of the random salt. 16 bytes is recommended for password hashing.
-	saltLength uint32
+	SaltLength uint32
 
 	// Length of the generated key. 16 bytes or more is recommended.
-	keyLength uint32
+	KeyLength uint32
 }
 
-func GenerateFromPassword(password string, p Params) (string, error) {
-	salt := make([]byte, p.saltLength)
+func GenerateFromPassword(password string, p Params) (hash string, err error) {
+	if p.SaltLength <= 0 {
+		return "", errInvalidSaltLength
+	}
+
+	salt := make([]byte, p.SaltLength)
 
 	if _, err := rand.Read(salt); err != nil {
 		return "", err
 	}
 
-	key := argon2.IDKey(stringToBytes(password), salt, p.iterations, p.memory, p.parallelism, p.keyLength)
+	key := argon2.IDKey(
+		unsafe.Slice(unsafe.StringData(password), len(password)),
+		salt,
+		p.Iterations,
+		p.Memory,
+		p.Parallelism,
+		p.KeyLength,
+	)
 
 	return fmt.Sprintf(
 		"$argon2id$v=%d$m=%d,t=%d,p=%d$%s$%s",
 		argon2.Version,
-		p.memory,
-		p.iterations,
-		p.parallelism,
+		p.Memory,
+		p.Iterations,
+		p.Parallelism,
 		base64.RawStdEncoding.EncodeToString(salt),
 		base64.RawStdEncoding.EncodeToString(key),
 	), nil
-}
-
-func stringToBytes(s string) []byte {
-	return unsafe.Slice(unsafe.StringData(s), len(s))
 }
 
 func CompareHashAndPassword(password, hash string) (bool, error) {
@@ -74,7 +82,14 @@ func CompareHashAndPassword(password, hash string) (bool, error) {
 		return false, err
 	}
 
-	comparedKey := argon2.IDKey(stringToBytes(password), salt, p.iterations, p.memory, p.parallelism, p.keyLength)
+	comparedKey := argon2.IDKey(
+		unsafe.Slice(unsafe.StringData(password), len(password)),
+		salt,
+		p.Iterations,
+		p.Memory,
+		p.Parallelism,
+		p.KeyLength,
+	)
 
 	if subtle.ConstantTimeEq(int32(len(key)), int32(len(comparedKey))) == 0 {
 		return false, nil
@@ -110,7 +125,7 @@ func decode(hash string) (params Params, salt, key []byte, err error) {
 		return Params{}, nil, nil, errIncompatibleVersion
 	}
 
-	_, err = fmt.Sscanf(vals[3], "m=%d,t=%d,p=%d", &params.memory, &params.iterations, &params.parallelism)
+	_, err = fmt.Sscanf(vals[3], "m=%d,t=%d,p=%d", &params.Memory, &params.Iterations, &params.Parallelism)
 	if err != nil {
 		return Params{}, nil, nil, err
 	}
@@ -120,14 +135,14 @@ func decode(hash string) (params Params, salt, key []byte, err error) {
 		return Params{}, nil, nil, err
 	}
 
-	params.saltLength = uint32(len(salt))
+	params.SaltLength = uint32(len(salt))
 
 	key, err = base64.RawStdEncoding.Strict().DecodeString(vals[5])
 	if err != nil {
 		return Params{}, nil, nil, err
 	}
 
-	params.keyLength = uint32(len(key))
+	params.KeyLength = uint32(len(key))
 
 	return params, salt, key, nil
 }
