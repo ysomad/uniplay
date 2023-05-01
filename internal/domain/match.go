@@ -65,8 +65,8 @@ func NewMatchScoreBoardRow(
 	mvps int32,
 	dmgDealt int32,
 	roundsPlayed int32,
-) MatchScoreBoardRow {
-	return MatchScoreBoardRow{
+) *MatchScoreBoardRow {
+	return &MatchScoreBoardRow{
 		SteamID:            SteamID(steamID),
 		PlayerName:         playerName,
 		PlayerAvatarURL:    playerAvatarURL,

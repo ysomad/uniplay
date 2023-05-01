@@ -17,6 +17,7 @@ var (
 	errIncompatibleVariant = errors.New("argon2: incompatible variant of argon2")
 	errIncompatibleVersion = errors.New("argon2: incompatible version of argon2")
 	errInvalidSaltLength   = errors.New("argon2: invalid params salt length")
+	errEmptyPassword       = errors.New("argon2: empty password")
 )
 
 var DefaultParams = Params{ //nolint:gochecknoglobals // it has to be here to use the package
@@ -46,6 +47,10 @@ type Params struct {
 }
 
 func GenerateFromPassword(password string, p Params) (hash string, err error) {
+	if password == "" {
+		return "", errEmptyPassword
+	}
+
 	if p.SaltLength <= 0 {
 		return "", errInvalidSaltLength
 	}
