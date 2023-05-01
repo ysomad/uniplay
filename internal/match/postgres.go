@@ -31,17 +31,17 @@ func (p *postgres) Exists(ctx context.Context, matchID uuid.UUID) (bool, error) 
 	ctx, span := p.tracer.Start(ctx, "match.Postgres.Exists")
 	defer span.End()
 
-	row := p.client.Pool.QueryRow(ctx, "select exists(select 1 from match where id = $1)", matchID)
+	sbRow := p.client.Pool.QueryRow(ctx, "select exists(select 1 from match where id = $1)", matchID)
 
 	var matchFound bool
-	if err := row.Scan(&matchFound); err != nil {
+	if err := sbRow.Scan(&matchFound); err != nil {
 		return false, err
 	}
 
 	return matchFound, nil
 }
 
-type dbMatchScoreBoardRow struct {
+type matchScoreBoardRow struct {
 	MatchID         uuid.UUID         `db:"match_id"`
 	MapName         string            `db:"map_name"`
 	MapIconURL      string            `db:"map_icon_url"`
@@ -65,8 +65,70 @@ type dbMatchScoreBoardRow struct {
 	MatchUploadedAt time.Time         `db:"match_uploaded_at"`
 }
 
-func (p *postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]*matchScoreBoardRow, error) {
-	ctx, span := p.tracer.Start(ctx, "match.Postgres.GetScoreBoardRowsByID")
+func (p *postgres) scoreboardRowsToMatch(sbRows []*matchScoreBoardRow) domain.Match {
+	match := domain.Match{
+		ID: sbRows[0].MatchID,
+		Map: domain.Map{
+			Name:    sbRows[0].MapName,
+			IconURL: sbRows[0].MapIconURL,
+		},
+		RoundsPlayed: sbRows[0].RoundsPlayed,
+		Duration:     sbRows[0].MatchDuration,
+		UploadedAt:   sbRows[0].MatchUploadedAt,
+	}
+
+	for _, sbRow := range sbRows {
+		row := domain.NewMatchScoreBoardRow(
+			sbRow.SteamID,
+			sbRow.PlayerName,
+			string(sbRow.PlayerAvatarURL),
+			sbRow.PlayerCaptain,
+			sbRow.Kills,
+			sbRow.HeadshotKills,
+			sbRow.Deaths,
+			sbRow.Assists,
+			sbRow.MVPCount,
+			sbRow.DamageDealt,
+			sbRow.RoundsPlayed,
+		)
+
+		team := domain.NewMatchTeam(
+			sbRow.TeamID,
+			sbRow.TeamScore,
+			sbRow.TeamMatchState,
+			sbRow.TeamName,
+			sbRow.TeamFlagCode,
+		)
+
+		// инициализировать команд матча
+		if match.Team1 == nil {
+			match.Team1 = team
+			match.Team1.ScoreBoard = append(match.Team1.ScoreBoard, row)
+
+			continue
+		}
+
+		if match.Team2 == nil {
+			match.Team2 = team
+			match.Team2.ScoreBoard = append(match.Team2.ScoreBoard, row)
+
+			continue
+		}
+
+		// Добавить строку в таблицу соответствующей команды
+		switch sbRow.TeamID {
+		case match.Team1.ID:
+			match.Team1.ScoreBoard = append(match.Team1.ScoreBoard, row)
+		case match.Team2.ID:
+			match.Team2.ScoreBoard = append(match.Team2.ScoreBoard, row)
+		}
+	}
+
+	return match
+}
+
+func (p *postgres) FindByID(ctx context.Context, matchID uuid.UUID) (domain.Match, error) {
+	ctx, span := p.tracer.Start(ctx, "match.Postgres.FindByID")
 	defer span.End()
 
 	sql, args, err := p.client.Builder.
@@ -105,48 +167,24 @@ func (p *postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 		OrderBy("pms.kills DESC").
 		ToSql()
 	if err != nil {
-		return nil, err
+		return domain.Match{}, err
 	}
 
 	rows, err := p.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
-		return nil, err
+		return domain.Match{}, err
 	}
 
-	res, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[dbMatchScoreBoardRow])
+	sbRows, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[matchScoreBoardRow])
 	if err != nil {
-		return nil, err
+		return domain.Match{}, err
 	}
 
-	sbRows := make([]*matchScoreBoardRow, len(res))
-
-	for i, row := range res {
-		sbRows[i] = &matchScoreBoardRow{
-			MatchID:         row.MatchID,
-			MapName:         row.MapName,
-			MapIconURL:      row.MapIconURL,
-			SteamID:         row.SteamID,
-			PlayerName:      row.PlayerName,
-			PlayerAvatarURL: string(row.PlayerAvatarURL),
-			PlayerCaptain:   row.PlayerCaptain,
-			TeamID:          row.TeamID,
-			TeamName:        row.TeamName,
-			TeamFlagCode:    row.TeamFlagCode,
-			TeamScore:       row.TeamScore,
-			TeamMatchState:  row.TeamMatchState,
-			Kills:           row.Kills,
-			HeadshotKills:   row.HeadshotKills,
-			Deaths:          row.Deaths,
-			Assists:         row.Assists,
-			DamageDealt:     row.DamageDealt,
-			RoundsPlayed:    row.RoundsPlayed,
-			MVPCount:        row.MVPCount,
-			MatchDuration:   row.MatchDuration,
-			MatchUploadedAt: row.MatchUploadedAt,
-		}
+	if len(sbRows) < 1 {
+		return domain.Match{}, domain.ErrMatchNotFound
 	}
 
-	return sbRows, nil
+	return p.scoreboardRowsToMatch(sbRows), nil
 }
 
 func (p *postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error { //nolint:gocognit // yes its T H I C C

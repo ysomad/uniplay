@@ -13,7 +13,7 @@ type repository interface {
 	CreateWithStats(context.Context, *replayMatch, []*playerStat, []*weaponStat) error
 	Exists(ctx context.Context, matchID uuid.UUID) (found bool, err error)
 	DeleteByID(ctx context.Context, matchID uuid.UUID) error
-	GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID) ([]*matchScoreBoardRow, error)
+	FindByID(ctx context.Context, matchID uuid.UUID) (domain.Match, error)
 }
 
 type service struct {
@@ -69,72 +69,5 @@ func (s *service) GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match,
 	ctx, span := s.tracer.Start(ctx, "match.Service.GetByID")
 	defer span.End()
 
-	rows, err := s.match.GetScoreBoardRowsByID(ctx, matchID)
-	if err != nil {
-		return domain.Match{}, err
-	}
-
-	if len(rows) < 1 {
-		return domain.Match{}, domain.ErrMatchNotFound
-	}
-
-	match := domain.Match{
-		ID: rows[0].MatchID,
-		Map: domain.Map{
-			Name:    rows[0].MapName,
-			IconURL: rows[0].MapIconURL,
-		},
-		RoundsPlayed: rows[0].RoundsPlayed,
-		Duration:     rows[0].MatchDuration,
-		UploadedAt:   rows[0].MatchUploadedAt,
-	}
-
-	for _, row := range rows {
-		r := domain.NewMatchScoreBoardRow(
-			row.SteamID,
-			row.PlayerName,
-			row.PlayerAvatarURL,
-			row.PlayerCaptain,
-			row.Kills,
-			row.HeadshotKills,
-			row.Deaths,
-			row.Assists,
-			row.MVPCount,
-			row.DamageDealt,
-			row.RoundsPlayed,
-		)
-
-		t := domain.NewMatchTeam(
-			row.TeamID,
-			row.TeamScore,
-			row.TeamMatchState,
-			row.TeamName,
-			row.TeamFlagCode,
-		)
-
-		// инициализировать команд матча
-		if match.Team1 == nil {
-			match.Team1 = t
-			match.Team1.ScoreBoard = append(match.Team1.ScoreBoard, &r)
-
-			continue
-		}
-
-		if match.Team2 == nil {
-			match.Team2 = t
-			match.Team2.ScoreBoard = append(match.Team2.ScoreBoard, &r)
-
-			continue
-		}
-
-		// Добавить строку в таблицу соответствующей команды
-		switch row.TeamID {
-		case match.Team1.ID:
-			match.Team1.ScoreBoard = append(match.Team1.ScoreBoard, &r)
-		case match.Team2.ID:
-			match.Team2.ScoreBoard = append(match.Team2.ScoreBoard, &r)
-		}
-	}
-
-	return match, nil
+	return s.match.FindByID(ctx, matchID)
 }
