@@ -93,7 +93,7 @@ func Run(conf *config.Config) { //nolint:funlen // main func
 	}()
 
 	h := newHandler(api)
-	corsHandler := cors.Default().Handler(h) // TODO: remove in prod
+	corsHandler := cors.Default().Handler(h)
 	srv.SetHandler(corsHandler)
 
 	if err = srv.Serve(); err != nil {

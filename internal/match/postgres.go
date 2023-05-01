@@ -144,7 +144,6 @@ func (p *postgres) GetScoreBoardRowsByID(ctx context.Context, matchID uuid.UUID)
 			MatchDuration:   row.MatchDuration,
 			MatchUploadedAt: row.MatchUploadedAt,
 		}
-
 	}
 
 	return sbRows, nil
