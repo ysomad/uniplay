@@ -46,6 +46,11 @@ func TestGenerateFromPassword(t *testing.T) {
 	key, err := base64.RawStdEncoding.Strict().DecodeString(vals[5])
 	assert.NoError(t, err)
 	assert.Equal(t, int(DefaultParams.KeyLength), len(key))
+
+	// empty password
+	got3, err := GenerateFromPassword("", DefaultParams)
+	assert.Error(t, err)
+	assert.Equal(t, "", got3)
 }
 
 func Test_decode(t *testing.T) {

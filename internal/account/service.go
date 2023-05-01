@@ -2,6 +2,7 @@ package account
 
 import (
 	"context"
+	"time"
 
 	"github.com/ysomad/uniplay/internal/domain"
 )
@@ -21,7 +22,7 @@ func NewService(r repository) *service {
 }
 
 func (s *service) Create(ctx context.Context, email, password string) (*domain.Account, error) {
-	acc, err := domain.NewAccount(email, password)
+	acc, err := domain.NewAccount(email, password, time.Now())
 	if err != nil {
 		return nil, err
 	}
