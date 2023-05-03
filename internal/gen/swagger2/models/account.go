@@ -32,6 +32,10 @@ type Account struct {
 	// Required: true
 	ID string `json:"id"`
 
+	// is admin
+	// Required: true
+	IsAdmin bool `json:"is_admin"`
+
 	// is verified
 	// Required: true
 	IsVerified bool `json:"is_verified"`
@@ -50,6 +54,10 @@ func (m *Account) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateIsAdmin(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -88,6 +96,15 @@ func (m *Account) validateEmail(formats strfmt.Registry) error {
 func (m *Account) validateID(formats strfmt.Registry) error {
 
 	if err := validate.RequiredString("id", "body", m.ID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Account) validateIsAdmin(formats strfmt.Registry) error {
+
+	if err := validate.Required("is_admin", "body", bool(m.IsAdmin)); err != nil {
 		return err
 	}
 

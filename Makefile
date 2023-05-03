@@ -15,7 +15,7 @@ compose-all:
 compose-down:
 	docker-compose down --remove-orphans
 
-PHONY: run
+.PHONY: run
 run:
 	go mod tidy && go mod download && \
 	go run ./cmd/app

@@ -1,21 +1,21 @@
-BEGIN
-;
+BEGIN;
 
 CREATE TABLE IF NOT EXISTS account (
     id uuid PRIMARY KEY NOT NULL,
     email varchar(255) UNIQUE NOT NULL,
     password varchar(4096) NOT NULL,
     is_verified boolean DEFAULT false,
+    is_admin boolean DEFAULT false,
     created_at timestamptz NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS map (    
+CREATE TABLE IF NOT EXISTS map (
     name varchar(16) PRIMARY KEY NOT NULL,
     icon_url varchar(255) NOT NULL
 );
 
 INSERT INTO map(name, icon_url)
-VALUES 
+VALUES
     ('cs_agency', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:Cs_agency.png'),
     ('cs_office', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:Cs_office.png'),
     ('de_ancient', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_ancient.png'),
@@ -31,10 +31,20 @@ VALUES
     ('de_vertigo', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_vertigo.png'),
     ('de_cbble', 'https://developer.valvesoftware.com/wiki/List_of_CS:GO_Maps#/media/File:De_cbble.png');
 
+CREATE TABLE IF NOT EXISTS institution (
+    id smallserial PRIMARY KEY NOT NULL,
+    name varchar(255) UNIQUE NOT NULL,
+    short_name varchar(255) NOT NULL,
+    city varchar(128) NOT NULL,
+    type smallint NOT NULL,
+    logo_url varchar(2048) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS team (
     id smallserial PRIMARY KEY NOT NULL,
     clan_name varchar(64) UNIQUE NOT NULL,
-    flag_code varchar(2) NOT NULL
+    flag_code varchar(2) NOT NULL,
+    instutition_id smallint REFERENCES institution (id)
 );
 
 CREATE TABLE IF NOT EXISTS player (
@@ -132,15 +142,6 @@ CREATE TABLE IF NOT EXISTS player_match_weapon_stat (
     right_arm_hits smallint NOT NULL,
     left_leg_hits smallint NOT NULL,
     right_leg_hits smallint NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS institution (
-    id smallserial PRIMARY KEY NOT NULL,
-    name varchar(255) UNIQUE NOT NULL,
-    short_name varchar(255) NOT NULL,
-    city varchar(128) NOT NULL,
-    type smallint NOT NULL,
-    logo_url varchar(2048) NOT NULL
 );
 
 ALTER TABLE institution ADD COLUMN ts tsvector

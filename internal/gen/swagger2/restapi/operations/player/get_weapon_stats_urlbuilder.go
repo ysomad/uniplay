@@ -11,7 +11,6 @@ import (
 	golangswaggerpaths "path"
 	"strings"
 
-	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
 
@@ -20,7 +19,6 @@ type GetWeaponStatsURL struct {
 	SteamID string
 
 	ClassID  *int16
-	MatchID  *strfmt.UUID
 	WeaponID *int16
 
 	_basePath string
@@ -70,14 +68,6 @@ func (o *GetWeaponStatsURL) Build() (*url.URL, error) {
 	}
 	if classIDQ != "" {
 		qs.Set("class_id", classIDQ)
-	}
-
-	var matchIDQ string
-	if o.MatchID != nil {
-		matchIDQ = o.MatchID.String()
-	}
-	if matchIDQ != "" {
-		qs.Set("match_id", matchIDQ)
 	}
 
 	var weaponIDQ string

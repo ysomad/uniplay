@@ -566,13 +566,6 @@ func init() {
             "name": "steam_id",
             "in": "path",
             "required": true
-          },
-          {
-            "type": "string",
-            "format": "uuid",
-            "description": "Фильтр по матчу",
-            "name": "match_id",
-            "in": "query"
           }
         ],
         "responses": {
@@ -625,13 +618,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "format": "uuid",
-            "description": "Фильтр по матчу",
-            "name": "match_id",
-            "in": "query"
-          },
-          {
             "type": "integer",
             "format": "int16",
             "description": "Фильтр по оружию",
@@ -682,6 +668,7 @@ func init() {
         "created_at",
         "email",
         "id",
+        "is_admin",
         "is_verified"
       ],
       "properties": {
@@ -696,6 +683,10 @@ func init() {
         },
         "id": {
           "type": "string",
+          "x-nullable": false
+        },
+        "is_admin": {
+          "type": "boolean",
           "x-nullable": false
         },
         "is_verified": {
@@ -869,8 +860,9 @@ func init() {
       "type": "object",
       "properties": {
         "duration": {
+          "description": "длительность матча в минутах",
           "type": "integer",
-          "format": "int64",
+          "format": "int32",
           "x-nullable": false
         },
         "id": {
@@ -2103,13 +2095,6 @@ func init() {
             "name": "steam_id",
             "in": "path",
             "required": true
-          },
-          {
-            "type": "string",
-            "format": "uuid",
-            "description": "Фильтр по матчу",
-            "name": "match_id",
-            "in": "query"
           }
         ],
         "responses": {
@@ -2162,13 +2147,6 @@ func init() {
             "required": true
           },
           {
-            "type": "string",
-            "format": "uuid",
-            "description": "Фильтр по матчу",
-            "name": "match_id",
-            "in": "query"
-          },
-          {
             "type": "integer",
             "format": "int16",
             "description": "Фильтр по оружию",
@@ -2219,6 +2197,7 @@ func init() {
         "created_at",
         "email",
         "id",
+        "is_admin",
         "is_verified"
       ],
       "properties": {
@@ -2233,6 +2212,10 @@ func init() {
         },
         "id": {
           "type": "string",
+          "x-nullable": false
+        },
+        "is_admin": {
+          "type": "boolean",
           "x-nullable": false
         },
         "is_verified": {
@@ -2406,8 +2389,9 @@ func init() {
       "type": "object",
       "properties": {
         "duration": {
+          "description": "длительность матча в минутах",
           "type": "integer",
-          "format": "int64",
+          "format": "int32",
           "x-nullable": false
         },
         "id": {

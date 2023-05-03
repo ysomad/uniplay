@@ -9,11 +9,12 @@ import (
 )
 
 type Account struct {
-	ID        uuid.UUID
-	Email     string
-	Password  string
-	Verified  bool
-	CreatedAt time.Time
+	ID         uuid.UUID
+	Email      string
+	Password   string
+	IsVerified bool
+	IsAdmin    bool
+	CreatedAt  time.Time
 }
 
 func NewAccount(email, password string, created time.Time) (a *Account, err error) {
