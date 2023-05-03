@@ -21,6 +21,7 @@ func TestNewAccount(t *testing.T) {
 	assert.NotEmpty(t, got1.ID)
 	assert.Equal(t, "test@email.com", got1.Email)
 	assert.NotEmpty(t, got1.Password)
-	assert.Equal(t, false, got1.Verified)
+	assert.Equal(t, false, got1.IsVerified)
+	assert.Equal(t, false, got1.IsAdmin)
 	assert.Equal(t, now, got1.CreatedAt)
 }

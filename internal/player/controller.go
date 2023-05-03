@@ -5,8 +5,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/google/uuid"
-
 	"github.com/ysomad/uniplay/internal/domain"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
@@ -107,19 +105,7 @@ func (c *Controller) GetPlayerStats(p gen.GetPlayerStatsParams) gen.GetPlayerSta
 		})
 	}
 
-	filter := domain.PlayerStatsFilter{}
-
-	if p.MatchID != nil {
-		filter.MatchID, err = uuid.Parse(p.MatchID.String())
-		if err != nil {
-			return gen.NewGetPlayerStatsBadRequest().WithPayload(&models.Error{
-				Code:    http.StatusBadRequest,
-				Message: err.Error(),
-			})
-		}
-	}
-
-	s, err := c.player.GetStats(p.HTTPRequest.Context(), steamID, filter)
+	s, err := c.player.GetStats(p.HTTPRequest.Context(), steamID)
 	if err != nil {
 		if errors.Is(err, domain.ErrPlayerNotFound) {
 			return gen.NewGetPlayerStatsNotFound().WithPayload(&models.Error{
@@ -191,19 +177,11 @@ func (c *Controller) GetWeaponStats(p gen.GetWeaponStatsParams) gen.GetWeaponSta
 		})
 	}
 
-	filter := domain.NewWeaponStatsFilter(p.WeaponID, p.ClassID)
-
-	if p.MatchID != nil {
-		filter.MatchID, err = uuid.Parse(p.MatchID.String())
-		if err != nil {
-			return gen.NewGetWeaponStatsBadRequest().WithPayload(&models.Error{
-				Code:    http.StatusBadRequest,
-				Message: err.Error(),
-			})
-		}
-	}
-
-	weaponStats, err := c.player.GetWeaponStats(p.HTTPRequest.Context(), steamID, filter)
+	weaponStats, err := c.player.GetWeaponStats(
+		p.HTTPRequest.Context(),
+		steamID,
+		domain.NewWeaponStatsFilter(p.WeaponID, p.ClassID),
+	)
 	if err != nil {
 		if errors.Is(err, domain.ErrPlayerNotFound) {
 			return gen.NewGetWeaponStatsNotFound().WithPayload(&models.Error{

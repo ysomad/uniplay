@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"github.com/google/uuid"
 	"github.com/ysomad/uniplay/internal/pkg/floatrounder"
 )
 
@@ -97,7 +96,6 @@ func newWeaponAccuracyStats(shots, headHits, neckHits, chestHits, stomachHits, l
 type WeaponStatsFilter struct {
 	WeaponID int16
 	ClassID  int16
-	MatchID  uuid.UUID
 }
 
 func NewWeaponStatsFilter(weaponID, classID *int16) WeaponStatsFilter {

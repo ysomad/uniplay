@@ -6,7 +6,6 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype/zeronull"
 	"go.opentelemetry.io/otel/trace"
@@ -137,7 +136,7 @@ type playerBaseStats struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (p *postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.PlayerStatsFilter) (*domain.PlayerBaseStats, error) {
+func (p *postgres) GetBaseStats(ctx context.Context, steamID uint64) (*domain.PlayerBaseStats, error) {
 	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetBaseStats")
 	defer span.End()
 
@@ -170,10 +169,6 @@ func (p *postgres) GetBaseStats(ctx context.Context, steamID uint64, f domain.Pl
 		InnerJoin("player_match pm ON ps.player_steam_id = pm.player_steam_id").
 		InnerJoin("match m ON pm.match_id = m.id").
 		Where(sq.Eq{"ps.player_steam_id": steamID})
-
-	if f.MatchID != uuid.Nil {
-		b = b.Where(sq.Eq{"ps.match_id": f.MatchID})
-	}
 
 	sql, args, err := b.GroupBy("pm.match_state, m.rounds").ToSql()
 	if err != nil {
@@ -259,8 +254,6 @@ func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f dom
 		b = b.Where(sq.Eq{"ws.weapon_id": f.WeaponID})
 	case f.ClassID != 0:
 		b = b.Where(sq.Eq{"w.class_id": f.ClassID})
-	case f.MatchID != uuid.Nil:
-		b = b.Where(sq.Eq{"ws.match_id": f.MatchID})
 	}
 
 	sql, args, err := b.

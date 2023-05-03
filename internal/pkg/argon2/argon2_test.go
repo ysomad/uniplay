@@ -226,13 +226,8 @@ func TestCompareHashAndPassword(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := CompareHashAndPassword(tt.args.password, tt.args.hash)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("CompareHashAndPassword() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if got != tt.want {
-				t.Errorf("CompareHashAndPassword() = %v, want %v", got, tt.want)
-			}
+			assert.Equal(t, tt.wantErr, (err != nil))
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }

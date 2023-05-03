@@ -26,7 +26,7 @@ services:
     ports:
       - "16686:16686"
       - "14268:14268"
-  
+
   prometheus:
     image: prom/prometheus:v2.41.0
     container_name: prometheus
@@ -46,7 +46,7 @@ services:
     - GF_SECURITY_ADMIN_PASSWORD=pass
     volumes:
       - grafana-data:/var/lib/grafana
-      - ./build/grafana/datasources:/etc/grafana/provisioning/datasources 
+      - ./build/grafana/datasources:/etc/grafana/provisioning/datasources
     depends_on:
       - prometheus
 

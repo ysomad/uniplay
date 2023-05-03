@@ -168,12 +168,6 @@ paths:
         description: Steam ID игрока
         required: true
         type: string
-      - name: match_id
-        in: query
-        description: Фильтр по матчу
-        required: false
-        type: string
-        format: uuid
       responses:
         "200":
           description: OK
@@ -207,12 +201,6 @@ paths:
         description: Steam ID игрока
         required: true
         type: string
-      - name: match_id
-        in: query
-        description: Фильтр по матчу
-        required: false
-        type: string
-        format: uuid
       - name: weapon_id
         in: query
         description: Фильтр по оружию
@@ -494,6 +482,7 @@ definitions:
     - created_at
     - email
     - id
+    - is_admin
     - is_verified
     properties:
       id:
@@ -503,6 +492,9 @@ definitions:
         type: string
         x-nullable: false
       is_verified:
+        type: boolean
+        x-nullable: false
+      is_admin:
         type: boolean
         x-nullable: false
       created_at:
@@ -632,7 +624,8 @@ definitions:
         x-nullable: false
       duration:
         type: integer
-        format: int64
+        format: int32
+        description: длительность матча в минутах
         x-nullable: false
       uploaded_at:
         type: string

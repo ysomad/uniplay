@@ -19,8 +19,8 @@ import (
 // swagger:model Match
 type Match struct {
 
-	// duration
-	Duration int64 `json:"duration,omitempty"`
+	// длительность матча в минутах
+	Duration int32 `json:"duration,omitempty"`
 
 	// id
 	// Format: uuid

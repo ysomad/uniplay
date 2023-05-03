@@ -9,10 +9,8 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/errors"
-	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
-	"github.com/go-openapi/validate"
 )
 
 // NewGetPlayerStatsParams creates a new GetPlayerStatsParams object
@@ -32,10 +30,6 @@ type GetPlayerStatsParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Фильтр по матчу
-	  In: query
-	*/
-	MatchID *strfmt.UUID
 	/*Steam ID игрока
 	  Required: true
 	  In: path
@@ -52,56 +46,12 @@ func (o *GetPlayerStatsParams) BindRequest(r *http.Request, route *middleware.Ma
 
 	o.HTTPRequest = r
 
-	qs := runtime.Values(r.URL.Query())
-
-	qMatchID, qhkMatchID, _ := qs.GetOK("match_id")
-	if err := o.bindMatchID(qMatchID, qhkMatchID, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
 	rSteamID, rhkSteamID, _ := route.Params.GetOK("steam_id")
 	if err := o.bindSteamID(rSteamID, rhkSteamID, route.Formats); err != nil {
 		res = append(res, err)
 	}
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-// bindMatchID binds and validates parameter MatchID from query.
-func (o *GetPlayerStatsParams) bindMatchID(rawData []string, hasKey bool, formats strfmt.Registry) error {
-	var raw string
-	if len(rawData) > 0 {
-		raw = rawData[len(rawData)-1]
-	}
-
-	// Required: false
-	// AllowEmptyValue: false
-
-	if raw == "" { // empty values pass all other validations
-		return nil
-	}
-
-	// Format: uuid
-	value, err := formats.Parse("uuid", raw)
-	if err != nil {
-		return errors.InvalidType("match_id", "query", "strfmt.UUID", raw)
-	}
-	o.MatchID = (value.(*strfmt.UUID))
-
-	if err := o.validateMatchID(formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// validateMatchID carries on validations for parameter MatchID
-func (o *GetPlayerStatsParams) validateMatchID(formats strfmt.Registry) error {
-
-	if err := validate.FormatOf("match_id", "query", "uuid", o.MatchID.String(), formats); err != nil {
-		return err
 	}
 	return nil
 }

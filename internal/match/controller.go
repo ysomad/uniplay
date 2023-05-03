@@ -135,7 +135,7 @@ func (c *Controller) GetMatch(p gen.GetMatchParams) gen.GetMatchResponder {
 			Score:      match.Team2.Score,
 			Scoreboard: make([]models.MatchTeamScoreboard, len(match.Team2.ScoreBoard)),
 		},
-		Duration:   int64(match.Duration),
+		Duration:   int32(match.Duration.Minutes()),
 		UploadedAt: strfmt.DateTime(match.UploadedAt),
 	}
 

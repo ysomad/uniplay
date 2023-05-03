@@ -3,7 +3,6 @@ package domain
 import (
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/ysomad/uniplay/internal/pkg/floatrounder"
 )
 
@@ -125,8 +124,4 @@ func newPlayerRoundStats(kills, deaths, dmgDealt, assists, grenadeDmgDealt, blin
 		BlindedPlayers:     floatrounder.Round(float64(blindedPlayers) / floatRoundsPlayed),
 		BlindedTimes:       floatrounder.Round(float64(blindedTimes) / floatRoundsPlayed),
 	}
-}
-
-type PlayerStatsFilter struct {
-	MatchID uuid.UUID
 }
