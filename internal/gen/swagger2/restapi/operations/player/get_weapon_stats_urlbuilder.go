@@ -45,7 +45,7 @@ func (o *GetWeaponStatsURL) SetBasePath(bp string) {
 func (o *GetWeaponStatsURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/players/{steam_id}/weapons"
+	var _path = "/players/{steam_id}/weapon-stats"
 
 	steamID := o.SteamID
 	if steamID != "" {

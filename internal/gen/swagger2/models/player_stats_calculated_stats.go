@@ -17,11 +17,29 @@ import (
 // swagger:model PlayerStats_calculated_stats
 type PlayerStatsCalculatedStats struct {
 
+	// средний урон за раунд
+	ADR float64 `json:"adr,omitempty"`
+
+	// k d
+	KD float64 `json:"kd,omitempty"`
+
+	// среднее кол-во ассистов за раунд
+	AssistsPerRound float64 `json:"assists_per_round,omitempty"`
+
+	// средне кол-во ослепленных игроков за раунд
+	BlindedPlayersPerRound float64 `json:"blinded_players_per_round,omitempty"`
+
+	// среднее кол-во смертей за раунд
+	DeathsPerRound float64 `json:"deaths_per_round,omitempty"`
+
+	// средний урон гранатами за раунд
+	GrenadeDamagePerRound float64 `json:"grenade_damage_per_round,omitempty"`
+
 	// headshot percentage
 	HeadshotPercentage float64 `json:"headshot_percentage,omitempty"`
 
-	// kill death ratio
-	KillDeathRatio float64 `json:"kill_death_ratio,omitempty"`
+	// среднее кол-во убийств за раунд
+	KillsPerRound float64 `json:"kills_per_round,omitempty"`
 
 	// win rate
 	WinRate float64 `json:"win_rate,omitempty"`

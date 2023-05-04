@@ -19,11 +19,14 @@ import (
 // swagger:model MatchTeam_scoreboard
 type MatchTeamScoreboard struct {
 
+	// a d r
+	ADR float64 `json:"adr,omitempty"`
+
+	// k d
+	KD float64 `json:"kd,omitempty"`
+
 	// assists
 	Assists int32 `json:"assists,omitempty"`
-
-	// damage per round
-	DamagePerRound float64 `json:"damage_per_round,omitempty"`
 
 	// deaths
 	Deaths int32 `json:"deaths,omitempty"`
@@ -34,9 +37,6 @@ type MatchTeamScoreboard struct {
 	// is player captain
 	// Required: true
 	IsPlayerCaptain bool `json:"is_player_captain"`
-
-	// kill death ratio
-	KillDeathRatio float64 `json:"kill_death_ratio,omitempty"`
 
 	// kills
 	Kills int32 `json:"kills,omitempty"`

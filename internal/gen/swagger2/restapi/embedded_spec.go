@@ -596,7 +596,7 @@ func init() {
         }
       }
     },
-    "/players/{steam_id}/weapons": {
+    "/players/{steam_id}/weapon-stats": {
       "get": {
         "consumes": [
           "application/json"
@@ -929,13 +929,14 @@ func init() {
         "steam_id"
       ],
       "properties": {
+        "adr": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "ADR"
+        },
         "assists": {
           "type": "integer",
           "format": "int32"
-        },
-        "damage_per_round": {
-          "type": "number",
-          "format": "double"
         },
         "deaths": {
           "type": "integer",
@@ -949,9 +950,10 @@ func init() {
           "type": "boolean",
           "x-nullable": false
         },
-        "kill_death_ratio": {
+        "kd": {
           "type": "number",
-          "format": "double"
+          "format": "double",
+          "x-go-name": "KD"
         },
         "kills": {
           "type": "integer",
@@ -1108,8 +1110,7 @@ func init() {
       "type": "object",
       "required": [
         "base_stats",
-        "calculated_stats",
-        "round_stats"
+        "calculated_stats"
       ],
       "properties": {
         "base_stats": {
@@ -1117,9 +1118,6 @@ func init() {
         },
         "calculated_stats": {
           "$ref": "#/definitions/PlayerStats_calculated_stats"
-        },
-        "round_stats": {
-          "$ref": "#/definitions/PlayerStats_round_stats"
         }
       }
     },
@@ -1225,11 +1223,43 @@ func init() {
       "description": "высчитанная статистика на основе статистики по матчам",
       "type": "object",
       "properties": {
+        "adr": {
+          "description": "средний урон за раунд",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "ADR"
+        },
+        "assists_per_round": {
+          "description": "среднее кол-во ассистов за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "blinded_players_per_round": {
+          "description": "средне кол-во ослепленных игроков за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "deaths_per_round": {
+          "description": "среднее кол-во смертей за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "grenade_damage_per_round": {
+          "description": "средний урон гранатами за раунд",
+          "type": "number",
+          "format": "double"
+        },
         "headshot_percentage": {
           "type": "number",
           "format": "double"
         },
-        "kill_death_ratio": {
+        "kd": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "KD"
+        },
+        "kills_per_round": {
+          "description": "среднее кол-во убийств за раунд",
           "type": "number",
           "format": "double"
         },
@@ -1237,50 +1267,7 @@ func init() {
           "type": "number",
           "format": "double"
         }
-      },
-      "x-nullable": false
-    },
-    "PlayerStats_round_stats": {
-      "description": "набор средних показателей за раунд",
-      "type": "object",
-      "properties": {
-        "assists": {
-          "description": "среднее кол-во ассистов за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "blinded_players": {
-          "description": "средне кол-во ослепленных игроков за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "blinded_times": {
-          "description": "среднее кол-во раз ослеплен за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "damage_dealt": {
-          "description": "средний урон за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "deaths": {
-          "description": "среднее кол-во смертей за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "grenade_damage_dealt": {
-          "description": "средний урон гранатами за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "kills": {
-          "description": "среднее кол-во убийств за раунд",
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "x-nullable": false
+      }
     },
     "PlayerWeaponStats": {
       "type": "array",
@@ -1300,6 +1287,13 @@ func init() {
         },
         "base_stats": {
           "$ref": "#/definitions/PlayerWeaponStats_inner_base_stats"
+        },
+        "weapon": {
+          "type": "string"
+        },
+        "weapon_id": {
+          "type": "integer",
+          "format": "int16"
         }
       },
       "x-nullable": false
@@ -1335,12 +1329,15 @@ func init() {
           "type": "number",
           "format": "double"
         }
-      },
-      "x-nullable": false
+      }
     },
     "PlayerWeaponStats_inner_base_stats": {
       "type": "object",
       "properties": {
+        "arm_hits": {
+          "type": "integer",
+          "format": "int32"
+        },
         "assists": {
           "type": "integer",
           "format": "int32"
@@ -1377,11 +1374,7 @@ func init() {
           "type": "integer",
           "format": "int32"
         },
-        "left_arm_hits": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "left_leg_hits": {
+        "leg_hits": {
           "type": "integer",
           "format": "int32"
         },
@@ -1390,14 +1383,6 @@ func init() {
           "format": "int32"
         },
         "noscope_kills": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "right_arm_hits": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "right_leg_hits": {
           "type": "integer",
           "format": "int32"
         },
@@ -1413,16 +1398,13 @@ func init() {
           "type": "integer",
           "format": "int32"
         },
-        "wallbang_kills": {
+        "total_hits": {
           "type": "integer",
           "format": "int32"
         },
-        "weapon": {
-          "type": "string"
-        },
-        "weapon_id": {
+        "wallbang_kills": {
           "type": "integer",
-          "format": "int16"
+          "format": "int32"
         }
       }
     },
@@ -2125,7 +2107,7 @@ func init() {
         }
       }
     },
-    "/players/{steam_id}/weapons": {
+    "/players/{steam_id}/weapon-stats": {
       "get": {
         "consumes": [
           "application/json"
@@ -2458,13 +2440,14 @@ func init() {
         "steam_id"
       ],
       "properties": {
+        "adr": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "ADR"
+        },
         "assists": {
           "type": "integer",
           "format": "int32"
-        },
-        "damage_per_round": {
-          "type": "number",
-          "format": "double"
         },
         "deaths": {
           "type": "integer",
@@ -2478,9 +2461,10 @@ func init() {
           "type": "boolean",
           "x-nullable": false
         },
-        "kill_death_ratio": {
+        "kd": {
           "type": "number",
-          "format": "double"
+          "format": "double",
+          "x-go-name": "KD"
         },
         "kills": {
           "type": "integer",
@@ -2637,8 +2621,7 @@ func init() {
       "type": "object",
       "required": [
         "base_stats",
-        "calculated_stats",
-        "round_stats"
+        "calculated_stats"
       ],
       "properties": {
         "base_stats": {
@@ -2646,9 +2629,6 @@ func init() {
         },
         "calculated_stats": {
           "$ref": "#/definitions/PlayerStats_calculated_stats"
-        },
-        "round_stats": {
-          "$ref": "#/definitions/PlayerStats_round_stats"
         }
       }
     },
@@ -2754,11 +2734,43 @@ func init() {
       "description": "высчитанная статистика на основе статистики по матчам",
       "type": "object",
       "properties": {
+        "adr": {
+          "description": "средний урон за раунд",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "ADR"
+        },
+        "assists_per_round": {
+          "description": "среднее кол-во ассистов за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "blinded_players_per_round": {
+          "description": "средне кол-во ослепленных игроков за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "deaths_per_round": {
+          "description": "среднее кол-во смертей за раунд",
+          "type": "number",
+          "format": "double"
+        },
+        "grenade_damage_per_round": {
+          "description": "средний урон гранатами за раунд",
+          "type": "number",
+          "format": "double"
+        },
         "headshot_percentage": {
           "type": "number",
           "format": "double"
         },
-        "kill_death_ratio": {
+        "kd": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "KD"
+        },
+        "kills_per_round": {
+          "description": "среднее кол-во убийств за раунд",
           "type": "number",
           "format": "double"
         },
@@ -2766,50 +2778,7 @@ func init() {
           "type": "number",
           "format": "double"
         }
-      },
-      "x-nullable": false
-    },
-    "PlayerStats_round_stats": {
-      "description": "набор средних показателей за раунд",
-      "type": "object",
-      "properties": {
-        "assists": {
-          "description": "среднее кол-во ассистов за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "blinded_players": {
-          "description": "средне кол-во ослепленных игроков за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "blinded_times": {
-          "description": "среднее кол-во раз ослеплен за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "damage_dealt": {
-          "description": "средний урон за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "deaths": {
-          "description": "среднее кол-во смертей за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "grenade_damage_dealt": {
-          "description": "средний урон гранатами за раунд",
-          "type": "number",
-          "format": "double"
-        },
-        "kills": {
-          "description": "среднее кол-во убийств за раунд",
-          "type": "number",
-          "format": "double"
-        }
-      },
-      "x-nullable": false
+      }
     },
     "PlayerWeaponStats": {
       "type": "array",
@@ -2829,6 +2798,13 @@ func init() {
         },
         "base_stats": {
           "$ref": "#/definitions/PlayerWeaponStats_inner_base_stats"
+        },
+        "weapon": {
+          "type": "string"
+        },
+        "weapon_id": {
+          "type": "integer",
+          "format": "int16"
         }
       },
       "x-nullable": false
@@ -2864,12 +2840,15 @@ func init() {
           "type": "number",
           "format": "double"
         }
-      },
-      "x-nullable": false
+      }
     },
     "PlayerWeaponStats_inner_base_stats": {
       "type": "object",
       "properties": {
+        "arm_hits": {
+          "type": "integer",
+          "format": "int32"
+        },
         "assists": {
           "type": "integer",
           "format": "int32"
@@ -2906,11 +2885,7 @@ func init() {
           "type": "integer",
           "format": "int32"
         },
-        "left_arm_hits": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "left_leg_hits": {
+        "leg_hits": {
           "type": "integer",
           "format": "int32"
         },
@@ -2919,14 +2894,6 @@ func init() {
           "format": "int32"
         },
         "noscope_kills": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "right_arm_hits": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "right_leg_hits": {
           "type": "integer",
           "format": "int32"
         },
@@ -2942,16 +2909,13 @@ func init() {
           "type": "integer",
           "format": "int32"
         },
-        "wallbang_kills": {
+        "total_hits": {
           "type": "integer",
           "format": "int32"
         },
-        "weapon": {
-          "type": "string"
-        },
-        "weapon_id": {
+        "wallbang_kills": {
           "type": "integer",
-          "format": "int16"
+          "format": "int32"
         }
       }
     },

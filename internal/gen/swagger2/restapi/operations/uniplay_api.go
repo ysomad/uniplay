@@ -417,7 +417,7 @@ func (o *UniplayAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/players/{steam_id}/weapons"] = player.NewGetWeaponStats(o.context, o.PlayerGetWeaponStatsHandler)
+	o.handlers["GET"]["/players/{steam_id}/weapon-stats"] = player.NewGetWeaponStats(o.context, o.PlayerGetWeaponStatsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

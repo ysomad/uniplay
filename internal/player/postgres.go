@@ -132,7 +132,6 @@ type playerBaseStats struct {
 	MatchesPlayed      int32         `db:"total_matches_played"`
 	Wins               int32         `db:"total_wins"`
 	Loses              int32         `db:"total_loses"`
-	Draws              int32         `db:"total_draws"`
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
@@ -163,7 +162,6 @@ func (p *postgres) GetBaseStats(ctx context.Context, steamID uint64) (*domain.Pl
 			"count(m.id) as total_matches_played",
 			"coalesce((case when pm.match_state = 1 then count(pm.*) end), 0) as total_wins",
 			"coalesce((case when pm.match_state = -1 then count(pm.*) end), 0) as total_loses",
-			"coalesce((case when pm.match_state = 0 then count(pm.*) end), 0) as total_draws",
 			"sum(m.duration) as total_time_played").
 		From("player_match_stat ps").
 		InnerJoin("player_match pm ON ps.player_steam_id = pm.player_steam_id").
@@ -208,14 +206,14 @@ type weaponBaseStats struct {
 	DamageTaken       int32  `db:"total_dmg_taken"`
 	DamageDealt       int32  `db:"total_dmg_dealt"`
 	Shots             int32  `db:"total_shots"`
-	HeadHits          int32  `db:"total_head_hits"`
-	NeckHits          int32  `db:"total_neck_hits"`
-	ChestHits         int32  `db:"total_chest_hits"`
-	StomachHits       int32  `db:"total_stomach_hits"`
-	LeftArmHits       int32  `db:"total_l_arm_hits"`
-	RightArmHits      int32  `db:"total_r_arm_hits"`
-	LeftLegHits       int32  `db:"total_l_leg_hits"`
-	RightLegHits      int32  `db:"total_r_leg_hits"`
+
+	TotalHits   int32 `db:"total_hits"`
+	HeadHits    int32 `db:"total_head_hits"`
+	NeckHits    int32 `db:"total_neck_hits"`
+	ChestHits   int32 `db:"total_chest_hits"`
+	StomachHits int32 `db:"total_stomach_hits"`
+	ArmHits     int32 `db:"total_arm_hits"`
+	LegHits     int32 `db:"total_leg_hits"`
 }
 
 func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
@@ -237,14 +235,13 @@ func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f dom
 			"sum(ws.damage_taken) as total_dmg_taken",
 			"sum(ws.damage_dealt) as total_dmg_dealt",
 			"sum(ws.shots) as total_shots",
+			"sum(ws.total_hits) as total_hits",
 			"sum(ws.head_hits) as total_head_hits",
 			"sum(ws.neck_hits) as total_neck_hits",
 			"sum(ws.chest_hits) as total_chest_hits",
 			"sum(ws.stomach_hits) as total_stomach_hits",
-			"sum(ws.left_arm_hits) as total_l_arm_hits",
-			"sum(ws.right_arm_hits) as total_r_arm_hits",
-			"sum(ws.left_leg_hits) as total_l_leg_hits",
-			"sum(ws.right_leg_hits) as total_r_leg_hits").
+			"sum(ws.arm_hits) as total_arm_hits",
+			"sum(ws.leg_hits) as total_leg_hits").
 		From("player_match_weapon_stat ws").
 		InnerJoin("weapon w ON ws.weapon_id = w.id").
 		Where(sq.Eq{"ws.player_steam_id": steamID})
@@ -294,15 +291,14 @@ func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f dom
 			Assists:           s.Assists,
 			DamageTaken:       s.DamageTaken,
 			DamageDealt:       s.DamageDealt,
+			TotalHits:         s.TotalHits,
 			Shots:             s.Shots,
 			HeadHits:          s.HeadHits,
 			NeckHits:          s.NeckHits,
 			ChestHits:         s.ChestHits,
 			StomachHits:       s.StomachHits,
-			LeftArmHits:       s.LeftArmHits,
-			RightArmHits:      s.RightArmHits,
-			LeftLegHits:       s.LeftLegHits,
-			RightLegHits:      s.RightLegHits,
+			ArmHits:           s.ArmHits,
+			LegHits:           s.LegHits,
 		}
 	}
 

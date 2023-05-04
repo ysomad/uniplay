@@ -30,7 +30,7 @@ func NewGetWeaponStats(ctx *middleware.Context, handler GetWeaponStatsHandler) *
 }
 
 /*
-	GetWeaponStats swagger:route GET /players/{steam_id}/weapons player getWeaponStats
+	GetWeaponStats swagger:route GET /players/{steam_id}/weapon-stats player getWeaponStats
 
 Получение статистики игрока по оружию
 */

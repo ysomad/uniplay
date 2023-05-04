@@ -42,27 +42,29 @@ func (p *postgres) Exists(ctx context.Context, matchID uuid.UUID) (bool, error) 
 }
 
 type matchScoreBoardRow struct {
-	MatchID         uuid.UUID         `db:"match_id"`
-	MapName         string            `db:"map_name"`
-	MapIconURL      string            `db:"map_icon_url"`
-	SteamID         uint64            `db:"steam_id"`
-	PlayerName      string            `db:"player_name"`
-	PlayerAvatarURL zeronull.Text     `db:"avatar_url"`
-	PlayerCaptain   bool              `db:"is_player_captain"`
-	TeamID          int32             `db:"team_id"`
-	TeamName        string            `db:"team_name"`
-	TeamFlagCode    string            `db:"team_flag_code"`
-	TeamScore       int32             `db:"team_score"`
-	TeamMatchState  domain.MatchState `db:"team_match_state"`
-	Kills           int32             `db:"kills"`
-	HeadshotKills   int32             `db:"headshot_kills"`
-	Deaths          int32             `db:"deaths"`
-	Assists         int32             `db:"assists"`
-	DamageDealt     int32             `db:"damage_dealt"`
-	RoundsPlayed    int32             `db:"rounds_played"`
-	MVPCount        int32             `db:"mvp_count"`
-	MatchDuration   time.Duration     `db:"match_duration"`
-	MatchUploadedAt time.Time         `db:"match_uploaded_at"`
+	MatchID            uuid.UUID         `db:"match_id"`
+	MapName            string            `db:"map_name"`
+	MapIconURL         string            `db:"map_icon_url"`
+	SteamID            uint64            `db:"steam_id"`
+	PlayerName         string            `db:"player_name"`
+	PlayerAvatarURL    zeronull.Text     `db:"avatar_url"`
+	PlayerCaptain      bool              `db:"is_player_captain"`
+	TeamID             int32             `db:"team_id"`
+	TeamName           string            `db:"team_name"`
+	TeamFlagCode       string            `db:"team_flag_code"`
+	TeamScore          int32             `db:"team_score"`
+	TeamMatchState     domain.MatchState `db:"team_match_state"`
+	Kills              int32             `db:"kills"`
+	HeadshotKills      int32             `db:"headshot_kills"`
+	Deaths             int32             `db:"deaths"`
+	Assists            int32             `db:"assists"`
+	RoundsPlayed       int32             `db:"rounds_played"`
+	MVPCount           int32             `db:"mvp_count"`
+	MatchDuration      time.Duration     `db:"match_duration"`
+	MatchUploadedAt    time.Time         `db:"match_uploaded_at"`
+	HeadshotPercentage float64           `db:"headshot_percentage"`
+	KD                 float64           `db:"kd"`
+	ADR                float64           `db:"adr"`
 }
 
 func (p *postgres) scoreboardRowsToMatch(sbRows []*matchScoreBoardRow) domain.Match {
@@ -78,19 +80,19 @@ func (p *postgres) scoreboardRowsToMatch(sbRows []*matchScoreBoardRow) domain.Ma
 	}
 
 	for _, sbRow := range sbRows {
-		row := domain.NewMatchScoreBoardRow(
-			sbRow.SteamID,
-			sbRow.PlayerName,
-			string(sbRow.PlayerAvatarURL),
-			sbRow.PlayerCaptain,
-			sbRow.Kills,
-			sbRow.HeadshotKills,
-			sbRow.Deaths,
-			sbRow.Assists,
-			sbRow.MVPCount,
-			sbRow.DamageDealt,
-			sbRow.RoundsPlayed,
-		)
+		row := &domain.MatchScoreBoardRow{
+			SteamID:            domain.SteamID(sbRow.SteamID),
+			PlayerName:         sbRow.PlayerName,
+			PlayerAvatarURL:    string(sbRow.PlayerAvatarURL),
+			IsPlayerCaptain:    sbRow.PlayerCaptain,
+			Kills:              sbRow.Kills,
+			Deaths:             sbRow.Deaths,
+			Assists:            sbRow.Assists,
+			MVPCount:           sbRow.MVPCount,
+			KD:                 sbRow.KD,
+			ADR:                sbRow.ADR,
+			HeadshotPercentage: sbRow.HeadshotPercentage,
+		}
 
 		team := domain.NewMatchTeam(
 			sbRow.TeamID,
@@ -149,11 +151,13 @@ func (p *postgres) FindByID(ctx context.Context, matchID uuid.UUID) (domain.Matc
 			"pms.hs_kills as headshot_kills",
 			"pms.deaths as deaths",
 			"pms.assists as assists",
-			"pms.damage_dealt as damage_dealt",
 			"m.rounds as rounds_played",
 			"pms.mvp_count as mvp_count",
 			"m.duration as match_duration",
 			"m.uploaded_at as match_uploaded_at",
+			"pms.headshot_percentage as headshot_percentage",
+			"pms.kd as kd",
+			"pms.adr as adr",
 		).
 		From("match m").
 		InnerJoin("map mp ON m.map = mp.name").
@@ -407,6 +411,14 @@ func (p *postgres) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.
 			"blinded_times",
 			"bombs_planted",
 			"bombs_defused",
+
+			"headshot_percentage",
+			"kd",
+			"adr",
+			"kills_per_round",
+			"assists_per_round",
+			"deaths_per_round",
+			"blinded_players_per_round",
 		)
 
 	for _, s := range stats {
@@ -430,6 +442,14 @@ func (p *postgres) savePlayerStats(ctx context.Context, tx pgx.Tx, matchID uuid.
 			s.blindedTimes,
 			s.bombsPlanted,
 			s.bombsDefused,
+
+			s.hsPercentage,
+			s.kd,
+			s.adr,
+			s.killsPerRound,
+			s.assistsPerRound,
+			s.deathsPerRound,
+			s.blindedPlayersPerRound,
 		)
 	}
 
@@ -464,14 +484,21 @@ func (p *postgres) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.
 			"damage_taken",
 			"damage_dealt",
 			"shots",
+			"total_hits",
 			"head_hits",
 			"neck_hits",
 			"chest_hits",
 			"stomach_hits",
-			"left_arm_hits",
-			"right_arm_hits",
-			"left_leg_hits",
-			"right_leg_hits",
+			"arm_hits",
+			"leg_hits",
+
+			"total_accuracy",
+			"head_accuracy",
+			"neck_accuracy",
+			"chest_accuracy",
+			"stomach_accuracy",
+			"arms_accuracy",
+			"legs_accuracy",
 		)
 
 	for _, s := range ws {
@@ -490,14 +517,22 @@ func (p *postgres) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.
 			s.damageTaken,
 			s.damageDealt,
 			s.shots,
+
+			s.totalHits,
 			s.headHits,
 			s.neckHits,
 			s.chestHits,
 			s.stomachHits,
-			s.leftArmHits,
-			s.rightArmHits,
-			s.leftLegHits,
-			s.rightLegHits,
+			s.armHits,
+			s.legHits,
+
+			s.accuracy.Total,
+			s.accuracy.Head,
+			s.accuracy.Neck,
+			s.accuracy.Chest,
+			s.accuracy.Stomach,
+			s.accuracy.Arms,
+			s.accuracy.Legs,
 		)
 	}
 

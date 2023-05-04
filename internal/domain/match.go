@@ -43,42 +43,14 @@ type MatchScoreBoardRow struct {
 	SteamID            SteamID
 	PlayerName         string
 	PlayerAvatarURL    string
-	PlayerCaptain      bool
+	IsPlayerCaptain    bool
 	Kills              int32
 	Deaths             int32
 	Assists            int32
 	MVPCount           int32
-	KillDeathRatio     float64
-	DamagePerRound     float64
+	KD                 float64
+	ADR                float64
 	HeadshotPercentage float64
-}
-
-func NewMatchScoreBoardRow(
-	steamID uint64,
-	playerName string,
-	playerAvatarURL string,
-	playerCaptain bool,
-	kills int32,
-	hsKills int32,
-	deaths int32,
-	assists int32,
-	mvps int32,
-	dmgDealt int32,
-	roundsPlayed int32,
-) *MatchScoreBoardRow {
-	return &MatchScoreBoardRow{
-		SteamID:            SteamID(steamID),
-		PlayerName:         playerName,
-		PlayerAvatarURL:    playerAvatarURL,
-		PlayerCaptain:      playerCaptain,
-		Kills:              kills,
-		Deaths:             deaths,
-		Assists:            assists,
-		MVPCount:           mvps,
-		KillDeathRatio:     calculateKD(float64(kills), float64(deaths)),
-		DamagePerRound:     calculateADR(float64(dmgDealt), float64(roundsPlayed)),
-		HeadshotPercentage: calculateHSPercentage(float64(hsKills), float64(kills)),
-	}
 }
 
 type MatchState int8

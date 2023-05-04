@@ -1,30 +1,27 @@
 package domain
 
-import (
-	"github.com/ysomad/uniplay/internal/pkg/floatrounder"
-)
+import "github.com/ysomad/uniplay/internal/pkg/stat"
 
 type WeaponStats struct {
 	Base     *WeaponBaseStats
-	Accuracy WeaponAccuracyStats
+	Accuracy *WeaponAccuracyStats
 }
 
-func NewWeaponStats(total []*WeaponBaseStats) []WeaponStats {
-	res := make([]WeaponStats, len(total))
+func NewWeaponStats(b []*WeaponBaseStats) []WeaponStats {
+	res := make([]WeaponStats, len(b))
 
-	for i, s := range total {
+	for i, s := range b {
 		res[i] = WeaponStats{
 			Base: s,
-			Accuracy: newWeaponAccuracyStats(
+			Accuracy: NewWeaponAccuracyStats(
 				s.Shots,
+				s.TotalHits,
 				s.HeadHits,
 				s.NeckHits,
 				s.ChestHits,
 				s.StomachHits,
-				s.LeftArmHits,
-				s.RightArmHits,
-				s.LeftLegHits,
-				s.RightLegHits,
+				s.ArmHits,
+				s.LegHits,
 			),
 		}
 	}
@@ -46,14 +43,13 @@ type WeaponBaseStats struct {
 	DamageTaken       int32
 	DamageDealt       int32
 	Shots             int32
+	TotalHits         int32
 	HeadHits          int32
 	NeckHits          int32
 	ChestHits         int32
 	StomachHits       int32
-	LeftArmHits       int32
-	RightArmHits      int32
-	LeftLegHits       int32
-	RightLegHits      int32
+	ArmHits           int32
+	LegHits           int32
 }
 
 type WeaponAccuracyStats struct {
@@ -66,30 +62,15 @@ type WeaponAccuracyStats struct {
 	Legs    float64
 }
 
-// calcAccuracy returns accuracy in percentage.
-func calcAccuracy(sum, num int32) float64 {
-	if sum <= 0 || num <= 0 {
-		return 0
-	}
-
-	return floatrounder.Round(float64(sum) * 100 / float64(num))
-}
-
-func newWeaponAccuracyStats(shots, headHits, neckHits, chestHits, stomachHits, lArmHits, rArmHits, lLegHits, rLegHits int32) WeaponAccuracyStats {
-	hits := headHits + neckHits + chestHits + stomachHits + lArmHits + rArmHits + lLegHits + rLegHits
-
-	if hits <= 0 {
-		return WeaponAccuracyStats{}
-	}
-
-	return WeaponAccuracyStats{
-		Total:   calcAccuracy(hits, shots),
-		Head:    calcAccuracy(headHits, hits),
-		Neck:    calcAccuracy(neckHits, hits),
-		Chest:   calcAccuracy(chestHits, hits),
-		Stomach: calcAccuracy(stomachHits, hits),
-		Arms:    calcAccuracy(lArmHits+rArmHits, hits),
-		Legs:    calcAccuracy(lLegHits+rLegHits, hits),
+func NewWeaponAccuracyStats(shots, hits, headHits, neckHits, chestHits, stomachHits, armHits, legHits int32) *WeaponAccuracyStats {
+	return &WeaponAccuracyStats{
+		Total:   stat.Accuracy(hits, shots),
+		Head:    stat.Accuracy(headHits, hits),
+		Neck:    stat.Accuracy(neckHits, hits),
+		Chest:   stat.Accuracy(chestHits, hits),
+		Stomach: stat.Accuracy(stomachHits, hits),
+		Arms:    stat.Accuracy(armHits, hits),
+		Legs:    stat.Accuracy(legHits, hits),
 	}
 }
 
