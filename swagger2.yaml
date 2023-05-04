@@ -185,7 +185,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
-  /players/{steam_id}/weapons:
+  /players/{steam_id}/weapon-stats:
     get:
       tags:
       - player
@@ -571,14 +571,11 @@ definitions:
     required:
     - base_stats
     - calculated_stats
-    - round_stats
     properties:
       base_stats:
         $ref: '#/definitions/PlayerStats_base_stats'
       calculated_stats:
         $ref: '#/definitions/PlayerStats_calculated_stats'
-      round_stats:
-        $ref: '#/definitions/PlayerStats_round_stats'
   PlayerWeaponStats:
     type: array
     items:
@@ -807,50 +804,42 @@ definitions:
   PlayerStats_calculated_stats:
     type: object
     properties:
-      kill_death_ratio:
+      kd:
         type: number
         format: double
+        x-go-name: KD
       headshot_percentage:
         type: number
         format: double
       win_rate:
         type: number
         format: double
-    description: высчитанная статистика на основе статистики по матчам
-    x-nullable: false
-  PlayerStats_round_stats:
-    type: object
-    properties:
-      damage_dealt:
+      adr:
         type: number
         format: double
         description: средний урон за раунд
-      grenade_damage_dealt:
+        x-go-name: ADR
+      grenade_damage_per_round:
         type: number
         format: double
         description: средний урон гранатами за раунд
-      kills:
+      kills_per_round:
         type: number
         format: double
         description: среднее кол-во убийств за раунд
-      assists:
+      assists_per_round:
         type: number
         format: double
         description: среднее кол-во ассистов за раунд
-      deaths:
+      deaths_per_round:
         type: number
         format: double
         description: среднее кол-во смертей за раунд
-      blinded_times:
-        type: number
-        format: double
-        description: среднее кол-во раз ослеплен за раунд
-      blinded_players:
+      blinded_players_per_round:
         type: number
         format: double
         description: средне кол-во ослепленных игроков за раунд
-    description: набор средних показателей за раунд
-    x-nullable: false
+    description: высчитанная статистика на основе статистики по матчам
   PlayerWeaponStats_inner_base_stats:
     type: object
     properties:
@@ -892,6 +881,9 @@ definitions:
       shots:
         type: integer
         format: int32
+      total_hits:
+        type: integer
+        format: int32
       head_hits:
         type: integer
         format: int32
@@ -904,16 +896,10 @@ definitions:
       stomach_hits:
         type: integer
         format: int32
-      left_arm_hits:
+      arm_hits:
         type: integer
         format: int32
-      right_arm_hits:
-        type: integer
-        format: int32
-      left_leg_hits:
-        type: integer
-        format: int32
-      right_leg_hits:
+      leg_hits:
         type: integer
         format: int32
   PlayerWeaponStats_inner_accuracy_stats:
@@ -940,7 +926,6 @@ definitions:
       legs:
         type: number
         format: double
-    x-nullable: false
   PlayerWeaponStats_inner:
     type: object
     required:
@@ -1021,12 +1006,14 @@ definitions:
       mvps:
         type: integer
         format: int32
-      kill_death_ratio:
+      kd:
         type: number
         format: double
-      damage_per_round:
+        x-go-name: KD
+      adr:
         type: number
         format: double
+        x-go-name: ADR
       headshot_percentage:
         type: number
         format: double

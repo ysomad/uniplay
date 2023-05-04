@@ -20,6 +20,9 @@ type replayMatch struct {
 	uploadedAt time.Time
 }
 
+// roundsPlayed returns total rounds played.
+func (m *replayMatch) roundsPlayed() int8 { return m.team1.score + m.team2.score }
+
 // setTeams set new team to a match from GameState.
 func (m *replayMatch) setTeams(t, ct *common.TeamState) {
 	m.team1 = newReplayTeam(t.ClanName(), t.Flag(), t.Team(), t.Members())

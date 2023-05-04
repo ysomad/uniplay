@@ -143,15 +143,15 @@ func (c *Controller) GetMatch(p gen.GetMatchParams) gen.GetMatchResponder {
 		payload.Team1.Scoreboard[i] = models.MatchTeamScoreboard{
 			SteamID:            row.SteamID.String(),
 			Assists:            row.Assists,
-			DamagePerRound:     row.DamagePerRound,
+			ADR:                row.ADR,
 			Deaths:             row.Deaths,
 			HeadshotPercentage: row.HeadshotPercentage,
-			KillDeathRatio:     row.KillDeathRatio,
+			KD:                 row.KD,
 			Kills:              row.Kills,
 			Mvps:               row.MVPCount,
 			PlayerName:         row.PlayerName,
 			PlayerAvatarURL:    row.PlayerAvatarURL,
-			IsPlayerCaptain:    row.PlayerCaptain,
+			IsPlayerCaptain:    row.IsPlayerCaptain,
 		}
 	}
 
@@ -159,15 +159,15 @@ func (c *Controller) GetMatch(p gen.GetMatchParams) gen.GetMatchResponder {
 		payload.Team2.Scoreboard[i] = models.MatchTeamScoreboard{
 			SteamID:            row.SteamID.String(),
 			Assists:            row.Assists,
-			DamagePerRound:     row.DamagePerRound,
+			ADR:                row.ADR,
 			Deaths:             row.Deaths,
 			HeadshotPercentage: row.HeadshotPercentage,
-			KillDeathRatio:     row.KillDeathRatio,
+			KD:                 row.KD,
 			Kills:              row.Kills,
 			Mvps:               row.MVPCount,
 			PlayerName:         row.PlayerName,
 			PlayerAvatarURL:    row.PlayerAvatarURL,
-			IsPlayerCaptain:    row.PlayerCaptain,
+			IsPlayerCaptain:    row.IsPlayerCaptain,
 		}
 	}
 

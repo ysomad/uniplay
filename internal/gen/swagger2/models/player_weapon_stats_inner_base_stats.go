@@ -17,6 +17,9 @@ import (
 // swagger:model PlayerWeaponStats_inner_base_stats
 type PlayerWeaponStatsInnerBaseStats struct {
 
+	// arm hits
+	ArmHits int32 `json:"arm_hits,omitempty"`
+
 	// assists
 	Assists int32 `json:"assists,omitempty"`
 
@@ -44,23 +47,14 @@ type PlayerWeaponStatsInnerBaseStats struct {
 	// kills
 	Kills int32 `json:"kills,omitempty"`
 
-	// left arm hits
-	LeftArmHits int32 `json:"left_arm_hits,omitempty"`
-
-	// left leg hits
-	LeftLegHits int32 `json:"left_leg_hits,omitempty"`
+	// leg hits
+	LegHits int32 `json:"leg_hits,omitempty"`
 
 	// neck hits
 	NeckHits int32 `json:"neck_hits,omitempty"`
 
 	// noscope kills
 	NoscopeKills int32 `json:"noscope_kills,omitempty"`
-
-	// right arm hits
-	RightArmHits int32 `json:"right_arm_hits,omitempty"`
-
-	// right leg hits
-	RightLegHits int32 `json:"right_leg_hits,omitempty"`
 
 	// shots
 	Shots int32 `json:"shots,omitempty"`
@@ -70,6 +64,9 @@ type PlayerWeaponStatsInnerBaseStats struct {
 
 	// through smoke kills
 	ThroughSmokeKills int32 `json:"through_smoke_kills,omitempty"`
+
+	// total hits
+	TotalHits int32 `json:"total_hits,omitempty"`
 
 	// wallbang kills
 	WallbangKills int32 `json:"wallbang_kills,omitempty"`

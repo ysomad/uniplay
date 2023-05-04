@@ -97,7 +97,7 @@ func (p *parser) collectStats(ctx context.Context) (*replayMatch, []*playerStat,
 	}
 
 	p.match.setTeamStates()
-	playerStats, weaponStats := p.stats.normalizeSync()
+	playerStats, weaponStats := p.stats.normalize(p.match.roundsPlayed())
 
 	return p.match, playerStats, weaponStats, nil
 }

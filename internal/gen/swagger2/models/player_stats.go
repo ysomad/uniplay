@@ -25,11 +25,7 @@ type PlayerStats struct {
 
 	// calculated stats
 	// Required: true
-	CalculatedStats PlayerStatsCalculatedStats `json:"calculated_stats"`
-
-	// round stats
-	// Required: true
-	RoundStats PlayerStatsRoundStats `json:"round_stats"`
+	CalculatedStats *PlayerStatsCalculatedStats `json:"calculated_stats"`
 }
 
 // Validate validates this player stats
@@ -41,10 +37,6 @@ func (m *PlayerStats) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateCalculatedStats(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRoundStats(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -76,27 +68,19 @@ func (m *PlayerStats) validateBaseStats(formats strfmt.Registry) error {
 
 func (m *PlayerStats) validateCalculatedStats(formats strfmt.Registry) error {
 
-	if err := m.CalculatedStats.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("calculated_stats")
-		} else if ce, ok := err.(*errors.CompositeError); ok {
-			return ce.ValidateName("calculated_stats")
-		}
+	if err := validate.Required("calculated_stats", "body", m.CalculatedStats); err != nil {
 		return err
 	}
 
-	return nil
-}
-
-func (m *PlayerStats) validateRoundStats(formats strfmt.Registry) error {
-
-	if err := m.RoundStats.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("round_stats")
-		} else if ce, ok := err.(*errors.CompositeError); ok {
-			return ce.ValidateName("round_stats")
+	if m.CalculatedStats != nil {
+		if err := m.CalculatedStats.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("calculated_stats")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("calculated_stats")
+			}
+			return err
 		}
-		return err
 	}
 
 	return nil
@@ -111,10 +95,6 @@ func (m *PlayerStats) ContextValidate(ctx context.Context, formats strfmt.Regist
 	}
 
 	if err := m.contextValidateCalculatedStats(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateRoundStats(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -142,27 +122,15 @@ func (m *PlayerStats) contextValidateBaseStats(ctx context.Context, formats strf
 
 func (m *PlayerStats) contextValidateCalculatedStats(ctx context.Context, formats strfmt.Registry) error {
 
-	if err := m.CalculatedStats.ContextValidate(ctx, formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("calculated_stats")
-		} else if ce, ok := err.(*errors.CompositeError); ok {
-			return ce.ValidateName("calculated_stats")
+	if m.CalculatedStats != nil {
+		if err := m.CalculatedStats.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("calculated_stats")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("calculated_stats")
+			}
+			return err
 		}
-		return err
-	}
-
-	return nil
-}
-
-func (m *PlayerStats) contextValidateRoundStats(ctx context.Context, formats strfmt.Registry) error {
-
-	if err := m.RoundStats.ContextValidate(ctx, formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("round_stats")
-		} else if ce, ok := err.(*errors.CompositeError); ok {
-			return ce.ValidateName("round_stats")
-		}
-		return err
 	}
 
 	return nil

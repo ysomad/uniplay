@@ -98,7 +98,15 @@ CREATE TABLE IF NOT EXISTS player_match_stat (
     blinded_players smallint NOT NULL,
     blinded_times smallint NOT NULL,
     bombs_planted smallint NOT NULL,
-    bombs_defused smallint NOT NULL
+    bombs_defused smallint NOT NULL,
+
+    headshot_percentage decimal NOT NULL,
+    kd decimal NOT NULL,
+    adr decimal NOT NULL,
+    kills_per_round decimal NOT NULL,
+    assists_per_round decimal NOT NULL,
+    deaths_per_round decimal NOT NULL,
+    blinded_players_per_round decimal NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS player_match (
@@ -134,14 +142,21 @@ CREATE TABLE IF NOT EXISTS player_match_weapon_stat (
     damage_taken smallint NOT NULL,
     damage_dealt smallint NOT NULL,
     shots smallint NOT NULL,
+    total_hits smallint NOT NULL,
     head_hits smallint NOT NULL,
     neck_hits smallint NOT NULL,
     chest_hits smallint NOT NULL,
     stomach_hits smallint NOT NULL,
-    left_arm_hits smallint NOT NULL,
-    right_arm_hits smallint NOT NULL,
-    left_leg_hits smallint NOT NULL,
-    right_leg_hits smallint NOT NULL
+    arm_hits smallint NOT NULL,
+    leg_hits smallint NOT NULL,
+
+    total_accuracy decimal NOT NULL,
+    head_accuracy decimal NOT NULL,
+    neck_accuracy decimal NOT NULL,
+    chest_accuracy decimal NOT NULL,
+    stomach_accuracy decimal NOT NULL,
+    arms_accuracy decimal NOT NULL,
+    legs_accuracy decimal NOT NULL
 );
 
 ALTER TABLE institution ADD COLUMN ts tsvector

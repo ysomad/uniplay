@@ -1,9 +1,9 @@
 package match
 
 import (
-	"sync"
-
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
+	"github.com/ysomad/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/pkg/stat"
 )
 
 type stats struct {
@@ -18,43 +18,11 @@ func newStats() stats {
 	}
 }
 
-// normalize returns restructured player and weapon stats.
-func (s *stats) normalize() ([]*playerStat, []*weaponStat) { //nolint:unused // for benchmarks
-	var (
-		wg          sync.WaitGroup
-		playerStats []*playerStat
-		weaponStats []*weaponStat
-	)
-
-	wg.Add(2)
-
-	go func() {
-		for _, ps := range s.playerStats {
-			playerStats = append(playerStats, ps)
-		}
-
-		wg.Done()
-	}()
-
-	go func() {
-		for _, weapons := range s.weaponStats {
-			for _, ws := range weapons {
-				weaponStats = append(weaponStats, ws)
-			}
-		}
-
-		wg.Done()
-	}()
-
-	wg.Wait()
-
-	return playerStats, weaponStats
-}
-
-func (s *stats) normalizeSync() ([]*playerStat, []*weaponStat) {
+func (s *stats) normalize(roundsPlayed int8) ([]*playerStat, []*weaponStat) {
 	playerStats := make([]*playerStat, 0, len(s.playerStats))
 
 	for _, ps := range s.playerStats {
+		ps.calculate(int32(roundsPlayed))
 		playerStats = append(playerStats, ps)
 	}
 
@@ -62,6 +30,17 @@ func (s *stats) normalizeSync() ([]*playerStat, []*weaponStat) {
 
 	for _, weapons := range s.weaponStats {
 		for _, ws := range weapons {
+			ws.calculateTotalHits()
+			ws.accuracy = domain.NewWeaponAccuracyStats(
+				ws.shots,
+				ws.totalHits,
+				ws.headHits,
+				ws.neckHits,
+				ws.chestHits,
+				ws.stomachHits,
+				ws.armHits,
+				ws.legHits,
+			)
 			weaponStats = append(weaponStats, ws)
 		}
 	}
@@ -128,23 +107,41 @@ func (s *stats) incrWeaponStat(steamID uint64, m metric, e common.EquipmentType)
 
 type playerStat struct {
 	steamID            uint64
-	kills              int
-	hsKills            int
-	blindKills         int
-	wallbangKills      int
-	noScopeKills       int
-	throughSmokeKills  int
-	deaths             int
-	assists            int
-	flashbangAssists   int
-	mvpCount           int
-	damageTaken        int
-	damageDealt        int
-	grenadeDamageDealt int
-	blindedPlayers     int
-	blindedTimes       int
-	bombsPlanted       int
-	bombsDefused       int
+	kills              int32
+	hsKills            int32
+	blindKills         int32
+	wallbangKills      int32
+	noScopeKills       int32
+	throughSmokeKills  int32
+	deaths             int32
+	assists            int32
+	flashbangAssists   int32
+	mvpCount           int32
+	damageTaken        int32
+	damageDealt        int32
+	grenadeDamageDealt int32
+	blindedPlayers     int32
+	blindedTimes       int32
+	bombsPlanted       int32
+	bombsDefused       int32
+
+	hsPercentage           float64
+	kd                     float64
+	adr                    float64
+	killsPerRound          float64
+	assistsPerRound        float64
+	deathsPerRound         float64
+	blindedPlayersPerRound float64
+}
+
+func (s *playerStat) calculate(rounds int32) {
+	s.hsPercentage = stat.HeadshotPercentage(s.hsKills, s.kills)
+	s.kd = stat.KD(s.kills, s.deaths)
+	s.adr = stat.ADR(s.damageDealt, rounds)
+	s.killsPerRound = stat.AVG(s.kills, rounds)
+	s.assistsPerRound = stat.AVG(s.assists, rounds)
+	s.deathsPerRound = stat.AVG(s.deaths, rounds)
+	s.blindedPlayersPerRound = stat.AVG(s.blindedPlayers, rounds)
 }
 
 // add adds v to a particular field depending on a received metric.
@@ -152,64 +149,74 @@ func (s *playerStat) add(m metric, v int) { //nolint:gocyclo // no other options
 	//nolint:exhaustive // each metric corresponds to specific playerStat field, no need to check all
 	switch m {
 	case metricKill:
-		s.kills += v
+		s.kills += int32(v)
 	case metricHSKill:
-		s.hsKills += v
+		s.hsKills += int32(v)
 	case metricBlindKill:
-		s.blindKills += v
+		s.blindKills += int32(v)
 	case metricWallbangKill:
-		s.wallbangKills += v
+		s.wallbangKills += int32(v)
 	case metricNoScopeKill:
-		s.noScopeKills += v
+		s.noScopeKills += int32(v)
 	case metricThroughSmokeKill:
-		s.throughSmokeKills += v
+		s.throughSmokeKills += int32(v)
 	case metricDeath:
-		s.deaths += v
+		s.deaths += int32(v)
 	case metricAssist:
-		s.assists += v
+		s.assists += int32(v)
 	case metricFlashbangAssist:
-		s.flashbangAssists += v
+		s.flashbangAssists += int32(v)
 	case metricRoundMVP:
-		s.mvpCount += v
+		s.mvpCount += int32(v)
 	case metricDamageTaken:
-		s.damageTaken += v
+		s.damageTaken += int32(v)
 	case metricDamageDealt:
-		s.damageDealt += v
+		s.damageDealt += int32(v)
 	case metricBlind:
-		s.blindedPlayers += v
+		s.blindedPlayers += int32(v)
 	case metricBlinded:
-		s.blindedTimes += v
+		s.blindedTimes += int32(v)
 	case metricBombPlanted:
-		s.bombsPlanted += v
+		s.bombsPlanted += int32(v)
 	case metricBombDefused:
-		s.bombsDefused += v
+		s.bombsDefused += int32(v)
 	case metricGrenadeDamageDealt:
-		s.grenadeDamageDealt += v
+		s.grenadeDamageDealt += int32(v)
 	}
 }
 
 type weaponStat struct {
 	steamID           uint64
 	weaponID          int32
-	kills             int
-	hsKills           int
-	blindKills        int
-	wallbangKills     int
-	noScopeKills      int
-	throughSmokeKills int
-	deaths            int
-	assists           int
-	damageTaken       int
-	damageDealt       int
-	shots             int
-	headHits          int
-	neckHits          int
-	chestHits         int
-	stomachHits       int
-	leftArmHits       int
-	rightArmHits      int
-	leftLegHits       int
-	rightLegHits      int
+	kills             int32
+	hsKills           int32
+	blindKills        int32
+	wallbangKills     int32
+	noScopeKills      int32
+	throughSmokeKills int32
+	deaths            int32
+	assists           int32
+	damageTaken       int32
+	damageDealt       int32
+	shots             int32
+	totalHits         int32
+	headHits          int32
+	neckHits          int32
+	chestHits         int32
+	stomachHits       int32
+	armHits           int32
+	legHits           int32
+
+	accuracy *domain.WeaponAccuracyStats
+}
+
+func (ws *weaponStat) calculateTotalHits() {
+	ws.totalHits = ws.headHits +
+		ws.neckHits +
+		ws.chestHits +
+		ws.stomachHits +
+		ws.armHits +
+		ws.legHits
 }
 
 // add adds v to a particular field depending on a received metric.
@@ -217,42 +224,38 @@ func (ws *weaponStat) add(m metric, v int) { //nolint:gocyclo // no other option
 	//nolint:exhaustive // each metric corresponds to specific weaponStat field, no need to check all
 	switch m {
 	case metricKill:
-		ws.kills += v
+		ws.kills += int32(v)
 	case metricHSKill:
-		ws.hsKills += v
+		ws.hsKills += int32(v)
 	case metricBlindKill:
-		ws.blindKills += v
+		ws.blindKills += int32(v)
 	case metricWallbangKill:
-		ws.wallbangKills += v
+		ws.wallbangKills += int32(v)
 	case metricNoScopeKill:
-		ws.noScopeKills += v
+		ws.noScopeKills += int32(v)
 	case metricThroughSmokeKill:
-		ws.throughSmokeKills += v
+		ws.throughSmokeKills += int32(v)
 	case metricDeath:
-		ws.deaths += v
+		ws.deaths += int32(v)
 	case metricAssist:
-		ws.assists += v
+		ws.assists += int32(v)
 	case metricDamageTaken:
-		ws.damageTaken += v
+		ws.damageTaken += int32(v)
 	case metricDamageDealt:
-		ws.damageDealt += v
+		ws.damageDealt += int32(v)
 	case metricShot:
-		ws.shots += v
+		ws.shots += int32(v)
 	case metricHitHead:
-		ws.headHits += v
+		ws.headHits += int32(v)
 	case metricHitNeck:
-		ws.neckHits += v
+		ws.neckHits += int32(v)
 	case metricHitChest:
-		ws.chestHits += v
+		ws.chestHits += int32(v)
 	case metricHitStomach:
-		ws.stomachHits += v
-	case metricHitLeftArm:
-		ws.leftArmHits += v
-	case metricHitRightArm:
-		ws.rightArmHits += v
-	case metricHitLeftLeg:
-		ws.leftLegHits += v
-	case metricHitRightLeg:
-		ws.rightLegHits += v
+		ws.stomachHits += int32(v)
+	case metricHitLeftArm, metricHitRightArm:
+		ws.armHits += int32(v)
+	case metricHitLeftLeg, metricHitRightLeg:
+		ws.legHits += int32(v)
 	}
 }

@@ -120,50 +120,43 @@ func (c *Controller) GetPlayerStats(p gen.GetPlayerStatsParams) gen.GetPlayerSta
 		})
 	}
 
-	// copilot is a LEGEND
-	payload := &models.PlayerStats{
+	return gen.NewGetPlayerStatsOK().WithPayload(&models.PlayerStats{
 		BaseStats: &models.PlayerStatsBaseStats{
-			Assists:            s.Base.Assists,
-			BlindKills:         s.Base.BlindKills,
-			BlindedPlayers:     s.Base.BlindedPlayers,
-			BlindedTimes:       s.Base.BlindedTimes,
-			BombsDefused:       s.Base.BombsDefused,
-			BombsPlanted:       s.Base.BombsPlanted,
-			DamageDealt:        s.Base.DamageDealt,
-			DamageTaken:        s.Base.DamageTaken,
-			Deaths:             s.Base.Deaths,
-			Draws:              s.Base.Draws,
-			FlashbangAssists:   s.Base.FlashbangAssists,
-			GrenadeDamageDealt: s.Base.GrenadeDamageDealt,
-			HeadshotKills:      s.Base.HeadshotKills,
-			Kills:              s.Base.Kills,
-			Loses:              s.Base.Loses,
-			MatchesPlayed:      s.Base.MatchesPlayed,
-			Mvps:               s.Base.MVPCount,
-			NoscopeKills:       s.Base.NoScopeKills,
-			RoundsPlayed:       s.Base.RoundsPlayed,
-			ThroughSmokeKills:  s.Base.ThroughSmokeKills,
-			TimePlayed:         int64(s.Base.TimePlayed),
-			WallbangKills:      s.Base.WallbangKills,
-			Wins:               s.Base.Wins,
+			Assists:            s.Assists,
+			BlindKills:         s.BlindKills,
+			BlindedPlayers:     s.BlindedPlayers,
+			BlindedTimes:       s.BlindedTimes,
+			BombsDefused:       s.BombsDefused,
+			BombsPlanted:       s.BombsPlanted,
+			DamageDealt:        s.DamageDealt,
+			DamageTaken:        s.DamageTaken,
+			Deaths:             s.Deaths,
+			FlashbangAssists:   s.FlashbangAssists,
+			GrenadeDamageDealt: s.GrenadeDamageDealt,
+			HeadshotKills:      s.HeadshotKills,
+			Kills:              s.Kills,
+			Loses:              s.Loses,
+			MatchesPlayed:      s.MatchesPlayed,
+			Mvps:               s.MVPCount,
+			NoscopeKills:       s.NoScopeKills,
+			RoundsPlayed:       s.RoundsPlayed,
+			ThroughSmokeKills:  s.ThroughSmokeKills,
+			TimePlayed:         int64(s.TimePlayed),
+			WallbangKills:      s.WallbangKills,
+			Wins:               s.Wins,
 		},
-		RoundStats: models.PlayerStatsRoundStats{
-			Assists:            s.Round.Assists,
-			BlindedPlayers:     s.Round.BlindedPlayers,
-			BlindedTimes:       s.Round.BlindedTimes,
-			DamageDealt:        s.Round.DamageDealt,
-			Deaths:             s.Round.Deaths,
-			GrenadeDamageDealt: s.Round.GrenadeDamageDealt,
-			Kills:              s.Round.Kills,
+		CalculatedStats: &models.PlayerStatsCalculatedStats{
+			ADR:                    s.ADR,
+			KD:                     s.KD,
+			AssistsPerRound:        s.AssistsPerRound,
+			BlindedPlayersPerRound: s.BlindedPlayersPerRound,
+			DeathsPerRound:         s.DeathsPerRound,
+			GrenadeDamagePerRound:  s.GrenadeDmgPerRound,
+			HeadshotPercentage:     s.HeadshotPercentage,
+			KillsPerRound:          s.KillsPerRound,
+			WinRate:                s.WinRate,
 		},
-		CalculatedStats: models.PlayerStatsCalculatedStats{
-			HeadshotPercentage: s.Calc.HeadshotPercentage,
-			KillDeathRatio:     s.Calc.KillDeathRatio,
-			WinRate:            s.Calc.WinRate,
-		},
-	}
-
-	return gen.NewGetPlayerStatsOK().WithPayload(payload)
+	})
 }
 
 func (c *Controller) GetWeaponStats(p gen.GetWeaponStatsParams) gen.GetWeaponStatsResponder {
@@ -211,11 +204,10 @@ func (c *Controller) GetWeaponStats(p gen.GetWeaponStatsParams) gen.GetWeaponSta
 				NeckHits:          s.Base.NeckHits,
 				HeadshotKills:     s.Base.HeadshotKills,
 				Kills:             s.Base.Kills,
-				LeftArmHits:       s.Base.LeftArmHits,
-				LeftLegHits:       s.Base.LeftLegHits,
+				ArmHits:           s.Base.ArmHits,
+				LegHits:           s.Base.LegHits,
+				TotalHits:         s.Base.TotalHits,
 				NoscopeKills:      s.Base.NoScopeKills,
-				RightArmHits:      s.Base.RightArmHits,
-				RightLegHits:      s.Base.RightLegHits,
 				Shots:             s.Base.Shots,
 				StomachHits:       s.Base.StomachHits,
 				ThroughSmokeKills: s.Base.ThroughSmokeKills,
@@ -223,7 +215,7 @@ func (c *Controller) GetWeaponStats(p gen.GetWeaponStatsParams) gen.GetWeaponSta
 				Weapon:            s.Base.Weapon,
 				WeaponID:          s.Base.WeaponID,
 			},
-			AccuracyStats: models.PlayerWeaponStatsInnerAccuracyStats{
+			AccuracyStats: &models.PlayerWeaponStatsInnerAccuracyStats{
 				Arms:    s.Accuracy.Arms,
 				Chest:   s.Accuracy.Chest,
 				Head:    s.Accuracy.Head,
