@@ -206,12 +206,14 @@ type weaponBaseStats struct {
 	DamageTaken       int32  `db:"total_dmg_taken"`
 	DamageDealt       int32  `db:"total_dmg_dealt"`
 	Shots             int32  `db:"total_shots"`
-	HeadHits          int32  `db:"total_head_hits"`
-	NeckHits          int32  `db:"total_neck_hits"`
-	ChestHits         int32  `db:"total_chest_hits"`
-	StomachHits       int32  `db:"total_stomach_hits"`
-	ArmHits           int32  `db:"total_arm_hits"`
-	LegHits           int32  `db:"total_leg_hits"`
+
+	TotalHits   int32 `db:"total_hits"`
+	HeadHits    int32 `db:"total_head_hits"`
+	NeckHits    int32 `db:"total_neck_hits"`
+	ChestHits   int32 `db:"total_chest_hits"`
+	StomachHits int32 `db:"total_stomach_hits"`
+	ArmHits     int32 `db:"total_arm_hits"`
+	LegHits     int32 `db:"total_leg_hits"`
 }
 
 func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
@@ -233,6 +235,7 @@ func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f dom
 			"sum(ws.damage_taken) as total_dmg_taken",
 			"sum(ws.damage_dealt) as total_dmg_dealt",
 			"sum(ws.shots) as total_shots",
+			"sum(ws.total_hits) as total_hits",
 			"sum(ws.head_hits) as total_head_hits",
 			"sum(ws.neck_hits) as total_neck_hits",
 			"sum(ws.chest_hits) as total_chest_hits",
@@ -288,6 +291,7 @@ func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f dom
 			Assists:           s.Assists,
 			DamageTaken:       s.DamageTaken,
 			DamageDealt:       s.DamageDealt,
+			TotalHits:         s.TotalHits,
 			Shots:             s.Shots,
 			HeadHits:          s.HeadHits,
 			NeckHits:          s.NeckHits,

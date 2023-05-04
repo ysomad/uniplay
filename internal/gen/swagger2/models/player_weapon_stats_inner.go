@@ -26,6 +26,12 @@ type PlayerWeaponStatsInner struct {
 	// base stats
 	// Required: true
 	BaseStats *PlayerWeaponStatsInnerBaseStats `json:"base_stats"`
+
+	// weapon
+	Weapon string `json:"weapon,omitempty"`
+
+	// weapon id
+	WeaponID int16 `json:"weapon_id,omitempty"`
 }
 
 // Validate validates this player weapon stats inner

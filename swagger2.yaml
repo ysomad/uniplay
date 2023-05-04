@@ -843,11 +843,6 @@ definitions:
   PlayerWeaponStats_inner_base_stats:
     type: object
     properties:
-      weapon_id:
-        type: integer
-        format: int16
-      weapon:
-        type: string
       kills:
         type: integer
         format: int32
@@ -932,6 +927,11 @@ definitions:
     - accuracy_stats
     - base_stats
     properties:
+      weapon_id:
+        type: integer
+        format: int16
+      weapon:
+        type: string
       base_stats:
         $ref: '#/definitions/PlayerWeaponStats_inner_base_stats'
       accuracy_stats:

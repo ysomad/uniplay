@@ -193,6 +193,8 @@ func (c *Controller) GetWeaponStats(p gen.GetWeaponStatsParams) gen.GetWeaponSta
 
 	for i, s := range weaponStats {
 		payload[i] = models.PlayerWeaponStatsInner{
+			Weapon:   s.Base.Weapon,
+			WeaponID: s.Base.WeaponID,
 			BaseStats: &models.PlayerWeaponStatsInnerBaseStats{
 				Assists:           s.Base.Assists,
 				BlindKills:        s.Base.BlindKills,
@@ -212,8 +214,6 @@ func (c *Controller) GetWeaponStats(p gen.GetWeaponStatsParams) gen.GetWeaponSta
 				StomachHits:       s.Base.StomachHits,
 				ThroughSmokeKills: s.Base.ThroughSmokeKills,
 				WallbangKills:     s.Base.WallbangKills,
-				Weapon:            s.Base.Weapon,
-				WeaponID:          s.Base.WeaponID,
 			},
 			AccuracyStats: &models.PlayerWeaponStatsInnerAccuracyStats{
 				Arms:    s.Accuracy.Arms,

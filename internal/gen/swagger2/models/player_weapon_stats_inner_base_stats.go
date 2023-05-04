@@ -70,12 +70,6 @@ type PlayerWeaponStatsInnerBaseStats struct {
 
 	// wallbang kills
 	WallbangKills int32 `json:"wallbang_kills,omitempty"`
-
-	// weapon
-	Weapon string `json:"weapon,omitempty"`
-
-	// weapon id
-	WeaponID int16 `json:"weapon_id,omitempty"`
 }
 
 // Validate validates this player weapon stats inner base stats

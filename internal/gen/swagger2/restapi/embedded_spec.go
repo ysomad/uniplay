@@ -1287,6 +1287,13 @@ func init() {
         },
         "base_stats": {
           "$ref": "#/definitions/PlayerWeaponStats_inner_base_stats"
+        },
+        "weapon": {
+          "type": "string"
+        },
+        "weapon_id": {
+          "type": "integer",
+          "format": "int16"
         }
       },
       "x-nullable": false
@@ -1398,13 +1405,6 @@ func init() {
         "wallbang_kills": {
           "type": "integer",
           "format": "int32"
-        },
-        "weapon": {
-          "type": "string"
-        },
-        "weapon_id": {
-          "type": "integer",
-          "format": "int16"
         }
       }
     },
@@ -2798,6 +2798,13 @@ func init() {
         },
         "base_stats": {
           "$ref": "#/definitions/PlayerWeaponStats_inner_base_stats"
+        },
+        "weapon": {
+          "type": "string"
+        },
+        "weapon_id": {
+          "type": "integer",
+          "format": "int16"
         }
       },
       "x-nullable": false
@@ -2909,13 +2916,6 @@ func init() {
         "wallbang_kills": {
           "type": "integer",
           "format": "int32"
-        },
-        "weapon": {
-          "type": "string"
-        },
-        "weapon_id": {
-          "type": "integer",
-          "format": "int16"
         }
       }
     },
