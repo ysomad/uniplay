@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-const defaultTeamSize = 5
+const DefaultTeamSize = 5
 
 type Match struct {
 	ID           uuid.UUID
@@ -26,17 +26,6 @@ type MatchTeam struct {
 	Name       string
 	FlagCode   string
 	ScoreBoard []*MatchScoreBoardRow
-}
-
-func NewMatchTeam(id, score int32, state MatchState, name, flag string) *MatchTeam {
-	return &MatchTeam{
-		ID:         id,
-		Score:      score,
-		State:      state,
-		Name:       name,
-		FlagCode:   flag,
-		ScoreBoard: make([]*MatchScoreBoardRow, 0, defaultTeamSize),
-	}
 }
 
 type MatchScoreBoardRow struct {

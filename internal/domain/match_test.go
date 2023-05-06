@@ -110,48 +110,48 @@ func TestNewMatchState(t *testing.T) {
 	}
 }
 
-func TestNewMatchTeam(t *testing.T) {
-	t.Parallel()
+// func TestNewMatchTeam(t *testing.T) {
+// 	t.Parallel()
 
-	type args struct {
-		id    int32
-		score int32
-		state MatchState
-		name  string
-		flag  string
-	}
+// 	type args struct {
+// 		id    int32
+// 		score int32
+// 		state MatchState
+// 		name  string
+// 		flag  string
+// 	}
 
-	tests := []struct {
-		name string
-		args args
-		want *MatchTeam
-	}{
-		{
-			name: "success",
-			args: args{
-				id:    23,
-				score: 15,
-				state: MatchStateWin,
-				name:  "team1",
-				flag:  "RU",
-			},
-			want: &MatchTeam{
-				ID:         23,
-				Score:      15,
-				State:      MatchStateWin,
-				Name:       "team1",
-				FlagCode:   "RU",
-				ScoreBoard: make([]*MatchScoreBoardRow, 0, defaultTeamSize),
-			},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got := NewMatchTeam(tt.args.id, tt.args.score, tt.args.state, tt.name, tt.args.flag)
-			assert.ObjectsAreEqual(tt.want, got)
-		})
-	}
-}
+// 	tests := []struct {
+// 		name string
+// 		args args
+// 		want *MatchTeam
+// 	}{
+// 		{
+// 			name: "success",
+// 			args: args{
+// 				id:    23,
+// 				score: 15,
+// 				state: MatchStateWin,
+// 				name:  "team1",
+// 				flag:  "RU",
+// 			},
+// 			want: &MatchTeam{
+// 				ID:         23,
+// 				Score:      15,
+// 				State:      MatchStateWin,
+// 				Name:       "team1",
+// 				FlagCode:   "RU",
+// 				ScoreBoard: make([]*MatchScoreBoardRow, 0, defaultTeamSize),
+// 			},
+// 		},
+// 	}
+// 	for _, tt := range tests {
+// 		t.Run(tt.name, func(t *testing.T) {
+// 			got := NewMatchTeam(tt.args.id, tt.args.score, tt.args.state, tt.name, tt.args.flag)
+// 			assert.ObjectsAreEqual(tt.want, got)
+// 		})
+// 	}
+// }
 
 func TestNewMatchID(t *testing.T) {
 	t.Parallel()

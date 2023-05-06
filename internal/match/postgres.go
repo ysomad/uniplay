@@ -68,11 +68,19 @@ type matchScoreBoardRow struct {
 }
 
 func (p *postgres) scoreboardRowsToMatch(sbRows []*matchScoreBoardRow) domain.Match {
-	match := domain.Match{
+	m := domain.Match{
 		ID: sbRows[0].MatchID,
 		Map: domain.Map{
 			Name:    sbRows[0].MapName,
 			IconURL: sbRows[0].MapIconURL,
+		},
+		Team1: &domain.MatchTeam{
+			ID:         sbRows[0].TeamID,
+			Score:      sbRows[0].TeamScore,
+			State:      sbRows[0].TeamMatchState,
+			Name:       sbRows[0].TeamName,
+			FlagCode:   sbRows[0].TeamFlagCode,
+			ScoreBoard: make([]*domain.MatchScoreBoardRow, 0, domain.DefaultTeamSize),
 		},
 		RoundsPlayed: sbRows[0].RoundsPlayed,
 		Duration:     sbRows[0].MatchDuration,
@@ -94,39 +102,27 @@ func (p *postgres) scoreboardRowsToMatch(sbRows []*matchScoreBoardRow) domain.Ma
 			HeadshotPercentage: sbRow.HeadshotPercentage,
 		}
 
-		team := domain.NewMatchTeam(
-			sbRow.TeamID,
-			sbRow.TeamScore,
-			sbRow.TeamMatchState,
-			sbRow.TeamName,
-			sbRow.TeamFlagCode,
-		)
-
-		// инициализировать команд матча
-		if match.Team1 == nil {
-			match.Team1 = team
-			match.Team1.ScoreBoard = append(match.Team1.ScoreBoard, row)
+		if sbRow.TeamID == m.Team1.ID {
+			m.Team1.ScoreBoard = append(m.Team1.ScoreBoard, row)
 
 			continue
 		}
 
-		if match.Team2 == nil {
-			match.Team2 = team
-			match.Team2.ScoreBoard = append(match.Team2.ScoreBoard, row)
-
-			continue
+		if m.Team2 == nil {
+			m.Team2 = &domain.MatchTeam{
+				ID:         sbRow.TeamID,
+				Score:      sbRow.TeamScore,
+				State:      sbRow.TeamMatchState,
+				Name:       sbRow.TeamName,
+				FlagCode:   sbRow.TeamFlagCode,
+				ScoreBoard: make([]*domain.MatchScoreBoardRow, 0, domain.DefaultTeamSize),
+			}
 		}
 
-		// Добавить строку в таблицу соответствующей команды
-		switch sbRow.TeamID {
-		case match.Team1.ID:
-			match.Team1.ScoreBoard = append(match.Team1.ScoreBoard, row)
-		case match.Team2.ID:
-			match.Team2.ScoreBoard = append(match.Team2.ScoreBoard, row)
-		}
+		m.Team2.ScoreBoard = append(m.Team2.ScoreBoard, row)
 	}
 
-	return match
+	return m
 }
 
 func (p *postgres) FindByID(ctx context.Context, matchID uuid.UUID) (domain.Match, error) {
@@ -168,7 +164,7 @@ func (p *postgres) FindByID(ctx context.Context, matchID uuid.UUID) (domain.Matc
 		InnerJoin("team t ON tm.team_id = t.id").
 		InnerJoin("team_player tp ON tp.player_steam_id = pms.player_steam_id AND tp.team_id = pm.team_id").
 		Where(sq.Eq{"m.id": matchID}).
-		OrderBy("pms.kills DESC").
+		OrderBy("pm.team_id, pms.kd DESC").
 		ToSql()
 	if err != nil {
 		return domain.Match{}, err

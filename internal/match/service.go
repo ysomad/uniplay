@@ -69,5 +69,10 @@ func (s *service) GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match,
 	ctx, span := s.tracer.Start(ctx, "match.Service.GetByID")
 	defer span.End()
 
-	return s.match.FindByID(ctx, matchID)
+	m, err := s.match.FindByID(ctx, matchID)
+	if err != nil {
+		return domain.Match{}, err
+	}
+
+	return m, nil
 }
