@@ -23,18 +23,18 @@ type UpdateTeamRequest struct {
 	// Required: true
 	// Max Length: 16
 	// Min Length: 2
-	ClanName *string `json:"clan_name"`
+	ClanName string `json:"clan_name"`
 
 	// flag code
 	// Required: true
 	// Max Length: 2
 	// Min Length: 2
-	FlagCode *string `json:"flag_code"`
+	FlagCode string `json:"flag_code"`
 
 	// institution id
 	// Required: true
 	// Minimum: 1
-	InstitutionID *int32 `json:"institution_id"`
+	InstitutionID int32 `json:"institution_id"`
 }
 
 // Validate validates this update team request
@@ -61,15 +61,15 @@ func (m *UpdateTeamRequest) Validate(formats strfmt.Registry) error {
 
 func (m *UpdateTeamRequest) validateClanName(formats strfmt.Registry) error {
 
-	if err := validate.Required("clan_name", "body", m.ClanName); err != nil {
+	if err := validate.RequiredString("clan_name", "body", m.ClanName); err != nil {
 		return err
 	}
 
-	if err := validate.MinLength("clan_name", "body", *m.ClanName, 2); err != nil {
+	if err := validate.MinLength("clan_name", "body", m.ClanName, 2); err != nil {
 		return err
 	}
 
-	if err := validate.MaxLength("clan_name", "body", *m.ClanName, 16); err != nil {
+	if err := validate.MaxLength("clan_name", "body", m.ClanName, 16); err != nil {
 		return err
 	}
 
@@ -78,15 +78,15 @@ func (m *UpdateTeamRequest) validateClanName(formats strfmt.Registry) error {
 
 func (m *UpdateTeamRequest) validateFlagCode(formats strfmt.Registry) error {
 
-	if err := validate.Required("flag_code", "body", m.FlagCode); err != nil {
+	if err := validate.RequiredString("flag_code", "body", m.FlagCode); err != nil {
 		return err
 	}
 
-	if err := validate.MinLength("flag_code", "body", *m.FlagCode, 2); err != nil {
+	if err := validate.MinLength("flag_code", "body", m.FlagCode, 2); err != nil {
 		return err
 	}
 
-	if err := validate.MaxLength("flag_code", "body", *m.FlagCode, 2); err != nil {
+	if err := validate.MaxLength("flag_code", "body", m.FlagCode, 2); err != nil {
 		return err
 	}
 
@@ -95,11 +95,11 @@ func (m *UpdateTeamRequest) validateFlagCode(formats strfmt.Registry) error {
 
 func (m *UpdateTeamRequest) validateInstitutionID(formats strfmt.Registry) error {
 
-	if err := validate.Required("institution_id", "body", m.InstitutionID); err != nil {
+	if err := validate.Required("institution_id", "body", int32(m.InstitutionID)); err != nil {
 		return err
 	}
 
-	if err := validate.MinimumInt("institution_id", "body", int64(*m.InstitutionID), 1, false); err != nil {
+	if err := validate.MinimumInt("institution_id", "body", int64(m.InstitutionID), 1, false); err != nil {
 		return err
 	}
 

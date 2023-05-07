@@ -27,7 +27,7 @@ type UpdateTeamOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.Player `json:"body,omitempty"`
+	Payload *models.Team `json:"body,omitempty"`
 }
 
 // NewUpdateTeamOK creates UpdateTeamOK with default headers values
@@ -37,13 +37,13 @@ func NewUpdateTeamOK() *UpdateTeamOK {
 }
 
 // WithPayload adds the payload to the update team o k response
-func (o *UpdateTeamOK) WithPayload(payload *models.Player) *UpdateTeamOK {
+func (o *UpdateTeamOK) WithPayload(payload *models.Team) *UpdateTeamOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the update team o k response
-func (o *UpdateTeamOK) SetPayload(payload *models.Player) {
+func (o *UpdateTeamOK) SetPayload(payload *models.Team) {
 	o.Payload = payload
 }
 
@@ -107,6 +107,53 @@ func (o *UpdateTeamNotFound) WriteResponse(rw http.ResponseWriter, producer runt
 }
 
 func (o *UpdateTeamNotFound) UpdateTeamResponder() {}
+
+// UpdateTeamConflictCode is the HTTP code returned for type UpdateTeamConflict
+const UpdateTeamConflictCode int = 409
+
+/*
+UpdateTeamConflict Conflict
+
+swagger:response updateTeamConflict
+*/
+type UpdateTeamConflict struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Error `json:"body,omitempty"`
+}
+
+// NewUpdateTeamConflict creates UpdateTeamConflict with default headers values
+func NewUpdateTeamConflict() *UpdateTeamConflict {
+
+	return &UpdateTeamConflict{}
+}
+
+// WithPayload adds the payload to the update team conflict response
+func (o *UpdateTeamConflict) WithPayload(payload *models.Error) *UpdateTeamConflict {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the update team conflict response
+func (o *UpdateTeamConflict) SetPayload(payload *models.Error) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *UpdateTeamConflict) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(409)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
+func (o *UpdateTeamConflict) UpdateTeamResponder() {}
 
 // UpdateTeamUnprocessableEntityCode is the HTTP code returned for type UpdateTeamUnprocessableEntity
 const UpdateTeamUnprocessableEntityCode int = 422

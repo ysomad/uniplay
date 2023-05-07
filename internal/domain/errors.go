@@ -15,7 +15,8 @@ const (
 	CodeMatchNotFound     = 800
 	CodeMatchAlreadyExist = 801
 
-	CodeTeamNotFound = 900
+	CodeTeamNotFound      = 900
+	CodeTeamClanNameTaken = 901
 
 	CodeAccountEmailTaken = 1000
 )
@@ -28,5 +29,6 @@ var (
 
 	ErrAccountEmailTaken = errors.New("account with given email already exist")
 
-	ErrTeamNotFound = errors.New("team not found")
+	ErrTeamNotFound      = errors.New("team not found")
+	ErrTeamClanNameTaken = errors.New("given clan name already taken")
 )

@@ -91,3 +91,37 @@ func (c *Controller) GetTeamPlayers(p gen.GetTeamPlayersParams) gen.GetTeamPlaye
 
 	return gen.NewGetTeamPlayersOK().WithPayload(models.TeamPlayerList(payload))
 }
+
+func (c *Controller) UpdateTeam(p gen.UpdateTeamParams) gen.UpdateTeamResponder {
+	t, err := c.team.Update(p.HTTPRequest.Context(), p.TeamID, updateParams{
+		clanName:      p.Payload.ClanName,
+		flagCode:      p.Payload.FlagCode,
+		institutionID: p.Payload.InstitutionID,
+	})
+	if err != nil {
+		switch {
+		case errors.Is(err, domain.ErrTeamNotFound):
+			return gen.NewUpdateTeamNotFound().WithPayload(&models.Error{
+				Code:    domain.CodeTeamNotFound,
+				Message: err.Error(),
+			})
+		case errors.Is(err, domain.ErrTeamClanNameTaken):
+			return gen.NewUpdateTeamConflict().WithPayload(&models.Error{
+				Code:    domain.CodeTeamClanNameTaken,
+				Message: err.Error(),
+			})
+		}
+
+		return gen.NewUpdateTeamInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	return gen.NewUpdateTeamOK().WithPayload(&models.Team{
+		ClanName:      t.ClanName,
+		FlagCode:      t.FlagCode,
+		ID:            t.ID,
+		InstitutionID: t.InstitutionID,
+	})
+}

@@ -2,13 +2,16 @@ package team
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
+	sq "github.com/Masterminds/squirrel"
+	"github.com/jackc/pgerrcode"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
+	"github.com/jackc/pgx/v5/pgtype/zeronull"
 	"go.opentelemetry.io/otel/trace"
 
-	sq "github.com/Masterminds/squirrel"
-	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/pgtype/zeronull"
 	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/pkg/filter"
 	"github.com/ysomad/uniplay/internal/pkg/paging"
@@ -152,4 +155,41 @@ func (p *postgres) GetPlayers(ctx context.Context, teamID int32) ([]domain.TeamP
 	}
 
 	return players, nil
+}
+
+func (p *postgres) Update(ctx context.Context, teamID int32, up updateParams) (domain.Team, error) {
+	sql, args, err := p.client.Builder.
+		Update("team").
+		SetMap(map[string]any{
+			"clan_name":      up.clanName,
+			"flag_code":      up.flagCode,
+			"institution_id": up.institutionID,
+		}).
+		Where(sq.Eq{"id": teamID}).
+		Suffix("RETURNING id, institution_id, clan_name, flag_code").
+		ToSql()
+	if err != nil {
+		return domain.Team{}, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return domain.Team{}, err
+	}
+
+	t, err := pgx.CollectOneRow(rows, pgx.RowToStructByPos[domain.Team])
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return domain.Team{}, domain.ErrTeamNotFound
+		}
+
+		var e *pgconn.PgError
+		if errors.As(err, &e) && e.Code == pgerrcode.UniqueViolation {
+			return domain.Team{}, domain.ErrTeamClanNameTaken
+		}
+
+		return domain.Team{}, err
+	}
+
+	return t, nil
 }

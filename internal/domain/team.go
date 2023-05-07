@@ -1,5 +1,12 @@
 package domain
 
+type Team struct {
+	ID            int32
+	InstitutionID int32
+	ClanName      string
+	FlagCode      string
+}
+
 type TeamListItem struct {
 	ID       int32
 	ClanName string

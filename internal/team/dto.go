@@ -28,3 +28,9 @@ func newListParams(s *string, id, psize *int32) listParams {
 
 	return p
 }
+
+type updateParams struct {
+	clanName      string
+	flagCode      string
+	institutionID int32
+}

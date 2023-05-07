@@ -331,9 +331,13 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/Player'
+            $ref: '#/definitions/Team'
         "404":
           description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "409":
+          description: Conflict
           schema:
             $ref: '#/definitions/Error'
         "422":
@@ -880,6 +884,26 @@ definitions:
       has_next:
         type: boolean
         x-nullable: false
+  Team:
+    type: object
+    required:
+    - clan_name
+    - id
+    properties:
+      id:
+        type: integer
+        format: int32
+        x-nullable: false
+      institution_id:
+        type: integer
+        format: int32
+        x-nullable: false
+      clan_name:
+        type: string
+        x-nullable: false
+      flag_code:
+        type: string
+        x-nullable: false
   TeamList:
     type: object
     required:
@@ -904,14 +928,17 @@ definitions:
         type: string
         minLength: 2
         maxLength: 16
+        x-nullable: false
       flag_code:
         type: string
         minLength: 2
         maxLength: 2
+        x-nullable: false
       institution_id:
         type: integer
         format: int32
         minimum: 1
+        x-nullable: false
   TeamPlayerList:
     type: array
     items:

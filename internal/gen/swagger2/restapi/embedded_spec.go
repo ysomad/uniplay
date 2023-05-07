@@ -796,11 +796,17 @@ func init() {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Player"
+              "$ref": "#/definitions/Team"
             }
           },
           "404": {
             "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -1663,6 +1669,33 @@ func init() {
         }
       }
     },
+    "Team": {
+      "type": "object",
+      "required": [
+        "clan_name",
+        "id"
+      ],
+      "properties": {
+        "clan_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "flag_code": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "institution_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
+    },
     "TeamList": {
       "type": "object",
       "required": [
@@ -1811,17 +1844,20 @@ func init() {
         "clan_name": {
           "type": "string",
           "maxLength": 16,
-          "minLength": 2
+          "minLength": 2,
+          "x-nullable": false
         },
         "flag_code": {
           "type": "string",
           "maxLength": 2,
-          "minLength": 2
+          "minLength": 2,
+          "x-nullable": false
         },
         "institution_id": {
           "type": "integer",
           "format": "int32",
-          "minimum": 1
+          "minimum": 1,
+          "x-nullable": false
         }
       }
     },
@@ -2695,11 +2731,17 @@ func init() {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Player"
+              "$ref": "#/definitions/Team"
             }
           },
           "404": {
             "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "409": {
+            "description": "Conflict",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -3562,6 +3604,33 @@ func init() {
         }
       }
     },
+    "Team": {
+      "type": "object",
+      "required": [
+        "clan_name",
+        "id"
+      ],
+      "properties": {
+        "clan_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "flag_code": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "institution_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      }
+    },
     "TeamList": {
       "type": "object",
       "required": [
@@ -3710,17 +3779,20 @@ func init() {
         "clan_name": {
           "type": "string",
           "maxLength": 16,
-          "minLength": 2
+          "minLength": 2,
+          "x-nullable": false
         },
         "flag_code": {
           "type": "string",
           "maxLength": 2,
-          "minLength": 2
+          "minLength": 2,
+          "x-nullable": false
         },
         "institution_id": {
           "type": "integer",
           "format": "int32",
-          "minimum": 1
+          "minimum": 1,
+          "x-nullable": false
         }
       }
     },
