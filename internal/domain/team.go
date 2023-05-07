@@ -11,3 +11,12 @@ type TeamListItem struct {
 	InstType      InstType
 	InstLogoURL   string
 }
+
+type TeamPlayer struct {
+	SteamID     SteamID
+	DisplayName string
+	FirstName   string
+	LastName    string
+	AvatarURL   string
+	IsCaptain   bool
+}

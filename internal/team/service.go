@@ -9,6 +9,7 @@ import (
 
 type repository interface {
 	GetAll(context.Context, listParams) (paging.InfList[domain.TeamListItem], error)
+	GetPlayers(ctx context.Context, teamID int32) ([]domain.TeamPlayer, error)
 }
 
 type service struct {
@@ -23,4 +24,8 @@ func NewService(r repository) *service {
 
 func (s *service) GetList(ctx context.Context, p listParams) (paging.InfList[domain.TeamListItem], error) {
 	return s.team.GetAll(ctx, p)
+}
+
+func (s *service) GetPlayers(ctx context.Context, teamID int32) ([]domain.TeamPlayer, error) {
+	return s.team.GetPlayers(ctx, teamID)
 }

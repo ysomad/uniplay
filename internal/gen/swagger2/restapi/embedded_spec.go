@@ -760,6 +760,110 @@ func init() {
           }
         }
       }
+    },
+    "/teams/{team_id}": {
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "team"
+        ],
+        "summary": "Редактирование информации о команде",
+        "operationId": "updateTeam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "ID команды",
+            "name": "team_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateTeamRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/teams/{team_id}/players": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "team"
+        ],
+        "summary": "Получение списка игроков команды",
+        "operationId": "getTeamPlayers",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "ID команды",
+            "name": "team_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TeamPlayerList"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1628,6 +1732,47 @@ func init() {
       "x-go-name": "TeamListItem",
       "x-nullable": false
     },
+    "TeamPlayerList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TeamPlayerList_inner"
+      }
+    },
+    "TeamPlayerList_inner": {
+      "type": "object",
+      "required": [
+        "is_captain",
+        "steam_id"
+      ],
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "display_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "is_captain": {
+          "type": "boolean",
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "steam_id": {
+          "type": "string",
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "TeamPlayerListItem",
+      "x-nullable": false
+    },
     "UpdatePlayerRequest": {
       "type": "object",
       "required": [
@@ -1658,6 +1803,31 @@ func init() {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
+        }
+      }
+    },
+    "UpdateTeamRequest": {
+      "type": "object",
+      "required": [
+        "clan_name",
+        "flag_code",
+        "institution_id"
+      ],
+      "properties": {
+        "clan_name": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 2
+        },
+        "flag_code": {
+          "type": "string",
+          "maxLength": 2,
+          "minLength": 2
+        },
+        "institution_id": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1
         }
       }
     },
@@ -2495,6 +2665,110 @@ func init() {
           }
         }
       }
+    },
+    "/teams/{team_id}": {
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "team"
+        ],
+        "summary": "Редактирование информации о команде",
+        "operationId": "updateTeam",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "ID команды",
+            "name": "team_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "payload",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateTeamRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/teams/{team_id}/players": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "team"
+        ],
+        "summary": "Получение списка игроков команды",
+        "operationId": "getTeamPlayers",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "ID команды",
+            "name": "team_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TeamPlayerList"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -3363,6 +3637,47 @@ func init() {
       "x-go-name": "TeamListItem",
       "x-nullable": false
     },
+    "TeamPlayerList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TeamPlayerList_inner"
+      }
+    },
+    "TeamPlayerList_inner": {
+      "type": "object",
+      "required": [
+        "is_captain",
+        "steam_id"
+      ],
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "display_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "is_captain": {
+          "type": "boolean",
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "steam_id": {
+          "type": "string",
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "TeamPlayerListItem",
+      "x-nullable": false
+    },
     "UpdatePlayerRequest": {
       "type": "object",
       "required": [
@@ -3393,6 +3708,31 @@ func init() {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
+        }
+      }
+    },
+    "UpdateTeamRequest": {
+      "type": "object",
+      "required": [
+        "clan_name",
+        "flag_code",
+        "institution_id"
+      ],
+      "properties": {
+        "clan_name": {
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 2
+        },
+        "flag_code": {
+          "type": "string",
+          "maxLength": 2,
+          "minLength": 2
+        },
+        "institution_id": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 1
         }
       }
     },

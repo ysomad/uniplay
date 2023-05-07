@@ -305,6 +305,75 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
+  /teams/{team_id}:
+    put:
+      tags:
+      - team
+      summary: Редактирование информации о команде
+      operationId: updateTeam
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: team_id
+        in: path
+        description: ID команды
+        required: true
+        type: integer
+        format: int32
+      - in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateTeamRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Player'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /teams/{team_id}/players:
+    get:
+      tags:
+      - team
+      summary: Получение списка игроков команды
+      operationId: getTeamPlayers
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: team_id
+        in: path
+        description: ID команды
+        required: true
+        type: integer
+        format: int32
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TeamPlayerList'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
   /matches:
     post:
       tags:
@@ -829,6 +898,29 @@ definitions:
       has_next:
         type: boolean
         x-nullable: false
+  UpdateTeamRequest:
+    type: object
+    required:
+    - clan_name
+    - flag_code
+    - institution_id
+    properties:
+      clan_name:
+        type: string
+        minLength: 2
+        maxLength: 16
+      flag_code:
+        type: string
+        minLength: 2
+        maxLength: 2
+      institution_id:
+        type: integer
+        format: int32
+        minimum: 1
+  TeamPlayerList:
+    type: array
+    items:
+      $ref: '#/definitions/TeamPlayerList_inner'
   PlayerList_players:
     type: object
     required:
@@ -1241,4 +1333,30 @@ definitions:
       institution:
         $ref: '#/definitions/TeamList_institution'
     x-go-name: TeamListItem
+    x-nullable: false
+  TeamPlayerList_inner:
+    type: object
+    required:
+    - is_captain
+    - steam_id
+    properties:
+      steam_id:
+        type: string
+        x-nullable: false
+      display_name:
+        type: string
+        x-nullable: false
+      avatar_url:
+        type: string
+        x-nullable: false
+      first_name:
+        type: string
+        x-nullable: false
+      last_name:
+        type: string
+        x-nullable: false
+      is_captain:
+        type: boolean
+        x-nullable: false
+    x-go-name: TeamPlayerListItem
     x-nullable: false

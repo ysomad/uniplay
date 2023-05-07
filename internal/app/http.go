@@ -94,6 +94,7 @@ func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 	api.InstitutionGetInstitutionsHandler = institutionGen.GetInstitutionsHandlerFunc(d.institution.GetInstitutions)
 
 	api.TeamGetTeamListHandler = teamGen.GetTeamListHandlerFunc(d.team.GetTeamList)
+	api.TeamGetTeamPlayersHandler = teamGen.GetTeamPlayersHandlerFunc(d.team.GetTeamPlayers)
 }
 
 func newServer(conf config.HTTP, api *operations.UniplayAPI) *restapi.Server {

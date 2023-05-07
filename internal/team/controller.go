@@ -57,3 +57,28 @@ func (c *Controller) GetTeamList(p gen.GetTeamListParams) gen.GetTeamListRespond
 
 	return gen.NewGetTeamListOK().WithPayload(payload)
 }
+
+func (c *Controller) GetTeamPlayers(p gen.GetTeamPlayersParams) gen.GetTeamPlayersResponder {
+	teams, err := c.team.GetPlayers(p.HTTPRequest.Context(), p.TeamID)
+	if err != nil {
+		return gen.NewGetTeamPlayersInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	payload := make([]models.TeamPlayerListItem, len(teams))
+
+	for i, t := range teams {
+		payload[i] = models.TeamPlayerListItem{
+			AvatarURL:   t.AvatarURL,
+			DisplayName: t.DisplayName,
+			FirstName:   t.FirstName,
+			LastName:    t.LastName,
+			SteamID:     t.SteamID.String(),
+			IsCaptain:   t.IsCaptain,
+		}
+	}
+
+	return gen.NewGetTeamPlayersOK().WithPayload(models.TeamPlayerList(payload))
+}

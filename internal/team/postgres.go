@@ -96,3 +96,56 @@ func (p *postgres) GetAll(ctx context.Context, lp listParams) (paging.InfList[do
 
 	return paging.NewInfList(teams, lp.paging.PageSize)
 }
+
+type dbTeamPlayer struct {
+	SteamID     domain.SteamID `db:"steam_id"`
+	DisplayName zeronull.Text  `db:"display_name"`
+	FirstName   zeronull.Text  `db:"first_name"`
+	LastName    zeronull.Text  `db:"last_name"`
+	AvatarURL   zeronull.Text  `db:"avatar_url"`
+	IsCaptain   bool           `db:"is_captain"`
+}
+
+func (p *postgres) GetPlayers(ctx context.Context, teamID int32) ([]domain.TeamPlayer, error) {
+	sql, args, err := p.client.Builder.
+		Select(
+			"tp.player_steam_id as steam_id",
+			"p.display_name as display_name",
+			"p.first_name as first_name",
+			"p.last_name as last_name",
+			"p.avatar_url as avatar_url",
+			"tp.is_captain as is_captain",
+		).
+		From("team_player tp").
+		InnerJoin("player p ON tp.player_steam_id = p.steam_id").
+		Where(sq.Eq{"tp.team_id": teamID}).
+		ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	dbPlayers, err := pgx.CollectRows(rows, pgx.RowToStructByName[dbTeamPlayer])
+	if err != nil {
+		return nil, err
+	}
+
+	players := make([]domain.TeamPlayer, len(dbPlayers))
+
+	for i, pl := range dbPlayers {
+		players[i] = domain.TeamPlayer{
+			SteamID:     pl.SteamID,
+			DisplayName: string(pl.DisplayName),
+			FirstName:   string(pl.FirstName),
+			LastName:    string(pl.LastName),
+			AvatarURL:   string(pl.AvatarURL),
+			IsCaptain:   pl.IsCaptain,
+		}
+	}
+
+	return players, nil
+}

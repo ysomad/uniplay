@@ -106,6 +106,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 			return team.GetTeamListNotImplemented()
 		})
 	}
+	if api.TeamGetTeamPlayersHandler == nil {
+		api.TeamGetTeamPlayersHandler = team.GetTeamPlayersHandlerFunc(func(params team.GetTeamPlayersParams) team.GetTeamPlayersResponder {
+			return team.GetTeamPlayersNotImplemented()
+		})
+	}
 	if api.CompendiumGetWeaponClassesHandler == nil {
 		api.CompendiumGetWeaponClassesHandler = compendium.GetWeaponClassesHandlerFunc(func(params compendium.GetWeaponClassesParams) compendium.GetWeaponClassesResponder {
 			return compendium.GetWeaponClassesNotImplemented()
@@ -124,6 +129,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 	if api.PlayerUpdatePlayerHandler == nil {
 		api.PlayerUpdatePlayerHandler = player.UpdatePlayerHandlerFunc(func(params player.UpdatePlayerParams) player.UpdatePlayerResponder {
 			return player.UpdatePlayerNotImplemented()
+		})
+	}
+	if api.TeamUpdateTeamHandler == nil {
+		api.TeamUpdateTeamHandler = team.UpdateTeamHandlerFunc(func(params team.UpdateTeamParams) team.UpdateTeamResponder {
+			return team.UpdateTeamNotImplemented()
 		})
 	}
 

@@ -15,6 +15,8 @@ const (
 	CodeMatchNotFound     = 800
 	CodeMatchAlreadyExist = 801
 
+	CodeTeamNotFound = 900
+
 	CodeAccountEmailTaken = 1000
 )
 
@@ -25,4 +27,6 @@ var (
 	ErrMatchNotFound     = errors.New("match not found")
 
 	ErrAccountEmailTaken = errors.New("account with given email already exist")
+
+	ErrTeamNotFound = errors.New("team not found")
 )
