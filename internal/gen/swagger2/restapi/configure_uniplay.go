@@ -126,6 +126,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 			return compendium.GetWeaponsNotImplemented()
 		})
 	}
+	if api.TeamSetTeamCaptainHandler == nil {
+		api.TeamSetTeamCaptainHandler = team.SetTeamCaptainHandlerFunc(func(params team.SetTeamCaptainParams) team.SetTeamCaptainResponder {
+			return team.SetTeamCaptainNotImplemented()
+		})
+	}
 	if api.PlayerUpdatePlayerHandler == nil {
 		api.PlayerUpdatePlayerHandler = player.UpdatePlayerHandlerFunc(func(params player.UpdatePlayerParams) player.UpdatePlayerResponder {
 			return player.UpdatePlayerNotImplemented()

@@ -870,6 +870,55 @@ func init() {
           }
         }
       }
+    },
+    "/teams/{team_id}/players/{steam_id}/captain": {
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "team"
+        ],
+        "summary": "Назначить игрока капитаном команды",
+        "operationId": "setTeamCaptain",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "ID команды",
+            "name": "team_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -2790,6 +2839,55 @@ func init() {
             "schema": {
               "$ref": "#/definitions/TeamPlayerList"
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/teams/{team_id}/players/{steam_id}/captain": {
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "team"
+        ],
+        "summary": "Назначить игрока капитаном команды",
+        "operationId": "setTeamCaptain",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "ID команды",
+            "name": "team_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
           "404": {
             "description": "Not Found",

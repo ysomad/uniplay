@@ -11,6 +11,7 @@ type repository interface {
 	GetAll(context.Context, listParams) (paging.InfList[domain.TeamListItem], error)
 	GetPlayers(ctx context.Context, teamID int32) ([]domain.TeamPlayer, error)
 	Update(ctx context.Context, teamID int32, p updateParams) (domain.Team, error)
+	SetCaptain(ctx context.Context, teamID int32, steamID domain.SteamID) error
 }
 
 type service struct {
@@ -33,4 +34,8 @@ func (s *service) GetPlayers(ctx context.Context, teamID int32) ([]domain.TeamPl
 
 func (s *service) Update(ctx context.Context, teamID int32, p updateParams) (domain.Team, error) {
 	return s.team.Update(ctx, teamID, p)
+}
+
+func (s *service) SetCaptain(ctx context.Context, teamID int32, steamID domain.SteamID) error {
+	return s.team.SetCaptain(ctx, teamID, steamID)
 }

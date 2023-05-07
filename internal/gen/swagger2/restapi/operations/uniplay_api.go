@@ -98,6 +98,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		CompendiumGetWeaponsHandler: compendium.GetWeaponsHandlerFunc(func(params compendium.GetWeaponsParams) compendium.GetWeaponsResponder {
 			return compendium.GetWeaponsNotImplemented()
 		}),
+		TeamSetTeamCaptainHandler: team.SetTeamCaptainHandlerFunc(func(params team.SetTeamCaptainParams) team.SetTeamCaptainResponder {
+			return team.SetTeamCaptainNotImplemented()
+		}),
 		PlayerUpdatePlayerHandler: player.UpdatePlayerHandlerFunc(func(params player.UpdatePlayerParams) player.UpdatePlayerResponder {
 			return player.UpdatePlayerNotImplemented()
 		}),
@@ -175,6 +178,8 @@ type UniplayAPI struct {
 	PlayerGetWeaponStatsHandler player.GetWeaponStatsHandler
 	// CompendiumGetWeaponsHandler sets the operation handler for the get weapons operation
 	CompendiumGetWeaponsHandler compendium.GetWeaponsHandler
+	// TeamSetTeamCaptainHandler sets the operation handler for the set team captain operation
+	TeamSetTeamCaptainHandler team.SetTeamCaptainHandler
 	// PlayerUpdatePlayerHandler sets the operation handler for the update player operation
 	PlayerUpdatePlayerHandler player.UpdatePlayerHandler
 	// TeamUpdateTeamHandler sets the operation handler for the update team operation
@@ -306,6 +311,9 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.CompendiumGetWeaponsHandler == nil {
 		unregistered = append(unregistered, "compendium.GetWeaponsHandler")
+	}
+	if o.TeamSetTeamCaptainHandler == nil {
+		unregistered = append(unregistered, "team.SetTeamCaptainHandler")
 	}
 	if o.PlayerUpdatePlayerHandler == nil {
 		unregistered = append(unregistered, "player.UpdatePlayerHandler")
@@ -467,6 +475,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/compendiums/weapons"] = compendium.NewGetWeapons(o.context, o.CompendiumGetWeaponsHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/teams/{team_id}/players/{steam_id}/captain"] = team.NewSetTeamCaptain(o.context, o.TeamSetTeamCaptainHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
