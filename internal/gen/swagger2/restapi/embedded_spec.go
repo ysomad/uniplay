@@ -396,6 +396,56 @@ func init() {
         }
       }
     },
+    "/players": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение списка игроков",
+        "operationId": "getPlayerList",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Поиск по никнейму, имени и фамилии",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_steam_id из ответа предыдущего запроса.",
+            "name": "last_steam_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlayerList"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}": {
       "get": {
         "consumes": [
@@ -1009,6 +1059,60 @@ func init() {
           "x-nullable": false
         }
       }
+    },
+    "PlayerList": {
+      "type": "object",
+      "required": [
+        "has_next",
+        "players"
+      ],
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-nullable": false
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlayerList_players"
+          }
+        }
+      }
+    },
+    "PlayerList_players": {
+      "type": "object",
+      "required": [
+        "steam_id"
+      ],
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "display_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "steam_id": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "PlayerListItem",
+      "x-nullable": false
     },
     "PlayerMatch": {
       "type": "object",
@@ -1907,6 +2011,56 @@ func init() {
         }
       }
     },
+    "/players": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение списка игроков",
+        "operationId": "getPlayerList",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Поиск по никнейму, имени и фамилии",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_steam_id из ответа предыдущего запроса.",
+            "name": "last_steam_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PlayerList"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}": {
       "get": {
         "consumes": [
@@ -2520,6 +2674,60 @@ func init() {
           "x-nullable": false
         }
       }
+    },
+    "PlayerList": {
+      "type": "object",
+      "required": [
+        "has_next",
+        "players"
+      ],
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-nullable": false
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PlayerList_players"
+          }
+        }
+      }
+    },
+    "PlayerList_players": {
+      "type": "object",
+      "required": [
+        "steam_id"
+      ],
+      "properties": {
+        "avatar_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "display_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "last_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "steam_id": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "team_id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "PlayerListItem",
+      "x-nullable": false
     },
     "PlayerMatch": {
       "type": "object",

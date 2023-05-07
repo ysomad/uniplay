@@ -53,6 +53,42 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
+  /players:
+    get:
+      tags:
+      - player
+      summary: Получение списка игроков
+      operationId: getPlayerList
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: search
+        in: query
+        description: "Поиск по никнейму, имени и фамилии"
+        required: false
+        type: string
+      - name: page_size
+        in: query
+        description: "Количество значений на странице. Минимум — 1, максимум — 500."
+        required: false
+        type: integer
+        format: int32
+      - name: last_steam_id
+        in: query
+        description: "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_steam_id из ответа предыдущего запроса."
+        required: false
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/PlayerList'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
   /players/{steam_id}:
     get:
       tags:
@@ -540,6 +576,19 @@ definitions:
       last_name:
         type: string
         x-nullable: false
+  PlayerList:
+    type: object
+    required:
+    - has_next
+    - players
+    properties:
+      players:
+        type: array
+        items:
+          $ref: '#/definitions/PlayerList_players'
+      has_next:
+        type: boolean
+        x-nullable: false
   UpdatePlayerRequest:
     type: object
     required:
@@ -728,6 +777,32 @@ definitions:
       has_next:
         type: boolean
         x-nullable: false
+  PlayerList_players:
+    type: object
+    required:
+    - steam_id
+    properties:
+      steam_id:
+        type: string
+        x-nullable: false
+      team_id:
+        type: integer
+        format: int32
+        x-nullable: false
+      display_name:
+        type: string
+        x-nullable: false
+      avatar_url:
+        type: string
+        x-nullable: false
+      first_name:
+        type: string
+        x-nullable: false
+      last_name:
+        type: string
+        x-nullable: false
+    x-go-name: PlayerListItem
+    x-nullable: false
   PlayerStats_base_stats:
     type: object
     properties:

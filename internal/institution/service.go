@@ -8,7 +8,7 @@ import (
 )
 
 type repository interface {
-	GetList(context.Context, getListParams) (paging.InfList[domain.Institution], error)
+	GetList(context.Context, listParams) (paging.InfList[domain.Institution], error)
 }
 
 type service struct {
@@ -21,6 +21,6 @@ func NewService(r repository) *service {
 	}
 }
 
-func (s *service) GetList(ctx context.Context, p getListParams) (paging.InfList[domain.Institution], error) {
+func (s *service) GetList(ctx context.Context, p listParams) (paging.InfList[domain.Institution], error) {
 	return s.institution.GetList(ctx, p)
 }

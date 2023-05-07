@@ -166,4 +166,12 @@ GENERATED ALWAYS AS
 
 CREATE INDEX institution_gin_idx ON institution USING GIN (ts);
 
+ALTER TABLE player ADD COLUMN ts tsvector
+GENERATED ALWAYS AS
+    (setweight(to_tsvector('russian', coalesce(display_name, '')), 'A') ||
+    setweight(to_tsvector('russian', coalesce(last_name, '')), 'B') ||
+    setweight(to_tsvector('russian', coalesce(first_name, '')), 'C')) STORED;
+
+CREATE INDEX player_gin_idx ON player USING GIN (ts);
+
 COMMIT;

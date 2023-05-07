@@ -85,6 +85,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 			return player.GetPlayerNotImplemented()
 		})
 	}
+	if api.PlayerGetPlayerListHandler == nil {
+		api.PlayerGetPlayerListHandler = player.GetPlayerListHandlerFunc(func(params player.GetPlayerListParams) player.GetPlayerListResponder {
+			return player.GetPlayerListNotImplemented()
+		})
+	}
 	if api.PlayerGetPlayerMatchesHandler == nil {
 		api.PlayerGetPlayerMatchesHandler = player.GetPlayerMatchesHandlerFunc(func(params player.GetPlayerMatchesParams) player.GetPlayerMatchesResponder {
 			return player.GetPlayerMatchesNotImplemented()

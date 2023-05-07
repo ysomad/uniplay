@@ -164,7 +164,7 @@ func (p *postgres) FindByID(ctx context.Context, matchID uuid.UUID) (domain.Matc
 		InnerJoin("team t ON tm.team_id = t.id").
 		InnerJoin("team_player tp ON tp.player_steam_id = pms.player_steam_id AND tp.team_id = pm.team_id").
 		Where(sq.Eq{"m.id": matchID}).
-		OrderBy("pm.team_id, pms.kd DESC").
+		OrderBy("pms.kd DESC").
 		ToSql()
 	if err != nil {
 		return domain.Match{}, err

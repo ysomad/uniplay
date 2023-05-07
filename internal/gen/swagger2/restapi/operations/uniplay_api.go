@@ -73,6 +73,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		PlayerGetPlayerHandler: player.GetPlayerHandlerFunc(func(params player.GetPlayerParams) player.GetPlayerResponder {
 			return player.GetPlayerNotImplemented()
 		}),
+		PlayerGetPlayerListHandler: player.GetPlayerListHandlerFunc(func(params player.GetPlayerListParams) player.GetPlayerListResponder {
+			return player.GetPlayerListNotImplemented()
+		}),
 		PlayerGetPlayerMatchesHandler: player.GetPlayerMatchesHandlerFunc(func(params player.GetPlayerMatchesParams) player.GetPlayerMatchesResponder {
 			return player.GetPlayerMatchesNotImplemented()
 		}),
@@ -146,6 +149,8 @@ type UniplayAPI struct {
 	MatchGetMatchHandler match.GetMatchHandler
 	// PlayerGetPlayerHandler sets the operation handler for the get player operation
 	PlayerGetPlayerHandler player.GetPlayerHandler
+	// PlayerGetPlayerListHandler sets the operation handler for the get player list operation
+	PlayerGetPlayerListHandler player.GetPlayerListHandler
 	// PlayerGetPlayerMatchesHandler sets the operation handler for the get player matches operation
 	PlayerGetPlayerMatchesHandler player.GetPlayerMatchesHandler
 	// PlayerGetPlayerStatsHandler sets the operation handler for the get player stats operation
@@ -261,6 +266,9 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.PlayerGetPlayerHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerHandler")
+	}
+	if o.PlayerGetPlayerListHandler == nil {
+		unregistered = append(unregistered, "player.GetPlayerListHandler")
 	}
 	if o.PlayerGetPlayerMatchesHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerMatchesHandler")
@@ -402,6 +410,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/players/{steam_id}"] = player.NewGetPlayer(o.context, o.PlayerGetPlayerHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/players"] = player.NewGetPlayerList(o.context, o.PlayerGetPlayerListHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

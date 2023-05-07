@@ -7,12 +7,10 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-func testInt32(i int32) *int32 { return &i }
-
 func TestNewIntSeek(t *testing.T) {
 	type args[T constraints.Signed] struct {
-		lastID   *T
-		pageSize *int32
+		lastID   T
+		pageSize int32
 	}
 
 	type test[T constraints.Signed] struct {
@@ -25,8 +23,8 @@ func TestNewIntSeek(t *testing.T) {
 		{
 			name: "success",
 			args: args[int32]{
-				lastID:   testInt32(69),
-				pageSize: testInt32(50),
+				lastID:   69,
+				pageSize: 50,
 			},
 			want: IntSeek[int32]{
 				PageSize: 50,
@@ -36,7 +34,7 @@ func TestNewIntSeek(t *testing.T) {
 		{
 			name: "empty lastID",
 			args: args[int32]{
-				pageSize: testInt32(50),
+				pageSize: 50,
 			},
 			want: IntSeek[int32]{
 				PageSize: 50,
@@ -46,7 +44,7 @@ func TestNewIntSeek(t *testing.T) {
 		{
 			name: "empty page size",
 			args: args[int32]{
-				lastID: testInt32(69),
+				lastID: 69,
 			},
 			want: IntSeek[int32]{
 				LastID:   69,
@@ -56,8 +54,8 @@ func TestNewIntSeek(t *testing.T) {
 		{
 			name: "page size less than min page size",
 			args: args[int32]{
-				lastID:   testInt32(69),
-				pageSize: testInt32(0),
+				lastID:   69,
+				pageSize: 0,
 			},
 			want: IntSeek[int32]{
 				LastID:   69,
@@ -67,8 +65,8 @@ func TestNewIntSeek(t *testing.T) {
 		{
 			name: "page size greater than max page size",
 			args: args[int32]{
-				lastID:   testInt32(69),
-				pageSize: testInt32(1111),
+				lastID:   69,
+				pageSize: 1111,
 			},
 			want: IntSeek[int32]{
 				LastID:   69,

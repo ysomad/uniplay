@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-var errInvalidToken = errors.New("paging: invalid token, must store uuid and RFC3339 datetime separated with comma")
+var errInvalidToken = errors.New("paging: invalid token, must store id and RFC3339 datetime separated with comma")
 
 type token string
 
