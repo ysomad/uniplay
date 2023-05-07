@@ -35,10 +35,6 @@ type UpdatePlayerRequest struct {
 	// Max Length: 32
 	// Min Length: 2
 	LastName string `json:"last_name"`
-
-	// team id
-	// Required: true
-	TeamID int32 `json:"team_id"`
 }
 
 // Validate validates this update player request
@@ -54,10 +50,6 @@ func (m *UpdatePlayerRequest) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateLastName(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTeamID(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -108,15 +100,6 @@ func (m *UpdatePlayerRequest) validateLastName(formats strfmt.Registry) error {
 	}
 
 	if err := validate.MaxLength("last_name", "body", m.LastName, 32); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *UpdatePlayerRequest) validateTeamID(formats strfmt.Registry) error {
-
-	if err := validate.Required("team_id", "body", int32(m.TeamID)); err != nil {
 		return err
 	}
 

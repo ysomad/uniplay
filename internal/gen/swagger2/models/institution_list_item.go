@@ -7,7 +7,6 @@ package models
 
 import (
 	"context"
-	"encoding/json"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -42,8 +41,7 @@ type InstitutionListItem struct {
 
 	// type
 	// Required: true
-	// Enum: [1 2]
-	Type int32 `json:"type"`
+	Type int8 `json:"type"`
 }
 
 // Validate validates this institution list item
@@ -125,34 +123,9 @@ func (m *InstitutionListItem) validateShortName(formats strfmt.Registry) error {
 	return nil
 }
 
-var institutionListItemTypeTypePropEnum []interface{}
-
-func init() {
-	var res []int32
-	if err := json.Unmarshal([]byte(`[1,2]`), &res); err != nil {
-		panic(err)
-	}
-	for _, v := range res {
-		institutionListItemTypeTypePropEnum = append(institutionListItemTypeTypePropEnum, v)
-	}
-}
-
-// prop value enum
-func (m *InstitutionListItem) validateTypeEnum(path, location string, value int32) error {
-	if err := validate.EnumCase(path, location, value, institutionListItemTypeTypePropEnum, true); err != nil {
-		return err
-	}
-	return nil
-}
-
 func (m *InstitutionListItem) validateType(formats strfmt.Registry) error {
 
-	if err := validate.Required("type", "body", int32(m.Type)); err != nil {
-		return err
-	}
-
-	// value enum
-	if err := m.validateTypeEnum("type", "body", m.Type); err != nil {
+	if err := validate.Required("type", "body", int8(m.Type)); err != nil {
 		return err
 	}
 

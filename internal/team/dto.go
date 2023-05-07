@@ -1,20 +1,14 @@
-package institution
+package team
 
-import (
-	"github.com/ysomad/uniplay/internal/domain"
-	"github.com/ysomad/uniplay/internal/pkg/paging"
-)
+import "github.com/ysomad/uniplay/internal/pkg/paging"
 
 type listParams struct {
 	searchQuery string
-	filter      domain.InstitutionFilter
 	paging      paging.IntSeek[int32]
 }
 
-func newListParams(s *string, f domain.InstitutionFilter, id, psize *int32) listParams {
-	p := listParams{
-		filter: f,
-	}
+func newListParams(s *string, id, psize *int32) listParams {
+	p := listParams{}
 
 	if s != nil {
 		p.searchQuery = *s
@@ -33,4 +27,10 @@ func newListParams(s *string, f domain.InstitutionFilter, id, psize *int32) list
 	p.paging = paging.NewIntSeek(lastID, pageSize)
 
 	return p
+}
+
+type updateParams struct {
+	clanName      string
+	flagCode      string
+	institutionID int32
 }

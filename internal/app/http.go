@@ -16,6 +16,7 @@ import (
 	"github.com/ysomad/uniplay/internal/institution"
 	"github.com/ysomad/uniplay/internal/match"
 	"github.com/ysomad/uniplay/internal/player"
+	"github.com/ysomad/uniplay/internal/team"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations"
@@ -24,6 +25,7 @@ import (
 	institutionGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 	matchGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	playerGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
+	teamGen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/team"
 )
 
 type apiDeps struct {
@@ -32,6 +34,7 @@ type apiDeps struct {
 	account     *account.Controller
 	player      *player.Controller
 	institution *institution.Controller
+	team        *team.Controller
 }
 
 func jsonConsumer() runtime.Consumer {
@@ -83,11 +86,16 @@ func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 	api.AccountCreateAccountHandler = accountGen.CreateAccountHandlerFunc(d.account.CreateAccount)
 
 	api.PlayerGetPlayerHandler = playerGen.GetPlayerHandlerFunc(d.player.GetPlayer)
+	api.PlayerGetPlayerListHandler = playerGen.GetPlayerListHandlerFunc(d.player.GetPlayerList)
 	api.PlayerUpdatePlayerHandler = playerGen.UpdatePlayerHandlerFunc(d.player.UpdatePlayer)
 	api.PlayerGetPlayerStatsHandler = playerGen.GetPlayerStatsHandlerFunc(d.player.GetPlayerStats)
 	api.PlayerGetWeaponStatsHandler = playerGen.GetWeaponStatsHandlerFunc(d.player.GetWeaponStats)
 
 	api.InstitutionGetInstitutionsHandler = institutionGen.GetInstitutionsHandlerFunc(d.institution.GetInstitutions)
+
+	api.TeamGetTeamListHandler = teamGen.GetTeamListHandlerFunc(d.team.GetTeamList)
+	api.TeamGetTeamPlayersHandler = teamGen.GetTeamPlayersHandlerFunc(d.team.GetTeamPlayers)
+	api.TeamUpdateTeamHandler = teamGen.UpdateTeamHandlerFunc(d.team.UpdateTeam)
 }
 
 func newServer(conf config.HTTP, api *operations.UniplayAPI) *restapi.Server {

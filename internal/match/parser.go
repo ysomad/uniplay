@@ -204,20 +204,27 @@ func (p *parser) handleKillerKill(e events.Kill) {
 	p.stats.incrPlayerStat(e.Killer.SteamID64, metricKill)
 	p.stats.incrWeaponStat(e.Killer.SteamID64, metricKill, e.Weapon.Type)
 
-	switch {
-	case e.IsHeadshot:
+	if e.IsHeadshot {
 		p.stats.incrPlayerStat(e.Killer.SteamID64, metricHSKill)
 		p.stats.incrWeaponStat(e.Killer.SteamID64, metricHSKill, e.Weapon.Type)
-	case e.AttackerBlind:
+	}
+
+	if e.AttackerBlind {
 		p.stats.incrPlayerStat(e.Killer.SteamID64, metricBlindKill)
 		p.stats.incrWeaponStat(e.Killer.SteamID64, metricBlindKill, e.Weapon.Type)
-	case e.IsWallBang():
+	}
+
+	if e.IsWallBang() {
 		p.stats.incrPlayerStat(e.Killer.SteamID64, metricWallbangKill)
 		p.stats.incrWeaponStat(e.Killer.SteamID64, metricWallbangKill, e.Weapon.Type)
-	case e.NoScope:
+	}
+
+	if e.NoScope {
 		p.stats.incrPlayerStat(e.Killer.SteamID64, metricNoScopeKill)
 		p.stats.incrWeaponStat(e.Killer.SteamID64, metricNoScopeKill, e.Weapon.Type)
-	case e.ThroughSmoke:
+	}
+
+	if e.ThroughSmoke {
 		p.stats.incrPlayerStat(e.Killer.SteamID64, metricThroughSmokeKill)
 		p.stats.incrWeaponStat(e.Killer.SteamID64, metricThroughSmokeKill, e.Weapon.Type)
 	}

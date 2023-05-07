@@ -21,6 +21,42 @@ func NewController(s *service) *Controller {
 	}
 }
 
+func (c *Controller) GetPlayerList(p gen.GetPlayerListParams) gen.GetPlayerListResponder {
+	lp, err := newListParams(p.Search, p.LastSteamID, p.PageSize)
+	if err != nil {
+		return gen.NewGetPlayerListInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	playerList, err := c.player.GetList(p.HTTPRequest.Context(), lp)
+	if err != nil {
+		return gen.NewGetPlayerListInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	payload := models.PlayerList{
+		Players: make([]models.PlayerListItem, len(playerList.Items)),
+		HasNext: playerList.HasNext,
+	}
+
+	for i, p := range playerList.Items {
+		payload.Players[i] = models.PlayerListItem{
+			SteamID:     p.SteamID.String(),
+			TeamID:      p.TeamID,
+			DisplayName: p.DisplayName,
+			FirstName:   p.FirstName,
+			LastName:    p.LastName,
+			AvatarURL:   p.AvatarURL,
+		}
+	}
+
+	return gen.NewGetPlayerListOK().WithPayload(&payload)
+}
+
 func (c *Controller) GetPlayer(p gen.GetPlayerParams) gen.GetPlayerResponder {
 	steamID, err := domain.NewSteamID(p.SteamID)
 	if err != nil {
@@ -65,7 +101,6 @@ func (c *Controller) UpdatePlayer(p gen.UpdatePlayerParams) gen.UpdatePlayerResp
 	}
 
 	pl, err := c.player.UpdateBySteamID(p.HTTPRequest.Context(), steamID, updateParams{
-		teamID:    p.Payload.TeamID,
 		firstName: p.Payload.FirstName,
 		lastName:  p.Payload.LastName,
 		avatarURL: p.Payload.AvatarURL.String(),

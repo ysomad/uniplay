@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/ysomad/uniplay/internal/domain"
-	"github.com/ysomad/uniplay/internal/pkg/paging"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
 	gen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
@@ -23,10 +22,11 @@ func NewController(s *service) *Controller {
 func (c *Controller) GetInstitutions(p gen.GetInstitutionsParams) gen.GetInstitutionsResponder {
 	list, err := c.institution.GetList(
 		p.HTTPRequest.Context(),
-		newGetListParams(
+		newListParams(
 			p.Search,
 			domain.NewInstitutionFilter(p.City, p.Type),
-			paging.NewIntSeek(p.LastID, p.PageSize),
+			p.LastID,
+			p.PageSize,
 		),
 	)
 	if err != nil {
@@ -48,7 +48,7 @@ func (c *Controller) GetInstitutions(p gen.GetInstitutionsParams) gen.GetInstitu
 			ShortName: inst.ShortName,
 			LogoURL:   inst.LogoURL,
 			City:      inst.City,
-			Type:      int32(inst.Type),
+			Type:      int8(inst.Type),
 		}
 	}
 

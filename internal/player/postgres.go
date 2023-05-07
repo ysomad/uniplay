@@ -3,6 +3,7 @@ package player
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
@@ -12,6 +13,8 @@ import (
 
 	"github.com/ysomad/uniplay/internal/domain"
 
+	"github.com/ysomad/uniplay/internal/pkg/filter"
+	"github.com/ysomad/uniplay/internal/pkg/paging"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
@@ -29,11 +32,58 @@ func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
 
 type dbPlayer struct {
 	SteamID     domain.SteamID `db:"steam_id"`
-	TeamID      zeronull.Int4  `db:"team_id"`
+	TeamID      zeronull.Int2  `db:"team_id"`
 	DisplayName zeronull.Text  `db:"display_name"`
 	FirstName   zeronull.Text  `db:"first_name"`
 	LastName    zeronull.Text  `db:"last_name"`
 	AvatarURL   zeronull.Text  `db:"avatar_url"`
+}
+
+func (p *postgres) GetAll(ctx context.Context, lp listParams) (paging.InfList[domain.Player], error) {
+	b := p.client.Builder.
+		Select("steam_id, team_id, display_name, avatar_url, first_name, last_name").
+		From("player")
+
+	filters := filter.New("steam_id", filter.TypeGT, lp.paging.LastID)
+
+	if lp.searchQuery != "" {
+		b = b.Where(sq.Expr("ts @@ phraseto_tsquery('russian', ?)", lp.searchQuery))
+	}
+
+	sql, args, err := filters.
+		Attach(b).
+		OrderBy("steam_id").
+		OrderBy(fmt.Sprintf("ts_rank(ts, to_tsquery('russian', '%s')) DESC", lp.searchQuery)).
+		Limit(uint64(lp.paging.PageSize) + 1).
+		ToSql()
+	if err != nil {
+		return paging.InfList[domain.Player]{}, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return paging.InfList[domain.Player]{}, err
+	}
+
+	dbPlayers, err := pgx.CollectRows(rows, pgx.RowToStructByName[dbPlayer])
+	if err != nil {
+		return paging.InfList[domain.Player]{}, err
+	}
+
+	players := make([]domain.Player, len(dbPlayers))
+
+	for i, player := range dbPlayers {
+		players[i] = domain.Player{
+			SteamID:     player.SteamID,
+			TeamID:      int32(player.TeamID),
+			DisplayName: string(player.DisplayName),
+			FirstName:   string(player.FirstName),
+			LastName:    string(player.LastName),
+			AvatarURL:   string(player.AvatarURL),
+		}
+	}
+
+	return paging.NewInfList(players, lp.paging.PageSize)
 }
 
 func (p *postgres) FindBySteamID(ctx context.Context, steamID domain.SteamID) (domain.Player, error) {
@@ -74,7 +124,6 @@ func (p *postgres) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, 
 	sql, args, err := p.client.Builder.
 		Update("player").
 		SetMap(map[string]any{
-			"team_id":    up.teamID,
 			"first_name": up.firstName,
 			"last_name":  up.lastName,
 			"avatar_url": up.avatarURL,

@@ -13,31 +13,29 @@ const (
 )
 
 // IntSeek is set of params for seek(keyset) pagination using integer as primary keys.
-type IntSeek[T constraints.Signed] struct {
+type IntSeek[T constraints.Integer] struct {
 	LastID   T // id of last item in list of items
 	PageSize int32
 }
 
-func NewIntSeek[T constraints.Signed](lastID *T, psize *int32) IntSeek[T] {
-	var s IntSeek[T]
-
-	if lastID != nil {
-		s.LastID = *lastID
+func NewIntSeek[T constraints.Integer](lastID T, psize int32) IntSeek[T] {
+	s := IntSeek[T]{
+		LastID: lastID,
 	}
 
-	if psize == nil || *psize < minPageSize {
+	if psize < minPageSize {
 		s.PageSize = defaultPageSize
 
 		return s
 	}
 
-	if *psize > maxPageSize {
+	if psize > maxPageSize {
 		s.PageSize = maxPageSize
 
 		return s
 	}
 
-	s.PageSize = *psize
+	s.PageSize = psize
 
 	return s
 }

@@ -6,9 +6,11 @@ import (
 	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
+	"github.com/ysomad/uniplay/internal/pkg/paging"
 )
 
 type repository interface {
+	GetAll(context.Context, listParams) (paging.InfList[domain.Player], error)
 	FindBySteamID(context.Context, domain.SteamID) (domain.Player, error)
 	UpdateBySteamID(context.Context, domain.SteamID, updateParams) (domain.Player, error)
 	GetBaseStats(ctx context.Context, steamID uint64) (*domain.PlayerBaseStats, error)
@@ -25,6 +27,10 @@ func NewService(t trace.Tracer, r repository) *service {
 		tracer: t,
 		player: r,
 	}
+}
+
+func (s *service) GetList(ctx context.Context, p listParams) (paging.InfList[domain.Player], error) {
+	return s.player.GetAll(ctx, p)
 }
 
 func (s *service) GetBySteamID(ctx context.Context, steamID domain.SteamID) (domain.Player, error) {

@@ -24,6 +24,7 @@ import (
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/team"
 )
 
 // NewUniplayAPI creates a new Uniplay instance
@@ -73,11 +74,20 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		PlayerGetPlayerHandler: player.GetPlayerHandlerFunc(func(params player.GetPlayerParams) player.GetPlayerResponder {
 			return player.GetPlayerNotImplemented()
 		}),
+		PlayerGetPlayerListHandler: player.GetPlayerListHandlerFunc(func(params player.GetPlayerListParams) player.GetPlayerListResponder {
+			return player.GetPlayerListNotImplemented()
+		}),
 		PlayerGetPlayerMatchesHandler: player.GetPlayerMatchesHandlerFunc(func(params player.GetPlayerMatchesParams) player.GetPlayerMatchesResponder {
 			return player.GetPlayerMatchesNotImplemented()
 		}),
 		PlayerGetPlayerStatsHandler: player.GetPlayerStatsHandlerFunc(func(params player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
 			return player.GetPlayerStatsNotImplemented()
+		}),
+		TeamGetTeamListHandler: team.GetTeamListHandlerFunc(func(params team.GetTeamListParams) team.GetTeamListResponder {
+			return team.GetTeamListNotImplemented()
+		}),
+		TeamGetTeamPlayersHandler: team.GetTeamPlayersHandlerFunc(func(params team.GetTeamPlayersParams) team.GetTeamPlayersResponder {
+			return team.GetTeamPlayersNotImplemented()
 		}),
 		CompendiumGetWeaponClassesHandler: compendium.GetWeaponClassesHandlerFunc(func(params compendium.GetWeaponClassesParams) compendium.GetWeaponClassesResponder {
 			return compendium.GetWeaponClassesNotImplemented()
@@ -90,6 +100,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		}),
 		PlayerUpdatePlayerHandler: player.UpdatePlayerHandlerFunc(func(params player.UpdatePlayerParams) player.UpdatePlayerResponder {
 			return player.UpdatePlayerNotImplemented()
+		}),
+		TeamUpdateTeamHandler: team.UpdateTeamHandlerFunc(func(params team.UpdateTeamParams) team.UpdateTeamResponder {
+			return team.UpdateTeamNotImplemented()
 		}),
 	}
 }
@@ -146,10 +159,16 @@ type UniplayAPI struct {
 	MatchGetMatchHandler match.GetMatchHandler
 	// PlayerGetPlayerHandler sets the operation handler for the get player operation
 	PlayerGetPlayerHandler player.GetPlayerHandler
+	// PlayerGetPlayerListHandler sets the operation handler for the get player list operation
+	PlayerGetPlayerListHandler player.GetPlayerListHandler
 	// PlayerGetPlayerMatchesHandler sets the operation handler for the get player matches operation
 	PlayerGetPlayerMatchesHandler player.GetPlayerMatchesHandler
 	// PlayerGetPlayerStatsHandler sets the operation handler for the get player stats operation
 	PlayerGetPlayerStatsHandler player.GetPlayerStatsHandler
+	// TeamGetTeamListHandler sets the operation handler for the get team list operation
+	TeamGetTeamListHandler team.GetTeamListHandler
+	// TeamGetTeamPlayersHandler sets the operation handler for the get team players operation
+	TeamGetTeamPlayersHandler team.GetTeamPlayersHandler
 	// CompendiumGetWeaponClassesHandler sets the operation handler for the get weapon classes operation
 	CompendiumGetWeaponClassesHandler compendium.GetWeaponClassesHandler
 	// PlayerGetWeaponStatsHandler sets the operation handler for the get weapon stats operation
@@ -158,6 +177,8 @@ type UniplayAPI struct {
 	CompendiumGetWeaponsHandler compendium.GetWeaponsHandler
 	// PlayerUpdatePlayerHandler sets the operation handler for the update player operation
 	PlayerUpdatePlayerHandler player.UpdatePlayerHandler
+	// TeamUpdateTeamHandler sets the operation handler for the update team operation
+	TeamUpdateTeamHandler team.UpdateTeamHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -262,11 +283,20 @@ func (o *UniplayAPI) Validate() error {
 	if o.PlayerGetPlayerHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerHandler")
 	}
+	if o.PlayerGetPlayerListHandler == nil {
+		unregistered = append(unregistered, "player.GetPlayerListHandler")
+	}
 	if o.PlayerGetPlayerMatchesHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerMatchesHandler")
 	}
 	if o.PlayerGetPlayerStatsHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerStatsHandler")
+	}
+	if o.TeamGetTeamListHandler == nil {
+		unregistered = append(unregistered, "team.GetTeamListHandler")
+	}
+	if o.TeamGetTeamPlayersHandler == nil {
+		unregistered = append(unregistered, "team.GetTeamPlayersHandler")
 	}
 	if o.CompendiumGetWeaponClassesHandler == nil {
 		unregistered = append(unregistered, "compendium.GetWeaponClassesHandler")
@@ -279,6 +309,9 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.PlayerUpdatePlayerHandler == nil {
 		unregistered = append(unregistered, "player.UpdatePlayerHandler")
+	}
+	if o.TeamUpdateTeamHandler == nil {
+		unregistered = append(unregistered, "team.UpdateTeamHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -405,11 +438,23 @@ func (o *UniplayAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/players"] = player.NewGetPlayerList(o.context, o.PlayerGetPlayerListHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/players/{steam_id}/matches"] = player.NewGetPlayerMatches(o.context, o.PlayerGetPlayerMatchesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/players/{steam_id}/stats"] = player.NewGetPlayerStats(o.context, o.PlayerGetPlayerStatsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/teams"] = team.NewGetTeamList(o.context, o.TeamGetTeamListHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/teams/{team_id}/players"] = team.NewGetTeamPlayers(o.context, o.TeamGetTeamPlayersHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -426,6 +471,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
 	o.handlers["PUT"]["/players/{steam_id}"] = player.NewUpdatePlayer(o.context, o.PlayerUpdatePlayerHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/teams/{team_id}"] = team.NewUpdateTeam(o.context, o.TeamUpdateTeamHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

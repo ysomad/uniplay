@@ -2,8 +2,6 @@ package domain
 
 type InstType int8
 
-func (t InstType) Int() int8 { return int8(t) }
-
 const (
 	InstTypeUniversity InstType = 1
 	InstTypeCollege    InstType = 2
