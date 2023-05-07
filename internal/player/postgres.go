@@ -32,7 +32,7 @@ func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
 
 type dbPlayer struct {
 	SteamID     domain.SteamID `db:"steam_id"`
-	TeamID      zeronull.Int4  `db:"team_id"`
+	TeamID      zeronull.Int2  `db:"team_id"`
 	DisplayName zeronull.Text  `db:"display_name"`
 	FirstName   zeronull.Text  `db:"first_name"`
 	LastName    zeronull.Text  `db:"last_name"`

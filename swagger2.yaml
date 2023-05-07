@@ -10,6 +10,8 @@ tags:
   description: Аккаунт
 - name: player
   description: Игрок
+- name: team
+  description: Команда
 - name: match
   description: Матч
 - name: institution
@@ -262,6 +264,43 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /teams:
+    get:
+      tags:
+      - team
+      summary: Получение списка команд
+      operationId: getTeamList
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: search
+        in: query
+        description: Поиск по названию команды
+        required: false
+        type: string
+      - name: page_size
+        in: query
+        description: "Количество значений на странице. Минимум — 1, максимум — 500."
+        required: false
+        type: integer
+        format: int32
+      - name: last_id
+        in: query
+        description: "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса."
+        required: false
+        type: integer
+        format: int32
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/TeamList'
         "500":
           description: Internal Server Error
           schema:
@@ -777,6 +816,19 @@ definitions:
       has_next:
         type: boolean
         x-nullable: false
+  TeamList:
+    type: object
+    required:
+    - has_next
+    - teams
+    properties:
+      teams:
+        type: array
+        items:
+          $ref: '#/definitions/TeamList_teams'
+      has_next:
+        type: boolean
+        x-nullable: false
   PlayerList_players:
     type: object
     required:
@@ -1121,10 +1173,7 @@ definitions:
         x-nullable: false
       type:
         type: integer
-        format: int32
-        enum:
-        - 1
-        - 2
+        format: int8
         x-nullable: false
     x-go-name: InstitutionListItem
     x-nullable: false
@@ -1157,3 +1206,39 @@ definitions:
         type: integer
         format: int32
         x-nullable: false
+  TeamList_institution:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      short_name:
+        type: string
+      logo_url:
+        type: string
+      city:
+        type: string
+      type:
+        type: integer
+        format: int8
+    x-go-name: TeamListInstitution
+  TeamList_teams:
+    type: object
+    required:
+    - clan_name
+    - id
+    properties:
+      id:
+        type: integer
+        format: int32
+        x-nullable: false
+      clan_name:
+        type: string
+        x-nullable: false
+      flag_code:
+        type: string
+        x-nullable: false
+      institution:
+        $ref: '#/definitions/TeamList_institution'
+    x-go-name: TeamListItem
+    x-nullable: false

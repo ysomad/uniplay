@@ -15,6 +15,7 @@ import (
 	"github.com/ysomad/uniplay/internal/institution"
 	"github.com/ysomad/uniplay/internal/match"
 	"github.com/ysomad/uniplay/internal/player"
+	"github.com/ysomad/uniplay/internal/team"
 
 	"github.com/ysomad/uniplay/internal/pkg/logger"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
@@ -72,6 +73,11 @@ func Run(conf *config.Config) { //nolint:funlen // main func
 	institutionService := institution.NewService(institutionPostgres)
 	institutionController := institution.NewController(institutionService)
 
+	// team
+	teamPostgres := team.NewPostgres(otel.AppTracer, pgClient)
+	teamService := team.NewService(teamPostgres)
+	teamController := team.NewController(teamService)
+
 	// go-swagger
 	api, err := newAPI(apiDeps{
 		compendium:  compendiumController,
@@ -79,6 +85,7 @@ func Run(conf *config.Config) { //nolint:funlen // main func
 		player:      playerController,
 		match:       matchController,
 		institution: institutionController,
+		team:        teamController,
 	})
 	if err != nil {
 		l.Fatal("newAPI", zap.Error(err))

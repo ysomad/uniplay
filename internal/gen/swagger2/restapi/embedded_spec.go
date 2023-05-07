@@ -709,6 +709,57 @@ func init() {
           }
         }
       }
+    },
+    "/teams": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "team"
+        ],
+        "summary": "Получение списка команд",
+        "operationId": "getTeamList",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Поиск по названию команды",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса.",
+            "name": "last_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TeamList"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -870,11 +921,7 @@ func init() {
         },
         "type": {
           "type": "integer",
-          "format": "int32",
-          "enum": [
-            1,
-            2
-          ],
+          "format": "int8",
           "x-nullable": false
         }
       },
@@ -1512,6 +1559,75 @@ func init() {
         }
       }
     },
+    "TeamList": {
+      "type": "object",
+      "required": [
+        "has_next",
+        "teams"
+      ],
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-nullable": false
+        },
+        "teams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TeamList_teams"
+          }
+        }
+      }
+    },
+    "TeamList_institution": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "logo_url": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int8"
+        }
+      },
+      "x-go-name": "TeamListInstitution"
+    },
+    "TeamList_teams": {
+      "type": "object",
+      "required": [
+        "clan_name",
+        "id"
+      ],
+      "properties": {
+        "clan_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "flag_code": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "institution": {
+          "$ref": "#/definitions/TeamList_institution"
+        }
+      },
+      "x-go-name": "TeamListItem",
+      "x-nullable": false
+    },
     "UpdatePlayerRequest": {
       "type": "object",
       "required": [
@@ -1617,6 +1733,10 @@ func init() {
     {
       "description": "Игрок",
       "name": "player"
+    },
+    {
+      "description": "Команда",
+      "name": "team"
     },
     {
       "description": "Матч",
@@ -2324,6 +2444,57 @@ func init() {
           }
         }
       }
+    },
+    "/teams": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "team"
+        ],
+        "summary": "Получение списка команд",
+        "operationId": "getTeamList",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Поиск по названию команды",
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Идентификатор последнего значения на странице. Оставьте это поле пустым при выполнении первого запроса. Чтобы получить следующие значения, укажите last_id из ответа предыдущего запроса.",
+            "name": "last_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TeamList"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -2485,11 +2656,7 @@ func init() {
         },
         "type": {
           "type": "integer",
-          "format": "int32",
-          "enum": [
-            1,
-            2
-          ],
+          "format": "int8",
           "x-nullable": false
         }
       },
@@ -3127,6 +3294,75 @@ func init() {
         }
       }
     },
+    "TeamList": {
+      "type": "object",
+      "required": [
+        "has_next",
+        "teams"
+      ],
+      "properties": {
+        "has_next": {
+          "type": "boolean",
+          "x-nullable": false
+        },
+        "teams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TeamList_teams"
+          }
+        }
+      }
+    },
+    "TeamList_institution": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "logo_url": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int8"
+        }
+      },
+      "x-go-name": "TeamListInstitution"
+    },
+    "TeamList_teams": {
+      "type": "object",
+      "required": [
+        "clan_name",
+        "id"
+      ],
+      "properties": {
+        "clan_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "flag_code": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": false
+        },
+        "institution": {
+          "$ref": "#/definitions/TeamList_institution"
+        }
+      },
+      "x-go-name": "TeamListItem",
+      "x-nullable": false
+    },
     "UpdatePlayerRequest": {
       "type": "object",
       "required": [
@@ -3232,6 +3468,10 @@ func init() {
     {
       "description": "Игрок",
       "name": "player"
+    },
+    {
+      "description": "Команда",
+      "name": "team"
     },
     {
       "description": "Матч",

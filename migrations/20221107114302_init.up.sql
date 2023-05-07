@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS team (
     id smallserial PRIMARY KEY NOT NULL,
     clan_name varchar(64) UNIQUE NOT NULL,
     flag_code varchar(2) NOT NULL,
-    instutition_id smallint REFERENCES institution (id)
+    institution_id smallint REFERENCES institution (id)
 );
 
 CREATE TABLE IF NOT EXISTS player (
@@ -173,5 +173,11 @@ GENERATED ALWAYS AS
     setweight(to_tsvector('russian', coalesce(first_name, '')), 'C')) STORED;
 
 CREATE INDEX player_gin_idx ON player USING GIN (ts);
+
+ALTER TABLE team ADD COLUMN ts tsvector
+GENERATED ALWAYS AS
+    (setweight(to_tsvector('russian', coalesce(clan_name, '')), 'A')) STORED;
+
+CREATE INDEX team_gin_idx ON team USING GIN (ts);
 
 COMMIT;

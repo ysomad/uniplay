@@ -48,7 +48,7 @@ func (c *Controller) GetInstitutions(p gen.GetInstitutionsParams) gen.GetInstitu
 			ShortName: inst.ShortName,
 			LogoURL:   inst.LogoURL,
 			City:      inst.City,
-			Type:      int32(inst.Type),
+			Type:      int8(inst.Type),
 		}
 	}
 

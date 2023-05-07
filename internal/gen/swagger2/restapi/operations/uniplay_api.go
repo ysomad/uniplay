@@ -24,6 +24,7 @@ import (
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/institution"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/match"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/player"
+	"github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/team"
 )
 
 // NewUniplayAPI creates a new Uniplay instance
@@ -81,6 +82,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		}),
 		PlayerGetPlayerStatsHandler: player.GetPlayerStatsHandlerFunc(func(params player.GetPlayerStatsParams) player.GetPlayerStatsResponder {
 			return player.GetPlayerStatsNotImplemented()
+		}),
+		TeamGetTeamListHandler: team.GetTeamListHandlerFunc(func(params team.GetTeamListParams) team.GetTeamListResponder {
+			return team.GetTeamListNotImplemented()
 		}),
 		CompendiumGetWeaponClassesHandler: compendium.GetWeaponClassesHandlerFunc(func(params compendium.GetWeaponClassesParams) compendium.GetWeaponClassesResponder {
 			return compendium.GetWeaponClassesNotImplemented()
@@ -155,6 +159,8 @@ type UniplayAPI struct {
 	PlayerGetPlayerMatchesHandler player.GetPlayerMatchesHandler
 	// PlayerGetPlayerStatsHandler sets the operation handler for the get player stats operation
 	PlayerGetPlayerStatsHandler player.GetPlayerStatsHandler
+	// TeamGetTeamListHandler sets the operation handler for the get team list operation
+	TeamGetTeamListHandler team.GetTeamListHandler
 	// CompendiumGetWeaponClassesHandler sets the operation handler for the get weapon classes operation
 	CompendiumGetWeaponClassesHandler compendium.GetWeaponClassesHandler
 	// PlayerGetWeaponStatsHandler sets the operation handler for the get weapon stats operation
@@ -275,6 +281,9 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.PlayerGetPlayerStatsHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerStatsHandler")
+	}
+	if o.TeamGetTeamListHandler == nil {
+		unregistered = append(unregistered, "team.GetTeamListHandler")
 	}
 	if o.CompendiumGetWeaponClassesHandler == nil {
 		unregistered = append(unregistered, "compendium.GetWeaponClassesHandler")
@@ -422,6 +431,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/players/{steam_id}/stats"] = player.NewGetPlayerStats(o.context, o.PlayerGetPlayerStatsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/teams"] = team.NewGetTeamList(o.context, o.TeamGetTeamListHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
