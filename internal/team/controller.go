@@ -125,3 +125,22 @@ func (c *Controller) UpdateTeam(p gen.UpdateTeamParams) gen.UpdateTeamResponder 
 		InstitutionID: t.InstitutionID,
 	})
 }
+
+func (c *Controller) SetTeamCaptain(p gen.SetTeamCaptainParams) gen.SetTeamCaptainResponder {
+	steamID, err := domain.NewSteamID(p.SteamID)
+	if err != nil {
+		return gen.NewSetTeamCaptainInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	if err := c.team.SetCaptain(p.HTTPRequest.Context(), p.TeamID, steamID); err != nil {
+		return gen.NewSetTeamCaptainInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	return gen.NewSetTeamCaptainNoContent()
+}

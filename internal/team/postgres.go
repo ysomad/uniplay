@@ -193,3 +193,48 @@ func (p *postgres) Update(ctx context.Context, teamID int32, up updateParams) (d
 
 	return t, nil
 }
+
+func (p *postgres) SetCaptain(ctx context.Context, teamID int32, steamID domain.SteamID) error {
+	err := pgx.BeginTxFunc(ctx, p.client.Pool, pgx.TxOptions{}, func(tx pgx.Tx) error {
+		// unset captain
+		sql, args, err := p.client.Builder.
+			Update("team_player").
+			Set("is_captain", false).
+			Where(sq.And{
+				sq.Eq{"team_id": teamID},
+				sq.Eq{"is_captain": true},
+			}).
+			ToSql()
+		if err != nil {
+			return err
+		}
+
+		if _, err = tx.Exec(ctx, sql, args...); err != nil {
+			return err
+		}
+
+		// set new captain
+		sql, args, err = p.client.Builder.
+			Update("team_player").
+			Set("is_captain", true).
+			Where(sq.And{
+				sq.Eq{"team_id": teamID},
+				sq.Eq{"player_steam_id": steamID},
+			}).
+			ToSql()
+		if err != nil {
+			return err
+		}
+
+		if _, err = tx.Exec(ctx, sql, args...); err != nil {
+			return err
+		}
+
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

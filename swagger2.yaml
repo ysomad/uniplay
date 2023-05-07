@@ -378,6 +378,35 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/Error'
+  /teams/{team_id}/players/{steam_id}/captain:
+    put:
+      tags:
+      - team
+      summary: Назначить игрока капитаном команды
+      operationId: setTeamCaptain
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: team_id
+        in: path
+        description: ID команды
+        required: true
+        type: integer
+        format: int32
+      - name: steam_id
+        in: path
+        description: Steam ID игрока
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
   /matches:
     post:
       tags:
