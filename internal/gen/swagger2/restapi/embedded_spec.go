@@ -1778,8 +1778,7 @@ func init() {
       "required": [
         "avatar_url",
         "first_name",
-        "last_name",
-        "team_id"
+        "last_name"
       ],
       "properties": {
         "avatar_url": {
@@ -1797,11 +1796,6 @@ func init() {
           "type": "string",
           "maxLength": 32,
           "minLength": 2,
-          "x-nullable": false
-        },
-        "team_id": {
-          "type": "integer",
-          "format": "int32",
           "x-nullable": false
         }
       }
@@ -3683,8 +3677,7 @@ func init() {
       "required": [
         "avatar_url",
         "first_name",
-        "last_name",
-        "team_id"
+        "last_name"
       ],
       "properties": {
         "avatar_url": {
@@ -3702,11 +3695,6 @@ func init() {
           "type": "string",
           "maxLength": 32,
           "minLength": 2,
-          "x-nullable": false
-        },
-        "team_id": {
-          "type": "integer",
-          "format": "int32",
           "x-nullable": false
         }
       }

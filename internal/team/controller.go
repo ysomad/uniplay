@@ -1,8 +1,10 @@
 package team
 
 import (
+	"errors"
 	"net/http"
 
+	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
 	gen "github.com/ysomad/uniplay/internal/gen/swagger2/restapi/operations/team"
 )
@@ -61,6 +63,13 @@ func (c *Controller) GetTeamList(p gen.GetTeamListParams) gen.GetTeamListRespond
 func (c *Controller) GetTeamPlayers(p gen.GetTeamPlayersParams) gen.GetTeamPlayersResponder {
 	teams, err := c.team.GetPlayers(p.HTTPRequest.Context(), p.TeamID)
 	if err != nil {
+		if errors.Is(err, domain.ErrTeamNotFound) {
+			return gen.NewGetTeamPlayersNotFound().WithPayload(&models.Error{
+				Code:    domain.CodeTeamNotFound,
+				Message: err.Error(),
+			})
+		}
+
 		return gen.NewGetTeamPlayersInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
 			Message: err.Error(),

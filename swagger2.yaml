@@ -703,12 +703,7 @@ definitions:
     - avatar_url
     - first_name
     - last_name
-    - team_id
     properties:
-      team_id:
-        type: integer
-        format: int32
-        x-nullable: false
       avatar_url:
         type: string
         format: uri

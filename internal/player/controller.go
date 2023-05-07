@@ -101,7 +101,6 @@ func (c *Controller) UpdatePlayer(p gen.UpdatePlayerParams) gen.UpdatePlayerResp
 	}
 
 	pl, err := c.player.UpdateBySteamID(p.HTTPRequest.Context(), steamID, updateParams{
-		teamID:    p.Payload.TeamID,
 		firstName: p.Payload.FirstName,
 		lastName:  p.Payload.LastName,
 		avatarURL: p.Payload.AvatarURL.String(),

@@ -124,7 +124,6 @@ func (p *postgres) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, 
 	sql, args, err := p.client.Builder.
 		Update("player").
 		SetMap(map[string]any{
-			"team_id":    up.teamID,
 			"first_name": up.firstName,
 			"last_name":  up.lastName,
 			"avatar_url": up.avatarURL,

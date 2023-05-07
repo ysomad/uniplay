@@ -134,6 +134,10 @@ func (p *postgres) GetPlayers(ctx context.Context, teamID int32) ([]domain.TeamP
 		return nil, err
 	}
 
+	if len(dbPlayers) < 1 {
+		return nil, domain.ErrTeamNotFound
+	}
+
 	players := make([]domain.TeamPlayer, len(dbPlayers))
 
 	for i, pl := range dbPlayers {
