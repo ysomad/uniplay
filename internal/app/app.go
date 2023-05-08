@@ -21,11 +21,17 @@ import (
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
-func Run(conf *config.Config) { //nolint:funlen // main func
+func Run(conf *config.Config, flags Flags) { //nolint:funlen // main func
+	if flags.InDocker {
+		initTempDir()
+	}
+
 	l, err := logger.New(conf.Log.Level)
 	if err != nil {
 		log.Fatalf("logger.New: %s", err.Error())
 	}
+
+	l.Info("starting app", zap.Any("flags", flags))
 
 	otel, err := newOpenTelemetry(conf)
 	if err != nil {
