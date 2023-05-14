@@ -19,13 +19,13 @@ import (
 // swagger:model PlayerMatch_match_stats
 type PlayerMatchMatchStats struct {
 
+	// adr
+	// Required: true
+	Adr int32 `json:"adr"`
+
 	// assists
 	// Required: true
 	Assists int32 `json:"assists"`
-
-	// damage per round
-	// Required: true
-	DamagePerRound int32 `json:"damage_per_round"`
 
 	// deaths
 	// Required: true
@@ -44,11 +44,11 @@ type PlayerMatchMatchStats struct {
 func (m *PlayerMatchMatchStats) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAssists(formats); err != nil {
+	if err := m.validateAdr(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateDamagePerRound(formats); err != nil {
+	if err := m.validateAssists(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -70,18 +70,18 @@ func (m *PlayerMatchMatchStats) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *PlayerMatchMatchStats) validateAssists(formats strfmt.Registry) error {
+func (m *PlayerMatchMatchStats) validateAdr(formats strfmt.Registry) error {
 
-	if err := validate.Required("assists", "body", int32(m.Assists)); err != nil {
+	if err := validate.Required("adr", "body", int32(m.Adr)); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (m *PlayerMatchMatchStats) validateDamagePerRound(formats strfmt.Registry) error {
+func (m *PlayerMatchMatchStats) validateAssists(formats strfmt.Registry) error {
 
-	if err := validate.Required("damage_per_round", "body", int32(m.DamagePerRound)); err != nil {
+	if err := validate.Required("assists", "body", int32(m.Assists)); err != nil {
 		return err
 	}
 

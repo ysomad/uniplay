@@ -575,18 +575,6 @@ func init() {
               "$ref": "#/definitions/PlayerMatchList"
             }
           },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "schema": {
@@ -904,12 +892,6 @@ func init() {
         "responses": {
           "204": {
             "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
           },
           "500": {
             "description": "Internal Server Error",
@@ -1382,19 +1364,19 @@ func init() {
     "PlayerMatch_match_stats": {
       "type": "object",
       "required": [
+        "adr",
         "assists",
-        "damage_per_round",
         "deaths",
         "headshot_percentage",
         "kills"
       ],
       "properties": {
-        "assists": {
+        "adr": {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
         },
-        "damage_per_round": {
+        "assists": {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
@@ -2559,18 +2541,6 @@ func init() {
               "$ref": "#/definitions/PlayerMatchList"
             }
           },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "schema": {
@@ -2888,12 +2858,6 @@ func init() {
         "responses": {
           "204": {
             "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
           },
           "500": {
             "description": "Internal Server Error",
@@ -3366,19 +3330,19 @@ func init() {
     "PlayerMatch_match_stats": {
       "type": "object",
       "required": [
+        "adr",
         "assists",
-        "damage_per_round",
         "deaths",
         "headshot_percentage",
         "kills"
       ],
       "properties": {
-        "assists": {
+        "adr": {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
         },
-        "damage_per_round": {
+        "assists": {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
