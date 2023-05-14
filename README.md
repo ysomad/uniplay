@@ -17,6 +17,12 @@ $ make run-migrate
 ```
 
 ### Run service and deps in docker
+- Run only required for development services
+```sh
+$ make compose-min
+```
+
+- Run all services
 ```sh
 $ make compose-all
 ```

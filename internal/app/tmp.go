@@ -8,6 +8,7 @@ import (
 
 func initTempDir() {
 	tempDir := os.TempDir()
+
 	if err := os.MkdirAll(tempDir, 1777); err != nil {
 		log.Fatalf("Failed to create temporary directory %s: %s", tempDir, err)
 	}
