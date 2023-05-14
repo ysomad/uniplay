@@ -1,8 +1,7 @@
 package player
 
 import (
-	"strconv"
-
+	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/pkg/paging"
 )
 
@@ -14,7 +13,7 @@ type updateParams struct {
 
 type listParams struct {
 	searchQuery string
-	paging      paging.IntSeek[uint64]
+	paging      paging.IntSeek[domain.SteamID]
 }
 
 func newListParams(search, steamID *string, psize *int32) (lp listParams, err error) {
@@ -23,12 +22,12 @@ func newListParams(search, steamID *string, psize *int32) (lp listParams, err er
 	}
 
 	var (
-		steamID64 uint64
+		steamID64 domain.SteamID
 		pageSize  int32
 	)
 
 	if steamID != nil {
-		steamID64, err = strconv.ParseUint(*steamID, 10, 64)
+		steamID64, err = domain.NewSteamID(*steamID)
 		if err != nil {
 			return listParams{}, err
 		}
@@ -44,12 +43,12 @@ func newListParams(search, steamID *string, psize *int32) (lp listParams, err er
 }
 
 type matchListParams struct {
-	steamID uint64
+	steamID domain.SteamID
 	paging.Seek
 }
 
 func newMatchListParams(steamID string, token *string, psize *int32) (lp matchListParams, err error) {
-	lp.steamID, err = strconv.ParseUint(steamID, 10, 64)
+	lp.steamID, err = domain.NewSteamID(steamID)
 	if err != nil {
 		return matchListParams{}, err
 	}

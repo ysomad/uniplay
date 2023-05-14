@@ -185,7 +185,7 @@ type playerBaseStats struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (p *postgres) GetBaseStats(ctx context.Context, steamID uint64) (*domain.PlayerBaseStats, error) {
+func (p *postgres) GetBaseStats(ctx context.Context, steamID domain.SteamID) (*domain.PlayerBaseStats, error) {
 	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetBaseStats")
 	defer span.End()
 
@@ -266,7 +266,7 @@ type weaponBaseStats struct {
 	LegHits     int32 `db:"total_leg_hits"`
 }
 
-func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
+func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID domain.SteamID, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
 	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetWeaponBaseStats")
 	defer span.End()
 

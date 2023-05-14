@@ -3,7 +3,6 @@ package player
 import (
 	"errors"
 	"net/http"
-	"strconv"
 
 	"github.com/go-openapi/strfmt"
 	"github.com/ysomad/uniplay/internal/domain"
@@ -131,9 +130,7 @@ func (c *Controller) UpdatePlayer(p gen.UpdatePlayerParams) gen.UpdatePlayerResp
 }
 
 func (c *Controller) GetPlayerStats(p gen.GetPlayerStatsParams) gen.GetPlayerStatsResponder {
-	var err error
-
-	steamID, err := strconv.ParseUint(p.SteamID, 10, 64)
+	steamID, err := domain.NewSteamID(p.SteamID)
 	if err != nil {
 		return gen.NewGetPlayerStatsBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
@@ -196,9 +193,7 @@ func (c *Controller) GetPlayerStats(p gen.GetPlayerStatsParams) gen.GetPlayerSta
 }
 
 func (c *Controller) GetWeaponStats(p gen.GetWeaponStatsParams) gen.GetWeaponStatsResponder {
-	var err error
-
-	steamID, err := strconv.ParseUint(p.SteamID, 10, 64)
+	steamID, err := domain.NewSteamID(p.SteamID)
 	if err != nil {
 		return gen.NewGetWeaponStatsBadRequest().WithPayload(&models.Error{
 			Code:    http.StatusBadRequest,
