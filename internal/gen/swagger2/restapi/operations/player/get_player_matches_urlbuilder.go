@@ -10,11 +10,16 @@ import (
 	"net/url"
 	golangswaggerpaths "path"
 	"strings"
+
+	"github.com/go-openapi/swag"
 )
 
 // GetPlayerMatchesURL generates an URL for the get player matches operation
 type GetPlayerMatchesURL struct {
 	SteamID string
+
+	PageSize  *int32
+	PageToken *string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -54,6 +59,26 @@ func (o *GetPlayerMatchesURL) Build() (*url.URL, error) {
 		_basePath = "/v1"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var pageSizeQ string
+	if o.PageSize != nil {
+		pageSizeQ = swag.FormatInt32(*o.PageSize)
+	}
+	if pageSizeQ != "" {
+		qs.Set("page_size", pageSizeQ)
+	}
+
+	var pageTokenQ string
+	if o.PageToken != nil {
+		pageTokenQ = *o.PageToken
+	}
+	if pageTokenQ != "" {
+		qs.Set("page_token", pageTokenQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

@@ -2,6 +2,7 @@ package paging
 
 import (
 	"errors"
+	"time"
 
 	"golang.org/x/exp/constraints"
 )
@@ -40,8 +41,8 @@ func NewIntSeek[T constraints.Integer](lastID T, psize int32) IntSeek[T] {
 	return s
 }
 
-// InfList is a list of objects for infinity scroll pagination.
-type InfList[T any] struct {
+// List is a list of objects for infinity scroll pagination.
+type List[T any] struct {
 	Items   []T
 	HasNext bool
 }
@@ -50,19 +51,19 @@ var (
 	errInvalidArgs = errors.New("paging: length of items should not equal more than pageSize + 1")
 )
 
-func NewInfList[T any](items []T, pageSize int32) (InfList[T], error) {
+func NewList[T any](items []T, pageSize int32) (List[T], error) {
 	if len(items) > int(pageSize) && len(items)-int(pageSize) != 1 {
-		return InfList[T]{}, errInvalidArgs
+		return List[T]{}, errInvalidArgs
 	}
 
 	if len(items) != int(pageSize+1) {
-		return InfList[T]{
+		return List[T]{
 			Items:   items,
 			HasNext: false,
 		}, nil
 	}
 
-	return InfList[T]{
+	return List[T]{
 		Items:   items[:len(items)-1],
 		HasNext: true,
 	}, nil
@@ -71,6 +72,53 @@ func NewInfList[T any](items []T, pageSize int32) (InfList[T], error) {
 // Seek is set of params for seek(keyset) pagination using uuids
 // or other non-sortable primary keys.
 type Seek struct {
-	PageToken token
+	PageToken Token
 	PageSize  int32
+}
+
+func NewSeek(t Token, psize int32) Seek {
+	s := Seek{PageToken: t}
+
+	if psize < minPageSize {
+		s.PageSize = defaultPageSize
+
+		return s
+	}
+
+	if psize > maxPageSize {
+		s.PageSize = maxPageSize
+
+		return s
+	}
+
+	s.PageSize = psize
+
+	return s
+}
+
+type ListItem interface {
+	GetID() string
+	GetTime() time.Time
+}
+
+type TokenList[T ListItem] struct {
+	Items         []T
+	NextPageToken Token
+}
+
+func NewTokenList[T ListItem](items []T, pageSize int32) (TokenList[T], error) {
+	if len(items) > int(pageSize) && len(items)-int(pageSize) != 1 {
+		return TokenList[T]{}, errInvalidArgs
+	}
+
+	if len(items) != int(pageSize+1) {
+		return TokenList[T]{Items: items}, nil
+	}
+
+	list := items[:len(items)-1]
+
+	return TokenList[T]{
+		Items:         list,
+		NextPageToken: NewToken(list[len(list)-1].GetID(), list[len(list)-1].GetTime()),
+	}, nil
 }

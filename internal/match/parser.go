@@ -72,10 +72,10 @@ func (p *parser) parseReplayHeader() error {
 func (p *parser) collectStats(ctx context.Context) (*replayMatch, []*playerStat, []*weaponStat, error) {
 	span := trace.SpanFromContext(ctx)
 
-	span.AddEvent("Starting replay parse", trace.WithAttributes(attribute.String("match_id", p.match.id.String())))
-	defer span.AddEvent("Finished replay parse")
+	span.AddEvent("starting replay parse", trace.WithAttributes(attribute.String("match_id", p.match.id.String())))
+	defer span.AddEvent("finished replay parse")
 
-	if (p.match.id == uuid.UUID{}) {
+	if p.match.id == uuid.Nil {
 		return nil, nil, nil, errEmptyMatchID
 	}
 

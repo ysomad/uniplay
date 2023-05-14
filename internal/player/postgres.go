@@ -7,6 +7,7 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype/zeronull"
 	"go.opentelemetry.io/otel/trace"
@@ -39,7 +40,7 @@ type dbPlayer struct {
 	AvatarURL   zeronull.Text  `db:"avatar_url"`
 }
 
-func (p *postgres) GetAll(ctx context.Context, lp listParams) (paging.InfList[domain.Player], error) {
+func (p *postgres) GetAll(ctx context.Context, lp listParams) (paging.List[domain.Player], error) {
 	b := p.client.Builder.
 		Select("steam_id, team_id, display_name, avatar_url, first_name, last_name").
 		From("player")
@@ -57,17 +58,17 @@ func (p *postgres) GetAll(ctx context.Context, lp listParams) (paging.InfList[do
 		Limit(uint64(lp.paging.PageSize) + 1).
 		ToSql()
 	if err != nil {
-		return paging.InfList[domain.Player]{}, err
+		return paging.List[domain.Player]{}, err
 	}
 
 	rows, err := p.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
-		return paging.InfList[domain.Player]{}, err
+		return paging.List[domain.Player]{}, err
 	}
 
 	dbPlayers, err := pgx.CollectRows(rows, pgx.RowToStructByName[dbPlayer])
 	if err != nil {
-		return paging.InfList[domain.Player]{}, err
+		return paging.List[domain.Player]{}, err
 	}
 
 	players := make([]domain.Player, len(dbPlayers))
@@ -83,7 +84,7 @@ func (p *postgres) GetAll(ctx context.Context, lp listParams) (paging.InfList[do
 		}
 	}
 
-	return paging.NewInfList(players, lp.paging.PageSize)
+	return paging.NewList(players, lp.paging.PageSize)
 }
 
 func (p *postgres) FindBySteamID(ctx context.Context, steamID domain.SteamID) (domain.Player, error) {
@@ -184,7 +185,7 @@ type playerBaseStats struct {
 	TimePlayed         time.Duration `db:"total_time_played"`
 }
 
-func (p *postgres) GetBaseStats(ctx context.Context, steamID uint64) (*domain.PlayerBaseStats, error) {
+func (p *postgres) GetBaseStats(ctx context.Context, steamID domain.SteamID) (*domain.PlayerBaseStats, error) {
 	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetBaseStats")
 	defer span.End()
 
@@ -265,7 +266,7 @@ type weaponBaseStats struct {
 	LegHits     int32 `db:"total_leg_hits"`
 }
 
-func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
+func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID domain.SteamID, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
 	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetWeaponBaseStats")
 	defer span.End()
 
@@ -352,4 +353,90 @@ func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID uint64, f dom
 	}
 
 	return res, nil
+}
+
+type dbPlayerMatch struct {
+	ID                 uuid.UUID         `db:"match_id"`
+	Score              domain.MatchScore `db:"match_score"`
+	UploadedAt         time.Time         `db:"match_uploaded_at"`
+	MapName            string            `db:"map_name"`
+	MapIconURL         string            `db:"map_icon_url"`
+	MatchState         domain.MatchState `db:"match_state"`
+	MatchScore         domain.MatchScore `db:"match_score"`
+	Kills              int32             `db:"kills"`
+	Deaths             int32             `db:"deaths"`
+	Assists            int32             `db:"assists"`
+	HeadshotPercentage float64           `db:"headshot_percentage"`
+	ADR                float64           `db:"adr"`
+}
+
+func (p *postgres) GetMatchList(ctx context.Context, lp matchListParams) (paging.TokenList[*domain.PlayerMatch], error) {
+	b := p.client.Builder.
+		Select(
+			"m.id as match_id",
+			"m.score as match_score",
+			"m.uploaded_at as match_uploaded_at",
+			"mp.name as map_name",
+			"mp.icon_url as map_icon_url",
+			"pm.match_state as match_state",
+			"pms.kills as kills",
+			"pms.deaths as deaths",
+			"pms.assists as assists",
+			"pms.headshot_percentage as headshot_percentage",
+			"pms.adr as adr").
+		From("player_match pm").
+		InnerJoin("match m ON pm.match_id = m.id").
+		InnerJoin("map mp ON mp.name = m.map").
+		InnerJoin("player_match_stat pms ON m.id = pms.match_id AND pms.player_steam_id = pm.player_steam_id")
+
+	if lp.PageToken != "" {
+		lastID, lastUploadedAt, err := lp.PageToken.Decode()
+		if err != nil {
+			return paging.TokenList[*domain.PlayerMatch]{}, err
+		}
+
+		b = b.Where(sq.Expr("(m.uploaded_at, m.id) < (?, ?)", lastUploadedAt, lastID))
+	}
+
+	sql, args, err := b.
+		Where(sq.Eq{"pm.player_steam_id": lp.steamID}).
+		OrderBy("m.uploaded_at DESC", "m.id DESC").
+		ToSql()
+	if err != nil {
+		return paging.TokenList[*domain.PlayerMatch]{}, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return paging.TokenList[*domain.PlayerMatch]{}, err
+	}
+
+	dbMatches, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[dbPlayerMatch])
+	if err != nil {
+		return paging.TokenList[*domain.PlayerMatch]{}, err
+	}
+
+	matches := make([]*domain.PlayerMatch, len(dbMatches))
+
+	for i, m := range dbMatches {
+		matches[i] = &domain.PlayerMatch{
+			ID: m.ID,
+			Map: domain.Map{
+				Name:    m.MapName,
+				IconURL: m.MapIconURL,
+			},
+			Score: m.MatchScore,
+			Stats: domain.PlayerMatchStats{
+				Kills:              m.Kills,
+				Deaths:             m.Deaths,
+				Assists:            m.Assists,
+				HeadshotPercentage: m.HeadshotPercentage,
+				ADR:                m.ADR,
+			},
+			State:      m.MatchState,
+			UploadedAt: m.UploadedAt,
+		}
+	}
+
+	return paging.NewTokenList(matches, lp.PageSize)
 }

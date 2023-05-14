@@ -20,39 +20,30 @@ import (
 // swagger:model PlayerMatchList
 type PlayerMatchList struct {
 
-	// has next
-	// Required: true
-	HasNext bool `json:"has_next"`
-
 	// matches
 	// Required: true
 	Matches []PlayerMatch `json:"matches"`
+
+	// next page token
+	// Required: true
+	NextPageToken string `json:"next_page_token"`
 }
 
 // Validate validates this player match list
 func (m *PlayerMatchList) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateHasNext(formats); err != nil {
+	if err := m.validateMatches(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateMatches(formats); err != nil {
+	if err := m.validateNextPageToken(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *PlayerMatchList) validateHasNext(formats strfmt.Registry) error {
-
-	if err := validate.Required("has_next", "body", bool(m.HasNext)); err != nil {
-		return err
-	}
-
 	return nil
 }
 
@@ -73,6 +64,15 @@ func (m *PlayerMatchList) validateMatches(formats strfmt.Registry) error {
 			return err
 		}
 
+	}
+
+	return nil
+}
+
+func (m *PlayerMatchList) validateNextPageToken(formats strfmt.Registry) error {
+
+	if err := validate.RequiredString("next_page_token", "body", m.NextPageToken); err != nil {
+		return err
 	}
 
 	return nil

@@ -41,53 +41,6 @@ func (o *SetTeamCaptainNoContent) WriteResponse(rw http.ResponseWriter, producer
 
 func (o *SetTeamCaptainNoContent) SetTeamCaptainResponder() {}
 
-// SetTeamCaptainNotFoundCode is the HTTP code returned for type SetTeamCaptainNotFound
-const SetTeamCaptainNotFoundCode int = 404
-
-/*
-SetTeamCaptainNotFound Not Found
-
-swagger:response setTeamCaptainNotFound
-*/
-type SetTeamCaptainNotFound struct {
-
-	/*
-	  In: Body
-	*/
-	Payload *models.Error `json:"body,omitempty"`
-}
-
-// NewSetTeamCaptainNotFound creates SetTeamCaptainNotFound with default headers values
-func NewSetTeamCaptainNotFound() *SetTeamCaptainNotFound {
-
-	return &SetTeamCaptainNotFound{}
-}
-
-// WithPayload adds the payload to the set team captain not found response
-func (o *SetTeamCaptainNotFound) WithPayload(payload *models.Error) *SetTeamCaptainNotFound {
-	o.Payload = payload
-	return o
-}
-
-// SetPayload sets the payload to the set team captain not found response
-func (o *SetTeamCaptainNotFound) SetPayload(payload *models.Error) {
-	o.Payload = payload
-}
-
-// WriteResponse to the client
-func (o *SetTeamCaptainNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
-
-	rw.WriteHeader(404)
-	if o.Payload != nil {
-		payload := o.Payload
-		if err := producer.Produce(rw, payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
-	}
-}
-
-func (o *SetTeamCaptainNotFound) SetTeamCaptainResponder() {}
-
 // SetTeamCaptainInternalServerErrorCode is the HTTP code returned for type SetTeamCaptainInternalServerError
 const SetTeamCaptainInternalServerErrorCode int = 500
 

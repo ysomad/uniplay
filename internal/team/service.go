@@ -8,7 +8,7 @@ import (
 )
 
 type repository interface {
-	GetAll(context.Context, listParams) (paging.InfList[domain.TeamListItem], error)
+	GetAll(context.Context, listParams) (paging.List[domain.TeamListItem], error)
 	GetPlayers(ctx context.Context, teamID int32) ([]domain.TeamPlayer, error)
 	Update(ctx context.Context, teamID int32, p updateParams) (domain.Team, error)
 	SetCaptain(ctx context.Context, teamID int32, steamID domain.SteamID) error
@@ -24,7 +24,7 @@ func NewService(r repository) *service {
 	}
 }
 
-func (s *service) GetList(ctx context.Context, p listParams) (paging.InfList[domain.TeamListItem], error) {
+func (s *service) GetList(ctx context.Context, p listParams) (paging.List[domain.TeamListItem], error) {
 	return s.team.GetAll(ctx, p)
 }
 

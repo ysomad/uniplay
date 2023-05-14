@@ -12,12 +12,14 @@ import (
 )
 
 type replayMatch struct {
-	id         uuid.UUID
-	team1      replayTeam
-	team2      replayTeam
-	mapName    string
-	duration   time.Duration
-	uploadedAt time.Time
+	id          uuid.UUID
+	team1       replayTeam
+	team2       replayTeam
+	score       domain.MatchScore
+	roundsTotal int8
+	mapName     string
+	duration    time.Duration
+	uploadedAt  time.Time
 }
 
 // roundsPlayed returns total rounds played.

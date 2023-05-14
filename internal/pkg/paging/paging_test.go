@@ -2,6 +2,7 @@ package paging
 
 import (
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/exp/constraints"
@@ -92,7 +93,7 @@ func TestNewInfList(t *testing.T) {
 	type test[T any] struct {
 		name    string
 		args    args[T]
-		want    InfList[T]
+		want    List[T]
 		wantErr bool
 	}
 
@@ -110,7 +111,7 @@ func TestNewInfList(t *testing.T) {
 				},
 				pageSize: 5,
 			},
-			want: InfList[string]{
+			want: List[string]{
 				Items: []string{
 					"item 1",
 					"item 2",
@@ -140,7 +141,7 @@ func TestNewInfList(t *testing.T) {
 				},
 				pageSize: 10,
 			},
-			want: InfList[string]{
+			want: List[string]{
 				Items: []string{
 					"item 1",
 					"item 2",
@@ -169,7 +170,7 @@ func TestNewInfList(t *testing.T) {
 				},
 				pageSize: 5,
 			},
-			want: InfList[string]{
+			want: List[string]{
 				Items: []string{
 					"item 1",
 					"item 2",
@@ -191,7 +192,7 @@ func TestNewInfList(t *testing.T) {
 				},
 				pageSize: 5,
 			},
-			want: InfList[string]{
+			want: List[string]{
 				Items: []string{
 					"item 1",
 					"item 2",
@@ -211,7 +212,7 @@ func TestNewInfList(t *testing.T) {
 				},
 				pageSize: 5,
 			},
-			want: InfList[string]{
+			want: List[string]{
 				Items: []string{
 					"item 1",
 					"item 2",
@@ -240,16 +241,177 @@ func TestNewInfList(t *testing.T) {
 				},
 				pageSize: 10,
 			},
-			want:    InfList[string]{},
+			want:    List[string]{},
 			wantErr: true,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := NewInfList(tt.args.items, tt.args.pageSize)
+			got, err := NewList(tt.args.items, tt.args.pageSize)
 			assert.Equal(t, tt.want, got)
 			assert.Equal(t, tt.wantErr, (err != nil))
+		})
+	}
+}
+
+var _ ListItem = &testList{}
+
+type testList struct {
+	id        string
+	createdAt time.Time
+}
+
+func (l *testList) GetID() string      { return l.id }
+func (l *testList) GetTime() time.Time { return l.createdAt }
+
+func TestNewTokenList(t *testing.T) {
+	type args[T ListItem] struct {
+		items    []T
+		pageSize int32
+	}
+	type test[T ListItem] struct {
+		name    string
+		args    args[T]
+		want    TokenList[T]
+		wantErr bool
+	}
+	time1 := time.Time{}.Add(time.Hour)
+	time2 := time1.Add(time.Hour)
+	time3 := time2.Add(time.Hour)
+	time4 := time3.Add(time.Hour)
+	time5 := time4.Add(time.Hour)
+	lastItemTestTime := time.Time{}.Add(time.Hour * 99999)
+	tests := []test[*testList]{
+		{
+			name: "0 items",
+			args: args[*testList]{
+				items:    []*testList{},
+				pageSize: 5,
+			},
+			want: TokenList[*testList]{
+				Items: []*testList{},
+			},
+			wantErr: false,
+		},
+		{
+			name: "6 items, has next page",
+			args: args[*testList]{
+				items: []*testList{
+					{
+						id:        "id1",
+						createdAt: time1,
+					},
+					{
+						id:        "id2",
+						createdAt: time2,
+					},
+					{
+						id:        "id3",
+						createdAt: time3,
+					},
+					{
+						id:        "id4",
+						createdAt: time4,
+					},
+					{
+						id:        "id5",
+						createdAt: time5,
+					},
+					{
+						id:        "id6",
+						createdAt: lastItemTestTime,
+					},
+				},
+				pageSize: 5,
+			},
+			want: TokenList[*testList]{
+				Items: []*testList{
+					{
+						id:        "id1",
+						createdAt: time1,
+					},
+					{
+						id:        "id2",
+						createdAt: time2,
+					},
+					{
+						id:        "id3",
+						createdAt: time3,
+					},
+					{
+						id:        "id4",
+						createdAt: time4,
+					},
+					{
+						id:        "id5",
+						createdAt: time5,
+					},
+				},
+				NextPageToken: "aWQ1LDAwMDEtMDEtMDFUMDU6MDA6MDBa",
+			},
+			wantErr: false,
+		},
+		{
+			name: "5 items, no next page",
+			args: args[*testList]{
+				items: []*testList{
+					{
+						id:        "id1",
+						createdAt: time1,
+					},
+					{
+						id:        "id2",
+						createdAt: time2,
+					},
+					{
+						id:        "id3",
+						createdAt: time3,
+					},
+					{
+						id:        "id4",
+						createdAt: time4,
+					},
+					{
+						id:        "id5",
+						createdAt: lastItemTestTime,
+					},
+				},
+				pageSize: 5,
+			},
+			want: TokenList[*testList]{
+				Items: []*testList{
+					{
+						id:        "id1",
+						createdAt: time1,
+					},
+					{
+						id:        "id2",
+						createdAt: time2,
+					},
+					{
+						id:        "id3",
+						createdAt: time3,
+					},
+					{
+						id:        "id4",
+						createdAt: time4,
+					},
+					{
+						id:        "id5",
+						createdAt: lastItemTestTime,
+					},
+				},
+				NextPageToken: "",
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := NewTokenList(tt.args.items, tt.args.pageSize)
+			assert.Equal(t, tt.wantErr, (err != nil))
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }

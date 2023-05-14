@@ -53,6 +53,9 @@ func (s *service) CreateFromReplay(ctx context.Context, r replay) (uuid.UUID, er
 		return uuid.Nil, err
 	}
 
+	match.score = domain.NewMatchScore(match.team1.score, match.team2.score)
+	match.roundsTotal = match.team1.score + match.team2.score
+
 	if err := s.match.CreateWithStats(ctx, match, playerStats, weaponStats); err != nil {
 		return uuid.Nil, err
 	}

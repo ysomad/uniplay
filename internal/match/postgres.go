@@ -45,7 +45,7 @@ type matchScoreBoardRow struct {
 	MatchID            uuid.UUID         `db:"match_id"`
 	MapName            string            `db:"map_name"`
 	MapIconURL         string            `db:"map_icon_url"`
-	SteamID            uint64            `db:"steam_id"`
+	SteamID            domain.SteamID    `db:"steam_id"`
 	PlayerName         string            `db:"player_name"`
 	PlayerAvatarURL    zeronull.Text     `db:"avatar_url"`
 	PlayerCaptain      bool              `db:"is_player_captain"`
@@ -89,7 +89,7 @@ func (p *postgres) scoreboardRowsToMatch(sbRows []*matchScoreBoardRow) domain.Ma
 
 	for _, sbRow := range sbRows {
 		row := &domain.MatchScoreBoardRow{
-			SteamID:            domain.SteamID(sbRow.SteamID),
+			SteamID:            sbRow.SteamID,
 			PlayerName:         sbRow.PlayerName,
 			PlayerAvatarURL:    string(sbRow.PlayerAvatarURL),
 			IsPlayerCaptain:    sbRow.PlayerCaptain,
@@ -347,8 +347,8 @@ func (p *postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []tea
 func (p *postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
 	sql, args, err := p.client.Builder.
 		Insert("match").
-		Columns("id, map, rounds, duration, uploaded_at").
-		Values(m.id, m.mapName, m.team1.score+m.team2.score, m.duration, m.uploadedAt).
+		Columns("id, map, score, rounds, duration, uploaded_at").
+		Values(m.id, m.mapName, m.score, m.roundsTotal, m.duration, m.uploadedAt).
 		ToSql()
 	if err != nil {
 		return err

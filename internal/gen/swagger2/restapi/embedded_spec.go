@@ -566,6 +566,19 @@ func init() {
             "name": "steam_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Токен следующей страницы в base64 формате",
+            "name": "page_token",
+            "in": "query"
           }
         ],
         "responses": {
@@ -573,18 +586,6 @@ func init() {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/PlayerMatchList"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Error"
             }
           },
           "500": {
@@ -904,12 +905,6 @@ func init() {
         "responses": {
           "204": {
             "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
           },
           "500": {
             "description": "Internal Server Error",
@@ -1363,38 +1358,39 @@ func init() {
     "PlayerMatchList": {
       "type": "object",
       "required": [
-        "has_next",
-        "matches"
+        "matches",
+        "next_page_token"
       ],
       "properties": {
-        "has_next": {
-          "type": "boolean",
-          "x-nullable": false
-        },
         "matches": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/PlayerMatch"
           }
+        },
+        "next_page_token": {
+          "type": "string",
+          "x-nullable": false
         }
       }
     },
     "PlayerMatch_match_stats": {
       "type": "object",
       "required": [
+        "adr",
         "assists",
-        "damage_per_round",
         "deaths",
         "headshot_percentage",
         "kills"
       ],
       "properties": {
-        "assists": {
-          "type": "integer",
-          "format": "int32",
+        "adr": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "ADR",
           "x-nullable": false
         },
-        "damage_per_round": {
+        "assists": {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
@@ -1405,8 +1401,8 @@ func init() {
           "x-nullable": false
         },
         "headshot_percentage": {
-          "type": "integer",
-          "format": "int32",
+          "type": "number",
+          "format": "double",
           "x-nullable": false
         },
         "kills": {
@@ -2550,6 +2546,19 @@ func init() {
             "name": "steam_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Токен следующей страницы в base64 формате",
+            "name": "page_token",
+            "in": "query"
           }
         ],
         "responses": {
@@ -2557,18 +2566,6 @@ func init() {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/PlayerMatchList"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Error"
             }
           },
           "500": {
@@ -2888,12 +2885,6 @@ func init() {
         "responses": {
           "204": {
             "description": "No Content"
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
           },
           "500": {
             "description": "Internal Server Error",
@@ -3347,38 +3338,39 @@ func init() {
     "PlayerMatchList": {
       "type": "object",
       "required": [
-        "has_next",
-        "matches"
+        "matches",
+        "next_page_token"
       ],
       "properties": {
-        "has_next": {
-          "type": "boolean",
-          "x-nullable": false
-        },
         "matches": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/PlayerMatch"
           }
+        },
+        "next_page_token": {
+          "type": "string",
+          "x-nullable": false
         }
       }
     },
     "PlayerMatch_match_stats": {
       "type": "object",
       "required": [
+        "adr",
         "assists",
-        "damage_per_round",
         "deaths",
         "headshot_percentage",
         "kills"
       ],
       "properties": {
-        "assists": {
-          "type": "integer",
-          "format": "int32",
+        "adr": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "ADR",
           "x-nullable": false
         },
-        "damage_per_round": {
+        "assists": {
           "type": "integer",
           "format": "int32",
           "x-nullable": false
@@ -3389,8 +3381,8 @@ func init() {
           "x-nullable": false
         },
         "headshot_percentage": {
-          "type": "integer",
-          "format": "int32",
+          "type": "number",
+          "format": "double",
           "x-nullable": false
         },
         "kills": {

@@ -173,19 +173,22 @@ paths:
         description: Steam ID игрока
         required: true
         type: string
+      - name: page_size
+        in: query
+        description: "Количество значений на странице. Минимум — 1, максимум — 500."
+        required: false
+        type: integer
+        format: int32
+      - name: page_token
+        in: query
+        description: Токен следующей страницы в base64 формате
+        required: false
+        type: string
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/PlayerMatchList'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/Error'
         "500":
           description: Internal Server Error
           schema:
@@ -903,15 +906,15 @@ definitions:
   PlayerMatchList:
     type: object
     required:
-    - has_next
     - matches
+    - next_page_token
     properties:
       matches:
         type: array
         items:
           $ref: '#/definitions/PlayerMatch'
-      has_next:
-        type: boolean
+      next_page_token:
+        type: string
         x-nullable: false
   Team:
     type: object
@@ -1323,8 +1326,8 @@ definitions:
   PlayerMatch_match_stats:
     type: object
     required:
+    - adr
     - assists
-    - damage_per_round
     - deaths
     - headshot_percentage
     - kills
@@ -1342,12 +1345,13 @@ definitions:
         format: int32
         x-nullable: false
       headshot_percentage:
-        type: integer
-        format: int32
+        type: number
+        format: double
         x-nullable: false
-      damage_per_round:
-        type: integer
-        format: int32
+      adr:
+        type: number
+        format: double
+        x-go-name: ADR
         x-nullable: false
   TeamList_institution:
     type: object
