@@ -347,8 +347,8 @@ func (p *postgres) saveTeamPlayers(ctx context.Context, tx pgx.Tx, players []tea
 func (p *postgres) saveMatch(ctx context.Context, tx pgx.Tx, m *replayMatch) error {
 	sql, args, err := p.client.Builder.
 		Insert("match").
-		Columns("id, map, rounds, duration, uploaded_at").
-		Values(m.id, m.mapName, m.team1.score+m.team2.score, m.duration, m.uploadedAt).
+		Columns("id, map, score, rounds, duration, uploaded_at").
+		Values(m.id, m.mapName, m.score, m.roundsTotal, m.duration, m.uploadedAt).
 		ToSql()
 	if err != nil {
 		return err

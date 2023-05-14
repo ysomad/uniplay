@@ -42,3 +42,27 @@ func newListParams(search, steamID *string, psize *int32) (lp listParams, err er
 
 	return lp, nil
 }
+
+type matchListParams struct {
+	steamID uint64
+	paging.Seek
+}
+
+func newMatchListParams(steamID string, token *string, psize *int32) (lp matchListParams, err error) {
+	lp.steamID, err = strconv.ParseUint(steamID, 10, 64)
+	if err != nil {
+		return matchListParams{}, err
+	}
+
+	if token != nil {
+		lp.PageToken = paging.Token(*token)
+	}
+
+	if psize != nil {
+		lp.PageSize = *psize
+	}
+
+	lp.Seek = paging.NewSeek(lp.PageToken, lp.PageSize)
+
+	return lp, nil
+}

@@ -13,11 +13,11 @@ import (
 var (
 	testPK    string
 	testTime  time.Time
-	testToken token
+	testToken Token
 )
 
-func generateTestToken(pk string, t time.Time) token {
-	return token(base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s,%s", pk, t.Format(time.RFC3339Nano)))))
+func generateTestToken(pk string, t time.Time) Token {
+	return Token(base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s,%s", pk, t.Format(time.RFC3339Nano)))))
 }
 
 func TestMain(m *testing.M) {
@@ -37,7 +37,7 @@ func TestNewToken(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want token
+		want Token
 	}{
 		{
 			name: "success",
@@ -85,7 +85,7 @@ func TestNewToken(t *testing.T) {
 func TestToken_Decode(t *testing.T) {
 	tests := []struct {
 		name         string
-		encodedToken token
+		encodedToken Token
 		wantPK       string
 		wantTime     time.Time
 		wantErr      bool

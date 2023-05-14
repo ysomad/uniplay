@@ -41,7 +41,7 @@ type dbTeamListItem struct {
 	InstLogoURL   zeronull.Text `db:"inst_logo_url"`
 }
 
-func (p *postgres) GetAll(ctx context.Context, lp listParams) (paging.InfList[domain.TeamListItem], error) {
+func (p *postgres) GetAll(ctx context.Context, lp listParams) (paging.List[domain.TeamListItem], error) {
 	b := p.client.Builder.
 		Select(
 			"t.id as team_id",
@@ -69,17 +69,17 @@ func (p *postgres) GetAll(ctx context.Context, lp listParams) (paging.InfList[do
 		Limit(uint64(lp.paging.PageSize) + 1).
 		ToSql()
 	if err != nil {
-		return paging.InfList[domain.TeamListItem]{}, err
+		return paging.List[domain.TeamListItem]{}, err
 	}
 
 	rows, err := p.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
-		return paging.InfList[domain.TeamListItem]{}, err
+		return paging.List[domain.TeamListItem]{}, err
 	}
 
 	dbTeams, err := pgx.CollectRows(rows, pgx.RowToStructByName[dbTeamListItem])
 	if err != nil {
-		return paging.InfList[domain.TeamListItem]{}, err
+		return paging.List[domain.TeamListItem]{}, err
 	}
 
 	teams := make([]domain.TeamListItem, len(dbTeams))
@@ -97,7 +97,7 @@ func (p *postgres) GetAll(ctx context.Context, lp listParams) (paging.InfList[do
 		}
 	}
 
-	return paging.NewInfList(teams, lp.paging.PageSize)
+	return paging.NewList(teams, lp.paging.PageSize)
 }
 
 type dbTeamPlayer struct {

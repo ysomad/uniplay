@@ -566,6 +566,19 @@ func init() {
             "name": "steam_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Токен следующей страницы в base64 формате",
+            "name": "page_token",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1345,19 +1358,19 @@ func init() {
     "PlayerMatchList": {
       "type": "object",
       "required": [
-        "has_next",
-        "matches"
+        "matches",
+        "next_page_token"
       ],
       "properties": {
-        "has_next": {
-          "type": "boolean",
-          "x-nullable": false
-        },
         "matches": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/PlayerMatch"
           }
+        },
+        "next_page_token": {
+          "type": "string",
+          "x-nullable": false
         }
       }
     },
@@ -1372,8 +1385,9 @@ func init() {
       ],
       "properties": {
         "adr": {
-          "type": "integer",
-          "format": "int32",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "ADR",
           "x-nullable": false
         },
         "assists": {
@@ -1387,8 +1401,8 @@ func init() {
           "x-nullable": false
         },
         "headshot_percentage": {
-          "type": "integer",
-          "format": "int32",
+          "type": "number",
+          "format": "double",
           "x-nullable": false
         },
         "kills": {
@@ -2532,6 +2546,19 @@ func init() {
             "name": "steam_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "description": "Количество значений на странице. Минимум — 1, максимум — 500.",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Токен следующей страницы в base64 формате",
+            "name": "page_token",
+            "in": "query"
           }
         ],
         "responses": {
@@ -3311,19 +3338,19 @@ func init() {
     "PlayerMatchList": {
       "type": "object",
       "required": [
-        "has_next",
-        "matches"
+        "matches",
+        "next_page_token"
       ],
       "properties": {
-        "has_next": {
-          "type": "boolean",
-          "x-nullable": false
-        },
         "matches": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/PlayerMatch"
           }
+        },
+        "next_page_token": {
+          "type": "string",
+          "x-nullable": false
         }
       }
     },
@@ -3338,8 +3365,9 @@ func init() {
       ],
       "properties": {
         "adr": {
-          "type": "integer",
-          "format": "int32",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "ADR",
           "x-nullable": false
         },
         "assists": {
@@ -3353,8 +3381,8 @@ func init() {
           "x-nullable": false
         },
         "headshot_percentage": {
-          "type": "integer",
-          "format": "int32",
+          "type": "number",
+          "format": "double",
           "x-nullable": false
         },
         "kills": {

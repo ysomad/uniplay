@@ -10,11 +10,12 @@ import (
 )
 
 type repository interface {
-	GetAll(context.Context, listParams) (paging.InfList[domain.Player], error)
+	GetAll(context.Context, listParams) (paging.List[domain.Player], error)
 	FindBySteamID(context.Context, domain.SteamID) (domain.Player, error)
 	UpdateBySteamID(context.Context, domain.SteamID, updateParams) (domain.Player, error)
 	GetBaseStats(ctx context.Context, steamID uint64) (*domain.PlayerBaseStats, error)
 	GetWeaponBaseStats(ctx context.Context, steamID uint64, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error)
+	GetMatchList(context.Context, matchListParams) (paging.TokenList[*domain.PlayerMatch], error)
 }
 
 type service struct {
@@ -29,7 +30,7 @@ func NewService(t trace.Tracer, r repository) *service {
 	}
 }
 
-func (s *service) GetList(ctx context.Context, p listParams) (paging.InfList[domain.Player], error) {
+func (s *service) GetList(ctx context.Context, p listParams) (paging.List[domain.Player], error) {
 	return s.player.GetAll(ctx, p)
 }
 
@@ -63,4 +64,8 @@ func (s *service) GetWeaponStats(ctx context.Context, steamID uint64, f domain.W
 	}
 
 	return domain.NewWeaponStats(ts), nil
+}
+
+func (s *service) GetMatchList(ctx context.Context, p matchListParams) (paging.TokenList[*domain.PlayerMatch], error) {
+	return s.player.GetMatchList(ctx, p)
 }

@@ -68,9 +68,12 @@ CREATE TABLE IF NOT EXISTS match (
     id uuid PRIMARY KEY NOT NULL,
     map varchar(16) NOT NULL REFERENCES map (name),
     rounds smallint NOT NULL,
+    score varchar(5) NOT NULL,
     duration interval NOT NULL,
     uploaded_at timestamptz NOT NULL
 );
+
+CREATE INDEX match_pagination_idx ON match (uploaded_at DESC, id DESC);
 
 CREATE TABLE IF NOT EXISTS team_match (
     team_id smallint NOT NULL REFERENCES team (id),

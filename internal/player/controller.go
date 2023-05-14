@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/ysomad/uniplay/internal/domain"
 
 	"github.com/ysomad/uniplay/internal/gen/swagger2/models"
@@ -263,4 +264,49 @@ func (c *Controller) GetWeaponStats(p gen.GetWeaponStatsParams) gen.GetWeaponSta
 	}
 
 	return gen.NewGetWeaponStatsOK().WithPayload(payload)
+}
+
+func (c *Controller) GetPlayerMatches(p gen.GetPlayerMatchesParams) gen.GetPlayerMatchesResponder {
+	lp, err := newMatchListParams(p.SteamID, p.PageToken, p.PageSize)
+	if err != nil {
+		return gen.NewGetPlayerMatchesInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	list, err := c.player.GetMatchList(p.HTTPRequest.Context(), lp)
+	if err != nil {
+		return gen.NewGetPlayerMatchesInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	payload := models.PlayerMatchList{
+		Matches:       make([]models.PlayerMatch, len(list.Items)),
+		NextPageToken: string(list.NextPageToken),
+	}
+
+	for i, m := range list.Items {
+		payload.Matches[i] = models.PlayerMatch{
+			ID: strfmt.UUID(m.ID.String()),
+			Map: models.Map{
+				IconURL: m.Map.IconURL,
+				Name:    m.Map.Name,
+			},
+			MatchState: int8(m.State),
+			MatchStats: &models.PlayerMatchMatchStats{
+				ADR:                m.Stats.ADR,
+				Assists:            m.Stats.Assists,
+				Deaths:             m.Stats.Deaths,
+				HeadshotPercentage: m.Stats.HeadshotPercentage,
+				Kills:              m.Stats.Kills,
+			},
+			Score:      string(m.Score),
+			UploadedAt: strfmt.DateTime(m.UploadedAt),
+		}
+	}
+
+	return gen.NewGetPlayerMatchesOK().WithPayload(&payload)
 }

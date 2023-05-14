@@ -19,9 +19,9 @@ import (
 // swagger:model PlayerMatch_match_stats
 type PlayerMatchMatchStats struct {
 
-	// adr
+	// a d r
 	// Required: true
-	Adr int32 `json:"adr"`
+	ADR float64 `json:"adr"`
 
 	// assists
 	// Required: true
@@ -33,7 +33,7 @@ type PlayerMatchMatchStats struct {
 
 	// headshot percentage
 	// Required: true
-	HeadshotPercentage int32 `json:"headshot_percentage"`
+	HeadshotPercentage float64 `json:"headshot_percentage"`
 
 	// kills
 	// Required: true
@@ -44,7 +44,7 @@ type PlayerMatchMatchStats struct {
 func (m *PlayerMatchMatchStats) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAdr(formats); err != nil {
+	if err := m.validateADR(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -70,9 +70,9 @@ func (m *PlayerMatchMatchStats) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *PlayerMatchMatchStats) validateAdr(formats strfmt.Registry) error {
+func (m *PlayerMatchMatchStats) validateADR(formats strfmt.Registry) error {
 
-	if err := validate.Required("adr", "body", int32(m.Adr)); err != nil {
+	if err := validate.Required("adr", "body", float64(m.ADR)); err != nil {
 		return err
 	}
 
@@ -99,7 +99,7 @@ func (m *PlayerMatchMatchStats) validateDeaths(formats strfmt.Registry) error {
 
 func (m *PlayerMatchMatchStats) validateHeadshotPercentage(formats strfmt.Registry) error {
 
-	if err := validate.Required("headshot_percentage", "body", int32(m.HeadshotPercentage)); err != nil {
+	if err := validate.Required("headshot_percentage", "body", float64(m.HeadshotPercentage)); err != nil {
 		return err
 	}
 

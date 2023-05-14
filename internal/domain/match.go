@@ -7,6 +7,13 @@ import (
 	"github.com/google/uuid"
 )
 
+// MatchScore represents score of match in format 16:1.
+type MatchScore string
+
+func NewMatchScore(score1, score2 int8) MatchScore {
+	return MatchScore(fmt.Sprintf("%d:%d", score1, score2))
+}
+
 const DefaultTeamSize = 5
 
 type Match struct {

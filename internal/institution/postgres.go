@@ -26,7 +26,7 @@ func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
 	}
 }
 
-func (pg *postgres) GetList(ctx context.Context, p listParams) (paging.InfList[domain.Institution], error) {
+func (pg *postgres) GetList(ctx context.Context, p listParams) (paging.List[domain.Institution], error) {
 	ctx, span := pg.tracer.Start(ctx, "institution.Postgres.GetList")
 	defer span.End()
 
@@ -55,18 +55,18 @@ func (pg *postgres) GetList(ctx context.Context, p listParams) (paging.InfList[d
 		Limit(uint64(p.paging.PageSize) + 1).
 		ToSql()
 	if err != nil {
-		return paging.InfList[domain.Institution]{}, err
+		return paging.List[domain.Institution]{}, err
 	}
 
 	rows, err := pg.client.Pool.Query(ctx, sql, args...)
 	if err != nil {
-		return paging.InfList[domain.Institution]{}, err
+		return paging.List[domain.Institution]{}, err
 	}
 
 	institutions, err := pgx.CollectRows(rows, pgx.RowToStructByPos[domain.Institution])
 	if err != nil {
-		return paging.InfList[domain.Institution]{}, err
+		return paging.List[domain.Institution]{}, err
 	}
 
-	return paging.NewInfList(institutions, p.paging.PageSize)
+	return paging.NewList(institutions, p.paging.PageSize)
 }
