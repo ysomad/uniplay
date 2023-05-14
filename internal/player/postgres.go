@@ -399,9 +399,7 @@ func (p *postgres) GetMatchList(ctx context.Context, lp matchListParams) (paging
 	}
 
 	sql, args, err := b.
-		Where(sq.And{
-			sq.Eq{"pm.player_steam_id": lp.steamID},
-		}).
+		Where(sq.Eq{"pm.player_steam_id": lp.steamID}).
 		OrderBy("m.uploaded_at DESC", "m.id DESC").
 		ToSql()
 	if err != nil {
