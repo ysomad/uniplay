@@ -13,10 +13,13 @@ type playerRepository interface {
 	GetAll(context.Context, listParams) (paging.List[domain.Player], error)
 	FindBySteamID(context.Context, domain.SteamID) (domain.Player, error)
 	UpdateBySteamID(context.Context, domain.SteamID, updateParams) (domain.Player, error)
+
 	GetBaseStats(context.Context, domain.SteamID) (*domain.PlayerBaseStats, error)
 	GetWeaponBaseStats(context.Context, domain.SteamID, domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error)
+
 	GetMatchList(context.Context, matchListParams) (paging.TokenList[*domain.PlayerMatch], error)
 	GetMostPlayedMaps(context.Context, domain.SteamID) ([]domain.MostPlayedMap, error)
+	GetMostSuccessMaps(context.Context, domain.SteamID) ([]domain.MostSuccessMap, error)
 }
 
 type service struct {
@@ -29,18 +32,6 @@ func NewService(t trace.Tracer, r playerRepository) *service {
 		tracer: t,
 		repo:   r,
 	}
-}
-
-func (s *service) GetList(ctx context.Context, p listParams) (paging.List[domain.Player], error) {
-	return s.repo.GetAll(ctx, p)
-}
-
-func (s *service) GetBySteamID(ctx context.Context, steamID domain.SteamID) (domain.Player, error) {
-	return s.repo.FindBySteamID(ctx, steamID)
-}
-
-func (s *service) UpdateBySteamID(ctx context.Context, steamID domain.SteamID, p updateParams) (domain.Player, error) {
-	return s.repo.UpdateBySteamID(ctx, steamID, p)
 }
 
 func (s *service) GetStats(ctx context.Context, steamID domain.SteamID) (domain.PlayerStats, error) {
@@ -65,8 +56,4 @@ func (s *service) GetWeaponStats(ctx context.Context, steamID domain.SteamID, f 
 	}
 
 	return domain.NewWeaponStats(ts), nil
-}
-
-func (s *service) GetMatchList(ctx context.Context, p matchListParams) (paging.TokenList[*domain.PlayerMatch], error) {
-	return s.repo.GetMatchList(ctx, p)
 }

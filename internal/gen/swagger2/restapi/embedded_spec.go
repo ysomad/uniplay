@@ -635,6 +635,44 @@ func init() {
         }
       }
     },
+    "/players/{steam_id}/most-success-maps": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение списка карт с наибольшим винрейтом",
+        "operationId": "getMostSuccessMaps",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MostSuccessMaps"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -1295,6 +1333,37 @@ func init() {
         }
       },
       "x-go-name": "MostPlayedMap",
+      "x-nullable": false
+    },
+    "MostSuccessMaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/MostSuccessMaps_inner"
+      }
+    },
+    "MostSuccessMaps_inner": {
+      "type": "object",
+      "required": [
+        "map_icon_url",
+        "map_name",
+        "winrate"
+      ],
+      "properties": {
+        "map_icon_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "map_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "winrate": {
+          "type": "number",
+          "format": "double",
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "MostSuccessMap",
       "x-nullable": false
     },
     "Player": {
@@ -2684,6 +2753,44 @@ func init() {
         }
       }
     },
+    "/players/{steam_id}/most-success-maps": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение списка карт с наибольшим винрейтом",
+        "operationId": "getMostSuccessMaps",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MostSuccessMaps"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -3344,6 +3451,37 @@ func init() {
         }
       },
       "x-go-name": "MostPlayedMap",
+      "x-nullable": false
+    },
+    "MostSuccessMaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/MostSuccessMaps_inner"
+      }
+    },
+    "MostSuccessMaps_inner": {
+      "type": "object",
+      "required": [
+        "map_icon_url",
+        "map_name",
+        "winrate"
+      ],
+      "properties": {
+        "map_icon_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "map_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "winrate": {
+          "type": "number",
+          "format": "double",
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "MostSuccessMap",
       "x-nullable": false
     },
     "Player": {

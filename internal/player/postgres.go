@@ -450,6 +450,7 @@ func (p *postgres) GetMostPlayedMaps(ctx context.Context, steamID domain.SteamID
 		Where(sq.Eq{"pm.player_steam_id": steamID}).
 		GroupBy("mp.name").
 		OrderBy("played_times DESC").
+		Limit(domain.MostPlayedMapsLimit).
 		ToSql()
 	if err != nil {
 		return nil, err
@@ -461,4 +462,40 @@ func (p *postgres) GetMostPlayedMaps(ctx context.Context, steamID domain.SteamID
 	}
 
 	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.MostPlayedMap])
+}
+
+func (p *postgres) GetMostSuccessMaps(ctx context.Context, steamID domain.SteamID) ([]domain.MostSuccessMap, error) {
+	subq := p.client.Builder.
+		Select(
+			"mp.name map_name",
+			"mp.icon_url map_icon_url",
+			"count(mp.name) played_times",
+			"count(mp.name) filter (where pm.match_state = 1) won_times",
+		).
+		From("player_match pm").
+		InnerJoin("match m ON m.id = pm.match_id").
+		InnerJoin("map mp ON mp.name = m.map").
+		Where(sq.Eq{"player_steam_id": steamID}).
+		GroupBy("mp.name")
+
+	sql, args, err := p.client.Builder.
+		Select(
+			"map_name",
+			"map_icon_url",
+			"round(((won_times/played_times::float)*100)::numeric, 2) win_rate",
+		).
+		FromSelect(subq, "subq").
+		OrderBy("win_rate DESC").
+		Limit(domain.MostSuccessMapsLimit).
+		ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.MostSuccessMap])
 }

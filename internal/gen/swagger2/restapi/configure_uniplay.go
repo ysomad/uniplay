@@ -86,6 +86,11 @@ func configureAPI(api *operations.UniplayAPI) http.Handler {
 			return player.GetMostPlayedMapsNotImplemented()
 		})
 	}
+	if api.PlayerGetMostSuccessMapsHandler == nil {
+		api.PlayerGetMostSuccessMapsHandler = player.GetMostSuccessMapsHandlerFunc(func(params player.GetMostSuccessMapsParams) player.GetMostSuccessMapsResponder {
+			return player.GetMostSuccessMapsNotImplemented()
+		})
+	}
 	if api.PlayerGetPlayerHandler == nil {
 		api.PlayerGetPlayerHandler = player.GetPlayerHandlerFunc(func(params player.GetPlayerParams) player.GetPlayerResponder {
 			return player.GetPlayerNotImplemented()

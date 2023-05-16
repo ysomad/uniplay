@@ -74,6 +74,9 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		PlayerGetMostPlayedMapsHandler: player.GetMostPlayedMapsHandlerFunc(func(params player.GetMostPlayedMapsParams) player.GetMostPlayedMapsResponder {
 			return player.GetMostPlayedMapsNotImplemented()
 		}),
+		PlayerGetMostSuccessMapsHandler: player.GetMostSuccessMapsHandlerFunc(func(params player.GetMostSuccessMapsParams) player.GetMostSuccessMapsResponder {
+			return player.GetMostSuccessMapsNotImplemented()
+		}),
 		PlayerGetPlayerHandler: player.GetPlayerHandlerFunc(func(params player.GetPlayerParams) player.GetPlayerResponder {
 			return player.GetPlayerNotImplemented()
 		}),
@@ -165,6 +168,8 @@ type UniplayAPI struct {
 	MatchGetMatchHandler match.GetMatchHandler
 	// PlayerGetMostPlayedMapsHandler sets the operation handler for the get most played maps operation
 	PlayerGetMostPlayedMapsHandler player.GetMostPlayedMapsHandler
+	// PlayerGetMostSuccessMapsHandler sets the operation handler for the get most success maps operation
+	PlayerGetMostSuccessMapsHandler player.GetMostSuccessMapsHandler
 	// PlayerGetPlayerHandler sets the operation handler for the get player operation
 	PlayerGetPlayerHandler player.GetPlayerHandler
 	// PlayerGetPlayerListHandler sets the operation handler for the get player list operation
@@ -292,6 +297,9 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.PlayerGetMostPlayedMapsHandler == nil {
 		unregistered = append(unregistered, "player.GetMostPlayedMapsHandler")
+	}
+	if o.PlayerGetMostSuccessMapsHandler == nil {
+		unregistered = append(unregistered, "player.GetMostSuccessMapsHandler")
 	}
 	if o.PlayerGetPlayerHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerHandler")
@@ -451,6 +459,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/players/{steam_id}/most-played-maps"] = player.NewGetMostPlayedMaps(o.context, o.PlayerGetMostPlayedMapsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/players/{steam_id}/most-success-maps"] = player.NewGetMostSuccessMaps(o.context, o.PlayerGetMostSuccessMapsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
