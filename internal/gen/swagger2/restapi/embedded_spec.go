@@ -597,6 +597,82 @@ func init() {
         }
       }
     },
+    "/players/{steam_id}/most-played-maps": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение списка карт сыгранных наибольшее кол-во раз",
+        "operationId": "getMostPlayedMaps",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MostPlayedMaps"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/players/{steam_id}/most-success-maps": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение списка карт с наибольшим винрейтом",
+        "operationId": "getMostSuccessMaps",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MostSuccessMaps"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -873,7 +949,7 @@ func init() {
       }
     },
     "/teams/{team_id}/players/{steam_id}/captain": {
-      "put": {
+      "post": {
         "consumes": [
           "application/json"
         ],
@@ -1226,6 +1302,68 @@ func init() {
           "x-nullable": false
         }
       },
+      "x-nullable": false
+    },
+    "MostPlayedMaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/MostPlayedMaps_inner"
+      }
+    },
+    "MostPlayedMaps_inner": {
+      "type": "object",
+      "required": [
+        "map_icon_url",
+        "map_name",
+        "played_times"
+      ],
+      "properties": {
+        "map_icon_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "map_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "played_times": {
+          "type": "integer",
+          "format": "int8",
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "MostPlayedMap",
+      "x-nullable": false
+    },
+    "MostSuccessMaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/MostSuccessMaps_inner"
+      }
+    },
+    "MostSuccessMaps_inner": {
+      "type": "object",
+      "required": [
+        "map_icon_url",
+        "map_name",
+        "winrate"
+      ],
+      "properties": {
+        "map_icon_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "map_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "winrate": {
+          "type": "number",
+          "format": "double",
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "MostSuccessMap",
       "x-nullable": false
     },
     "Player": {
@@ -2577,6 +2715,82 @@ func init() {
         }
       }
     },
+    "/players/{steam_id}/most-played-maps": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение списка карт сыгранных наибольшее кол-во раз",
+        "operationId": "getMostPlayedMaps",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MostPlayedMaps"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/players/{steam_id}/most-success-maps": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "player"
+        ],
+        "summary": "Получение списка карт с наибольшим винрейтом",
+        "operationId": "getMostSuccessMaps",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Steam ID игрока",
+            "name": "steam_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/MostSuccessMaps"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/players/{steam_id}/stats": {
       "get": {
         "consumes": [
@@ -2853,7 +3067,7 @@ func init() {
       }
     },
     "/teams/{team_id}/players/{steam_id}/captain": {
-      "put": {
+      "post": {
         "consumes": [
           "application/json"
         ],
@@ -3206,6 +3420,68 @@ func init() {
           "x-nullable": false
         }
       },
+      "x-nullable": false
+    },
+    "MostPlayedMaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/MostPlayedMaps_inner"
+      }
+    },
+    "MostPlayedMaps_inner": {
+      "type": "object",
+      "required": [
+        "map_icon_url",
+        "map_name",
+        "played_times"
+      ],
+      "properties": {
+        "map_icon_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "map_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "played_times": {
+          "type": "integer",
+          "format": "int8",
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "MostPlayedMap",
+      "x-nullable": false
+    },
+    "MostSuccessMaps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/MostSuccessMaps_inner"
+      }
+    },
+    "MostSuccessMaps_inner": {
+      "type": "object",
+      "required": [
+        "map_icon_url",
+        "map_name",
+        "winrate"
+      ],
+      "properties": {
+        "map_icon_url": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "map_name": {
+          "type": "string",
+          "x-nullable": false
+        },
+        "winrate": {
+          "type": "number",
+          "format": "double",
+          "x-nullable": false
+        }
+      },
+      "x-go-name": "MostSuccessMap",
       "x-nullable": false
     },
     "Player": {

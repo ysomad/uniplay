@@ -71,6 +71,12 @@ func NewUniplayAPI(spec *loads.Document) *UniplayAPI {
 		MatchGetMatchHandler: match.GetMatchHandlerFunc(func(params match.GetMatchParams) match.GetMatchResponder {
 			return match.GetMatchNotImplemented()
 		}),
+		PlayerGetMostPlayedMapsHandler: player.GetMostPlayedMapsHandlerFunc(func(params player.GetMostPlayedMapsParams) player.GetMostPlayedMapsResponder {
+			return player.GetMostPlayedMapsNotImplemented()
+		}),
+		PlayerGetMostSuccessMapsHandler: player.GetMostSuccessMapsHandlerFunc(func(params player.GetMostSuccessMapsParams) player.GetMostSuccessMapsResponder {
+			return player.GetMostSuccessMapsNotImplemented()
+		}),
 		PlayerGetPlayerHandler: player.GetPlayerHandlerFunc(func(params player.GetPlayerParams) player.GetPlayerResponder {
 			return player.GetPlayerNotImplemented()
 		}),
@@ -160,6 +166,10 @@ type UniplayAPI struct {
 	CompendiumGetMapsHandler compendium.GetMapsHandler
 	// MatchGetMatchHandler sets the operation handler for the get match operation
 	MatchGetMatchHandler match.GetMatchHandler
+	// PlayerGetMostPlayedMapsHandler sets the operation handler for the get most played maps operation
+	PlayerGetMostPlayedMapsHandler player.GetMostPlayedMapsHandler
+	// PlayerGetMostSuccessMapsHandler sets the operation handler for the get most success maps operation
+	PlayerGetMostSuccessMapsHandler player.GetMostSuccessMapsHandler
 	// PlayerGetPlayerHandler sets the operation handler for the get player operation
 	PlayerGetPlayerHandler player.GetPlayerHandler
 	// PlayerGetPlayerListHandler sets the operation handler for the get player list operation
@@ -284,6 +294,12 @@ func (o *UniplayAPI) Validate() error {
 	}
 	if o.MatchGetMatchHandler == nil {
 		unregistered = append(unregistered, "match.GetMatchHandler")
+	}
+	if o.PlayerGetMostPlayedMapsHandler == nil {
+		unregistered = append(unregistered, "player.GetMostPlayedMapsHandler")
+	}
+	if o.PlayerGetMostSuccessMapsHandler == nil {
+		unregistered = append(unregistered, "player.GetMostSuccessMapsHandler")
 	}
 	if o.PlayerGetPlayerHandler == nil {
 		unregistered = append(unregistered, "player.GetPlayerHandler")
@@ -442,6 +458,14 @@ func (o *UniplayAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/players/{steam_id}/most-played-maps"] = player.NewGetMostPlayedMaps(o.context, o.PlayerGetMostPlayedMapsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/players/{steam_id}/most-success-maps"] = player.NewGetMostSuccessMaps(o.context, o.PlayerGetMostSuccessMapsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/players/{steam_id}"] = player.NewGetPlayer(o.context, o.PlayerGetPlayerHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -475,10 +499,10 @@ func (o *UniplayAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/compendiums/weapons"] = compendium.NewGetWeapons(o.context, o.CompendiumGetWeaponsHandler)
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/teams/{team_id}/players/{steam_id}/captain"] = team.NewSetTeamCaptain(o.context, o.TeamSetTeamCaptainHandler)
+	o.handlers["POST"]["/teams/{team_id}/players/{steam_id}/captain"] = team.NewSetTeamCaptain(o.context, o.TeamSetTeamCaptainHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

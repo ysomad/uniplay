@@ -30,7 +30,7 @@ func (c *Controller) GetPlayerList(p gen.GetPlayerListParams) gen.GetPlayerListR
 		})
 	}
 
-	playerList, err := c.player.GetList(p.HTTPRequest.Context(), lp)
+	playerList, err := c.player.repo.GetAll(p.HTTPRequest.Context(), lp)
 	if err != nil {
 		return gen.NewGetPlayerListInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
@@ -66,7 +66,7 @@ func (c *Controller) GetPlayer(p gen.GetPlayerParams) gen.GetPlayerResponder {
 		})
 	}
 
-	pl, err := c.player.GetBySteamID(p.HTTPRequest.Context(), steamID)
+	pl, err := c.player.repo.FindBySteamID(p.HTTPRequest.Context(), steamID)
 	if err != nil {
 		if errors.Is(err, domain.ErrPlayerNotFound) {
 			return gen.NewGetPlayerNotFound().WithPayload(&models.Error{
@@ -100,7 +100,7 @@ func (c *Controller) UpdatePlayer(p gen.UpdatePlayerParams) gen.UpdatePlayerResp
 		})
 	}
 
-	pl, err := c.player.UpdateBySteamID(p.HTTPRequest.Context(), steamID, updateParams{
+	pl, err := c.player.repo.UpdateBySteamID(p.HTTPRequest.Context(), steamID, updateParams{
 		firstName: p.Payload.FirstName,
 		lastName:  p.Payload.LastName,
 		avatarURL: p.Payload.AvatarURL.String(),
@@ -270,7 +270,7 @@ func (c *Controller) GetPlayerMatches(p gen.GetPlayerMatchesParams) gen.GetPlaye
 		})
 	}
 
-	list, err := c.player.GetMatchList(p.HTTPRequest.Context(), lp)
+	list, err := c.player.repo.GetMatchList(p.HTTPRequest.Context(), lp)
 	if err != nil {
 		return gen.NewGetPlayerMatchesInternalServerError().WithPayload(&models.Error{
 			Code:    http.StatusInternalServerError,
@@ -304,4 +304,64 @@ func (c *Controller) GetPlayerMatches(p gen.GetPlayerMatchesParams) gen.GetPlaye
 	}
 
 	return gen.NewGetPlayerMatchesOK().WithPayload(&payload)
+}
+
+func (c *Controller) GetMostPlayedMaps(p gen.GetMostPlayedMapsParams) gen.GetMostPlayedMapsResponder {
+	steamID, err := domain.NewSteamID(p.SteamID)
+	if err != nil {
+		return gen.NewGetMostPlayedMapsInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	maps, err := c.player.repo.GetMostPlayedMaps(p.HTTPRequest.Context(), steamID)
+	if err != nil {
+		return gen.NewGetMostPlayedMapsInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	payload := make(models.MostPlayedMaps, len(maps))
+
+	for i, m := range maps {
+		payload[i] = models.MostPlayedMap{
+			MapIconURL:  m.Map.IconURL,
+			MapName:     m.Map.Name,
+			PlayedTimes: m.PlayedTimes,
+		}
+	}
+
+	return gen.NewGetMostPlayedMapsOK().WithPayload(payload)
+}
+
+func (c *Controller) GetMostSuccessMaps(p gen.GetMostSuccessMapsParams) gen.GetMostSuccessMapsResponder {
+	steamID, err := domain.NewSteamID(p.SteamID)
+	if err != nil {
+		return gen.NewGetMostSuccessMapsInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	maps, err := c.player.repo.GetMostSuccessMaps(p.HTTPRequest.Context(), steamID)
+	if err != nil {
+		return gen.NewGetMostSuccessMapsInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	payload := make(models.MostSuccessMaps, len(maps))
+
+	for i, m := range maps {
+		payload[i] = models.MostSuccessMap{
+			MapIconURL: m.Map.IconURL,
+			MapName:    m.Map.Name,
+			Winrate:    m.WinRate,
+		}
+	}
+
+	return gen.NewGetMostSuccessMapsOK().WithPayload(payload)
 }

@@ -30,7 +30,7 @@ func NewSetTeamCaptain(ctx *middleware.Context, handler SetTeamCaptainHandler) *
 }
 
 /*
-	SetTeamCaptain swagger:route PUT /teams/{team_id}/players/{steam_id}/captain team setTeamCaptain
+	SetTeamCaptain swagger:route POST /teams/{team_id}/players/{steam_id}/captain team setTeamCaptain
 
 Назначить игрока капитаном команды
 */
