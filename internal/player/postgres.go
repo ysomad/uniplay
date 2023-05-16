@@ -440,3 +440,25 @@ func (p *postgres) GetMatchList(ctx context.Context, lp matchListParams) (paging
 
 	return paging.NewTokenList(matches, lp.PageSize)
 }
+
+func (p *postgres) GetMostPlayedMaps(ctx context.Context, steamID domain.SteamID) ([]domain.MostPlayedMap, error) {
+	sql, args, err := p.client.Builder.
+		Select("mp.name, mp.icon_url, count(mp.name) as played_times").
+		From("player_match pm").
+		InnerJoin("match m ON pm.match_id = m.id").
+		InnerJoin("map mp on mp.name = m.map").
+		Where(sq.Eq{"pm.player_steam_id": steamID}).
+		GroupBy("mp.name").
+		OrderBy("played_times DESC").
+		ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := p.client.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return pgx.CollectRows(rows, pgx.RowToStructByPos[domain.MostPlayedMap])
+}

@@ -305,3 +305,33 @@ func (c *Controller) GetPlayerMatches(p gen.GetPlayerMatchesParams) gen.GetPlaye
 
 	return gen.NewGetPlayerMatchesOK().WithPayload(&payload)
 }
+
+func (c *Controller) GetMostPlayedMaps(p gen.GetMostPlayedMapsParams) gen.GetMostPlayedMapsResponder {
+	steamID, err := domain.NewSteamID(p.SteamID)
+	if err != nil {
+		return gen.NewGetMostPlayedMapsInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	maps, err := c.player.repo.GetMostPlayedMaps(p.HTTPRequest.Context(), steamID)
+	if err != nil {
+		return gen.NewGetMostPlayedMapsInternalServerError().WithPayload(&models.Error{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	payload := make(models.MostPlayedMaps, len(maps))
+
+	for i, m := range maps {
+		payload[i] = models.MostPlayedMap{
+			MapIconURL:  m.Map.IconURL,
+			MapName:     m.Map.Name,
+			PlayedTimes: m.PlayedTimes,
+		}
+	}
+
+	return gen.NewGetMostPlayedMapsOK().WithPayload(payload)
+}

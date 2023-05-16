@@ -91,6 +91,7 @@ func attachHandlers(api *operations.UniplayAPI, d apiDeps) {
 	api.PlayerGetPlayerStatsHandler = playerGen.GetPlayerStatsHandlerFunc(d.player.GetPlayerStats)
 	api.PlayerGetWeaponStatsHandler = playerGen.GetWeaponStatsHandlerFunc(d.player.GetWeaponStats)
 	api.PlayerGetPlayerMatchesHandler = playerGen.GetPlayerMatchesHandlerFunc(d.player.GetPlayerMatches)
+	api.PlayerGetMostPlayedMapsHandler = playerGen.GetMostPlayedMapsHandlerFunc(d.player.GetMostPlayedMaps)
 
 	api.InstitutionGetInstitutionsHandler = institutionGen.GetInstitutionsHandlerFunc(d.institution.GetInstitutions)
 
