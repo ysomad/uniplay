@@ -296,10 +296,11 @@ func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID domain.SteamI
 		InnerJoin("weapon w ON ws.weapon_id = w.id").
 		Where(sq.Eq{"ws.player_steam_id": steamID})
 
-	switch {
-	case f.WeaponID != 0:
+	if f.WeaponID != 0 {
 		b = b.Where(sq.Eq{"ws.weapon_id": f.WeaponID})
-	case f.ClassID != 0:
+	}
+
+	if f.ClassID != 0 {
 		b = b.Where(sq.Eq{"w.class_id": f.ClassID})
 	}
 
