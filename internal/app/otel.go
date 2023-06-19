@@ -49,7 +49,7 @@ func newOpenTelemetry(conf *config.Config) (openTelemetry, error) {
 		return openTelemetry{}, err
 	}
 
-	ol.AppTracer = otel.GetTracerProvider().Tracer("uniplay")
+	ol.AppTracer = otel.GetTracerProvider().Tracer(conf.App.Name)
 	ol.PgxTracer = otelpgx.NewTracer(otelpgx.WithTrimSQLInSpanName())
 	ol.CleanupFuncs = [2]func(context.Context) error{
 		tracerProvider.Shutdown,
