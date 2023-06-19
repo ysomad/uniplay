@@ -1,7 +1,6 @@
 package app
 
 import (
-	"context"
 	"time"
 
 	"github.com/exaring/otelpgx"
@@ -21,15 +20,13 @@ import (
 )
 
 type openTelemetry struct {
-	AppTracer trace.Tracer
-	PgxTracer *otelpgx.Tracer
-
-	// functions which have to called before or after app is down
-	CleanupFuncs [2]func(context.Context) error
+	appTracer      trace.Tracer
+	pgxTracer      *otelpgx.Tracer
+	tracerProvider *sdktrace.TracerProvider
+	meterProvider  *metric.MeterProvider
 }
 
-func newOpenTelemetry(conf *config.Config) (openTelemetry, error) {
-	ol := openTelemetry{}
+func newOpenTelemetry(conf *config.Config) (ot openTelemetry, err error) {
 	res := newResource(conf.App)
 
 	jaegerExp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(conf.Jaeger.Endpoint)))
@@ -37,26 +34,22 @@ func newOpenTelemetry(conf *config.Config) (openTelemetry, error) {
 		return openTelemetry{}, err
 	}
 
-	tracerProvider := newTracerProvider(res, jaegerExp)
+	ot.tracerProvider = newTracerProvider(res, jaegerExp)
 
 	prometheusExp, err := prometheus.New()
 	if err != nil {
 		return openTelemetry{}, err
 	}
 
-	meterProvider, err := newMeterProvider(res, prometheusExp)
+	ot.meterProvider, err = newMeterProvider(res, prometheusExp)
 	if err != nil {
 		return openTelemetry{}, err
 	}
 
-	ol.AppTracer = otel.GetTracerProvider().Tracer(conf.App.Name)
-	ol.PgxTracer = otelpgx.NewTracer(otelpgx.WithTrimSQLInSpanName())
-	ol.CleanupFuncs = [2]func(context.Context) error{
-		tracerProvider.Shutdown,
-		meterProvider.Shutdown,
-	}
+	ot.appTracer = otel.GetTracerProvider().Tracer(conf.App.Name)
+	ot.pgxTracer = otelpgx.NewTracer(otelpgx.WithTrimSQLInSpanName())
 
-	return ol, nil
+	return ot, nil
 }
 
 func newResource(conf config.App) *resource.Resource {

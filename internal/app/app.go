@@ -38,10 +38,13 @@ func Run(conf *config.Config, flags Flags) { //nolint:funlen // main func
 		l.Fatal("otel.New", zap.Error(err))
 	}
 
+	defer otel.meterProvider.Shutdown(context.Background())
+	defer otel.tracerProvider.Shutdown(context.Background())
+
 	pgClient, err := pgclient.New(
 		conf.PG.URL,
 		pgclient.WithMaxConns(conf.PG.MaxConns),
-		pgclient.WithQueryTracer(otel.PgxTracer),
+		pgclient.WithQueryTracer(otel.pgxTracer),
 	)
 	if err != nil {
 		l.Fatal("pgclient.New", zap.Error(err))
@@ -55,8 +58,8 @@ func Run(conf *config.Config, flags Flags) { //nolint:funlen // main func
 	}
 
 	// match
-	matchPostgres := match.NewPostgres(otel.AppTracer, pgClient)
-	matchService := match.NewService(otel.AppTracer, matchPostgres)
+	matchPostgres := match.NewPostgres(otel.appTracer, pgClient)
+	matchService := match.NewService(otel.appTracer, matchPostgres)
 	matchController := match.NewController(matchService)
 
 	// compendium
@@ -65,22 +68,22 @@ func Run(conf *config.Config, flags Flags) { //nolint:funlen // main func
 	compendiumController := compendium.NewController(compendiumService)
 
 	// account
-	accountPostgres := account.NewPostgres(otel.AppTracer, pgClient)
+	accountPostgres := account.NewPostgres(otel.appTracer, pgClient)
 	accountService := account.NewService(accountPostgres)
 	accountController := account.NewController(accountService)
 
 	// player
-	playerPostgres := player.NewPostgres(otel.AppTracer, pgClient)
-	playerService := player.NewService(otel.AppTracer, playerPostgres)
+	playerPostgres := player.NewPostgres(otel.appTracer, pgClient)
+	playerService := player.NewService(otel.appTracer, playerPostgres)
 	playerController := player.NewController(playerService)
 
 	// institution
-	institutionPostgres := institution.NewPostgres(otel.AppTracer, pgClient)
+	institutionPostgres := institution.NewPostgres(otel.appTracer, pgClient)
 	institutionService := institution.NewService(institutionPostgres)
 	institutionController := institution.NewController(institutionService)
 
 	// team
-	teamPostgres := team.NewPostgres(otel.AppTracer, pgClient)
+	teamPostgres := team.NewPostgres(otel.appTracer, pgClient)
 	teamService := team.NewService(teamPostgres)
 	teamController := team.NewController(teamService)
 
@@ -111,11 +114,5 @@ func Run(conf *config.Config, flags Flags) { //nolint:funlen // main func
 
 	if err = srv.Serve(); err != nil {
 		l.Fatal("srv.Serve", zap.Error(err))
-	}
-
-	for _, f := range otel.CleanupFuncs {
-		if err = f(context.Background()); err != nil {
-			l.Fatal("cleanupFuncs", zap.Error(err))
-		}
 	}
 }
