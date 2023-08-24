@@ -1,24 +1,19 @@
 package app
 
 import (
-	"context"
 	"log"
 
-	"github.com/IBM/pgxpoolprometheus"
-	"github.com/prometheus/client_golang/prometheus"
 	"github.com/rs/cors"
-	"go.uber.org/zap"
-
 	"github.com/ysomad/uniplay/internal/account"
 	"github.com/ysomad/uniplay/internal/compendium"
 	"github.com/ysomad/uniplay/internal/config"
 	"github.com/ysomad/uniplay/internal/institution"
 	"github.com/ysomad/uniplay/internal/match"
-	"github.com/ysomad/uniplay/internal/player"
-	"github.com/ysomad/uniplay/internal/team"
-
 	"github.com/ysomad/uniplay/internal/pkg/logger"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
+	"github.com/ysomad/uniplay/internal/player"
+	"github.com/ysomad/uniplay/internal/team"
+	"go.uber.org/zap"
 )
 
 func Run(conf *config.Config, flags Flags) { //nolint:funlen // main func
@@ -33,33 +28,17 @@ func Run(conf *config.Config, flags Flags) { //nolint:funlen // main func
 
 	l.Info("starting app", zap.Any("flags", flags))
 
-	otel, err := newOpenTelemetry(conf)
-	if err != nil {
-		l.Fatal("otel.New", zap.Error(err))
-	}
-
-	defer otel.meterProvider.Shutdown(context.Background())
-	defer otel.tracerProvider.Shutdown(context.Background())
-
 	pgClient, err := pgclient.New(
 		conf.PG.URL,
 		pgclient.WithMaxConns(conf.PG.MaxConns),
-		pgclient.WithQueryTracer(otel.pgxTracer),
 	)
 	if err != nil {
 		l.Fatal("pgclient.New", zap.Error(err))
 	}
 
-	// pgx metrics
-	pgxCollector := pgxpoolprometheus.NewCollector(pgClient.Pool, map[string]string{"db_name": conf.PG.DBName})
-
-	if err = prometheus.Register(pgxCollector); err != nil {
-		l.Fatal("prometheus.Register", zap.Error(err))
-	}
-
 	// match
-	matchPostgres := match.NewPostgres(otel.appTracer, pgClient)
-	matchService := match.NewService(otel.appTracer, matchPostgres)
+	matchPostgres := match.NewPostgres(pgClient)
+	matchService := match.NewService(matchPostgres)
 	matchController := match.NewController(matchService)
 
 	// compendium
@@ -68,22 +47,22 @@ func Run(conf *config.Config, flags Flags) { //nolint:funlen // main func
 	compendiumController := compendium.NewController(compendiumService)
 
 	// account
-	accountPostgres := account.NewPostgres(otel.appTracer, pgClient)
+	accountPostgres := account.NewPostgres(pgClient)
 	accountService := account.NewService(accountPostgres)
 	accountController := account.NewController(accountService)
 
 	// player
-	playerPostgres := player.NewPostgres(otel.appTracer, pgClient)
-	playerService := player.NewService(otel.appTracer, playerPostgres)
+	playerPostgres := player.NewPostgres(pgClient)
+	playerService := player.NewService(playerPostgres)
 	playerController := player.NewController(playerService)
 
 	// institution
-	institutionPostgres := institution.NewPostgres(otel.appTracer, pgClient)
+	institutionPostgres := institution.NewPostgres(pgClient)
 	institutionService := institution.NewService(institutionPostgres)
 	institutionController := institution.NewController(institutionService)
 
 	// team
-	teamPostgres := team.NewPostgres(otel.appTracer, pgClient)
+	teamPostgres := team.NewPostgres(pgClient)
 	teamService := team.NewService(teamPostgres)
 	teamController := team.NewController(teamService)
 

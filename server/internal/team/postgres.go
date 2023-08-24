@@ -10,7 +10,6 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgtype/zeronull"
-	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/pkg/filter"
@@ -19,13 +18,11 @@ import (
 )
 
 type postgres struct {
-	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
+func NewPostgres(c *pgclient.Client) *postgres {
 	return &postgres{
-		tracer: t,
 		client: c,
 	}
 }

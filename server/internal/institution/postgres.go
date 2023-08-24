@@ -6,7 +6,6 @@ import (
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5"
-	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/pkg/filter"
@@ -15,21 +14,16 @@ import (
 )
 
 type postgres struct {
-	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
+func NewPostgres(c *pgclient.Client) *postgres {
 	return &postgres{
-		tracer: t,
 		client: c,
 	}
 }
 
 func (pg *postgres) GetList(ctx context.Context, p listParams) (paging.List[domain.Institution], error) {
-	ctx, span := pg.tracer.Start(ctx, "institution.Postgres.GetList")
-	defer span.End()
-
 	b := pg.client.Builder.
 		Select("id, type, name, short_name, city, logo_url").
 		From("institution")

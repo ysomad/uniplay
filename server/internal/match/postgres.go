@@ -9,28 +9,22 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype/zeronull"
-	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
 type postgres struct {
-	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
+func NewPostgres(c *pgclient.Client) *postgres {
 	return &postgres{
-		tracer: t,
 		client: c,
 	}
 }
 
 func (p *postgres) Exists(ctx context.Context, matchID uuid.UUID) (bool, error) {
-	ctx, span := p.tracer.Start(ctx, "match.Postgres.Exists")
-	defer span.End()
-
 	sbRow := p.client.Pool.QueryRow(ctx, "select exists(select 1 from match where id = $1)", matchID)
 
 	var matchFound bool
@@ -126,9 +120,6 @@ func (p *postgres) scoreboardRowsToMatch(sbRows []*matchScoreBoardRow) domain.Ma
 }
 
 func (p *postgres) FindByID(ctx context.Context, matchID uuid.UUID) (domain.Match, error) {
-	ctx, span := p.tracer.Start(ctx, "match.Postgres.FindByID")
-	defer span.End()
-
 	sql, args, err := p.client.Builder.
 		Select(
 			"m.id as match_id",
@@ -188,9 +179,6 @@ func (p *postgres) FindByID(ctx context.Context, matchID uuid.UUID) (domain.Matc
 }
 
 func (p *postgres) CreateWithStats(ctx context.Context, match *replayMatch, ps []*playerStat, ws []*weaponStat) error { //nolint:gocognit // yes its T H I C C
-	ctx, span := p.tracer.Start(ctx, "match.Postgres.CreateWithStats")
-	defer span.End()
-
 	txFunc := func(tx pgx.Tx) error {
 		players := append(match.team1.players, match.team2.players...) //nolint:gocritic // why not ?
 
@@ -545,9 +533,6 @@ func (p *postgres) saveWeaponsStat(ctx context.Context, tx pgx.Tx, matchID uuid.
 }
 
 func (p *postgres) DeleteByID(ctx context.Context, matchID uuid.UUID) error {
-	ctx, span := p.tracer.Start(ctx, "match.Postgres.DeleteByID")
-	defer span.End()
-
 	txFunc := func(tx pgx.Tx) error {
 		if err := p.deletePlayerStats(ctx, tx, matchID); err != nil {
 			return err

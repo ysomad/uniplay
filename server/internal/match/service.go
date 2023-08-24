@@ -3,8 +3,6 @@ package match
 import (
 	"context"
 
-	"go.opentelemetry.io/otel/trace"
-
 	"github.com/google/uuid"
 	"github.com/ysomad/uniplay/internal/domain"
 )
@@ -17,21 +15,16 @@ type repository interface {
 }
 
 type service struct {
-	tracer trace.Tracer
-	match  repository
+	match repository
 }
 
-func NewService(t trace.Tracer, m repository) *service {
+func NewService(m repository) *service {
 	return &service{
-		tracer: t,
-		match:  m,
+		match: m,
 	}
 }
 
 func (s *service) CreateFromReplay(ctx context.Context, r replay) (uuid.UUID, error) {
-	ctx, span := s.tracer.Start(ctx, "match.Service.CreateFromReplay")
-	defer span.End()
-
 	p := newParser(r)
 	defer p.close()
 
@@ -69,9 +62,6 @@ func (s *service) DeleteByID(ctx context.Context, matchID uuid.UUID) error {
 }
 
 func (s *service) GetByID(ctx context.Context, matchID uuid.UUID) (domain.Match, error) {
-	ctx, span := s.tracer.Start(ctx, "match.Service.GetByID")
-	defer span.End()
-
 	m, err := s.match.FindByID(ctx, matchID)
 	if err != nil {
 		return domain.Match{}, err

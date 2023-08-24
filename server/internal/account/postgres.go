@@ -6,20 +6,17 @@ import (
 
 	"github.com/jackc/pgerrcode"
 	"github.com/jackc/pgx/v5/pgconn"
-	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/pkg/pgclient"
 )
 
 type postgres struct {
-	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
+func NewPostgres(c *pgclient.Client) *postgres {
 	return &postgres{
-		tracer: t,
 		client: c,
 	}
 }

@@ -18,21 +18,10 @@ CREATE TABLE IF NOT EXISTS accounts (
     created_at timestamptz NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS countries (
-    id smallserial PRIMARY KEY NOT NULL,
-    name varchar(32) UNIQUE NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS cities (
-    id smallserial PRIMARY KEY NOT NULL,
-    name varchar(32) UNIQUE NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS teams (
     id serial PRIMARY KEY NOT NULL,
     name varchar(16) UNIQUE NOT NULL,
     short_name varchar(8) UNIQUE NOT NULL,
-    country_id smallint REFERENCES countries (id) NOT NULL,
     institution_id smallint REFERENCES institution (id)
 );
 
@@ -43,8 +32,7 @@ CREATE TABLE IF NOT EXISTS players (
     nickname varchar(64) UNIQUE,
     avatar_url varchar(2048),
     first_name varchar(32),
-    last_name varchar(32),
-    country_id smallint REFERENCES countries (id) NOT NULL,
+    last_name varchar(32)
 );
 
 CREATE TABLE IF NOT EXISTS media (

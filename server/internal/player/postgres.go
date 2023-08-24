@@ -10,7 +10,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype/zeronull"
-	"go.opentelemetry.io/otel/trace"
 
 	"github.com/ysomad/uniplay/internal/domain"
 
@@ -20,13 +19,11 @@ import (
 )
 
 type postgres struct {
-	tracer trace.Tracer
 	client *pgclient.Client
 }
 
-func NewPostgres(t trace.Tracer, c *pgclient.Client) *postgres {
+func NewPostgres(c *pgclient.Client) *postgres {
 	return &postgres{
-		tracer: t,
 		client: c,
 	}
 }
@@ -186,9 +183,6 @@ type playerBaseStats struct {
 }
 
 func (p *postgres) GetBaseStats(ctx context.Context, steamID domain.SteamID) (*domain.PlayerBaseStats, error) {
-	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetBaseStats")
-	defer span.End()
-
 	b := p.client.Builder.
 		Select(
 			"sum(ps.kills) as total_kills",
@@ -267,9 +261,6 @@ type weaponBaseStats struct {
 }
 
 func (p *postgres) GetWeaponBaseStats(ctx context.Context, steamID domain.SteamID, f domain.WeaponStatsFilter) ([]*domain.WeaponBaseStats, error) {
-	ctx, span := p.tracer.Start(ctx, "player.Postgres.GetWeaponBaseStats")
-	defer span.End()
-
 	b := p.client.Builder.
 		Select(
 			"ws.weapon_id",

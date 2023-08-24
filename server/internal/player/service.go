@@ -3,8 +3,6 @@ package player
 import (
 	"context"
 
-	"go.opentelemetry.io/otel/trace"
-
 	"github.com/ysomad/uniplay/internal/domain"
 	"github.com/ysomad/uniplay/internal/pkg/paging"
 )
@@ -23,21 +21,16 @@ type playerRepository interface {
 }
 
 type service struct {
-	tracer trace.Tracer
-	repo   playerRepository
+	repo playerRepository
 }
 
-func NewService(t trace.Tracer, r playerRepository) *service {
+func NewService(r playerRepository) *service {
 	return &service{
-		tracer: t,
-		repo:   r,
+		repo: r,
 	}
 }
 
 func (s *service) GetStats(ctx context.Context, steamID domain.SteamID) (domain.PlayerStats, error) {
-	ctx, span := s.tracer.Start(ctx, "player.Service.GetStats")
-	defer span.End()
-
 	ts, err := s.repo.GetBaseStats(ctx, steamID)
 	if err != nil {
 		return domain.PlayerStats{}, err
@@ -47,9 +40,6 @@ func (s *service) GetStats(ctx context.Context, steamID domain.SteamID) (domain.
 }
 
 func (s *service) GetWeaponStats(ctx context.Context, steamID domain.SteamID, f domain.WeaponStatsFilter) ([]domain.WeaponStats, error) {
-	ctx, span := s.tracer.Start(ctx, "player.Service.GetWeaponStats")
-	defer span.End()
-
 	ts, err := s.repo.GetWeaponBaseStats(ctx, steamID, f)
 	if err != nil {
 		return nil, err
