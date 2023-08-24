@@ -1,15 +1,13 @@
 name: CI
 
 on:
-  push:
-    branches: [ "master", "dev" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "dev", "master" ]
 
 jobs:
 
-  build:
-    name: runner / build
+  build-server:
+    name: server / build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -17,28 +15,32 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: '^1.20.3'
+        go-version: '^1.21.0'
 
     - name: Build
-      run: go build -v ./cmd/app
-    
-  unit-tests:
-    name: runner / unit tests
+      run: |
+        cd server
+        go build -v ./cmd/app
+
+  server-unit-tests:
+    name: server / unit tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
 
     - uses: actions/setup-go@v4
       with:
-        go-version: '^1.20.3'
+        go-version: '^1.21.0'
 
     - name: Unit tests
-      run: "go test \
-        -v \
-        -race \
-        -covermode=atomic \
-        -coverprofile=coverage.out \
-        ./internal/..."
+      run: |
+        cd server
+        go test \
+          -v \
+          -race \
+          -covermode=atomic \
+          -coverprofile=coverage.out \
+          ./internal/...
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
@@ -46,7 +48,7 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
 
   golangci-lint:
-    name: runner / golangci-lint
+    name: server / lint
     runs-on: ubuntu-latest
     steps:
       - name: Check out code into the Go module directory

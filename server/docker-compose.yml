@@ -1,0 +1,32 @@
+version: "3.9"
+
+volumes:
+  pg-data:
+  grafana-data:
+
+services:
+
+  postgres:
+    image: "postgres:15.3-alpine"
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "pass"
+      POSTGRES_DB: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+  
+  app:
+    image: app
+    container_name: app
+    restart: unless-stopped
+    build: .
+    env_file:
+      - .env.docker
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
