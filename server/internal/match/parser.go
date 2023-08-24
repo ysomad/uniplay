@@ -7,8 +7,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/ysomad/uniplay/internal/domain"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/trace"
 
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v3/pkg/demoinfocs/common"
@@ -70,11 +68,6 @@ func (p *parser) parseReplayHeader() error {
 
 // collectStats collects player stats from the replay.
 func (p *parser) collectStats(ctx context.Context) (*replayMatch, []*playerStat, []*weaponStat, error) {
-	span := trace.SpanFromContext(ctx)
-
-	span.AddEvent("starting replay parse", trace.WithAttributes(attribute.String("match_id", p.match.id.String())))
-	defer span.AddEvent("finished replay parse")
-
 	if p.match.id == uuid.Nil {
 		return nil, nil, nil, errEmptyMatchID
 	}
