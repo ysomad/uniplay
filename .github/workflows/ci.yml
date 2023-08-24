@@ -40,7 +40,7 @@ jobs:
           -race \
           -covermode=atomic \
           -coverprofile=coverage.out \
-          ./server/internal/...
+          ./internal/...
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
