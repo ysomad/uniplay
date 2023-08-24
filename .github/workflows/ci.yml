@@ -35,12 +35,12 @@ jobs:
     - name: Unit tests
       run: |
         cd server
-        "go test \
+        go test \
           -v \
           -race \
           -covermode=atomic \
           -coverprofile=coverage.out \
-          ./server/internal/..."
+          ./server/internal/...
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
