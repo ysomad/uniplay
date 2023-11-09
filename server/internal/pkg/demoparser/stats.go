@@ -6,39 +6,6 @@ import (
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
 )
 
-type event uint8
-
-const (
-	eventKill event = iota + 1
-	eventHSKill
-	eventBlindKill
-	eventWBKill
-	eventSmokeKill
-
-	eventDeath
-	eventAssist
-	eventFBAssist
-	eventRoundMVP
-
-	eventBecameBlind
-	eventBlindedPlayer
-
-	eventBombPlanted
-	eventBombDefused
-
-	eventDmgDealt
-	eventDmgTaken
-	eventDmgGrenadeDealt
-
-	eventShot
-	eventHitHead
-	eventHitNeck
-	eventHitChest
-	eventHitStomach
-	eventHitArm
-	eventHitLeg
-)
-
 type dmgStats struct {
 	Dealt int
 	Taken int

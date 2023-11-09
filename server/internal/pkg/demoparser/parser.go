@@ -11,13 +11,17 @@ import (
 
 type parser struct {
 	demoinfocs.Parser
-	demosize int64
+	playerStats playerStatsMap
+	weaponStats weaponStatsMap
+	demosize    int64
 }
 
 func New(d Demo) *parser {
 	return &parser{
-		Parser:   demoinfocs.NewParser(d),
-		demosize: d.size,
+		Parser:      demoinfocs.NewParser(d),
+		demosize:    d.size,
+		playerStats: make(playerStatsMap, 20),
+		weaponStats: make(weaponStatsMap, 20),
 	}
 }
 
@@ -62,5 +66,17 @@ func (p *parser) playerConnected(pl *common.Player) bool {
 
 func (p *parser) hurtHandler(e events.PlayerHurt) {
 	if p.playerConnected(e.Player) {
+		p.playerStats.add(e.Player.SteamID64, eventDmgTaken, e.HealthDamage)
+		p.weaponStats.add(e.Player.SteamID64, eventDmgTaken, e.Weapon.Type, e.HealthDamage)
+	}
+
+	if p.playerConnected(e.Attacker) {
+		p.playerStats.add(e.Attacker.SteamID64, eventDmgDealt, e.HealthDamage)
+		p.weaponStats.add(e.Attacker.SteamID64, eventDmgDealt, e.Weapon.Type, e.HealthDamage)
+		p.weaponStats.incr(e.Attacker.SteamID64, p.hitgroupToEvent(e.HitGroup), e.Weapon.Type)
+
+		if e.Weapon.Class() == common.EqClassGrenade {
+			p.playerStats.add(e.Attacker.SteamID64, eventDmgGrenadeDealt, e.HealthDamage)
+		}
 	}
 }
