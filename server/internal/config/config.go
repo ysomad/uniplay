@@ -1,11 +1,10 @@
 package config
 
 type Config struct {
-	App    App    `yaml:"app"`
-	HTTP   HTTP   `yaml:"http"`
-	Log    Log    `yaml:"log"`
-	PG     PG     `yaml:"postgres"`
-	Jaeger Jaeger `yaml:"jaeger"`
+	App  App  `yaml:"app"`
+	HTTP HTTP `yaml:"http"`
+	Log  Log  `yaml:"log"`
+	PG   PG   `yaml:"postgres"`
 }
 
 type App struct {
@@ -28,9 +27,5 @@ type (
 		MaxConns int32  `yaml:"max_connections" env-required:"true"`
 		URL      string `env:"PG_URL" env-required:"true"`
 		DBName   string `env:"PG_DB_NAME" env-required:"true"`
-	}
-
-	Jaeger struct {
-		Endpoint string `env:"JAEGER_ENDPOINT" env-required:"true"`
 	}
 )
