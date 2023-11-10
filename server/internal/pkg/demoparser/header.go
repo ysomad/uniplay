@@ -9,7 +9,6 @@ import (
 )
 
 type demoHeader struct {
-	uploadedAt     time.Time
 	server         string
 	client         string
 	mapName        string
@@ -53,21 +52,13 @@ func (h *demoHeader) validate() error {
 		return errors.New("demo file size must be greater than 0")
 	}
 
-	if h.uploadedAt.Equal(time.Time{}) {
-		return errors.New("invalid demo upload time")
-	}
-
-	if h.uploadedAt.After(time.Now().Add(time.Minute * 1)) {
-		return errors.New("demo upload time must be uploaded within 5 minutes span")
-	}
-
 	return nil
 }
 
 // uuid generates md5 uuid from all fields of demo header.
 func (h *demoHeader) uuid() uuid.UUID {
 	s := fmt.Sprintf(
-		"%d,%d,%d,%s,%s,%s,%d,%d,%s",
+		"%d,%d,%d,%s,%s,%s,%d,%d",
 		h.playbackTicks,
 		h.playbackFrames,
 		h.signonLength,
@@ -75,7 +66,6 @@ func (h *demoHeader) uuid() uuid.UUID {
 		h.client,
 		h.mapName,
 		h.playbackTime,
-		h.filesize,
-		h.uploadedAt)
+		h.filesize)
 	return uuid.NewMD5(uuid.UUID{}, []byte(s))
 }

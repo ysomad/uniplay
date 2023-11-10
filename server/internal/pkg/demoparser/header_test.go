@@ -10,9 +10,7 @@ import (
 
 func Test_demoHeader_validate(t *testing.T) {
 	t.Parallel()
-	now := time.Now()
 	type fields struct {
-		uploadedAt     time.Time
 		server         string
 		client         string
 		mapName        string
@@ -29,12 +27,12 @@ func Test_demoHeader_validate(t *testing.T) {
 	}{
 		{
 			name:    "Valid Header",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: now},
+			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024},
 			wantErr: false,
 		},
 		{
 			name:    "Valid Header (Future uploadedAt - 1m)",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: now.Add(time.Minute)},
+			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024},
 			wantErr: false,
 		},
 
@@ -45,57 +43,47 @@ func Test_demoHeader_validate(t *testing.T) {
 		},
 		{
 			name:    "Invalid Header (Negative Playback Ticks)",
-			fields:  fields{playbackTicks: -1, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: now},
+			fields:  fields{playbackTicks: -1, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024},
 			wantErr: true,
 		},
 		{
 			name:    "Invalid Header (Negative Playback Frames)",
-			fields:  fields{playbackTicks: 128, playbackFrames: -1, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: now},
+			fields:  fields{playbackTicks: 128, playbackFrames: -1, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024},
 			wantErr: true,
 		},
 		{
 			name:    "Invalid Header (Negative Signon Length)",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: -1, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: now},
+			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: -1, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024},
 			wantErr: true,
 		},
 		{
 			name:    "Invalid Header (Zero Signon Length)",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 0, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: now},
+			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 0, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024},
 			wantErr: true,
 		},
 		{
 			name:    "Invalid Header (Empty Server)",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: now},
+			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024},
 			wantErr: true,
 		},
 		{
 			name:    "Invalid Header (Empty Client)",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: now},
+			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024},
 			wantErr: true,
 		},
 		{
 			name:    "Invalid Header (Empty Map Name)",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: now},
+			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "", playbackTime: time.Second * 60, filesize: 1024},
 			wantErr: true,
 		},
 		{
 			name:    "Invalid Header (Negative Filesize)",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: -1024, uploadedAt: now},
+			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: -1024},
 			wantErr: true,
 		},
 		{
 			name:    "Invalid Header (Zero Playback Time)",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: 0, filesize: 1024, uploadedAt: now},
-			wantErr: true,
-		},
-		{
-			name:    "Invalid Header (Empty UploadedAt Time)",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: time.Time{}},
-			wantErr: true,
-		},
-		{
-			name:    "Invalid Header (Future UploadedAt Time - 2m)",
-			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: time.Second * 60, filesize: 1024, uploadedAt: now.Add(time.Minute * 2)},
+			fields:  fields{playbackTicks: 128, playbackFrames: 256, signonLength: 16, server: "example.com", client: "player1", mapName: "de_dust2", playbackTime: 0, filesize: 1024},
 			wantErr: true,
 		},
 	}
@@ -110,7 +98,6 @@ func Test_demoHeader_validate(t *testing.T) {
 				mapName:        tt.fields.mapName,
 				playbackTime:   tt.fields.playbackTime,
 				filesize:       tt.fields.filesize,
-				uploadedAt:     tt.fields.uploadedAt,
 			}
 			err := h.validate()
 			assert.Equal(t, tt.wantErr, (err != nil))
@@ -120,7 +107,6 @@ func Test_demoHeader_validate(t *testing.T) {
 
 func Test_demoHeader_uuid(t *testing.T) {
 	type fields struct {
-		uploadedAt     time.Time
 		server         string
 		client         string
 		mapName        string
@@ -138,7 +124,6 @@ func Test_demoHeader_uuid(t *testing.T) {
 		{
 			name: "All fields have non-zero values",
 			fields: fields{
-				uploadedAt:     time.Date(2023, time.November, 10, 12, 0, 0, 0, time.UTC),
 				server:         "example-server",
 				client:         "example-client",
 				mapName:        "example-map",
@@ -148,20 +133,26 @@ func Test_demoHeader_uuid(t *testing.T) {
 				playbackTime:   5 * time.Minute,
 				filesize:       1024,
 			},
-			want: uuid.NewMD5(uuid.UUID{}, []byte("100,200,30,example-server,example-client,example-map,300000000000,1024,2023-11-10 12:00:00 +0000 UTC")),
+			want: uuid.NewMD5(uuid.UUID{}, []byte("100,200,30,example-server,example-client,example-map,300000000000,1024")),
 		},
 		{
 			name: "Some fields have zero values",
 			fields: fields{
-				server: "example-server",
+				server:         "example-server",
+				client:         "example-client",
+				mapName:        "example-map",
+				playbackTicks:  0,
+				playbackFrames: 0,
+				signonLength:   0,
+				playbackTime:   0,
+				filesize:       0,
 			},
-			want: uuid.MustParse("123359d3-9b2a-341c-8f7c-86591a196584"),
+			want: uuid.NewMD5(uuid.UUID{}, []byte("0,0,0,example-server,example-client,example-map,0,0")),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			h := &demoHeader{
-				uploadedAt:     tt.fields.uploadedAt,
 				server:         tt.fields.server,
 				client:         tt.fields.client,
 				mapName:        tt.fields.mapName,

@@ -7,28 +7,28 @@ import (
 	"strings"
 )
 
-type Demo struct {
+type demo struct {
 	io.ReadCloser
 	size int64
 }
 
-func NewDemo(rc io.ReadCloser, h *multipart.FileHeader) (Demo, error) {
+func newDemo(rc io.ReadCloser, h *multipart.FileHeader) (demo, error) {
 	if rc == nil {
-		return Demo{}, errors.New("nil demo file")
+		return demo{}, errors.New("nil demo file")
 	}
 
 	if h == nil {
-		return Demo{}, errors.New("nil file header")
+		return demo{}, errors.New("nil file header")
 	}
 
 	if h.Size <= 0 {
-		return Demo{}, errors.New("file header size must be greater than 0")
+		return demo{}, errors.New("file header size must be greater than 0")
 	}
 
 	ss := strings.Split(h.Filename, ".")
 	if len(ss)-1 <= 0 || ss[len(ss)-1] != "dem" {
-		return Demo{}, errors.New("demo must have .dem file extension")
+		return demo{}, errors.New("demo must have .dem file extension")
 	}
 
-	return Demo{rc, h.Size}, nil
+	return demo{rc, h.Size}, nil
 }

@@ -1,6 +1,8 @@
 package demoparser
 
 import (
+	"encoding/json"
+
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
 )
 
@@ -20,22 +22,22 @@ type bombStats struct {
 }
 
 type hitStats struct {
-	total   int
-	head    int
-	neck    int
-	chest   int
-	stomach int
-	arms    int
-	legs    int
+	Total   int
+	Head    int
+	Neck    int
+	Chest   int
+	Stomach int
+	Arms    int
+	Legs    int
 }
 
 type killStats struct {
-	total   int
-	hs      int
-	blind   int
-	wb      int
-	smoke   int
-	noscope int
+	Total    int
+	HS       int
+	Blind    int
+	Wallbang int
+	Smoke    int
+	NoScope  int
 }
 
 // type accuracyStats struct {
@@ -65,7 +67,7 @@ type playerStatsMap map[uint64]*playerStats
 
 func (psm playerStatsMap) add(steamID uint64, ev event, val int) {
 	if _, ok := psm[steamID]; !ok {
-		psm[steamID] = &playerStats{}
+		psm[steamID] = newPlayerStats()
 	}
 
 	psm[steamID].add(ev, val)
@@ -75,49 +77,63 @@ func (psm playerStatsMap) incr(steamID uint64, ev event) {
 	psm.add(steamID, ev, 1)
 }
 
+func (psm playerStatsMap) Marshal() ([]byte, error) { return json.Marshal(psm) }
+
 type playerStats struct {
-	kills          *killStats
-	damage         *dmgGrenadeStats
-	deaths         int
-	assists        int
-	fbAssists      int
-	mvps           int
-	blindedPlayers int
-	blindedTimes   int
+	Kills            *killStats
+	Damage           *dmgGrenadeStats
+	Bomb             bombStats
+	Deaths           int
+	Assists          int
+	FlashbangAssists int
+	MVPs             int
+	BlindedPlayers   int
+	BlindedTimes     int
+}
+
+func newPlayerStats() *playerStats {
+	return &playerStats{
+		Kills:  &killStats{},
+		Damage: &dmgGrenadeStats{},
+	}
 }
 
 func (ps *playerStats) add(e event, v int) {
 	switch e {
 	case eventKill:
-		ps.kills.total += v
+		ps.Kills.Total += v
 	case eventHSKill:
-		ps.kills.hs += v
+		ps.Kills.HS += v
 	case eventBlindKill:
-		ps.kills.blind += v
+		ps.Kills.Blind += v
 	case eventWBKill:
-		ps.kills.wb += v
+		ps.Kills.Wallbang += v
 	case eventSmokeKill:
-		ps.kills.smoke += v
+		ps.Kills.Smoke += v
 	case eventNoScopeKill:
-		ps.kills.noscope += v
+		ps.Kills.NoScope += v
 	case eventDeath:
-		ps.deaths += v
+		ps.Deaths += v
 	case eventAssist:
-		ps.assists += v
+		ps.Assists += v
 	case eventFBAssist:
-		ps.fbAssists += v
+		ps.FlashbangAssists += v
 	case eventRoundMVP:
-		ps.mvps += v
+		ps.MVPs += v
 	case eventDmgDealt:
-		ps.damage.Dealt += v
+		ps.Damage.Dealt += v
 	case eventDmgTaken:
-		ps.damage.Taken += v
+		ps.Damage.Taken += v
 	case eventDmgGrenadeDealt:
-		ps.damage.DealtWithGrenade += v
+		ps.Damage.DealtWithGrenade += v
 	case eventBlindedPlayer:
-		ps.blindedPlayers += v
+		ps.BlindedPlayers += v
 	case eventBecameBlind:
-		ps.blindedTimes += v
+		ps.BlindedTimes += v
+	case eventBombDefused:
+		ps.Bomb.Defused += v
+	case eventBombPlanted:
+		ps.Bomb.Planted += v
 	}
 }
 
@@ -149,7 +165,7 @@ func (ws weaponStatsMap) add(steamID uint64, ev event, et common.EquipmentType, 
 	weaponID := int(et)
 
 	if _, ok = ws[steamID][weaponID]; !ok {
-		ws[steamID][weaponID] = &weaponStats{}
+		ws[steamID][weaponID] = newWeaponStats()
 	}
 
 	ws[steamID][weaponID].add(ev, val)
@@ -159,48 +175,59 @@ func (ws weaponStatsMap) incr(steamID uint64, ev event, et common.EquipmentType)
 	ws.add(steamID, ev, et, 1)
 }
 
+func (ws weaponStatsMap) Marshal() ([]byte, error) { return json.Marshal(ws) }
+
 type weaponStats struct {
-	hits    *hitStats
-	kills   *killStats
-	damage  dmgStats
-	deaths  int
-	assists int
-	shots   int
+	Hits    *hitStats
+	Kills   *killStats
+	Damage  dmgStats
+	Deaths  int
+	Assists int
+	Shots   int
+}
+
+func newWeaponStats() *weaponStats {
+	return &weaponStats{
+		Hits:  &hitStats{},
+		Kills: &killStats{},
+	}
 }
 
 func (ws *weaponStats) add(e event, v int) {
 	switch e {
 	case eventKill:
-		ws.kills.total += v
+		ws.Kills.Total += v
 	case eventHSKill:
-		ws.kills.hs += v
+		ws.Kills.HS += v
 	case eventBlindKill:
-		ws.kills.blind += v
+		ws.Kills.Blind += v
 	case eventWBKill:
-		ws.kills.wb += v
+		ws.Kills.Wallbang += v
 	case eventSmokeKill:
-		ws.kills.smoke += v
+		ws.Kills.Smoke += v
 	case eventNoScopeKill:
-		ws.kills.noscope += v
+		ws.Kills.NoScope += v
 	case eventDeath:
-		ws.deaths += v
+		ws.Deaths += v
 	case eventAssist:
-		ws.assists += v
+		ws.Assists += v
 	case eventDmgDealt:
-		ws.damage.Dealt += v
+		ws.Damage.Dealt += v
 	case eventDmgTaken:
-		ws.damage.Taken += v
+		ws.Damage.Taken += v
 	case eventShot:
-		ws.shots += v
+		ws.Shots += v
 	case eventHitHead:
-		ws.hits.head += v
+		ws.Hits.Head += v
 	case eventHitNeck:
-		ws.hits.neck += v
+		ws.Hits.Neck += v
 	case eventHitStomach:
-		ws.hits.stomach += v
+		ws.Hits.Stomach += v
+	case eventHitChest:
+		ws.Hits.Chest += v
 	case eventHitArm:
-		ws.hits.arms += v
+		ws.Hits.Arms += v
 	case eventHitLeg:
-		ws.hits.legs += v
+		ws.Hits.Legs += v
 	}
 }

@@ -1,9 +1,12 @@
 package demoparser
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"log/slog"
-	"time"
+	"mime/multipart"
+	"os"
 
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
@@ -18,14 +21,18 @@ type parser struct {
 	demosize    int64
 }
 
-func New(d Demo) *parser {
+func New(demofile io.ReadCloser, demoheader *multipart.FileHeader) (*parser, error) {
+	d, err := newDemo(demofile, demoheader)
+	if err != nil {
+		return nil, fmt.Errorf("demo not created: %w", err)
+	}
 	return &parser{
 		Parser:      demoinfocs.NewParser(d),
 		demosize:    d.size,
 		gameState:   &gameState{},
 		playerStats: make(playerStatsMap, 20),
 		weaponStats: make(weaponStatsMap, 20),
-	}
+	}, nil
 }
 
 func (p *parser) Parse() error {
@@ -33,6 +40,8 @@ func (p *parser) Parse() error {
 	if err != nil {
 		return fmt.Errorf("demo header not parsed: %w", err)
 	}
+
+	slog.Info("parsed demo header", "header", h)
 
 	dh := &demoHeader{
 		server:         h.ServerName,
@@ -43,18 +52,21 @@ func (p *parser) Parse() error {
 		signonLength:   h.SignonLength,
 		playbackTime:   h.PlaybackTime,
 		filesize:       p.demosize,
-		uploadedAt:     time.Now(),
 	}
 
-	if err := dh.validate(); err != nil {
-		return fmt.Errorf("parsed invalid demo header: %w", err)
-	}
+	// TODO: skip validation because file header comes empty from demoinfocs
+	// if err := dh.validate(); err != nil {
+	// 	return fmt.Errorf("parsed invalid demo header: %w", err)
+	// }
+
+	slog.Info("generated demo id", "id", dh.uuid())
 
 	p.RegisterEventHandler(p.killHandler)
 	p.RegisterEventHandler(p.hurtHandler)
 	p.RegisterEventHandler(p.weaponFireHandler)
 	p.RegisterEventHandler(p.playerFlashedHandler)
 
+	p.RegisterEventHandler(p.matchStartedChangedHandler)
 	p.RegisterEventHandler(p.roundFreezetimeEndHandler)
 	p.RegisterEventHandler(p.teamSideSwitchHandler)
 	p.RegisterEventHandler(p.roundMVPAnnouncementHandler)
@@ -62,7 +74,42 @@ func (p *parser) Parse() error {
 	p.RegisterEventHandler(p.bombDefusedHandler)
 	p.RegisterEventHandler(p.bombPlantedHandler)
 
+	if err = p.ParseToEnd(); err != nil {
+		return fmt.Errorf("demo not parsed: %w", err)
+	}
+
+	pbb, err := json.MarshalIndent(p.playerStats, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	if err = os.WriteFile("playerstats.json", pbb, 0o644); err != nil {
+		return err
+	}
+
+	wbb, err := json.MarshalIndent(p.weaponStats, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	if err = os.WriteFile("weaponstats.json", wbb, 0o644); err != nil {
+		return err
+	}
+
 	return nil
+}
+
+func (p *parser) matchStartedChangedHandler(e events.MatchStartedChanged) {
+	// https://github.com/markus-wa/demoinfocs-golang/discussions/366
+	if e.OldIsStarted || !e.NewIsStarted {
+		return
+	}
+
+	p.gameState.started = true
+	team := p.GameState().TeamCounterTerrorists()
+	p.gameState.teamA = newTeam(team.ClanName(), team.Flag(), team.Team(), team.Members())
+	team = p.GameState().TeamTerrorists()
+	p.gameState.teamB = newTeam(team.ClanName(), team.Flag(), team.Team(), team.Members())
 }
 
 func (p *parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
@@ -106,14 +153,14 @@ func (p *parser) killHandler(e events.Kill) {
 			p.weaponStats.incr(e.Killer.SteamID64, eventSmokeKill, e.Weapon.Type)
 		}
 	} else {
-		slog.Error("kill by unconnected player")
+		slog.Error("kill by unconnected player", "killer", e.Killer)
 	}
 
 	if playerConnected(e.Victim) {
 		p.playerStats.incr(e.Victim.SteamID64, eventDeath)
 		p.weaponStats.incr(e.Victim.SteamID64, eventDeath, e.Weapon.Type)
 	} else {
-		slog.Error("killed unconnected player")
+		slog.Error("killed unconnected player", "victim", e.Victim)
 	}
 
 	if playerConnected(e.Assister) {
@@ -124,7 +171,7 @@ func (p *parser) killHandler(e events.Kill) {
 			p.playerStats.incr(e.Assister.SteamID64, eventFBAssist)
 		}
 	} else {
-		slog.Error("kill assist by unconnected player")
+		slog.Error("kill assist by unconnected player", "assister", e.Assister)
 	}
 }
 
@@ -140,7 +187,7 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 		p.playerStats.add(e.Player.SteamID64, eventDmgTaken, e.HealthDamage)
 		p.weaponStats.add(e.Player.SteamID64, eventDmgTaken, e.Weapon.Type, e.HealthDamage)
 	} else {
-		slog.Error("unconnected player got hurt")
+		slog.Error("unconnected player got hurt", "player", e.Player)
 	}
 
 	if playerConnected(e.Attacker) {
@@ -152,7 +199,7 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 			p.playerStats.add(e.Attacker.SteamID64, eventDmgGrenadeDealt, e.HealthDamage)
 		}
 	} else {
-		slog.Error("unconnected attacker hurt other player")
+		slog.Error("unconnected attacker hurt other player", "attacker", e.Attacker)
 	}
 }
 
@@ -174,7 +221,7 @@ func (p *parser) weaponFireHandler(e events.WeaponFire) {
 	}
 
 	if !playerConnected(e.Shooter) {
-		slog.Error("fire from unconnected player")
+		slog.Error("fire from unconnected player", "shooter", e.Shooter)
 		return
 	}
 
@@ -205,7 +252,9 @@ func (p *parser) bombPlantedHandler(e events.BombPlanted) {
 	}
 
 	if !playerConnected(e.Player) {
-		slog.Error("bomb planted by unconnected player", "site", e.Site)
+		slog.Error("bomb planted by unconnected player",
+			"site", e.Site,
+			"player", e.Player)
 		return
 	}
 
@@ -221,7 +270,9 @@ func (p *parser) bombDefusedHandler(e events.BombDefused) {
 	}
 
 	if !playerConnected(e.Player) {
-		slog.Error("bomb defused by unconnected player", "site", e.Site)
+		slog.Error("bomb defused by unconnected player",
+			"site", e.Site,
+			"player", e.Player)
 		return
 	}
 
@@ -237,20 +288,20 @@ func (p *parser) playerFlashedHandler(e events.PlayerFlashed) {
 	}
 
 	if playerSpectator(e.Player) {
-		slog.Info("flashed spectator")
+		slog.Info("flashed spectator", "player", e.Player)
 		return
 	}
 
 	if playerConnected(e.Player) {
 		p.playerStats.incr(e.Player.SteamID64, eventBecameBlind)
 	} else {
-		slog.Error("flashed by unconnected player")
+		slog.Error("flashed by unconnected player", "player", e.Player)
 	}
 
 	if playerConnected(e.Attacker) {
 		p.playerStats.incr(e.Attacker.SteamID64, eventBlindedPlayer)
 	} else {
-		slog.Error("unconnected player flashed other player")
+		slog.Error("unconnected player flashed other player", "attacker", e.Attacker)
 	}
 }
 
@@ -263,7 +314,7 @@ func (p *parser) roundMVPAnnouncementHandler(e events.RoundMVPAnnouncement) {
 	}
 
 	if !playerConnected(e.Player) {
-		slog.Error("announced mvp for unconnected player")
+		slog.Error("announced mvp for unconnected player", "player", e.Player)
 		return
 	}
 

@@ -1,0 +1,4624 @@
+{
+  "76561197978835160": {
+    "1": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 7
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "102": {
+      "Hits": {
+        "Total": 0,
+        "Head": 4,
+        "Neck": 0,
+        "Chest": 3,
+        "Stomach": 0,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 3,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 1,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 298,
+        "Taken": 201
+      },
+      "Deaths": 1,
+      "Assists": 1,
+      "Shots": 38
+    },
+    "2": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 5,
+        "Stomach": 1,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 74,
+        "Taken": 106
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 55
+    },
+    "204": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 56
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "301": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 72
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "302": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 57
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "303": {
+      "Hits": {
+        "Total": 0,
+        "Head": 5,
+        "Neck": 0,
+        "Chest": 9,
+        "Stomach": 3,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 9,
+        "HS": 5,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 1,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 938,
+        "Taken": 140
+      },
+      "Deaths": 1,
+      "Assists": 1,
+      "Shots": 159
+    },
+    "304": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 22
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "305": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 0,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 50,
+        "Taken": 407
+      },
+      "Deaths": 2,
+      "Assists": 0,
+      "Shots": 11
+    },
+    "309": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 1
+    },
+    "4": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 305
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "405": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 18
+    },
+    "407": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "502": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 44,
+        "Taken": 19
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 7
+    },
+    "503": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 18
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 3
+    },
+    "504": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 10
+    },
+    "505": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 1
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 7
+    },
+    "506": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 102,
+        "Taken": 6
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 9
+    },
+    "6": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 18,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 2
+    },
+    "9": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 123
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    }
+  },
+  "76561197989744167": {
+    "1": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 14
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 3
+    },
+    "102": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 379
+      },
+      "Deaths": 3,
+      "Assists": 1,
+      "Shots": 0
+    },
+    "104": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 26
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "2": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 12,
+        "Taken": 118
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 2
+    },
+    "204": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 40
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "301": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 139
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "302": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 7
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "303": {
+      "Hits": {
+        "Total": 0,
+        "Head": 7,
+        "Neck": 0,
+        "Chest": 11,
+        "Stomach": 3,
+        "Arms": 3,
+        "Legs": 4
+      },
+      "Kills": {
+        "Total": 8,
+        "HS": 5,
+        "Blind": 0,
+        "Wallbang": 1,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 1153,
+        "Taken": 548
+      },
+      "Deaths": 4,
+      "Assists": 5,
+      "Shots": 253
+    },
+    "304": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 25,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "305": {
+      "Hits": {
+        "Total": 0,
+        "Head": 4,
+        "Neck": 0,
+        "Chest": 5,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 2,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 374,
+        "Taken": 140
+      },
+      "Deaths": 1,
+      "Assists": 1,
+      "Shots": 155
+    },
+    "4": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 2,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 150,
+        "Taken": 203
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 21
+    },
+    "405": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 44
+    },
+    "502": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 10,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 3
+    },
+    "503": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 64,
+        "Taken": 11
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 4
+    },
+    "504": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 1
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 11
+    },
+    "505": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 6
+    },
+    "506": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 119,
+        "Taken": 50
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 8
+    },
+    "9": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 124
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    }
+  },
+  "76561198024615867": {
+    "102": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 4,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 3
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 93,
+        "Taken": 127
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 28
+    },
+    "2": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 100
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 1
+    },
+    "302": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 58
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "303": {
+      "Hits": {
+        "Total": 0,
+        "Head": 5,
+        "Neck": 1,
+        "Chest": 7,
+        "Stomach": 1,
+        "Arms": 2,
+        "Legs": 2
+      },
+      "Kills": {
+        "Total": 6,
+        "HS": 5,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 988,
+        "Taken": 412
+      },
+      "Deaths": 4,
+      "Assists": 4,
+      "Shots": 129
+    },
+    "304": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 85,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "305": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 4,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 1,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 121,
+        "Taken": 527
+      },
+      "Deaths": 5,
+      "Assists": 0,
+      "Shots": 32
+    },
+    "309": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 83
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 2
+    },
+    "4": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 207,
+        "Taken": 34
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 10
+    },
+    "405": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 2
+    },
+    "502": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 32,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 9
+    },
+    "503": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 1,
+        "Taken": 74
+      },
+      "Deaths": 1,
+      "Assists": 1,
+      "Shots": 3
+    },
+    "504": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 13
+    },
+    "505": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 9
+    },
+    "506": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 173,
+        "Taken": 3
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 9
+    },
+    "7": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 125
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "9": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 113
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 4
+    }
+  },
+  "76561198034202275": {
+    "102": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 52
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 0
+    },
+    "2": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 223
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "204": {
+      "Hits": {
+        "Total": 0,
+        "Head": 2,
+        "Neck": 0,
+        "Chest": 4,
+        "Stomach": 2,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 186,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 4
+    },
+    "3": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 15
+    },
+    "303": {
+      "Hits": {
+        "Total": 0,
+        "Head": 2,
+        "Neck": 0,
+        "Chest": 5,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 3,
+        "HS": 2,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 358,
+        "Taken": 1207
+      },
+      "Deaths": 10,
+      "Assists": 0,
+      "Shots": 76
+    },
+    "304": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 25
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "305": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 104,
+        "Taken": 295
+      },
+      "Deaths": 3,
+      "Assists": 1,
+      "Shots": 10
+    },
+    "309": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 1
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 83,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 1
+    },
+    "4": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 155
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 10
+    },
+    "405": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 48
+    },
+    "502": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 74
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "503": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 9,
+        "Taken": 1
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 3
+    },
+    "504": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 3
+    },
+    "505": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 5
+    },
+    "506": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 41,
+        "Taken": 109
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 7
+    },
+    "9": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 3
+    }
+  },
+  "76561198058883409": {
+    "1": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 115
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 2
+    },
+    "102": {
+      "Hits": {
+        "Total": 0,
+        "Head": 4,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 1,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 3,
+        "HS": 2,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 222,
+        "Taken": 72
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 30
+    },
+    "104": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 14
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "2": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 0,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 70,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 19
+    },
+    "204": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 90
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "301": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 110
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "303": {
+      "Hits": {
+        "Total": 0,
+        "Head": 10,
+        "Neck": 0,
+        "Chest": 7,
+        "Stomach": 5,
+        "Arms": 1,
+        "Legs": 3
+      },
+      "Kills": {
+        "Total": 14,
+        "HS": 10,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 1,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 1692,
+        "Taken": 59
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 174
+    },
+    "305": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 377
+      },
+      "Deaths": 4,
+      "Assists": 1,
+      "Shots": 0
+    },
+    "4": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 2,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 1,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 325,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 12
+    },
+    "405": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 34
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 20
+    },
+    "407": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "502": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 54,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 10
+    },
+    "503": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 3,
+        "Taken": 51
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 3
+    },
+    "504": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 7
+    },
+    "505": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 9
+    },
+    "506": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 199,
+        "Taken": 44
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 4
+    },
+    "7": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 94
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "9": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 132
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    }
+  },
+  "76561198063336407": {
+    "1": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 3,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 179,
+        "Taken": 29
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 15
+    },
+    "102": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 188
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "2": {
+      "Hits": {
+        "Total": 0,
+        "Head": 3,
+        "Neck": 0,
+        "Chest": 2,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 301,
+        "Taken": 92
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 31
+    },
+    "301": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 66
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "303": {
+      "Hits": {
+        "Total": 0,
+        "Head": 6,
+        "Neck": 0,
+        "Chest": 3,
+        "Stomach": 5,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 7,
+        "HS": 6,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 1,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 965,
+        "Taken": 85
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 233
+    },
+    "304": {
+      "Hits": {
+        "Total": 0,
+        "Head": 2,
+        "Neck": 0,
+        "Chest": 3,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 239,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "305": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 4,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 1
+      },
+      "Kills": {
+        "Total": 4,
+        "HS": 2,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 1,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 194,
+        "Taken": 427
+      },
+      "Deaths": 4,
+      "Assists": 0,
+      "Shots": 56
+    },
+    "309": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 2,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 219,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 10
+    },
+    "4": {
+      "Hits": {
+        "Total": 0,
+        "Head": 2,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 1
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 2,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 314,
+        "Taken": 52
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 19
+    },
+    "405": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 7
+    },
+    "407": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "502": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 45,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 8
+    },
+    "503": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 24,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 2
+    },
+    "504": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 5
+    },
+    "505": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 8
+    },
+    "506": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 23,
+        "Taken": 66
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 8
+    },
+    "9": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 126
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    }
+  },
+  "76561198096708443": {
+    "1": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 120
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "102": {
+      "Hits": {
+        "Total": 0,
+        "Head": 2,
+        "Neck": 0,
+        "Chest": 5,
+        "Stomach": 4,
+        "Arms": 1,
+        "Legs": 9
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 1,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 399,
+        "Taken": 122
+      },
+      "Deaths": 1,
+      "Assists": 1,
+      "Shots": 88
+    },
+    "104": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 2,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 26,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 33
+    },
+    "2": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 27
+    },
+    "204": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 2
+    },
+    "301": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 0
+    },
+    "302": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 26
+    },
+    "303": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 3,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 119,
+        "Taken": 1062
+      },
+      "Deaths": 9,
+      "Assists": 0,
+      "Shots": 20
+    },
+    "304": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 22,
+        "Taken": 156
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 14
+    },
+    "305": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 3,
+        "Stomach": 0,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 1,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 77,
+        "Taken": 121
+      },
+      "Deaths": 2,
+      "Assists": 1,
+      "Shots": 67
+    },
+    "309": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 109
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "4": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 186,
+        "Taken": 323
+      },
+      "Deaths": 2,
+      "Assists": 0,
+      "Shots": 9
+    },
+    "405": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 2
+    },
+    "502": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 59,
+        "Taken": 104
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 2
+    },
+    "503": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 71,
+        "Taken": 73
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 7
+    },
+    "504": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 1,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 6
+    },
+    "505": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 11
+    },
+    "506": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 5,
+        "Taken": 98
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 6
+    },
+    "9": {
+      "Hits": {
+        "Total": 0,
+        "Head": 2,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 2,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 237,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 5
+    }
+  },
+  "76561198134401925": {
+    "1": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 9
+    },
+    "102": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 6,
+        "Stomach": 2,
+        "Arms": 2,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 208,
+        "Taken": 132
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 157
+    },
+    "104": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 14,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 7
+    },
+    "2": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 12
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "303": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 4,
+        "Stomach": 1,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 144,
+        "Taken": 1064
+      },
+      "Deaths": 8,
+      "Assists": 0,
+      "Shots": 94
+    },
+    "304": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 85
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "305": {
+      "Hits": {
+        "Total": 0,
+        "Head": 5,
+        "Neck": 0,
+        "Chest": 4,
+        "Stomach": 2,
+        "Arms": 2,
+        "Legs": 4
+      },
+      "Kills": {
+        "Total": 6,
+        "HS": 3,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 701,
+        "Taken": 133
+      },
+      "Deaths": 2,
+      "Assists": 3,
+      "Shots": 65
+    },
+    "4": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 1
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 108,
+        "Taken": 251
+      },
+      "Deaths": 2,
+      "Assists": 1,
+      "Shots": 22
+    },
+    "405": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 10
+    },
+    "502": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 6
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 2
+    },
+    "503": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 25,
+        "Taken": 24
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 5
+    },
+    "504": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 9
+    },
+    "505": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 8
+    },
+    "506": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 32,
+        "Taken": 277
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 3
+    }
+  },
+  "76561198171689321": {
+    "1": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 128,
+        "Taken": 44
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 14
+    },
+    "102": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 180
+      },
+      "Deaths": 2,
+      "Assists": 1,
+      "Shots": 0
+    },
+    "104": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 0
+    },
+    "2": {
+      "Hits": {
+        "Total": 0,
+        "Head": 2,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 206,
+        "Taken": 127
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 8
+    },
+    "204": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 0
+    },
+    "301": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 3,
+        "Stomach": 0,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 176,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 14
+    },
+    "302": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 5,
+        "Stomach": 0,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 115,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 34
+    },
+    "303": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 7,
+        "Stomach": 1,
+        "Arms": 2,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 1,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 246,
+        "Taken": 1314
+      },
+      "Deaths": 9,
+      "Assists": 2,
+      "Shots": 100
+    },
+    "304": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 24
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "305": {
+      "Hits": {
+        "Total": 0,
+        "Head": 2,
+        "Neck": 0,
+        "Chest": 4,
+        "Stomach": 6,
+        "Arms": 2,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 3,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 548,
+        "Taken": 82
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 78
+    },
+    "4": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 1
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 76,
+        "Taken": 134
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 5
+    },
+    "404": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 5
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "405": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 6
+    },
+    "502": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 40
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 1
+    },
+    "503": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 48,
+        "Taken": 3
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 3
+    },
+    "504": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 9
+    },
+    "505": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 1,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 7
+    },
+    "506": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 24,
+        "Taken": 43
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 4
+    },
+    "6": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 18
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "7": {
+      "Hits": {
+        "Total": 0,
+        "Head": 2,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 219,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 13
+    },
+    "9": {
+      "Hits": {
+        "Total": 0,
+        "Head": 3,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 3,
+        "HS": 3,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 381,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 13
+    }
+  },
+  "76561198253891911": {
+    "1": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 3,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 37,
+        "Taken": 15
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 27
+    },
+    "102": {
+      "Hits": {
+        "Total": 0,
+        "Head": 3,
+        "Neck": 0,
+        "Chest": 8,
+        "Stomach": 0,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 3,
+        "HS": 3,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 360,
+        "Taken": 127
+      },
+      "Deaths": 2,
+      "Assists": 0,
+      "Shots": 49
+    },
+    "2": {
+      "Hits": {
+        "Total": 0,
+        "Head": 2,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 2,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 210,
+        "Taken": 95
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 12
+    },
+    "301": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 3,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 211,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 1,
+      "Shots": 15
+    },
+    "302": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 1,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 7,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 17
+    },
+    "303": {
+      "Hits": {
+        "Total": 0,
+        "Head": 1,
+        "Neck": 0,
+        "Chest": 9,
+        "Stomach": 1,
+        "Arms": 0,
+        "Legs": 1
+      },
+      "Kills": {
+        "Total": 3,
+        "HS": 1,
+        "Blind": 0,
+        "Wallbang": 1,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 377,
+        "Taken": 1089
+      },
+      "Deaths": 8,
+      "Assists": 0,
+      "Shots": 38
+    },
+    "304": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 59
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "305": {
+      "Hits": {
+        "Total": 0,
+        "Head": 3,
+        "Neck": 0,
+        "Chest": 5,
+        "Stomach": 0,
+        "Arms": 4,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 5,
+        "HS": 3,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 448,
+        "Taken": 108
+      },
+      "Deaths": 1,
+      "Assists": 2,
+      "Shots": 32
+    },
+    "309": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 110
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 1
+    },
+    "4": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 1,
+        "Stomach": 2,
+        "Arms": 3,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 1,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 224,
+        "Taken": 133
+      },
+      "Deaths": 1,
+      "Assists": 0,
+      "Shots": 12
+    },
+    "404": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 3
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "405": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 34,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 20
+    },
+    "502": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 1
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 0
+    },
+    "503": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 10,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 3
+    },
+    "504": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 4
+    },
+    "505": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 5
+    },
+    "506": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 107,
+        "Taken": 129
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 5
+    },
+    "9": {
+      "Hits": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "Kills": {
+        "Total": 0,
+        "HS": 0,
+        "Blind": 0,
+        "Wallbang": 0,
+        "Smoke": 0,
+        "NoScope": 0
+      },
+      "Damage": {
+        "Dealt": 0,
+        "Taken": 0
+      },
+      "Deaths": 0,
+      "Assists": 0,
+      "Shots": 2
+    }
+  }
+}

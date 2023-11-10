@@ -1,10 +1,14 @@
 package demoparser
 
-import "github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
+import (
+	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
+)
 
 func playerConnected(pl *common.Player) bool {
-	if pl == nil ||
-		pl.SteamID64 == 0 ||
+	if pl == nil {
+		return false
+	}
+	if pl.SteamID64 == 0 ||
 		pl.UserID == 0 ||
 		!pl.IsConnected ||
 		pl.IsBot ||

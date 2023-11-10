@@ -60,8 +60,8 @@ func Test_playerStats_add(t *testing.T) {
 				v: 5,
 			},
 			want: &playerStats{
-				kills: &killStats{
-					total: 5,
+				Kills: &killStats{
+					Total: 5,
 				},
 			},
 		},
@@ -75,8 +75,8 @@ func Test_playerStats_add(t *testing.T) {
 				v: 3,
 			},
 			want: &playerStats{
-				kills: &killStats{
-					hs: 3,
+				Kills: &killStats{
+					HS: 3,
 				},
 			},
 		},
@@ -90,8 +90,8 @@ func Test_playerStats_add(t *testing.T) {
 				v: 2,
 			},
 			want: &playerStats{
-				kills: &killStats{
-					blind: 2,
+				Kills: &killStats{
+					Blind: 2,
 				},
 			},
 		},
@@ -105,8 +105,8 @@ func Test_playerStats_add(t *testing.T) {
 				v: 1,
 			},
 			want: &playerStats{
-				kills: &killStats{
-					wb: 1,
+				Kills: &killStats{
+					Wallbang: 1,
 				},
 			},
 		},
@@ -120,8 +120,8 @@ func Test_playerStats_add(t *testing.T) {
 				v: 33,
 			},
 			want: &playerStats{
-				kills: &killStats{
-					noscope: 33,
+				Kills: &killStats{
+					NoScope: 33,
 				},
 			},
 		},
@@ -135,8 +135,8 @@ func Test_playerStats_add(t *testing.T) {
 				v: 4,
 			},
 			want: &playerStats{
-				kills: &killStats{
-					smoke: 4,
+				Kills: &killStats{
+					Smoke: 4,
 				},
 			},
 		},
@@ -150,7 +150,7 @@ func Test_playerStats_add(t *testing.T) {
 				v: 1,
 			},
 			want: &playerStats{
-				deaths: 1,
+				Deaths: 1,
 			},
 		},
 		{
@@ -163,7 +163,7 @@ func Test_playerStats_add(t *testing.T) {
 				v: 2,
 			},
 			want: &playerStats{
-				assists: 2,
+				Assists: 2,
 			},
 		},
 		{
@@ -176,7 +176,7 @@ func Test_playerStats_add(t *testing.T) {
 				v: 1,
 			},
 			want: &playerStats{
-				fbAssists: 1,
+				FlashbangAssists: 1,
 			},
 		},
 		{
@@ -189,7 +189,7 @@ func Test_playerStats_add(t *testing.T) {
 				v: 3,
 			},
 			want: &playerStats{
-				mvps: 3,
+				MVPs: 3,
 			},
 		},
 		{
@@ -202,7 +202,7 @@ func Test_playerStats_add(t *testing.T) {
 				v: 2,
 			},
 			want: &playerStats{
-				blindedPlayers: 2,
+				BlindedPlayers: 2,
 			},
 		},
 		{
@@ -215,7 +215,7 @@ func Test_playerStats_add(t *testing.T) {
 				v: 5,
 			},
 			want: &playerStats{
-				blindedTimes: 5,
+				BlindedTimes: 5,
 			},
 		},
 		{
@@ -228,7 +228,7 @@ func Test_playerStats_add(t *testing.T) {
 				v: 50,
 			},
 			want: &playerStats{
-				damage: &dmgGrenadeStats{
+				Damage: &dmgGrenadeStats{
 					dmgStats: dmgStats{
 						Dealt: 50,
 						Taken: 0,
@@ -247,7 +247,7 @@ func Test_playerStats_add(t *testing.T) {
 				v: 30,
 			},
 			want: &playerStats{
-				damage: &dmgGrenadeStats{
+				Damage: &dmgGrenadeStats{
 					dmgStats: dmgStats{
 						Dealt: 0,
 						Taken: 30,
@@ -266,7 +266,7 @@ func Test_playerStats_add(t *testing.T) {
 				v: 15,
 			},
 			want: &playerStats{
-				damage: &dmgGrenadeStats{
+				Damage: &dmgGrenadeStats{
 					dmgStats: dmgStats{
 						Dealt: 0,
 						Taken: 0,
@@ -288,14 +288,14 @@ func Test_playerStats_add(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			ps := &playerStats{
-				kills:          tt.fields.kills,
-				damage:         tt.fields.damage,
-				deaths:         tt.fields.deaths,
-				assists:        tt.fields.assists,
-				fbAssists:      tt.fields.fbAssists,
-				mvps:           tt.fields.mvps,
-				blindedPlayers: tt.fields.blindedPlayers,
-				blindedTimes:   tt.fields.blindedTimes,
+				Kills:            tt.fields.kills,
+				Damage:           tt.fields.damage,
+				Deaths:           tt.fields.deaths,
+				Assists:          tt.fields.assists,
+				FlashbangAssists: tt.fields.fbAssists,
+				MVPs:             tt.fields.mvps,
+				BlindedPlayers:   tt.fields.blindedPlayers,
+				BlindedTimes:     tt.fields.blindedTimes,
 			}
 			ps.add(tt.args.e, tt.args.v)
 			assert.Equal(t, tt.want, ps)
@@ -416,8 +416,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 5,
 			},
 			want: &weaponStats{
-				kills: &killStats{
-					total: 5,
+				Kills: &killStats{
+					Total: 5,
 				},
 			},
 		},
@@ -431,8 +431,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 3,
 			},
 			want: &weaponStats{
-				kills: &killStats{
-					hs: 3,
+				Kills: &killStats{
+					HS: 3,
 				},
 			},
 		},
@@ -446,8 +446,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 2,
 			},
 			want: &weaponStats{
-				kills: &killStats{
-					blind: 2,
+				Kills: &killStats{
+					Blind: 2,
 				},
 			},
 		},
@@ -461,8 +461,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 5,
 			},
 			want: &weaponStats{
-				kills: &killStats{
-					noscope: 5,
+				Kills: &killStats{
+					NoScope: 5,
 				},
 			},
 		},
@@ -477,8 +477,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 1,
 			},
 			want: &weaponStats{
-				kills: &killStats{
-					wb: 1,
+				Kills: &killStats{
+					Wallbang: 1,
 				},
 			},
 		},
@@ -492,8 +492,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 4,
 			},
 			want: &weaponStats{
-				kills: &killStats{
-					smoke: 4,
+				Kills: &killStats{
+					Smoke: 4,
 				},
 			},
 		},
@@ -507,7 +507,7 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 1,
 			},
 			want: &weaponStats{
-				deaths: 1,
+				Deaths: 1,
 			},
 		},
 		{
@@ -520,7 +520,7 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 2,
 			},
 			want: &weaponStats{
-				assists: 2,
+				Assists: 2,
 			},
 		},
 		{
@@ -533,7 +533,7 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 50,
 			},
 			want: &weaponStats{
-				damage: dmgStats{
+				Damage: dmgStats{
 					Dealt: 50,
 					Taken: 0,
 				},
@@ -549,7 +549,7 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 30,
 			},
 			want: &weaponStats{
-				damage: dmgStats{
+				Damage: dmgStats{
 					Dealt: 0,
 					Taken: 30,
 				},
@@ -565,7 +565,7 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 5,
 			},
 			want: &weaponStats{
-				shots: 5,
+				Shots: 5,
 			},
 		},
 		{
@@ -578,8 +578,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 2,
 			},
 			want: &weaponStats{
-				hits: &hitStats{
-					head: 2,
+				Hits: &hitStats{
+					Head: 2,
 				},
 			},
 		},
@@ -593,8 +593,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 1,
 			},
 			want: &weaponStats{
-				hits: &hitStats{
-					neck: 1,
+				Hits: &hitStats{
+					Neck: 1,
 				},
 			},
 		},
@@ -608,8 +608,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 3,
 			},
 			want: &weaponStats{
-				hits: &hitStats{
-					stomach: 3,
+				Hits: &hitStats{
+					Stomach: 3,
 				},
 			},
 		},
@@ -623,8 +623,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 1,
 			},
 			want: &weaponStats{
-				hits: &hitStats{
-					arms: 1,
+				Hits: &hitStats{
+					Arms: 1,
 				},
 			},
 		},
@@ -638,8 +638,8 @@ func Test_weaponStats_add(t *testing.T) {
 				v: 2,
 			},
 			want: &weaponStats{
-				hits: &hitStats{
-					legs: 2,
+				Hits: &hitStats{
+					Legs: 2,
 				},
 			},
 		},
@@ -656,12 +656,12 @@ func Test_weaponStats_add(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			ws := &weaponStats{
-				hits:    tt.fields.hits,
-				kills:   tt.fields.kills,
-				damage:  tt.fields.damage,
-				deaths:  tt.fields.deaths,
-				assists: tt.fields.assists,
-				shots:   tt.fields.shots,
+				Hits:    tt.fields.hits,
+				Kills:   tt.fields.kills,
+				Damage:  tt.fields.damage,
+				Deaths:  tt.fields.deaths,
+				Assists: tt.fields.assists,
+				Shots:   tt.fields.shots,
 			}
 			ws.add(tt.args.e, tt.args.v)
 			assert.Equal(t, tt.want, ws)

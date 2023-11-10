@@ -15,7 +15,7 @@ func newReadCloser(data string) io.ReadCloser {
 	return readCloser
 }
 
-func TestNewDemo(t *testing.T) {
+func Test_newDemo(t *testing.T) {
 	t.Parallel()
 	type args struct {
 		rc io.ReadCloser
@@ -24,7 +24,7 @@ func TestNewDemo(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    Demo
+		want    demo
 		wantErr bool
 	}{
 		{
@@ -36,7 +36,7 @@ func TestNewDemo(t *testing.T) {
 					Size:     1337,
 				},
 			},
-			want:    Demo{},
+			want:    demo{},
 			wantErr: true,
 		},
 		{
@@ -45,7 +45,7 @@ func TestNewDemo(t *testing.T) {
 				rc: newReadCloser("urmom"),
 				h:  &multipart.FileHeader{},
 			},
-			want:    Demo{},
+			want:    demo{},
 			wantErr: true,
 		},
 		{
@@ -57,7 +57,7 @@ func TestNewDemo(t *testing.T) {
 					Size:     0,
 				},
 			},
-			want:    Demo{},
+			want:    demo{},
 			wantErr: true,
 		},
 		{
@@ -69,7 +69,7 @@ func TestNewDemo(t *testing.T) {
 					Size:     -1488,
 				},
 			},
-			want:    Demo{},
+			want:    demo{},
 			wantErr: true,
 		},
 		{
@@ -81,7 +81,7 @@ func TestNewDemo(t *testing.T) {
 					Size:     322,
 				},
 			},
-			want:    Demo{},
+			want:    demo{},
 			wantErr: true,
 		},
 		{
@@ -93,7 +93,7 @@ func TestNewDemo(t *testing.T) {
 					Size:     322,
 				},
 			},
-			want:    Demo{},
+			want:    demo{},
 			wantErr: true,
 		},
 		{
@@ -105,7 +105,7 @@ func TestNewDemo(t *testing.T) {
 					Size:     322,
 				},
 			},
-			want:    Demo{},
+			want:    demo{},
 			wantErr: true,
 		},
 		{
@@ -117,7 +117,7 @@ func TestNewDemo(t *testing.T) {
 					Size:     666,
 				},
 			},
-			want:    Demo{},
+			want:    demo{},
 			wantErr: true,
 		},
 		{
@@ -129,13 +129,13 @@ func TestNewDemo(t *testing.T) {
 					Size:     10000,
 				},
 			},
-			want:    Demo{newReadCloser("success"), 10000},
+			want:    demo{newReadCloser("success"), 10000},
 			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := NewDemo(tt.args.rc, tt.args.h)
+			got, err := newDemo(tt.args.rc, tt.args.h)
 			assert.Equal(t, tt.wantErr, (err != nil))
 			assert.Equal(t, tt.want, got)
 		})
