@@ -8,11 +8,11 @@ import (
 )
 
 type demo struct {
-	io.ReadCloser
+	io.Reader
 	size int64
 }
 
-func newDemo(rc io.ReadCloser, h *multipart.FileHeader) (demo, error) {
+func newDemo(rc io.Reader, h *multipart.FileHeader) (demo, error) {
 	if rc == nil {
 		return demo{}, errors.New("nil demo file")
 	}

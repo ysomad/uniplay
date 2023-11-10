@@ -21,7 +21,7 @@ type parser struct {
 	demosize    int64
 }
 
-func New(demofile io.ReadCloser, demoheader *multipart.FileHeader) (*parser, error) {
+func New(demofile io.Reader, demoheader *multipart.FileHeader) (*parser, error) {
 	d, err := newDemo(demofile, demoheader)
 	if err != nil {
 		return nil, fmt.Errorf("demo not created: %w", err)
