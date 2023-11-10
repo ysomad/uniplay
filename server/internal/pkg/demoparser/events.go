@@ -10,6 +10,7 @@ const (
 	eventBlindKill
 	eventWBKill
 	eventSmokeKill
+	eventNoScopeKill
 
 	eventDeath
 	eventAssist

@@ -111,6 +111,21 @@ func Test_playerStats_add(t *testing.T) {
 			},
 		},
 		{
+			name: "Add NoScope kills",
+			fields: fields{
+				kills: &killStats{},
+			},
+			args: args{
+				e: eventNoScopeKill,
+				v: 33,
+			},
+			want: &playerStats{
+				kills: &killStats{
+					noscope: 33,
+				},
+			},
+		},
+		{
 			name: "Add Smoke kills",
 			fields: fields{
 				kills: &killStats{},
@@ -436,6 +451,22 @@ func Test_weaponStats_add(t *testing.T) {
 				},
 			},
 		},
+		{
+			name: "Add NoScope kills",
+			fields: fields{
+				kills: &killStats{},
+			},
+			args: args{
+				e: eventNoScopeKill,
+				v: 5,
+			},
+			want: &weaponStats{
+				kills: &killStats{
+					noscope: 5,
+				},
+			},
+		},
+
 		{
 			name: "Add WB kills",
 			fields: fields{

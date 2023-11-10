@@ -1,8 +1,6 @@
 package demoparser
 
 import (
-	"time"
-
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
 )
 
@@ -32,11 +30,12 @@ type hitStats struct {
 }
 
 type killStats struct {
-	total int
-	hs    int
-	blind int
-	wb    int
-	smoke int
+	total   int
+	hs      int
+	blind   int
+	wb      int
+	smoke   int
+	noscope int
 }
 
 // type accuracyStats struct {
@@ -99,6 +98,8 @@ func (ps *playerStats) add(e event, v int) {
 		ps.kills.wb += v
 	case eventSmokeKill:
 		ps.kills.smoke += v
+	case eventNoScopeKill:
+		ps.kills.noscope += v
 	case eventDeath:
 		ps.deaths += v
 	case eventAssist:
@@ -179,6 +180,8 @@ func (ws *weaponStats) add(e event, v int) {
 		ws.kills.wb += v
 	case eventSmokeKill:
 		ws.kills.smoke += v
+	case eventNoScopeKill:
+		ws.kills.noscope += v
 	case eventDeath:
 		ws.deaths += v
 	case eventAssist:
@@ -200,35 +203,4 @@ func (ws *weaponStats) add(e event, v int) {
 	case eventHitLeg:
 		ws.hits.legs += v
 	}
-}
-
-type roundReason uint8
-
-const (
-	roundReasonBomb roundReason = iota + 1
-	roundReasonDefused
-	roundReasonElimination
-)
-
-type round struct {
-	killFeed    []*roundKill
-	cash        int
-	cashSpend   int
-	equipValue  int
-	survivorsT  int
-	survivorsCT int
-	reason      roundReason
-}
-
-type roundKill struct {
-	killer        uint64
-	victim        uint64
-	assister      uint64
-	headshot      bool
-	wallbang      bool
-	blind         bool
-	throughSmoke  bool
-	noScope       bool
-	assistedFlash bool
-	sinceStart    time.Duration // time passed since round start
 }
