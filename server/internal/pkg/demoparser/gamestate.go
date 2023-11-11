@@ -1,59 +1,139 @@
 package demoparser
 
 import (
+	"errors"
 	"fmt"
 	"log/slog"
 	"time"
 
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
-)
-
-type roundReason uint8
-
-const (
-	roundReasonBomb roundReason = iota + 1
-	roundReasonDefused
-	roundReasonElimination
+	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/events"
 )
 
 type gameStatus int8
 
 const (
-	gameStatusUnknown gameStatus = 0
-	gameStatusDraw    gameStatus = 1
-	gameStatusLose    gameStatus = -1
-	gameStatusWin     gameStatus = 2
+	gameStatusInProgress gameStatus = 0
+	gameStatusDraw       gameStatus = 1
+	gameStatusLose       gameStatus = -1
+	gameStatusWin        gameStatus = 2
 )
 
 type round struct {
-	killFeed   []*roundKill
-	cash       int
-	cashSpend  int
-	equipValue int
-	survivorsA int
-	survivorsB int
-	reason     roundReason
+	StartedAt time.Time
+	TeamA     *roundTeam
+	TeamB     *roundTeam
+	KillFeed  []*roundKill
+	Reason    events.RoundEndReason
+}
+
+func newRound(ts *common.TeamState) round {
+	return round{
+		TeamA:     newRoundTeam(ts.Members(), ts.Team()),
+		TeamB:     newRoundTeam(ts.Opponent.Members(), ts.Opponent.Team()),
+		KillFeed:  make([]*roundKill, 0, 20),
+		Reason:    events.RoundEndReasonStillInProgress,
+		StartedAt: time.Now(),
+	}
+}
+
+func (r *round) end(winner, loser *common.TeamState, reason events.RoundEndReason) {
+	switch winner.Team() {
+	case r.TeamA.Side:
+		r.TeamA.roundEnd(winner)
+		r.TeamB.roundEnd(loser)
+	case r.TeamB.Side:
+		r.TeamA.roundEnd(loser)
+		r.TeamB.roundEnd(winner)
+	}
+
+	r.Reason = reason
+}
+
+type roundTeam struct {
+	Survivors map[uint64]struct{}
+	Cash      int // cash at start of round, must be set on round start
+	CashSpend int // during round, must be set on round end
+	EqValue   int // equipment value on round start, must be set on round end
+	Side      common.Team
+}
+
+// newRoundTeam must be created at round start.
+func newRoundTeam(members []*common.Player, side common.Team) *roundTeam {
+	cash := 0
+	survivors := make(map[uint64]struct{}, len(members))
+
+	for _, m := range members {
+		if !playerConnected(m) {
+			slog.Error("player not added to round team", "player", m)
+			continue
+		}
+
+		cash += m.Money()
+		survivors[m.SteamID64] = struct{}{}
+	}
+
+	return &roundTeam{
+		Cash:      cash,
+		Side:      side,
+		Survivors: survivors,
+	}
+}
+
+func (rt *roundTeam) roundEnd(ts *common.TeamState) {
+	rt.CashSpend = ts.MoneySpentThisRound()
+	rt.EqValue = ts.RoundStartEquipmentValue()
 }
 
 type roundKill struct {
-	killer        uint64
-	victim        uint64
-	assister      uint64
-	headshot      bool
-	wallbang      bool
-	blind         bool
-	throughSmoke  bool
-	noScope       bool
-	assistedFlash bool
-	sinceStart    time.Duration // time passed since round start
+	Killer        uint64
+	Victim        uint64
+	Assister      uint64
+	SinceStart    time.Duration
+	Headshot      bool
+	Wallbang      bool
+	Blind         bool
+	ThroughSmoke  bool
+	NoScope       bool
+	AssistedFlash bool
+	KillerSide    common.Team
+	AssisterSide  common.Team
+	Weapon        common.EquipmentType
+}
+
+func newRoundKill(e events.Kill, roundStartedAt time.Time) *roundKill {
+	k := &roundKill{
+		Killer:       e.Killer.SteamID64,
+		KillerSide:   e.Killer.Team,
+		Victim:       e.Victim.SteamID64,
+		Headshot:     e.IsHeadshot,
+		Wallbang:     e.IsWallBang(),
+		Blind:        e.AttackerBlind,
+		ThroughSmoke: e.ThroughSmoke,
+		NoScope:      e.NoScope,
+		SinceStart:   time.Since(roundStartedAt),
+		Weapon:       e.Weapon.Type,
+	}
+
+	if playerConnected(e.Assister) {
+		k.Assister = e.Assister.SteamID64
+		k.AssisterSide = e.Assister.Team
+		k.AssistedFlash = e.AssistedFlash
+	}
+
+	return k
 }
 
 type gameState struct {
-	rounds     []round
+	Rounds     []round
 	teamA      team
 	teamB      team
 	knifeRound bool
 	started    bool
+}
+
+func newGameState() *gameState {
+	return &gameState{Rounds: make([]round, 0, 50)}
 }
 
 func (gs *gameState) detectKnifeRound(pp []*common.Player) {
@@ -76,6 +156,48 @@ func (gs *gameState) collectStats() bool {
 	return true
 }
 
+func (gs *gameState) startRound(ts *common.TeamState) {
+	gs.Rounds = append(gs.Rounds, newRound(ts))
+}
+
+var (
+	errNoRounds          = errors.New("no rounds found in game state")
+	errInvalidVictimSide = errors.New("invalid victim side")
+)
+
+// killCount appends kill to last (current) round in game state.
+func (gs *gameState) killCount(kill events.Kill) error {
+	if len(gs.Rounds) < 1 {
+		return fmt.Errorf("kill not counted: %w", errNoRounds)
+	}
+
+	// add kill to round kill feed
+	currRound := len(gs.Rounds) - 1
+	gs.Rounds[currRound].KillFeed = append(gs.Rounds[currRound].KillFeed, newRoundKill(kill, gs.Rounds[currRound].StartedAt))
+
+	// remove victim from team survivors list
+	switch kill.Victim.Team {
+	case gs.Rounds[currRound].TeamA.Side:
+		delete(gs.Rounds[currRound].TeamA.Survivors, kill.Victim.SteamID64)
+	case gs.Rounds[currRound].TeamB.Side:
+		delete(gs.Rounds[currRound].TeamB.Survivors, kill.Victim.SteamID64)
+	default:
+		return fmt.Errorf("kill not counted: %w (%d)", errInvalidVictimSide, kill.Victim.Team)
+	}
+
+	return nil
+}
+
+func (gs *gameState) endRound(r events.RoundEnd) error {
+	if len(gs.Rounds) < 1 {
+		return errNoRounds
+	}
+
+	gs.Rounds[len(gs.Rounds)-1].end(r.WinnerState, r.LoserState, r.Reason)
+
+	return nil
+}
+
 type team struct {
 	name    string
 	flag    string
@@ -91,7 +213,7 @@ func newTeam(name, flag string, side common.Team, pp []*common.Player) team {
 		flag:    flag,
 		players: make([]uint64, 0, len(pp)),
 		side:    side,
-		status:  gameStatusUnknown,
+		status:  gameStatusInProgress,
 	}
 
 	for _, p := range pp {

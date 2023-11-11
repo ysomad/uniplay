@@ -29,7 +29,7 @@ func New(demofile io.Reader, demoheader *multipart.FileHeader) (*parser, error) 
 	return &parser{
 		Parser:      demoinfocs.NewParser(d),
 		demosize:    d.size,
-		gameState:   &gameState{},
+		gameState:   newGameState(),
 		playerStats: make(playerStatsMap, 20),
 		weaponStats: make(weaponStatsMap, 20),
 	}, nil
@@ -71,6 +71,9 @@ func (p *parser) Parse() error {
 	p.RegisterEventHandler(p.teamSideSwitchHandler)
 	p.RegisterEventHandler(p.roundMVPAnnouncementHandler)
 
+	p.RegisterEventHandler(p.roundStartHandler)
+	p.RegisterEventHandler(p.roundEndHandler)
+
 	p.RegisterEventHandler(p.bombDefusedHandler)
 	p.RegisterEventHandler(p.bombPlantedHandler)
 
@@ -78,25 +81,56 @@ func (p *parser) Parse() error {
 		return fmt.Errorf("demo not parsed: %w", err)
 	}
 
-	pbb, err := json.MarshalIndent(p.playerStats, "", "  ")
+	playerStatsBytes, err := json.MarshalIndent(p.playerStats, "", "  ")
 	if err != nil {
 		return err
 	}
 
-	if err = os.WriteFile("playerstats.json", pbb, 0o644); err != nil {
+	if err = os.WriteFile("playerstats.json", playerStatsBytes, 0o644); err != nil {
 		return err
 	}
 
-	wbb, err := json.MarshalIndent(p.weaponStats, "", "  ")
+	weaponStatsBytes, err := json.MarshalIndent(p.weaponStats, "", "  ")
 	if err != nil {
 		return err
 	}
 
-	if err = os.WriteFile("weaponstats.json", wbb, 0o644); err != nil {
+	if err = os.WriteFile("weaponstats.json", weaponStatsBytes, 0o644); err != nil {
+		return err
+	}
+
+	gameStateBytes, err := json.MarshalIndent(p.gameState, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	if err = os.WriteFile("gamestate.json", gameStateBytes, 0o644); err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func (p *parser) roundStartHandler(e events.RoundStart) {
+	if !p.gameState.collectStats() {
+		slog.Info("round start event skip",
+			"knife_round", p.gameState.knifeRound,
+			"game_started", p.gameState.started)
+		return
+	}
+
+	p.gameState.startRound(p.GameState().TeamTerrorists())
+}
+
+func (p *parser) roundEndHandler(e events.RoundEnd) {
+	if !p.gameState.collectStats() {
+		slog.Info("round end event skip")
+		return
+	}
+
+	if err := p.gameState.endRound(e); err != nil {
+		slog.Error("round not ended: %w", err)
+	}
 }
 
 func (p *parser) matchStartedChangedHandler(e events.MatchStartedChanged) {
@@ -124,7 +158,14 @@ func (p *parser) killHandler(e events.Kill) {
 		return
 	}
 
+	killer := false
+	victim := false
+
+	// collect stats
+
 	if playerConnected(e.Killer) {
+		killer = true
+
 		p.playerStats.incr(e.Killer.SteamID64, eventKill)
 		p.weaponStats.incr(e.Killer.SteamID64, eventKill, e.Weapon.Type)
 
@@ -157,6 +198,8 @@ func (p *parser) killHandler(e events.Kill) {
 	}
 
 	if playerConnected(e.Victim) {
+		victim = true
+
 		p.playerStats.incr(e.Victim.SteamID64, eventDeath)
 		p.weaponStats.incr(e.Victim.SteamID64, eventDeath, e.Weapon.Type)
 	} else {
@@ -172,6 +215,16 @@ func (p *parser) killHandler(e events.Kill) {
 		}
 	} else {
 		slog.Error("kill assist by unconnected player", "assister", e.Assister)
+	}
+
+	// collect kill feed
+	if killer && victim {
+		p.gameState.killCount(e)
+	} else {
+		slog.Error("kill not added to kill feed",
+			"killer", e.Killer,
+			"victim", e.Victim,
+			"assister", e.Assister)
 	}
 }
 
@@ -204,9 +257,12 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 }
 
 func (p *parser) teamSideSwitchHandler(_ events.TeamSideSwitch) {
+	slog.Info("team side switch")
+
 	if err := p.gameState.teamA.swapSide(); err != nil {
 		slog.Error("team A side not swapped", "err", err.Error())
 	}
+
 	if err := p.gameState.teamB.swapSide(); err != nil {
 		slog.Error("team B side not swapped", "err", err.Error())
 	}

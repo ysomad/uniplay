@@ -167,7 +167,7 @@ func Test_gameState_collectStats(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gs := &gameState{
-				rounds:     tt.fields.rounds,
+				Rounds:     tt.fields.rounds,
 				teamA:      tt.fields.teamA,
 				teamB:      tt.fields.teamB,
 				knifeRound: tt.fields.knifeRound,
@@ -222,7 +222,7 @@ func Test_newTeam(t *testing.T) {
 					987654321,
 				},
 				side:   common.TeamTerrorists,
-				status: gameStatusUnknown,
+				status: gameStatusInProgress,
 			},
 		},
 		{
@@ -246,7 +246,7 @@ func Test_newTeam(t *testing.T) {
 				flag:    "FLAG_B",
 				players: []uint64{},
 				side:    common.TeamCounterTerrorists,
-				status:  gameStatusUnknown,
+				status:  gameStatusInProgress,
 			},
 		},
 		{
@@ -270,7 +270,7 @@ func Test_newTeam(t *testing.T) {
 				flag:    "FLAG_C",
 				players: []uint64{},
 				side:    common.TeamTerrorists,
-				status:  gameStatusUnknown,
+				status:  gameStatusInProgress,
 			},
 		},
 		{
@@ -294,7 +294,7 @@ func Test_newTeam(t *testing.T) {
 				flag:    "FLAG_D",
 				players: []uint64{},
 				side:    common.TeamCounterTerrorists,
-				status:  gameStatusUnknown,
+				status:  gameStatusInProgress,
 			},
 		},
 		{
@@ -310,7 +310,7 @@ func Test_newTeam(t *testing.T) {
 				flag:    "FLAG_E",
 				players: []uint64{},
 				side:    common.TeamTerrorists,
-				status:  gameStatusUnknown,
+				status:  gameStatusInProgress,
 			},
 		},
 	}
@@ -345,7 +345,7 @@ func Test_team_swapSide(t *testing.T) {
 				players: []uint64{1, 2, 3},
 				score:   5,
 				side:    common.TeamCounterTerrorists,
-				status:  gameStatusUnknown,
+				status:  gameStatusInProgress,
 			},
 			wantSide: common.TeamTerrorists,
 			wantErr:  false,
@@ -358,7 +358,7 @@ func Test_team_swapSide(t *testing.T) {
 				players: []uint64{4, 5, 6},
 				score:   3,
 				side:    common.TeamTerrorists,
-				status:  gameStatusUnknown,
+				status:  gameStatusInProgress,
 			},
 			wantSide: common.TeamCounterTerrorists,
 			wantErr:  false,
@@ -371,7 +371,7 @@ func Test_team_swapSide(t *testing.T) {
 				players: []uint64{7, 8, 9},
 				score:   7,
 				side:    common.TeamSpectators,
-				status:  gameStatusUnknown,
+				status:  gameStatusInProgress,
 			},
 			wantSide: common.TeamSpectators,
 			wantErr:  true,
@@ -384,7 +384,7 @@ func Test_team_swapSide(t *testing.T) {
 				players: []uint64{13, 14, 15},
 				score:   8,
 				side:    common.TeamUnassigned,
-				status:  gameStatusUnknown,
+				status:  gameStatusInProgress,
 			},
 			wantSide: common.TeamUnassigned,
 			wantErr:  true,
