@@ -108,6 +108,8 @@ func (p *parser) Parse() error {
 		return err
 	}
 
+	p.weaponStats.calculateUnobtainableStats()
+
 	return nil
 }
 
@@ -236,6 +238,11 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 		return
 	}
 
+	if e.HealthDamage == 0 {
+		slog.Error("skipping no health damage hurt event", "event", e)
+		return
+	}
+
 	if playerConnected(e.Player) {
 		p.playerStats.add(e.Player.SteamID64, eventDmgTaken, e.HealthDamage)
 		p.weaponStats.add(e.Player.SteamID64, eventDmgTaken, e.Weapon.Type, e.HealthDamage)
@@ -246,7 +253,10 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 	if playerConnected(e.Attacker) {
 		p.playerStats.add(e.Attacker.SteamID64, eventDmgDealt, e.HealthDamage)
 		p.weaponStats.add(e.Attacker.SteamID64, eventDmgDealt, e.Weapon.Type, e.HealthDamage)
-		p.weaponStats.incr(e.Attacker.SteamID64, p.hitgroupToEvent(e.HitGroup), e.Weapon.Type)
+
+		if e.HitGroup != events.HitGroupGeneric && e.HitGroup != events.HitGroupGear {
+			p.weaponStats.incr(e.Attacker.SteamID64, p.hitgroupToEvent(e.HitGroup), e.Weapon.Type)
+		}
 
 		if e.Weapon.Class() == common.EqClassGrenade {
 			p.playerStats.add(e.Attacker.SteamID64, eventDmgGrenadeDealt, e.HealthDamage)

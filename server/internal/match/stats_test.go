@@ -2196,7 +2196,6 @@ func Test_stats_incrWeaponStat(t *testing.T) {
 		args   args
 		want   map[uint64]map[common.EquipmentType]*weaponStat
 	}{
-
 		{
 			name: "add 1 kill to existed weapon",
 			fields: fields{

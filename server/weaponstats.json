@@ -18,6 +18,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 7
@@ -44,6 +45,7 @@
         "Smoke": 1,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 298,
         "Taken": 201
@@ -70,6 +72,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 74,
         "Taken": 106
@@ -96,6 +99,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 56
@@ -122,6 +126,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 72
@@ -148,6 +153,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 57
@@ -174,6 +180,7 @@
         "Smoke": 1,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 938,
         "Taken": 140
@@ -200,6 +207,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 22
@@ -226,6 +234,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 50,
         "Taken": 407
@@ -252,6 +261,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -278,6 +288,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 305
@@ -304,6 +315,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -330,6 +342,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -356,6 +369,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 44,
         "Taken": 19
@@ -382,6 +396,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 18
@@ -408,6 +423,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -434,6 +450,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 1
@@ -460,6 +477,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 102,
         "Taken": 6
@@ -486,6 +504,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 18,
         "Taken": 0
@@ -512,6 +531,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 123
@@ -540,6 +560,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 14
@@ -566,6 +587,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 379
@@ -592,6 +614,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 26
@@ -618,6 +641,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 12,
         "Taken": 118
@@ -644,6 +668,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 40
@@ -670,6 +695,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 139
@@ -696,6 +722,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 7
@@ -722,6 +749,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 1153,
         "Taken": 548
@@ -748,6 +776,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 25,
         "Taken": 0
@@ -774,6 +803,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 374,
         "Taken": 140
@@ -800,6 +830,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 150,
         "Taken": 203
@@ -826,6 +857,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -852,6 +884,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 10,
         "Taken": 0
@@ -878,6 +911,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 64,
         "Taken": 11
@@ -904,6 +938,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 1
@@ -930,6 +965,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -956,6 +992,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 119,
         "Taken": 50
@@ -982,6 +1019,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 124
@@ -1010,6 +1048,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 93,
         "Taken": 127
@@ -1036,6 +1075,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 100
@@ -1062,6 +1102,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 58
@@ -1088,6 +1129,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 988,
         "Taken": 412
@@ -1114,6 +1156,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 85,
         "Taken": 0
@@ -1140,6 +1183,7 @@
         "Smoke": 1,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 121,
         "Taken": 527
@@ -1166,6 +1210,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 83
@@ -1192,6 +1237,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 207,
         "Taken": 34
@@ -1218,6 +1264,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1244,6 +1291,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 32,
         "Taken": 0
@@ -1270,6 +1318,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 1,
         "Taken": 74
@@ -1296,6 +1345,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1322,6 +1372,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1348,6 +1399,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 173,
         "Taken": 3
@@ -1374,6 +1426,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 125
@@ -1400,6 +1453,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 113
@@ -1428,6 +1482,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 52
@@ -1454,6 +1509,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 223
@@ -1480,6 +1536,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 186,
         "Taken": 0
@@ -1506,6 +1563,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1532,6 +1590,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 358,
         "Taken": 1207
@@ -1558,6 +1617,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 25
@@ -1584,6 +1644,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 104,
         "Taken": 295
@@ -1610,6 +1671,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 83,
         "Taken": 0
@@ -1636,6 +1698,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 155
@@ -1662,6 +1725,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1688,6 +1752,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 74
@@ -1714,6 +1779,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 9,
         "Taken": 1
@@ -1740,6 +1806,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1766,6 +1833,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1792,6 +1860,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 41,
         "Taken": 109
@@ -1818,6 +1887,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1846,6 +1916,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 115
@@ -1872,6 +1943,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 222,
         "Taken": 72
@@ -1898,6 +1970,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 14
@@ -1924,6 +1997,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 70,
         "Taken": 0
@@ -1950,6 +2024,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 90
@@ -1976,6 +2051,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 110
@@ -2002,6 +2078,7 @@
         "Smoke": 1,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 1692,
         "Taken": 59
@@ -2028,6 +2105,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 377
@@ -2054,6 +2132,7 @@
         "Smoke": 1,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 325,
         "Taken": 0
@@ -2080,6 +2159,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 34
@@ -2106,6 +2186,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2132,6 +2213,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 54,
         "Taken": 0
@@ -2158,6 +2240,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 3,
         "Taken": 51
@@ -2184,6 +2267,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2210,6 +2294,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2236,6 +2321,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 199,
         "Taken": 44
@@ -2262,6 +2348,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 94
@@ -2288,6 +2375,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 132
@@ -2316,6 +2404,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 179,
         "Taken": 29
@@ -2342,6 +2431,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 188
@@ -2368,6 +2458,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 301,
         "Taken": 92
@@ -2394,6 +2485,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 66
@@ -2420,6 +2512,7 @@
         "Smoke": 1,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 965,
         "Taken": 85
@@ -2446,6 +2539,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 239,
         "Taken": 0
@@ -2472,6 +2566,7 @@
         "Smoke": 1,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 194,
         "Taken": 427
@@ -2498,6 +2593,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 219,
         "Taken": 0
@@ -2524,6 +2620,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 314,
         "Taken": 52
@@ -2550,6 +2647,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2576,6 +2674,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2602,6 +2701,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 45,
         "Taken": 0
@@ -2628,6 +2728,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 24,
         "Taken": 0
@@ -2654,6 +2755,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2680,6 +2782,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2706,6 +2809,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 23,
         "Taken": 66
@@ -2732,6 +2836,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 126
@@ -2760,6 +2865,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 120
@@ -2786,6 +2892,7 @@
         "Smoke": 1,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 399,
         "Taken": 122
@@ -2812,6 +2919,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 26,
         "Taken": 0
@@ -2838,6 +2946,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2864,6 +2973,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2890,6 +3000,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2916,6 +3027,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2942,6 +3054,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 119,
         "Taken": 1062
@@ -2968,6 +3081,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 22,
         "Taken": 156
@@ -2994,6 +3108,7 @@
         "Smoke": 1,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 77,
         "Taken": 121
@@ -3020,6 +3135,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 109
@@ -3046,6 +3162,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 186,
         "Taken": 323
@@ -3072,6 +3189,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3098,6 +3216,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 59,
         "Taken": 104
@@ -3124,6 +3243,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 71,
         "Taken": 73
@@ -3150,6 +3270,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 1,
         "Taken": 0
@@ -3176,6 +3297,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3202,6 +3324,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 5,
         "Taken": 98
@@ -3228,6 +3351,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 237,
         "Taken": 0
@@ -3256,6 +3380,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3282,6 +3407,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 208,
         "Taken": 132
@@ -3308,6 +3434,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 14,
         "Taken": 0
@@ -3334,6 +3461,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 12
@@ -3360,6 +3488,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 144,
         "Taken": 1064
@@ -3386,6 +3515,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 85
@@ -3412,6 +3542,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 701,
         "Taken": 133
@@ -3438,6 +3569,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 108,
         "Taken": 251
@@ -3464,6 +3596,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3490,6 +3623,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 6
@@ -3516,6 +3650,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 25,
         "Taken": 24
@@ -3542,6 +3677,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3568,6 +3704,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3594,6 +3731,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 32,
         "Taken": 277
@@ -3622,6 +3760,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 128,
         "Taken": 44
@@ -3648,6 +3787,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 180
@@ -3674,6 +3814,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3700,6 +3841,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 206,
         "Taken": 127
@@ -3726,6 +3868,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3752,6 +3895,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 176,
         "Taken": 0
@@ -3778,6 +3922,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 115,
         "Taken": 0
@@ -3804,6 +3949,7 @@
         "Smoke": 1,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 246,
         "Taken": 1314
@@ -3830,6 +3976,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 24
@@ -3856,6 +4003,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 548,
         "Taken": 82
@@ -3882,6 +4030,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 76,
         "Taken": 134
@@ -3908,6 +4057,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 5
@@ -3934,6 +4084,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3960,6 +4111,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 40
@@ -3986,6 +4138,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 48,
         "Taken": 3
@@ -4012,6 +4165,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -4038,6 +4192,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 1,
         "Taken": 0
@@ -4064,6 +4219,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 24,
         "Taken": 43
@@ -4090,6 +4246,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 18
@@ -4116,6 +4273,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 219,
         "Taken": 0
@@ -4142,6 +4300,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 381,
         "Taken": 0
@@ -4170,6 +4329,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 37,
         "Taken": 15
@@ -4196,6 +4356,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 360,
         "Taken": 127
@@ -4222,6 +4383,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 210,
         "Taken": 95
@@ -4248,6 +4410,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 211,
         "Taken": 0
@@ -4274,6 +4437,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 7,
         "Taken": 0
@@ -4300,6 +4464,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 377,
         "Taken": 1089
@@ -4326,6 +4491,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 59
@@ -4352,6 +4518,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 448,
         "Taken": 108
@@ -4378,6 +4545,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 110
@@ -4404,6 +4572,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 224,
         "Taken": 133
@@ -4430,6 +4599,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 3
@@ -4456,6 +4626,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 34,
         "Taken": 0
@@ -4482,6 +4653,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 1
@@ -4508,6 +4680,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 10,
         "Taken": 0
@@ -4534,6 +4707,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -4560,6 +4734,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -4586,6 +4761,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 107,
         "Taken": 129
@@ -4612,6 +4788,7 @@
         "Smoke": 0,
         "NoScope": 0
       },
+      "Accuracy": null,
       "Damage": {
         "Dealt": 0,
         "Taken": 0

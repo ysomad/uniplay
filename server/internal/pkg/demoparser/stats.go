@@ -1,7 +1,7 @@
 package demoparser
 
 import (
-	"encoding/json"
+	"log/slog"
 
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
 	"github.com/ysomad/uniplay/internal/pkg/stat"
@@ -30,6 +30,11 @@ type hitStats struct {
 	Stomach int
 	Arms    int
 	Legs    int
+}
+
+// calculateTotal calculate total amount of hits.
+func (hs *hitStats) calculateTotal() {
+	hs.Total = hs.Head + hs.Neck + hs.Chest + hs.Stomach + hs.Arms + hs.Legs
 }
 
 type killStats struct {
@@ -67,6 +72,14 @@ func newAccuracyStats(shots int, hits *hitStats) *accuracyStats {
 type playerStatsMap map[uint64]*playerStats
 
 func (psm playerStatsMap) add(steamID uint64, ev event, val int) {
+	if ev == eventUnknown || val <= 0 {
+		slog.Error("player stat not added",
+			"steam_id", steamID,
+			"event", ev,
+			"value", val)
+		return
+	}
+
 	if _, ok := psm[steamID]; !ok {
 		psm[steamID] = newPlayerStats()
 	}
@@ -77,8 +90,6 @@ func (psm playerStatsMap) add(steamID uint64, ev event, val int) {
 func (psm playerStatsMap) incr(steamID uint64, ev event) {
 	psm.add(steamID, ev, 1)
 }
-
-func (psm playerStatsMap) Marshal() ([]byte, error) { return json.Marshal(psm) }
 
 type playerStats struct {
 	Kills            *killStats
@@ -135,6 +146,10 @@ func (ps *playerStats) add(e event, v int) {
 		ps.Bomb.Defused += v
 	case eventBombPlanted:
 		ps.Bomb.Planted += v
+	default:
+		slog.Error("player stats event not added",
+			"event", e,
+			"value", v)
 	}
 }
 
@@ -154,6 +169,15 @@ func equipValid(e common.EquipmentType) bool {
 type weaponStatsMap map[uint64]map[int]*weaponStats
 
 func (ws weaponStatsMap) add(steamID uint64, ev event, et common.EquipmentType, val int) {
+	if ev == eventUnknown || val <= 0 {
+		slog.Error("weapon stat not added",
+			"steam_id", steamID,
+			"event", ev,
+			"value", val,
+			"weapon", et.String())
+		return
+	}
+
 	if !equipValid(et) {
 		return
 	}
@@ -176,15 +200,26 @@ func (ws weaponStatsMap) incr(steamID uint64, ev event, et common.EquipmentType)
 	ws.add(steamID, ev, et, 1)
 }
 
-func (ws weaponStatsMap) Marshal() ([]byte, error) { return json.Marshal(ws) }
+// calculateUnobtainableStats calculates unobtainable stats from demo for every player weapon stats.
+// (because its not obtainable from demo and must be calculated manually).
+func (wsm weaponStatsMap) calculateUnobtainableStats() {
+	for _, wss := range wsm {
+		for _, ws := range wss {
+			ws.Hits.calculateTotal()
+			ws.Accuracy = newAccuracyStats(ws.Shots, ws.Hits)
+
+		}
+	}
+}
 
 type weaponStats struct {
-	Hits    *hitStats
-	Kills   *killStats
-	Damage  dmgStats
-	Deaths  int
-	Assists int
-	Shots   int
+	Hits     *hitStats
+	Kills    *killStats
+	Accuracy *accuracyStats
+	Damage   dmgStats
+	Deaths   int
+	Assists  int
+	Shots    int
 }
 
 func newWeaponStats() *weaponStats {
@@ -230,5 +265,9 @@ func (ws *weaponStats) add(e event, v int) {
 		ws.Hits.Arms += v
 	case eventHitLeg:
 		ws.Hits.Legs += v
+	default:
+		slog.Error("weapon stats event not added",
+			"event", e,
+			"value", v)
 	}
 }

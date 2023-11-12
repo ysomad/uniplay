@@ -715,15 +715,7 @@ func Test_newAccuracyStats(t *testing.T) {
 					Legs:    -2,
 				},
 			},
-			want: &accuracyStats{
-				Total:   0.0,
-				Head:    0.0,
-				Neck:    0.0,
-				Chest:   0.0,
-				Stomach: 0.0,
-				Arms:    0.0,
-				Legs:    0.0,
-			},
+			want: &accuracyStats{},
 		},
 	}
 	for _, tt := range tests {

@@ -1,11 +1,16 @@
 package demoparser
 
-import "github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/events"
+import (
+	"log/slog"
+
+	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/events"
+)
 
 type event uint8
 
 const (
-	eventKill event = iota + 1
+	eventUnknown event = iota
+	eventKill
 	eventHSKill
 	eventBlindKill
 	eventWBKill
@@ -51,6 +56,7 @@ func (p *parser) hitgroupToEvent(hg events.HitGroup) event {
 	case events.HitGroupLeftLeg, events.HitGroupRightLeg:
 		return eventHitLeg
 	default:
-		return 0
+		slog.Error("unsupported hitgroup", "hitgroup", hg)
+		return eventUnknown
 	}
 }
