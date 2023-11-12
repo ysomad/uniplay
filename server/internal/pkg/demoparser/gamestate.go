@@ -27,8 +27,8 @@ type round struct {
 	Reason    events.RoundEndReason
 }
 
-func newRound(ts *common.TeamState) round {
-	return round{
+func newRound(ts *common.TeamState) *round {
+	return &round{
 		TeamA:     newRoundTeam(ts.Members(), ts.Team()),
 		TeamB:     newRoundTeam(ts.Opponent.Members(), ts.Opponent.Team()),
 		KillFeed:  make([]*roundKill, 0, 20),
@@ -92,7 +92,7 @@ type roundKill struct {
 	SinceStart    time.Duration
 	Headshot      bool
 	Wallbang      bool
-	Blind         bool
+	KillerBlind   bool
 	ThroughSmoke  bool
 	NoScope       bool
 	AssistedFlash bool
@@ -101,31 +101,31 @@ type roundKill struct {
 	Weapon        common.EquipmentType
 }
 
-func newRoundKill(e events.Kill, roundStartedAt time.Time) *roundKill {
+func newRoundKill(kill events.Kill, roundStartedAt time.Time) *roundKill {
 	k := &roundKill{
-		Killer:       e.Killer.SteamID64,
-		KillerSide:   e.Killer.Team,
-		Victim:       e.Victim.SteamID64,
-		Headshot:     e.IsHeadshot,
-		Wallbang:     e.IsWallBang(),
-		Blind:        e.AttackerBlind,
-		ThroughSmoke: e.ThroughSmoke,
-		NoScope:      e.NoScope,
-		SinceStart:   time.Since(roundStartedAt),
-		Weapon:       e.Weapon.Type,
+		Killer:       kill.Killer.SteamID64,
+		KillerSide:   kill.Killer.Team,
+		Victim:       kill.Victim.SteamID64,
+		Headshot:     kill.IsHeadshot,
+		Wallbang:     kill.IsWallBang(),
+		KillerBlind:  kill.AttackerBlind,
+		ThroughSmoke: kill.ThroughSmoke,
+		NoScope:      kill.NoScope,
+		SinceStart:   time.Duration(time.Since(roundStartedAt).Seconds()),
+		Weapon:       kill.Weapon.Type,
 	}
 
-	if playerConnected(e.Assister) {
-		k.Assister = e.Assister.SteamID64
-		k.AssisterSide = e.Assister.Team
-		k.AssistedFlash = e.AssistedFlash
+	if playerConnected(kill.Assister) {
+		k.Assister = kill.Assister.SteamID64
+		k.AssisterSide = kill.Assister.Team
+		k.AssistedFlash = kill.AssistedFlash
 	}
 
 	return k
 }
 
 type gameState struct {
-	Rounds     []round
+	Rounds     []*round
 	teamA      team
 	teamB      team
 	knifeRound bool
@@ -133,11 +133,12 @@ type gameState struct {
 }
 
 func newGameState() *gameState {
-	return &gameState{Rounds: make([]round, 0, 50)}
+	return &gameState{Rounds: make([]*round, 0, 50)}
 }
 
 func (gs *gameState) detectKnifeRound(pp []*common.Player) {
 	gs.knifeRound = false
+
 	for _, p := range pp {
 		weapons := p.Weapons()
 		if len(weapons) == 1 && weapons[0].Type == common.EqKnife {
@@ -145,6 +146,7 @@ func (gs *gameState) detectKnifeRound(pp []*common.Player) {
 			break
 		}
 	}
+
 	slog.Info("knife round set to", "knife_round", gs.knifeRound)
 }
 
@@ -172,15 +174,15 @@ func (gs *gameState) killCount(kill events.Kill) error {
 	}
 
 	// add kill to round kill feed
-	currRound := len(gs.Rounds) - 1
-	gs.Rounds[currRound].KillFeed = append(gs.Rounds[currRound].KillFeed, newRoundKill(kill, gs.Rounds[currRound].StartedAt))
+	currRound := gs.Rounds[len(gs.Rounds)-1]
+	currRound.KillFeed = append(currRound.KillFeed, newRoundKill(kill, currRound.StartedAt))
 
 	// remove victim from team survivors list
 	switch kill.Victim.Team {
-	case gs.Rounds[currRound].TeamA.Side:
-		delete(gs.Rounds[currRound].TeamA.Survivors, kill.Victim.SteamID64)
-	case gs.Rounds[currRound].TeamB.Side:
-		delete(gs.Rounds[currRound].TeamB.Survivors, kill.Victim.SteamID64)
+	case currRound.TeamA.Side:
+		delete(currRound.TeamA.Survivors, kill.Victim.SteamID64)
+	case currRound.TeamB.Side:
+		delete(currRound.TeamB.Survivors, kill.Victim.SteamID64)
 	default:
 		return fmt.Errorf("kill not counted: %w (%d)", errInvalidVictimSide, kill.Victim.Team)
 	}
