@@ -207,7 +207,6 @@ func (wsm weaponStatsMap) calculateUnobtainableStats() {
 		for _, ws := range wss {
 			ws.Hits.calculateTotal()
 			ws.Accuracy = newAccuracyStats(ws.Shots, ws.Hits)
-
 		}
 	}
 }

@@ -18,7 +18,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 7
@@ -29,7 +37,7 @@
     },
     "102": {
       "Hits": {
-        "Total": 0,
+        "Total": 8,
         "Head": 4,
         "Neck": 0,
         "Chest": 3,
@@ -45,7 +53,15 @@
         "Smoke": 1,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 21.05,
+        "Head": 50,
+        "Neck": 0,
+        "Chest": 37.5,
+        "Stomach": 0,
+        "Arms": 12.5,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 298,
         "Taken": 201
@@ -56,7 +72,7 @@
     },
     "2": {
       "Hits": {
-        "Total": 0,
+        "Total": 8,
         "Head": 1,
         "Neck": 0,
         "Chest": 5,
@@ -72,7 +88,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 14.55,
+        "Head": 12.5,
+        "Neck": 0,
+        "Chest": 62.5,
+        "Stomach": 12.5,
+        "Arms": 12.5,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 74,
         "Taken": 106
@@ -99,7 +123,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 56
@@ -126,7 +158,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 72
@@ -153,7 +193,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 57
@@ -164,7 +212,7 @@
     },
     "303": {
       "Hits": {
-        "Total": 0,
+        "Total": 18,
         "Head": 5,
         "Neck": 0,
         "Chest": 9,
@@ -180,7 +228,15 @@
         "Smoke": 1,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 11.32,
+        "Head": 27.78,
+        "Neck": 0,
+        "Chest": 50,
+        "Stomach": 16.67,
+        "Arms": 5.56,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 938,
         "Taken": 140
@@ -207,7 +263,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 22
@@ -218,7 +282,7 @@
     },
     "305": {
       "Hits": {
-        "Total": 0,
+        "Total": 2,
         "Head": 0,
         "Neck": 0,
         "Chest": 1,
@@ -234,7 +298,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 18.18,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 50,
+        "Stomach": 0,
+        "Arms": 50,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 50,
         "Taken": 407
@@ -261,7 +333,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -288,7 +368,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 305
@@ -315,7 +403,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -342,7 +438,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -369,7 +473,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 44,
         "Taken": 19
@@ -396,7 +508,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 18
@@ -423,7 +543,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -450,7 +578,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 1
@@ -477,7 +613,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 102,
         "Taken": 6
@@ -488,7 +632,7 @@
     },
     "6": {
       "Hits": {
-        "Total": 0,
+        "Total": 1,
         "Head": 0,
         "Neck": 0,
         "Chest": 1,
@@ -504,7 +648,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 50,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 100,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 18,
         "Taken": 0
@@ -531,7 +683,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 123
@@ -560,7 +720,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 14
@@ -587,7 +755,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 379
@@ -614,7 +790,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 26
@@ -625,7 +809,7 @@
     },
     "2": {
       "Hits": {
-        "Total": 0,
+        "Total": 1,
         "Head": 0,
         "Neck": 0,
         "Chest": 1,
@@ -641,7 +825,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 50,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 100,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 12,
         "Taken": 118
@@ -668,7 +860,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 40
@@ -695,7 +895,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 139
@@ -722,7 +930,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 7
@@ -733,7 +949,7 @@
     },
     "303": {
       "Hits": {
-        "Total": 0,
+        "Total": 28,
         "Head": 7,
         "Neck": 0,
         "Chest": 11,
@@ -749,7 +965,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 11.07,
+        "Head": 25,
+        "Neck": 0,
+        "Chest": 39.29,
+        "Stomach": 10.71,
+        "Arms": 10.71,
+        "Legs": 14.29
+      },
       "Damage": {
         "Dealt": 1153,
         "Taken": 548
@@ -760,7 +984,7 @@
     },
     "304": {
       "Hits": {
-        "Total": 0,
+        "Total": 1,
         "Head": 0,
         "Neck": 0,
         "Chest": 1,
@@ -776,7 +1000,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 100,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 25,
         "Taken": 0
@@ -787,7 +1019,7 @@
     },
     "305": {
       "Hits": {
-        "Total": 0,
+        "Total": 9,
         "Head": 4,
         "Neck": 0,
         "Chest": 5,
@@ -803,7 +1035,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 5.81,
+        "Head": 44.44,
+        "Neck": 0,
+        "Chest": 55.56,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 374,
         "Taken": 140
@@ -814,7 +1054,7 @@
     },
     "4": {
       "Hits": {
-        "Total": 0,
+        "Total": 3,
         "Head": 0,
         "Neck": 0,
         "Chest": 2,
@@ -830,7 +1070,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 14.29,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 66.67,
+        "Stomach": 33.33,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 150,
         "Taken": 203
@@ -857,7 +1105,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -884,7 +1140,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 10,
         "Taken": 0
@@ -911,7 +1175,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 64,
         "Taken": 11
@@ -938,7 +1210,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 1
@@ -965,7 +1245,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -992,7 +1280,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 119,
         "Taken": 50
@@ -1019,7 +1315,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 124
@@ -1032,7 +1336,7 @@
   "76561198024615867": {
     "102": {
       "Hits": {
-        "Total": 0,
+        "Total": 7,
         "Head": 0,
         "Neck": 0,
         "Chest": 4,
@@ -1048,7 +1352,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 25,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 57.14,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 42.86
+      },
       "Damage": {
         "Dealt": 93,
         "Taken": 127
@@ -1075,7 +1387,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 100
@@ -1102,7 +1422,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 58
@@ -1113,7 +1441,7 @@
     },
     "303": {
       "Hits": {
-        "Total": 0,
+        "Total": 18,
         "Head": 5,
         "Neck": 1,
         "Chest": 7,
@@ -1129,7 +1457,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 13.95,
+        "Head": 27.78,
+        "Neck": 5.56,
+        "Chest": 38.89,
+        "Stomach": 5.56,
+        "Arms": 11.11,
+        "Legs": 11.11
+      },
       "Damage": {
         "Dealt": 988,
         "Taken": 412
@@ -1140,7 +1476,7 @@
     },
     "304": {
       "Hits": {
-        "Total": 0,
+        "Total": 1,
         "Head": 1,
         "Neck": 0,
         "Chest": 0,
@@ -1156,7 +1492,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 100,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 85,
         "Taken": 0
@@ -1167,7 +1511,7 @@
     },
     "305": {
       "Hits": {
-        "Total": 0,
+        "Total": 5,
         "Head": 0,
         "Neck": 0,
         "Chest": 4,
@@ -1183,7 +1527,15 @@
         "Smoke": 1,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 15.63,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 80,
+        "Stomach": 20,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 121,
         "Taken": 527
@@ -1210,7 +1562,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 83
@@ -1221,7 +1581,7 @@
     },
     "4": {
       "Hits": {
-        "Total": 0,
+        "Total": 2,
         "Head": 1,
         "Neck": 0,
         "Chest": 0,
@@ -1237,7 +1597,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 20,
+        "Head": 50,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 50,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 207,
         "Taken": 34
@@ -1264,7 +1632,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1291,7 +1667,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 32,
         "Taken": 0
@@ -1318,7 +1702,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 1,
         "Taken": 74
@@ -1345,7 +1737,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1372,7 +1772,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1399,7 +1807,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 173,
         "Taken": 3
@@ -1426,7 +1842,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 125
@@ -1453,7 +1877,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 113
@@ -1482,7 +1914,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 52
@@ -1509,7 +1949,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 223
@@ -1520,7 +1968,7 @@
     },
     "204": {
       "Hits": {
-        "Total": 0,
+        "Total": 8,
         "Head": 2,
         "Neck": 0,
         "Chest": 4,
@@ -1536,7 +1984,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 200,
+        "Head": 25,
+        "Neck": 0,
+        "Chest": 50,
+        "Stomach": 25,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 186,
         "Taken": 0
@@ -1563,7 +2019,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1574,7 +2038,7 @@
     },
     "303": {
       "Hits": {
-        "Total": 0,
+        "Total": 7,
         "Head": 2,
         "Neck": 0,
         "Chest": 5,
@@ -1590,7 +2054,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 9.21,
+        "Head": 28.57,
+        "Neck": 0,
+        "Chest": 71.43,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 358,
         "Taken": 1207
@@ -1617,7 +2089,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 25
@@ -1628,7 +2108,7 @@
     },
     "305": {
       "Hits": {
-        "Total": 0,
+        "Total": 2,
         "Head": 1,
         "Neck": 0,
         "Chest": 0,
@@ -1644,7 +2124,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 20,
+        "Head": 50,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 50,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 104,
         "Taken": 295
@@ -1655,7 +2143,7 @@
     },
     "309": {
       "Hits": {
-        "Total": 0,
+        "Total": 1,
         "Head": 0,
         "Neck": 0,
         "Chest": 0,
@@ -1671,7 +2159,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 100,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 100
+      },
       "Damage": {
         "Dealt": 83,
         "Taken": 0
@@ -1698,7 +2194,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 155
@@ -1725,7 +2229,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1752,7 +2264,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 74
@@ -1779,7 +2299,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 9,
         "Taken": 1
@@ -1806,7 +2334,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1833,7 +2369,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1860,7 +2404,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 41,
         "Taken": 109
@@ -1887,7 +2439,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -1916,7 +2476,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 115
@@ -1927,7 +2495,7 @@
     },
     "102": {
       "Hits": {
-        "Total": 0,
+        "Total": 6,
         "Head": 4,
         "Neck": 0,
         "Chest": 0,
@@ -1943,7 +2511,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 20,
+        "Head": 66.67,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 16.67,
+        "Arms": 16.67,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 222,
         "Taken": 72
@@ -1970,7 +2546,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 14
@@ -1981,7 +2565,7 @@
     },
     "2": {
       "Hits": {
-        "Total": 0,
+        "Total": 3,
         "Head": 1,
         "Neck": 0,
         "Chest": 1,
@@ -1997,7 +2581,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 15.79,
+        "Head": 33.33,
+        "Neck": 0,
+        "Chest": 33.33,
+        "Stomach": 0,
+        "Arms": 33.33,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 70,
         "Taken": 0
@@ -2024,7 +2616,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 90
@@ -2051,7 +2651,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 110
@@ -2062,7 +2670,7 @@
     },
     "303": {
       "Hits": {
-        "Total": 0,
+        "Total": 26,
         "Head": 10,
         "Neck": 0,
         "Chest": 7,
@@ -2078,7 +2686,15 @@
         "Smoke": 1,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 14.94,
+        "Head": 38.46,
+        "Neck": 0,
+        "Chest": 26.92,
+        "Stomach": 19.23,
+        "Arms": 3.85,
+        "Legs": 11.54
+      },
       "Damage": {
         "Dealt": 1692,
         "Taken": 59
@@ -2105,7 +2721,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 377
@@ -2116,7 +2740,7 @@
     },
     "4": {
       "Hits": {
-        "Total": 0,
+        "Total": 4,
         "Head": 1,
         "Neck": 0,
         "Chest": 2,
@@ -2132,7 +2756,15 @@
         "Smoke": 1,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 33.33,
+        "Head": 25,
+        "Neck": 0,
+        "Chest": 50,
+        "Stomach": 25,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 325,
         "Taken": 0
@@ -2159,7 +2791,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 34
@@ -2186,7 +2826,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2213,7 +2861,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 54,
         "Taken": 0
@@ -2240,7 +2896,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 3,
         "Taken": 51
@@ -2267,7 +2931,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2294,7 +2966,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2321,7 +3001,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 199,
         "Taken": 44
@@ -2348,7 +3036,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 94
@@ -2375,7 +3071,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 132
@@ -2388,7 +3092,7 @@
   "76561198063336407": {
     "1": {
       "Hits": {
-        "Total": 0,
+        "Total": 5,
         "Head": 1,
         "Neck": 0,
         "Chest": 3,
@@ -2404,7 +3108,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 33.33,
+        "Head": 20,
+        "Neck": 0,
+        "Chest": 60,
+        "Stomach": 20,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 179,
         "Taken": 29
@@ -2431,7 +3143,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 188
@@ -2442,7 +3162,7 @@
     },
     "2": {
       "Hits": {
-        "Total": 0,
+        "Total": 5,
         "Head": 3,
         "Neck": 0,
         "Chest": 2,
@@ -2458,7 +3178,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 16.13,
+        "Head": 60,
+        "Neck": 0,
+        "Chest": 40,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 301,
         "Taken": 92
@@ -2485,7 +3213,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 66
@@ -2496,7 +3232,7 @@
     },
     "303": {
       "Hits": {
-        "Total": 0,
+        "Total": 14,
         "Head": 6,
         "Neck": 0,
         "Chest": 3,
@@ -2512,7 +3248,15 @@
         "Smoke": 1,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 6.01,
+        "Head": 42.86,
+        "Neck": 0,
+        "Chest": 21.43,
+        "Stomach": 35.71,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 965,
         "Taken": 85
@@ -2523,7 +3267,7 @@
     },
     "304": {
       "Hits": {
-        "Total": 0,
+        "Total": 5,
         "Head": 2,
         "Neck": 0,
         "Chest": 3,
@@ -2539,7 +3283,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 40,
+        "Neck": 0,
+        "Chest": 60,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 239,
         "Taken": 0
@@ -2550,7 +3302,7 @@
     },
     "305": {
       "Hits": {
-        "Total": 0,
+        "Total": 6,
         "Head": 1,
         "Neck": 0,
         "Chest": 4,
@@ -2566,7 +3318,15 @@
         "Smoke": 1,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 10.71,
+        "Head": 16.67,
+        "Neck": 0,
+        "Chest": 66.67,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 16.67
+      },
       "Damage": {
         "Dealt": 194,
         "Taken": 427
@@ -2577,7 +3337,7 @@
     },
     "309": {
       "Hits": {
-        "Total": 0,
+        "Total": 2,
         "Head": 0,
         "Neck": 0,
         "Chest": 2,
@@ -2593,7 +3353,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 20,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 100,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 219,
         "Taken": 0
@@ -2604,7 +3372,7 @@
     },
     "4": {
       "Hits": {
-        "Total": 0,
+        "Total": 3,
         "Head": 2,
         "Neck": 0,
         "Chest": 0,
@@ -2620,7 +3388,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 15.79,
+        "Head": 66.67,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 33.33
+      },
       "Damage": {
         "Dealt": 314,
         "Taken": 52
@@ -2647,7 +3423,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2674,7 +3458,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2701,7 +3493,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 45,
         "Taken": 0
@@ -2728,7 +3528,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 24,
         "Taken": 0
@@ -2755,7 +3563,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2782,7 +3598,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2809,7 +3633,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 23,
         "Taken": 66
@@ -2836,7 +3668,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 126
@@ -2865,7 +3705,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 120
@@ -2876,7 +3724,7 @@
     },
     "102": {
       "Hits": {
-        "Total": 0,
+        "Total": 21,
         "Head": 2,
         "Neck": 0,
         "Chest": 5,
@@ -2892,7 +3740,15 @@
         "Smoke": 1,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 23.86,
+        "Head": 9.52,
+        "Neck": 0,
+        "Chest": 23.81,
+        "Stomach": 19.05,
+        "Arms": 4.76,
+        "Legs": 42.86
+      },
       "Damage": {
         "Dealt": 399,
         "Taken": 122
@@ -2903,7 +3759,7 @@
     },
     "104": {
       "Hits": {
-        "Total": 0,
+        "Total": 2,
         "Head": 0,
         "Neck": 0,
         "Chest": 2,
@@ -2919,7 +3775,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 6.06,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 100,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 26,
         "Taken": 0
@@ -2946,7 +3810,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -2973,7 +3845,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3000,7 +3880,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3027,7 +3915,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3038,7 +3934,7 @@
     },
     "303": {
       "Hits": {
-        "Total": 0,
+        "Total": 4,
         "Head": 1,
         "Neck": 0,
         "Chest": 3,
@@ -3054,7 +3950,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 20,
+        "Head": 25,
+        "Neck": 0,
+        "Chest": 75,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 119,
         "Taken": 1062
@@ -3065,7 +3969,7 @@
     },
     "304": {
       "Hits": {
-        "Total": 0,
+        "Total": 1,
         "Head": 0,
         "Neck": 0,
         "Chest": 1,
@@ -3081,7 +3985,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 7.14,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 100,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 22,
         "Taken": 156
@@ -3092,7 +4004,7 @@
     },
     "305": {
       "Hits": {
-        "Total": 0,
+        "Total": 4,
         "Head": 0,
         "Neck": 0,
         "Chest": 3,
@@ -3108,7 +4020,15 @@
         "Smoke": 1,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 5.97,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 75,
+        "Stomach": 0,
+        "Arms": 25,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 77,
         "Taken": 121
@@ -3135,7 +4055,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 109
@@ -3146,7 +4074,7 @@
     },
     "4": {
       "Hits": {
-        "Total": 0,
+        "Total": 2,
         "Head": 1,
         "Neck": 0,
         "Chest": 1,
@@ -3162,7 +4090,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 22.22,
+        "Head": 50,
+        "Neck": 0,
+        "Chest": 50,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 186,
         "Taken": 323
@@ -3189,7 +4125,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3216,7 +4160,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 59,
         "Taken": 104
@@ -3243,7 +4195,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 71,
         "Taken": 73
@@ -3270,7 +4230,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 1,
         "Taken": 0
@@ -3297,7 +4265,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3324,7 +4300,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 5,
         "Taken": 98
@@ -3335,7 +4319,7 @@
     },
     "9": {
       "Hits": {
-        "Total": 0,
+        "Total": 2,
         "Head": 2,
         "Neck": 0,
         "Chest": 0,
@@ -3351,7 +4335,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 40,
+        "Head": 100,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 237,
         "Taken": 0
@@ -3380,7 +4372,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3391,7 +4391,7 @@
     },
     "102": {
       "Hits": {
-        "Total": 0,
+        "Total": 11,
         "Head": 1,
         "Neck": 0,
         "Chest": 6,
@@ -3407,7 +4407,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 7.01,
+        "Head": 9.09,
+        "Neck": 0,
+        "Chest": 54.55,
+        "Stomach": 18.18,
+        "Arms": 18.18,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 208,
         "Taken": 132
@@ -3418,7 +4426,7 @@
     },
     "104": {
       "Hits": {
-        "Total": 0,
+        "Total": 1,
         "Head": 0,
         "Neck": 0,
         "Chest": 1,
@@ -3434,7 +4442,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 14.29,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 100,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 14,
         "Taken": 0
@@ -3461,7 +4477,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 12
@@ -3472,7 +4496,7 @@
     },
     "303": {
       "Hits": {
-        "Total": 0,
+        "Total": 6,
         "Head": 0,
         "Neck": 0,
         "Chest": 4,
@@ -3488,7 +4512,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 6.38,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 66.67,
+        "Stomach": 16.67,
+        "Arms": 16.67,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 144,
         "Taken": 1064
@@ -3515,7 +4547,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 85
@@ -3526,7 +4566,7 @@
     },
     "305": {
       "Hits": {
-        "Total": 0,
+        "Total": 17,
         "Head": 5,
         "Neck": 0,
         "Chest": 4,
@@ -3542,7 +4582,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 26.15,
+        "Head": 29.41,
+        "Neck": 0,
+        "Chest": 23.53,
+        "Stomach": 11.76,
+        "Arms": 11.76,
+        "Legs": 23.53
+      },
       "Damage": {
         "Dealt": 701,
         "Taken": 133
@@ -3553,7 +4601,7 @@
     },
     "4": {
       "Hits": {
-        "Total": 0,
+        "Total": 3,
         "Head": 0,
         "Neck": 0,
         "Chest": 1,
@@ -3569,7 +4617,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 13.64,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 33.33,
+        "Stomach": 33.33,
+        "Arms": 0,
+        "Legs": 33.33
+      },
       "Damage": {
         "Dealt": 108,
         "Taken": 251
@@ -3596,7 +4652,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3623,7 +4687,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 6
@@ -3650,7 +4722,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 25,
         "Taken": 24
@@ -3677,7 +4757,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3704,7 +4792,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3731,7 +4827,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 32,
         "Taken": 277
@@ -3744,7 +4848,7 @@
   "76561198171689321": {
     "1": {
       "Hits": {
-        "Total": 0,
+        "Total": 2,
         "Head": 1,
         "Neck": 0,
         "Chest": 1,
@@ -3760,7 +4864,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 14.29,
+        "Head": 50,
+        "Neck": 0,
+        "Chest": 50,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 128,
         "Taken": 44
@@ -3787,7 +4899,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 180
@@ -3814,7 +4934,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3825,7 +4953,7 @@
     },
     "2": {
       "Hits": {
-        "Total": 0,
+        "Total": 3,
         "Head": 2,
         "Neck": 0,
         "Chest": 0,
@@ -3841,7 +4969,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 37.5,
+        "Head": 66.67,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 33.33,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 206,
         "Taken": 127
@@ -3868,7 +5004,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -3879,7 +5023,7 @@
     },
     "301": {
       "Hits": {
-        "Total": 0,
+        "Total": 5,
         "Head": 1,
         "Neck": 0,
         "Chest": 3,
@@ -3895,7 +5039,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 35.71,
+        "Head": 20,
+        "Neck": 0,
+        "Chest": 60,
+        "Stomach": 0,
+        "Arms": 20,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 176,
         "Taken": 0
@@ -3906,7 +5058,7 @@
     },
     "302": {
       "Hits": {
-        "Total": 0,
+        "Total": 6,
         "Head": 0,
         "Neck": 0,
         "Chest": 5,
@@ -3922,7 +5074,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 17.65,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 83.33,
+        "Stomach": 0,
+        "Arms": 16.67,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 115,
         "Taken": 0
@@ -3933,7 +5093,7 @@
     },
     "303": {
       "Hits": {
-        "Total": 0,
+        "Total": 10,
         "Head": 0,
         "Neck": 0,
         "Chest": 7,
@@ -3949,7 +5109,15 @@
         "Smoke": 1,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 10,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 70,
+        "Stomach": 10,
+        "Arms": 20,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 246,
         "Taken": 1314
@@ -3976,7 +5144,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 24
@@ -3987,7 +5163,7 @@
     },
     "305": {
       "Hits": {
-        "Total": 0,
+        "Total": 14,
         "Head": 2,
         "Neck": 0,
         "Chest": 4,
@@ -4003,7 +5179,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 17.95,
+        "Head": 14.29,
+        "Neck": 0,
+        "Chest": 28.57,
+        "Stomach": 42.86,
+        "Arms": 14.29,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 548,
         "Taken": 82
@@ -4014,7 +5198,7 @@
     },
     "4": {
       "Hits": {
-        "Total": 0,
+        "Total": 2,
         "Head": 0,
         "Neck": 0,
         "Chest": 0,
@@ -4030,7 +5214,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 40,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 50,
+        "Arms": 0,
+        "Legs": 50
+      },
       "Damage": {
         "Dealt": 76,
         "Taken": 134
@@ -4057,7 +5249,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 5
@@ -4084,7 +5284,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -4111,7 +5319,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 40
@@ -4138,7 +5354,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 48,
         "Taken": 3
@@ -4165,7 +5389,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -4192,7 +5424,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 1,
         "Taken": 0
@@ -4219,7 +5459,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 24,
         "Taken": 43
@@ -4246,7 +5494,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 18
@@ -4257,7 +5513,7 @@
     },
     "7": {
       "Hits": {
-        "Total": 0,
+        "Total": 3,
         "Head": 2,
         "Neck": 0,
         "Chest": 0,
@@ -4273,7 +5529,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 23.08,
+        "Head": 66.67,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 33.33,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 219,
         "Taken": 0
@@ -4284,7 +5548,7 @@
     },
     "9": {
       "Hits": {
-        "Total": 0,
+        "Total": 5,
         "Head": 3,
         "Neck": 0,
         "Chest": 1,
@@ -4300,7 +5564,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 38.46,
+        "Head": 60,
+        "Neck": 0,
+        "Chest": 20,
+        "Stomach": 20,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 381,
         "Taken": 0
@@ -4313,7 +5585,7 @@
   "76561198253891911": {
     "1": {
       "Hits": {
-        "Total": 0,
+        "Total": 3,
         "Head": 0,
         "Neck": 0,
         "Chest": 3,
@@ -4329,7 +5601,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 11.11,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 100,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 37,
         "Taken": 15
@@ -4340,7 +5620,7 @@
     },
     "102": {
       "Hits": {
-        "Total": 0,
+        "Total": 12,
         "Head": 3,
         "Neck": 0,
         "Chest": 8,
@@ -4356,7 +5636,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 24.49,
+        "Head": 25,
+        "Neck": 0,
+        "Chest": 66.67,
+        "Stomach": 0,
+        "Arms": 8.33,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 360,
         "Taken": 127
@@ -4367,7 +5655,7 @@
     },
     "2": {
       "Hits": {
-        "Total": 0,
+        "Total": 3,
         "Head": 2,
         "Neck": 0,
         "Chest": 0,
@@ -4383,7 +5671,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 25,
+        "Head": 66.67,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 33.33,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 210,
         "Taken": 95
@@ -4394,7 +5690,7 @@
     },
     "301": {
       "Hits": {
-        "Total": 0,
+        "Total": 5,
         "Head": 1,
         "Neck": 0,
         "Chest": 3,
@@ -4410,7 +5706,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 33.33,
+        "Head": 20,
+        "Neck": 0,
+        "Chest": 60,
+        "Stomach": 20,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 211,
         "Taken": 0
@@ -4421,7 +5725,7 @@
     },
     "302": {
       "Hits": {
-        "Total": 0,
+        "Total": 2,
         "Head": 0,
         "Neck": 0,
         "Chest": 1,
@@ -4437,7 +5741,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 11.76,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 50,
+        "Stomach": 50,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 7,
         "Taken": 0
@@ -4448,7 +5760,7 @@
     },
     "303": {
       "Hits": {
-        "Total": 0,
+        "Total": 12,
         "Head": 1,
         "Neck": 0,
         "Chest": 9,
@@ -4464,7 +5776,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 31.58,
+        "Head": 8.33,
+        "Neck": 0,
+        "Chest": 75,
+        "Stomach": 8.33,
+        "Arms": 0,
+        "Legs": 8.33
+      },
       "Damage": {
         "Dealt": 377,
         "Taken": 1089
@@ -4491,7 +5811,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 59
@@ -4502,7 +5830,7 @@
     },
     "305": {
       "Hits": {
-        "Total": 0,
+        "Total": 12,
         "Head": 3,
         "Neck": 0,
         "Chest": 5,
@@ -4518,7 +5846,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 37.5,
+        "Head": 25,
+        "Neck": 0,
+        "Chest": 41.67,
+        "Stomach": 0,
+        "Arms": 33.33,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 448,
         "Taken": 108
@@ -4545,7 +5881,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 110
@@ -4556,7 +5900,7 @@
     },
     "4": {
       "Hits": {
-        "Total": 0,
+        "Total": 6,
         "Head": 0,
         "Neck": 0,
         "Chest": 1,
@@ -4572,7 +5916,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 50,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 16.67,
+        "Stomach": 33.33,
+        "Arms": 50,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 224,
         "Taken": 133
@@ -4599,7 +5951,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 3
@@ -4626,7 +5986,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 34,
         "Taken": 0
@@ -4653,7 +6021,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 1
@@ -4680,7 +6056,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 10,
         "Taken": 0
@@ -4707,7 +6091,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -4734,7 +6126,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0
@@ -4761,7 +6161,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 107,
         "Taken": 129
@@ -4788,7 +6196,15 @@
         "Smoke": 0,
         "NoScope": 0
       },
-      "Accuracy": null,
+      "Accuracy": {
+        "Total": 0,
+        "Head": 0,
+        "Neck": 0,
+        "Chest": 0,
+        "Stomach": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
       "Damage": {
         "Dealt": 0,
         "Taken": 0

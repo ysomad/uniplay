@@ -89,7 +89,7 @@ type roundKill struct {
 	Killer        uint64
 	Victim        uint64
 	Assister      uint64
-	SinceStart    time.Duration
+	SinceStart    uint16 // seconds
 	Headshot      bool
 	Wallbang      bool
 	KillerBlind   bool
@@ -111,7 +111,7 @@ func newRoundKill(kill events.Kill, roundStartedAt time.Time) *roundKill {
 		KillerBlind:  kill.AttackerBlind,
 		ThroughSmoke: kill.ThroughSmoke,
 		NoScope:      kill.NoScope,
-		SinceStart:   time.Duration(time.Since(roundStartedAt).Seconds()),
+		SinceStart:   uint16(time.Since(roundStartedAt).Seconds()),
 		Weapon:       kill.Weapon.Type,
 	}
 

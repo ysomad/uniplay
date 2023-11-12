@@ -81,6 +81,8 @@ func (p *parser) Parse() error {
 		return fmt.Errorf("demo not parsed: %w", err)
 	}
 
+	p.weaponStats.calculateUnobtainableStats()
+
 	playerStatsBytes, err := json.MarshalIndent(p.playerStats, "", "  ")
 	if err != nil {
 		return err
@@ -107,8 +109,6 @@ func (p *parser) Parse() error {
 	if err = os.WriteFile("gamestate.json", gameStateBytes, 0o644); err != nil {
 		return err
 	}
-
-	p.weaponStats.calculateUnobtainableStats()
 
 	return nil
 }
@@ -239,7 +239,7 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 	}
 
 	if e.HealthDamage == 0 {
-		slog.Error("skipping no health damage hurt event", "event", e)
+		slog.Error("skipping 0 damage hurt event", "event", e)
 		return
 	}
 
