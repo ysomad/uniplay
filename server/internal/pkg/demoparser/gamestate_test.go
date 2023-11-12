@@ -2,7 +2,6 @@ package demoparser
 
 import (
 	"fmt"
-	"reflect"
 	"testing"
 	"time"
 
@@ -131,6 +130,7 @@ func Test_gameState_detectKnifeRound(t *testing.T) {
 }
 
 func Test_gameState_collectStats(t *testing.T) {
+	t.Parallel()
 	type fields struct {
 		rounds     []*round
 		teamA      team
@@ -184,6 +184,7 @@ func Test_gameState_collectStats(t *testing.T) {
 }
 
 func Test_newTeam(t *testing.T) {
+	t.Parallel()
 	type args struct {
 		name string
 		flag string
@@ -327,6 +328,7 @@ func Test_newTeam(t *testing.T) {
 }
 
 func Test_team_swapSide(t *testing.T) {
+	t.Parallel()
 	type fields struct {
 		name    string
 		flag    string
@@ -407,148 +409,6 @@ func Test_team_swapSide(t *testing.T) {
 			err := tr.swapSide()
 			assert.Equal(t, tt.wantErr, (err != nil))
 			assert.Equal(t, tt.wantSide, tr.side)
-		})
-	}
-}
-
-func Test_gameState_killCount(t *testing.T) {
-	type fields struct {
-		Rounds     []*round
-		teamA      team
-		teamB      team
-		knifeRound bool
-		started    bool
-	}
-	type args struct {
-		kill events.Kill
-	}
-	tests := []struct {
-		name    string
-		args    args
-		fields  fields
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			gs := &gameState{
-				Rounds:     tt.fields.Rounds,
-				teamA:      tt.fields.teamA,
-				teamB:      tt.fields.teamB,
-				knifeRound: tt.fields.knifeRound,
-				started:    tt.fields.started,
-			}
-			if err := gs.killCount(tt.args.kill); (err != nil) != tt.wantErr {
-				t.Errorf("gameState.killCount() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
-}
-
-func Test_newRound(t *testing.T) {
-	type args struct {
-		ts *common.TeamState
-	}
-	tests := []struct {
-		name string
-		args args
-		want *round
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := newRound(tt.args.ts); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("newRound() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func Test_round_end(t *testing.T) {
-	type fields struct {
-		StartedAt time.Time
-		TeamA     *roundTeam
-		TeamB     *roundTeam
-		KillFeed  []*roundKill
-		Reason    events.RoundEndReason
-	}
-	type args struct {
-		winner *common.TeamState
-		loser  *common.TeamState
-		reason events.RoundEndReason
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		args   args
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			r := &round{
-				StartedAt: tt.fields.StartedAt,
-				TeamA:     tt.fields.TeamA,
-				TeamB:     tt.fields.TeamB,
-				KillFeed:  tt.fields.KillFeed,
-				Reason:    tt.fields.Reason,
-			}
-			r.end(tt.args.winner, tt.args.loser, tt.args.reason)
-		})
-	}
-}
-
-func Test_newRoundTeam(t *testing.T) {
-	type args struct {
-		members []*common.Player
-		side    common.Team
-	}
-	tests := []struct {
-		name string
-		args args
-		want *roundTeam
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := newRoundTeam(tt.args.members, tt.args.side); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("newRoundTeam() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func Test_roundTeam_roundEnd(t *testing.T) {
-	type fields struct {
-		Survivors map[uint64]struct{}
-		Cash      int
-		CashSpend int
-		EqValue   int
-		Side      common.Team
-	}
-	type args struct {
-		ts *common.TeamState
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		args   args
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			rt := &roundTeam{
-				Survivors: tt.fields.Survivors,
-				Cash:      tt.fields.Cash,
-				CashSpend: tt.fields.CashSpend,
-				EqValue:   tt.fields.EqValue,
-				Side:      tt.fields.Side,
-			}
-			rt.roundEnd(tt.args.ts)
 		})
 	}
 }
@@ -783,89 +643,6 @@ func Test_newRoundKill(t *testing.T) {
 			fmt.Printf("Expected: %+v\n", tt.want)
 			fmt.Printf("Actual  : %+v\n", got)
 			assert.Equal(t, tt.want, got)
-		})
-	}
-}
-
-func Test_newGameState(t *testing.T) {
-	tests := []struct {
-		name string
-		want *gameState
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := newGameState(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("newGameState() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func Test_gameState_startRound(t *testing.T) {
-	type fields struct {
-		Rounds     []*round
-		teamA      team
-		teamB      team
-		knifeRound bool
-		started    bool
-	}
-	type args struct {
-		ts *common.TeamState
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		args   args
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			gs := &gameState{
-				Rounds:     tt.fields.Rounds,
-				teamA:      tt.fields.teamA,
-				teamB:      tt.fields.teamB,
-				knifeRound: tt.fields.knifeRound,
-				started:    tt.fields.started,
-			}
-			gs.startRound(tt.args.ts)
-		})
-	}
-}
-
-func Test_gameState_endRound(t *testing.T) {
-	type fields struct {
-		Rounds     []*round
-		teamA      team
-		teamB      team
-		knifeRound bool
-		started    bool
-	}
-	type args struct {
-		r events.RoundEnd
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			gs := &gameState{
-				Rounds:     tt.fields.Rounds,
-				teamA:      tt.fields.teamA,
-				teamB:      tt.fields.teamB,
-				knifeRound: tt.fields.knifeRound,
-				started:    tt.fields.started,
-			}
-			if err := gs.endRound(tt.args.r); (err != nil) != tt.wantErr {
-				t.Errorf("gameState.endRound() error = %v, wantErr %v", err, tt.wantErr)
-			}
 		})
 	}
 }

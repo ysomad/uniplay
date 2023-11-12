@@ -106,6 +106,7 @@ func Test_demoHeader_validate(t *testing.T) {
 }
 
 func Test_demoHeader_uuid(t *testing.T) {
+	t.Parallel()
 	type fields struct {
 		server         string
 		client         string

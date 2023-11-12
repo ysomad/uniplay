@@ -7,27 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_playerStatsMap_add(t *testing.T) {
-	t.Parallel()
-	type args struct {
-		steamID uint64
-		ev      event
-		val     int
-	}
-	tests := []struct {
-		name string
-		psm  playerStatsMap
-		args args
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			tt.psm.add(tt.args.steamID, tt.args.ev, tt.args.val)
-		})
-	}
-}
-
 func Test_playerStats_add(t *testing.T) {
 	t.Parallel()
 	type fields struct {
@@ -364,28 +343,6 @@ func Test_equipValid(t *testing.T) {
 	}
 }
 
-func Test_weaponStatsMap_add(t *testing.T) {
-	t.Parallel()
-	type args struct {
-		steamID uint64
-		ev      event
-		et      common.EquipmentType
-		val     int
-	}
-	tests := []struct {
-		ws   weaponStatsMap
-		want weaponStatsMap
-		name string
-		args args
-	}{}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			tt.ws.add(tt.args.steamID, tt.args.ev, tt.args.et, tt.args.val)
-			assert.Equal(t, tt.want, tt.ws)
-		})
-	}
-}
-
 func Test_weaponStats_add(t *testing.T) {
 	t.Parallel()
 	type fields struct {
@@ -665,6 +622,114 @@ func Test_weaponStats_add(t *testing.T) {
 			}
 			ws.add(tt.args.e, tt.args.v)
 			assert.Equal(t, tt.want, ws)
+		})
+	}
+}
+
+func Test_newAccuracyStats(t *testing.T) {
+	t.Parallel()
+	type args struct {
+		hits  *hitStats
+		shots int
+	}
+	tests := []struct {
+		want *accuracyStats
+		name string
+		args args
+	}{
+		{
+			name: "Normal case",
+			args: args{
+				shots: 100,
+				hits: &hitStats{
+					Total:   80,
+					Head:    20,
+					Neck:    15,
+					Chest:   25,
+					Stomach: 10,
+					Arms:    5,
+					Legs:    5,
+				},
+			},
+			want: &accuracyStats{
+				Total:   80.0,
+				Head:    25.0,
+				Neck:    18.75,
+				Chest:   31.25,
+				Stomach: 12.5,
+				Arms:    6.25,
+				Legs:    6.25,
+			},
+		},
+		{
+			name: "Zero hits",
+			args: args{
+				shots: 100,
+				hits:  &hitStats{Total: 0},
+			},
+			want: &accuracyStats{},
+		},
+		{
+			name: "All hits, zero shots",
+			args: args{
+				shots: 0,
+				hits: &hitStats{
+					Total:   50,
+					Head:    10,
+					Neck:    10,
+					Chest:   10,
+					Stomach: 5,
+					Arms:    5,
+					Legs:    10,
+				},
+			},
+			want: &accuracyStats{
+				Total:   0,
+				Head:    20,
+				Neck:    20,
+				Chest:   20,
+				Stomach: 10,
+				Arms:    10,
+				Legs:    20,
+			},
+		},
+		{
+			name: "Zero hits, zero shots",
+			args: args{
+				shots: 0,
+				hits:  &hitStats{},
+			},
+			want: &accuracyStats{Total: 0},
+		},
+		{
+			name: "Negative hits",
+			args: args{
+				shots: 100,
+				hits: &hitStats{
+					Total:   -10,
+					Head:    -2,
+					Neck:    -1,
+					Chest:   -3,
+					Stomach: -1,
+					Arms:    -1,
+					Legs:    -2,
+				},
+			},
+			want: &accuracyStats{
+				Total:   0.0,
+				Head:    0.0,
+				Neck:    0.0,
+				Chest:   0.0,
+				Stomach: 0.0,
+				Arms:    0.0,
+				Legs:    0.0,
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := newAccuracyStats(tt.args.shots, tt.args.hits)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }

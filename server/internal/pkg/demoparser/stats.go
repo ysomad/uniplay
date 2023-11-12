@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
+	"github.com/ysomad/uniplay/internal/pkg/stat"
 )
 
 type dmgStats struct {
@@ -40,28 +41,28 @@ type killStats struct {
 	NoScope  int
 }
 
-// type accuracyStats struct {
-// 	total   float64
-// 	head    float64
-// 	neck    float64
-// 	chest   float64
-// 	stomach float64
-// 	arms    float64
-// 	legs    float64
-// }
+type accuracyStats struct {
+	Total   float64
+	Head    float64
+	Neck    float64
+	Chest   float64
+	Stomach float64
+	Arms    float64
+	Legs    float64
+}
 
-// func newAccuracyStats(shots int, hits *hitStats) *accuracyStats {
-// 	totalHits := int32(hits.total)
-// 	return &accuracyStats{
-// 		total:   stat.Accuracy(totalHits, int32(shots)),
-// 		head:    stat.Accuracy(int32(hits.head), totalHits),
-// 		neck:    stat.Accuracy(int32(hits.neck), totalHits),
-// 		chest:   stat.Accuracy(int32(hits.chest), totalHits),
-// 		stomach: stat.Accuracy(int32(hits.stomach), totalHits),
-// 		arms:    stat.Accuracy(int32(hits.arms), totalHits),
-// 		legs:    stat.Accuracy(int32(hits.legs), totalHits),
-// 	}
-// }
+func newAccuracyStats(shots int, hits *hitStats) *accuracyStats {
+	totalHits := int32(hits.Total)
+	return &accuracyStats{
+		Total:   stat.Accuracy(totalHits, int32(shots)),
+		Head:    stat.Accuracy(int32(hits.Head), totalHits),
+		Neck:    stat.Accuracy(int32(hits.Neck), totalHits),
+		Chest:   stat.Accuracy(int32(hits.Chest), totalHits),
+		Stomach: stat.Accuracy(int32(hits.Stomach), totalHits),
+		Arms:    stat.Accuracy(int32(hits.Arms), totalHits),
+		Legs:    stat.Accuracy(int32(hits.Legs), totalHits),
+	}
+}
 
 type playerStatsMap map[uint64]*playerStats
 
