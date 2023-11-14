@@ -50,8 +50,16 @@ func (r *round) end(winner, loser *common.TeamState, reason events.RoundEndReaso
 	r.Reason = reason
 }
 
+// TODO: put to roundTeam.Players
+type roundPlayer struct {
+	Survived bool
+	Traded   bool
+	Kill     bool
+	Assist   bool
+}
+
 type roundTeam struct {
-	Survivors map[uint64]struct{}
+	Players   map[uint64]struct{}
 	Cash      int // cash at start of round, must be set on round start
 	CashSpend int // during round, must be set on round end
 	EqValue   int // equipment value on round start, must be set on round end
@@ -74,15 +82,19 @@ func newRoundTeam(members []*common.Player, side common.Team) *roundTeam {
 	}
 
 	return &roundTeam{
-		Cash:      cash,
-		Side:      side,
-		Survivors: survivors,
+		Cash:    cash,
+		Side:    side,
+		Players: survivors,
 	}
 }
 
 func (rt *roundTeam) roundEnd(ts *common.TeamState) {
-	rt.CashSpend = ts.MoneySpentThisRound()
-	rt.EqValue = ts.RoundStartEquipmentValue()
+	if ts.Team() == rt.Side {
+		rt.CashSpend = ts.MoneySpentThisRound()
+		rt.EqValue = ts.FreezeTimeEndEquipmentValue()
+	} else {
+		slog.Error("money spent this round, eq value not set for team", "team", rt, "state", ts)
+	}
 }
 
 type roundKill struct {
@@ -180,9 +192,9 @@ func (gs *gameState) killCount(kill events.Kill) error {
 	// remove victim from team survivors list
 	switch kill.Victim.Team {
 	case currRound.TeamA.Side:
-		delete(currRound.TeamA.Survivors, kill.Victim.SteamID64)
+		delete(currRound.TeamA.Players, kill.Victim.SteamID64)
 	case currRound.TeamB.Side:
-		delete(currRound.TeamB.Survivors, kill.Victim.SteamID64)
+		delete(currRound.TeamB.Players, kill.Victim.SteamID64)
 	default:
 		return fmt.Errorf("kill not counted: %w (%d)", errInvalidVictimSide, kill.Victim.Team)
 	}

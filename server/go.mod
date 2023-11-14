@@ -17,14 +17,15 @@ require (
 	github.com/jackc/pgx/v5 v5.4.3
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/json-iterator/go v1.1.12
+	github.com/lmittmann/tint v1.0.3
 	github.com/markus-wa/demoinfocs-golang/v3 v3.3.0
+	github.com/markus-wa/demoinfocs-golang/v4 v4.0.0-beta.5
 	github.com/rs/cors v1.9.0
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/zap v1.25.0
 	golang.org/x/crypto v0.12.0
 	golang.org/x/exp v0.0.0-20230817173708-d852ddb80c63
 	golang.org/x/net v0.14.0
-	github.com/markus-wa/demoinfocs-golang/v4 v4.0.0-beta.5
 )
 
 require (

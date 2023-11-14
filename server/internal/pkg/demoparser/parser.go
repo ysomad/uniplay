@@ -11,6 +11,7 @@ import (
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/events"
+	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/msgs2"
 )
 
 type parser struct {
@@ -76,6 +77,11 @@ func (p *parser) Parse() error {
 
 	p.RegisterEventHandler(p.bombDefusedHandler)
 	p.RegisterEventHandler(p.bombPlantedHandler)
+
+	p.RegisterNetMessageHandler(func(msg *msgs2.CSVCMsg_ServerInfo) {
+		slog.Info("server ip", "val", msg.GameSessionConfig.GetServerIpAddress())
+		slog.Info("map", "val", msg.GameSessionConfig.GetS1Mapname())
+	})
 
 	if err = p.ParseToEnd(); err != nil {
 		return fmt.Errorf("demo not parsed: %w", err)
@@ -216,7 +222,7 @@ func (p *parser) killHandler(e events.Kill) {
 			p.playerStats.incr(e.Assister.SteamID64, eventFBAssist)
 		}
 	} else {
-		slog.Error("kill assist by unconnected player", "assister", e.Assister)
+		slog.Info("kill assist by unconnected player", "assister", e.Assister)
 	}
 
 	// collect kill feed
