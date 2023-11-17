@@ -69,8 +69,8 @@ func (p *parser) Parse() error {
 	p.RegisterEventHandler(p.weaponFireHandler)
 	p.RegisterEventHandler(p.playerFlashedHandler)
 
-	p.RegisterEventHandler(p.matchStartedHandler)
-	p.RegisterEventHandler(p.matchStartedChangedHandler)
+	p.RegisterEventHandler(p.matchStartHandler)
+	// p.RegisterEventHandler(p.matchStartedChangedHandler)
 	p.RegisterEventHandler(p.roundFreezetimeEndHandler)
 	p.RegisterEventHandler(p.teamSideSwitchHandler)
 	p.RegisterEventHandler(p.roundMVPAnnouncementHandler)
@@ -157,7 +157,8 @@ func (p *parser) matchStartedChangedHandler(e events.MatchStartedChanged) {
 	// p.gameState.teamB = newTeam(team.ClanName(), team.Flag(), team.Team(), team.Members())
 }
 
-func (p *parser) matchStartedHandler(e events.MatchStart) {
+func (p *parser) matchStartHandler(e events.MatchStart) {
+	slog.Info("MATCH START")
 	p.gameState.started = true
 }
 

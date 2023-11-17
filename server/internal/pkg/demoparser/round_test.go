@@ -19,7 +19,7 @@ func Test_newRoundHistory(t *testing.T) {
 	}{
 		{
 			name: "success",
-			want: roundHistory{rounds: make([]*round, 0, 50)},
+			want: roundHistory{Rounds: make([]*round, 0, 50)},
 		},
 	}
 	for _, tt := range tests {

@@ -2,7 +2,6 @@ package demoparser
 
 import (
 	"errors"
-	"fmt"
 	"log/slog"
 	"time"
 
@@ -26,13 +25,23 @@ func newRoundHistory() roundHistory {
 
 // start appends new round into rounds.
 func (rh *roundHistory) start(ts *common.TeamState) {
+	if len(ts.Members()) <= 0 {
+		slog.Info("skipping round start for empty team")
+		return
+	}
+
+	if ts.Members()[0].Money() <= 0 {
+		slog.Info("skipping round start for no cash member")
+		return
+	}
+
 	rh.Rounds = append(rh.Rounds, newRound(ts))
 }
 
 // endCurrent ends latest rounds in rounds history.
 func (rh *roundHistory) endCurrent(e events.RoundEnd) error {
 	if len(rh.Rounds) < 1 {
-		return fmt.Errorf("current round not ended: %w", errNoRounds)
+		return errNoRounds
 	}
 
 	rh.Rounds[len(rh.Rounds)-1].end(e.WinnerState, e.LoserState, e.Reason)
