@@ -3,6 +3,7 @@ package main
 import (
 	"log/slog"
 	"net/http"
+	"os"
 
 	"github.com/ysomad/uniplay/internal/pkg/demoparser"
 )
@@ -38,6 +39,10 @@ func uploadDemoHandlerV1(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+		AddSource: true,
+		Level:     slog.LevelError,
+	})))
 	http.HandleFunc("/v1/demos", uploadDemoHandlerV1)
 	http.ListenAndServe(":8080", nil)
 }

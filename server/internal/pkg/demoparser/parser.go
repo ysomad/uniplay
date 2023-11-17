@@ -19,6 +19,7 @@ type parser struct {
 	playerStats playerStatsMap
 	weaponStats weaponStatsMap
 	gameState   *gameState
+	rounds      roundHistory
 	demosize    int64
 }
 
@@ -30,9 +31,10 @@ func New(demofile io.Reader, demoheader *multipart.FileHeader) (*parser, error) 
 	return &parser{
 		Parser:      demoinfocs.NewParser(d),
 		demosize:    d.size,
-		gameState:   newGameState(),
+		gameState:   &gameState{},
 		playerStats: make(playerStatsMap, 20),
 		weaponStats: make(weaponStatsMap, 20),
+		rounds:      newRoundHistory(),
 	}, nil
 }
 
@@ -67,6 +69,7 @@ func (p *parser) Parse() error {
 	p.RegisterEventHandler(p.weaponFireHandler)
 	p.RegisterEventHandler(p.playerFlashedHandler)
 
+	p.RegisterEventHandler(p.matchStartedHandler)
 	p.RegisterEventHandler(p.matchStartedChangedHandler)
 	p.RegisterEventHandler(p.roundFreezetimeEndHandler)
 	p.RegisterEventHandler(p.teamSideSwitchHandler)
@@ -107,12 +110,12 @@ func (p *parser) Parse() error {
 		return err
 	}
 
-	gameStateBytes, err := json.MarshalIndent(p.gameState, "", "  ")
+	roundsBytes, err := json.MarshalIndent(p.rounds, "", "  ")
 	if err != nil {
 		return err
 	}
 
-	if err = os.WriteFile("gamestate.json", gameStateBytes, 0o644); err != nil {
+	if err = os.WriteFile("rounds.json", roundsBytes, 0o644); err != nil {
 		return err
 	}
 
@@ -127,7 +130,7 @@ func (p *parser) roundStartHandler(e events.RoundStart) {
 		return
 	}
 
-	p.gameState.startRound(p.GameState().TeamTerrorists())
+	p.rounds.start(p.GameState().TeamTerrorists())
 }
 
 func (p *parser) roundEndHandler(e events.RoundEnd) {
@@ -136,22 +139,26 @@ func (p *parser) roundEndHandler(e events.RoundEnd) {
 		return
 	}
 
-	if err := p.gameState.endRound(e); err != nil {
-		slog.Error("round not ended: %w", err)
+	if err := p.rounds.endCurrent(e); err != nil {
+		slog.Error("current round not ended: %w", err)
 	}
 }
 
 func (p *parser) matchStartedChangedHandler(e events.MatchStartedChanged) {
 	// https://github.com/markus-wa/demoinfocs-golang/discussions/366
-	if e.OldIsStarted || !e.NewIsStarted {
-		return
-	}
+	// if e.OldIsStarted || !e.NewIsStarted {
+	// 	return
+	// }
+	//
+	// p.gameState.started = true
+	// team := p.GameState().TeamCounterTerrorists()
+	// p.gameState.teamA = newTeam(team.ClanName(), team.Flag(), team.Team(), team.Members())
+	// team = p.GameState().TeamTerrorists()
+	// p.gameState.teamB = newTeam(team.ClanName(), team.Flag(), team.Team(), team.Members())
+}
 
+func (p *parser) matchStartedHandler(e events.MatchStart) {
 	p.gameState.started = true
-	team := p.GameState().TeamCounterTerrorists()
-	p.gameState.teamA = newTeam(team.ClanName(), team.Flag(), team.Team(), team.Members())
-	team = p.GameState().TeamTerrorists()
-	p.gameState.teamB = newTeam(team.ClanName(), team.Flag(), team.Team(), team.Members())
 }
 
 func (p *parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
@@ -166,14 +173,8 @@ func (p *parser) killHandler(e events.Kill) {
 		return
 	}
 
-	killer := false
-	victim := false
-
 	// collect stats
-
 	if playerConnected(e.Killer) {
-		killer = true
-
 		p.playerStats.incr(e.Killer.SteamID64, eventKill)
 		p.weaponStats.incr(e.Killer.SteamID64, eventKill, e.Weapon.Type)
 
@@ -202,16 +203,14 @@ func (p *parser) killHandler(e events.Kill) {
 			p.weaponStats.incr(e.Killer.SteamID64, eventSmokeKill, e.Weapon.Type)
 		}
 	} else {
-		slog.Error("kill by unconnected player", "killer", e.Killer)
+		slog.Error("kill by unconnected player", "event", e)
 	}
 
 	if playerConnected(e.Victim) {
-		victim = true
-
 		p.playerStats.incr(e.Victim.SteamID64, eventDeath)
 		p.weaponStats.incr(e.Victim.SteamID64, eventDeath, e.Weapon.Type)
 	} else {
-		slog.Error("killed unconnected player", "victim", e.Victim)
+		slog.Error("killed unconnected player", "event", e)
 	}
 
 	if playerConnected(e.Assister) {
@@ -222,17 +221,11 @@ func (p *parser) killHandler(e events.Kill) {
 			p.playerStats.incr(e.Assister.SteamID64, eventFBAssist)
 		}
 	} else {
-		slog.Info("kill assist by unconnected player", "assister", e.Assister)
+		slog.Info("kill assist by unconnected player", "event", e)
 	}
 
-	// collect kill feed
-	if killer && victim {
-		p.gameState.killCount(e)
-	} else {
-		slog.Error("kill not added to kill feed",
-			"killer", e.Killer,
-			"victim", e.Victim,
-			"assister", e.Assister)
+	if err := p.rounds.killCount(e); err != nil {
+		slog.Error("kill not counted", "err", err.Error(), "kill", e)
 	}
 }
 
@@ -253,7 +246,7 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 		p.playerStats.add(e.Player.SteamID64, eventDmgTaken, e.HealthDamage)
 		p.weaponStats.add(e.Player.SteamID64, eventDmgTaken, e.Weapon.Type, e.HealthDamage)
 	} else {
-		slog.Error("unconnected player got hurt", "player", e.Player)
+		slog.Error("unconnected player got hurt", "event", e)
 	}
 
 	if playerConnected(e.Attacker) {
@@ -268,20 +261,20 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 			p.playerStats.add(e.Attacker.SteamID64, eventDmgGrenadeDealt, e.HealthDamage)
 		}
 	} else {
-		slog.Error("unconnected attacker hurt other player", "attacker", e.Attacker)
+		slog.Error("unconnected attacker hurt other player", "event", e)
 	}
 }
 
 func (p *parser) teamSideSwitchHandler(_ events.TeamSideSwitch) {
 	slog.Info("team side switch")
 
-	if err := p.gameState.teamA.swapSide(); err != nil {
-		slog.Error("team A side not swapped", "err", err.Error())
-	}
-
-	if err := p.gameState.teamB.swapSide(); err != nil {
-		slog.Error("team B side not swapped", "err", err.Error())
-	}
+	// if err := p.gameState.teamA.swapSide(); err != nil {
+	// 	slog.Error("team A side not swapped", "err", err.Error())
+	// }
+	//
+	// if err := p.gameState.teamB.swapSide(); err != nil {
+	// 	slog.Error("team B side not swapped", "err", err.Error())
+	// }
 }
 
 func (p *parser) weaponFireHandler(e events.WeaponFire) {
