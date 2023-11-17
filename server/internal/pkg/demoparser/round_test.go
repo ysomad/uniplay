@@ -1,8 +1,6 @@
 package demoparser
 
 import (
-	"fmt"
-	"reflect"
 	"testing"
 	"time"
 
@@ -30,173 +28,6 @@ func Test_newRoundHistory(t *testing.T) {
 	}
 }
 
-func Test_roundHistory_startRound(t *testing.T) {
-	type args struct {
-		ts *common.TeamState
-	}
-	tests := []struct {
-		name string
-		rh   roundHistory
-		args args
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			tt.rh.start(tt.args.ts)
-		})
-	}
-}
-
-func Test_roundHistory_endRoundCurrRound(t *testing.T) {
-	type args struct {
-		e events.RoundEnd
-	}
-	tests := []struct {
-		name    string
-		rh      roundHistory
-		args    args
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if err := tt.rh.endCurrent(tt.args.e); (err != nil) != tt.wantErr {
-				t.Errorf("roundHistory.endRoundCurrRound() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
-}
-
-func Test_roundHistory_killCount(t *testing.T) {
-	type args struct {
-		kill events.Kill
-	}
-	tests := []struct {
-		name    string
-		rh      roundHistory
-		args    args
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if err := tt.rh.killCount(tt.args.kill); (err != nil) != tt.wantErr {
-				t.Errorf("roundHistory.killCount() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
-	}
-}
-
-func Test_newRound(t *testing.T) {
-	type args struct {
-		ts *common.TeamState
-	}
-	tests := []struct {
-		name string
-		args args
-		want *round
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := newRound(tt.args.ts); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("newRound() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func Test_round_end(t *testing.T) {
-	type fields struct {
-		StartedAt time.Time
-		TeamA     *roundTeam
-		TeamB     *roundTeam
-		KillFeed  []*roundKill
-		Reason    events.RoundEndReason
-	}
-	type args struct {
-		winner *common.TeamState
-		loser  *common.TeamState
-		reason events.RoundEndReason
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		args   args
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			r := &round{
-				StartedAt: tt.fields.StartedAt,
-				TeamA:     tt.fields.TeamA,
-				TeamB:     tt.fields.TeamB,
-				KillFeed:  tt.fields.KillFeed,
-				Reason:    tt.fields.Reason,
-			}
-			r.end(tt.args.winner, tt.args.loser, tt.args.reason)
-		})
-	}
-}
-
-func Test_newRoundTeam(t *testing.T) {
-	type args struct {
-		members []*common.Player
-		side    common.Team
-	}
-	tests := []struct {
-		name string
-		args args
-		want *roundTeam
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := newRoundTeam(tt.args.members, tt.args.side); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("newRoundTeam() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func Test_roundTeam_onRoundEnd(t *testing.T) {
-	type fields struct {
-		Survivors map[uint64]struct{}
-		Cash      int
-		CashSpend int
-		EqValue   int
-		Side      common.Team
-	}
-	type args struct {
-		ts *common.TeamState
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		args   args
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			rt := &roundTeam{
-				Survivors: tt.fields.Survivors,
-				Cash:      tt.fields.Cash,
-				CashSpend: tt.fields.CashSpend,
-				EqValue:   tt.fields.EqValue,
-				Side:      tt.fields.Side,
-			}
-			rt.onRoundEnd(tt.args.ts)
-		})
-	}
-}
-
 func Test_newRoundKill(t *testing.T) {
 	t.Parallel()
 
@@ -208,11 +39,12 @@ func Test_newRoundKill(t *testing.T) {
 	ctplayer2 := &common.Player{SteamID64: 103, Team: common.TeamCounterTerrorists, IsConnected: true, Name: "ctplayer2", UserID: 5}
 	ctplayer3 := &common.Player{SteamID64: 322, Team: common.TeamCounterTerrorists, IsConnected: true, Name: "ctplayer3", UserID: 6}
 
-	roundStartedAt := time.Now()
+	roundStartTime := time.Minute*2 + time.Second*25
 
 	type args struct {
-		roundStartedAt time.Time
-		kill           events.Kill
+		kill      events.Kill
+		roundTime time.Duration
+		killTime  time.Duration
 	}
 
 	tests := []struct {
@@ -228,7 +60,8 @@ func Test_newRoundKill(t *testing.T) {
 					Victim: ctplayer1,
 					Weapon: &common.Equipment{Type: common.EqAK47},
 				},
-				roundStartedAt: roundStartedAt,
+				roundTime: roundStartTime,
+				killTime:  roundStartTime + time.Minute*2 + time.Second*5,
 			},
 			want: &roundKill{
 				Killer:      123,
@@ -237,7 +70,7 @@ func Test_newRoundKill(t *testing.T) {
 				Headshot:    false,
 				Wallbang:    false,
 				KillerBlind: false,
-				SinceStart:  uint16(time.Since(roundStartedAt).Seconds()),
+				SinceStart:  uint16((time.Minute*2 + time.Second*5).Seconds()),
 				Weapon:      common.EqAK47,
 			},
 		},
@@ -251,7 +84,8 @@ func Test_newRoundKill(t *testing.T) {
 					PenetratedObjects: 2,
 					Weapon:            &common.Equipment{Type: common.EqM4A4},
 				},
-				roundStartedAt: roundStartedAt,
+				roundTime: roundStartTime,
+				killTime:  roundStartTime + time.Minute*2 + time.Second*5,
 			},
 			want: &roundKill{
 				Killer:      456,
@@ -260,7 +94,7 @@ func Test_newRoundKill(t *testing.T) {
 				Headshot:    true,
 				Wallbang:    true,
 				KillerBlind: false,
-				SinceStart:  uint16(time.Since(roundStartedAt).Seconds()),
+				SinceStart:  uint16((time.Minute*2 + time.Second*5).Seconds()),
 				Weapon:      common.EqM4A4,
 			},
 		},
@@ -274,7 +108,8 @@ func Test_newRoundKill(t *testing.T) {
 					AttackerBlind: true,
 					Weapon:        &common.Equipment{Type: common.EqAWP},
 				},
-				roundStartedAt: roundStartedAt,
+				roundTime: roundStartTime,
+				killTime:  roundStartTime + time.Minute*2 + time.Second*5,
 			},
 			want: &roundKill{
 				Killer:        123,
@@ -286,7 +121,7 @@ func Test_newRoundKill(t *testing.T) {
 				Headshot:      false,
 				Wallbang:      false,
 				KillerBlind:   true,
-				SinceStart:    uint16(time.Since(roundStartedAt).Seconds()),
+				SinceStart:    uint16((time.Minute*2 + time.Second*5).Seconds()),
 				Weapon:        common.EqAWP,
 			},
 		},
@@ -300,7 +135,8 @@ func Test_newRoundKill(t *testing.T) {
 					AssistedFlash: true,
 					Weapon:        &common.Equipment{Type: common.EqAWP},
 				},
-				roundStartedAt: roundStartedAt,
+				roundTime: roundStartTime,
+				killTime:  roundStartTime + time.Minute*2 + time.Second*5,
 			},
 			want: &roundKill{
 				Killer:        123,
@@ -312,7 +148,7 @@ func Test_newRoundKill(t *testing.T) {
 				Headshot:      false,
 				Wallbang:      false,
 				KillerBlind:   false,
-				SinceStart:    uint16(time.Since(roundStartedAt).Seconds()),
+				SinceStart:    uint16((time.Minute*2 + time.Second*5).Seconds()),
 				Weapon:        common.EqAWP,
 			},
 		},
@@ -325,7 +161,8 @@ func Test_newRoundKill(t *testing.T) {
 					Assister: tplayer2,
 					Weapon:   &common.Equipment{Type: common.EqAWP},
 				},
-				roundStartedAt: roundStartedAt,
+				roundTime: roundStartTime,
+				killTime:  roundStartTime + time.Minute*2 + time.Second*5,
 			},
 			want: &roundKill{
 				Killer:        456,
@@ -337,7 +174,7 @@ func Test_newRoundKill(t *testing.T) {
 				Headshot:      false,
 				Wallbang:      false,
 				KillerBlind:   false,
-				SinceStart:    uint16(time.Since(roundStartedAt).Seconds()),
+				SinceStart:    uint16((time.Minute*2 + time.Second*5).Seconds()),
 				Weapon:        common.EqAWP,
 			},
 		},
@@ -351,7 +188,8 @@ func Test_newRoundKill(t *testing.T) {
 					IsHeadshot: true,
 					Weapon:     &common.Equipment{Type: common.EqAWP},
 				},
-				roundStartedAt: roundStartedAt,
+				roundTime: roundStartTime,
+				killTime:  roundStartTime + time.Minute*2 + time.Second*5,
 			},
 			want: &roundKill{
 				Killer:        456,
@@ -363,7 +201,7 @@ func Test_newRoundKill(t *testing.T) {
 				Headshot:      true,
 				Wallbang:      false,
 				KillerBlind:   false,
-				SinceStart:    uint16(time.Since(roundStartedAt).Seconds()),
+				SinceStart:    uint16((time.Minute*2 + time.Second*5).Seconds()),
 				Weapon:        common.EqAWP,
 			},
 		},
@@ -377,7 +215,8 @@ func Test_newRoundKill(t *testing.T) {
 					PenetratedObjects: 5,
 					Weapon:            &common.Equipment{Type: common.EqAWP},
 				},
-				roundStartedAt: roundStartedAt,
+				roundTime: roundStartTime,
+				killTime:  roundStartTime + time.Minute*2 + time.Second*5,
 			},
 			want: &roundKill{
 				Killer:        123,
@@ -389,7 +228,7 @@ func Test_newRoundKill(t *testing.T) {
 				Headshot:      false,
 				Wallbang:      true,
 				KillerBlind:   false,
-				SinceStart:    uint16(time.Since(roundStartedAt).Seconds()),
+				SinceStart:    uint16((time.Minute*2 + time.Second*5).Seconds()),
 				Weapon:        common.EqAWP,
 			},
 		},
@@ -403,7 +242,8 @@ func Test_newRoundKill(t *testing.T) {
 					AttackerBlind: true,
 					Weapon:        &common.Equipment{Type: common.EqAWP},
 				},
-				roundStartedAt: roundStartedAt,
+				roundTime: roundStartTime,
+				killTime:  roundStartTime + time.Minute*2 + time.Second*5,
 			},
 			want: &roundKill{
 				Killer:        456,
@@ -415,17 +255,14 @@ func Test_newRoundKill(t *testing.T) {
 				Headshot:      false,
 				Wallbang:      false,
 				KillerBlind:   true,
-				SinceStart:    uint16(time.Since(roundStartedAt).Seconds()),
+				SinceStart:    uint16((time.Minute*2 + time.Second*5).Seconds()),
 				Weapon:        common.EqAWP,
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := newRoundKill(tt.args.kill, tt.args.roundStartedAt)
-			fmt.Printf("Test Case: %s\n", tt.name)
-			fmt.Printf("Expected: %+v\n", tt.want)
-			fmt.Printf("Actual  : %+v\n", got)
+			got := newRoundKill(tt.args.kill, tt.args.roundTime, tt.args.killTime)
 			assert.Equal(t, tt.want, got)
 		})
 	}

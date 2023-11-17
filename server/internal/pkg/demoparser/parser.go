@@ -130,7 +130,7 @@ func (p *parser) roundStartHandler(e events.RoundStart) {
 		return
 	}
 
-	p.rounds.start(p.GameState().TeamTerrorists())
+	p.rounds.start(p.GameState().TeamTerrorists(), p.CurrentTime())
 }
 
 func (p *parser) roundEndHandler(e events.RoundEnd) {
@@ -225,7 +225,7 @@ func (p *parser) killHandler(e events.Kill) {
 		slog.Info("kill assist by unconnected player", "event", e)
 	}
 
-	if err := p.rounds.killCount(e); err != nil {
+	if err := p.rounds.killCount(e, p.CurrentTime()); err != nil {
 		slog.Error("kill not counted", "err", err.Error(), "kill", e)
 	}
 }

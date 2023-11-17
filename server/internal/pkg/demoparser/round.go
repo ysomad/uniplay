@@ -24,7 +24,8 @@ func newRoundHistory() roundHistory {
 }
 
 // start appends new round into rounds.
-func (rh *roundHistory) start(ts *common.TeamState) {
+// currTime is time elapsed since demo start.
+func (rh *roundHistory) start(ts *common.TeamState, currTime time.Duration) {
 	if len(ts.Members()) <= 0 {
 		slog.Info("skipping round start for empty team")
 		return
@@ -35,7 +36,7 @@ func (rh *roundHistory) start(ts *common.TeamState) {
 		return
 	}
 
-	rh.Rounds = append(rh.Rounds, newRound(ts))
+	rh.Rounds = append(rh.Rounds, newRound(ts, currTime))
 }
 
 // endCurrent ends latest rounds in rounds history.
@@ -50,7 +51,7 @@ func (rh *roundHistory) endCurrent(e events.RoundEnd) error {
 }
 
 // killCount appends kill to last round kill feed and removes player from survivors.
-func (rh roundHistory) killCount(kill events.Kill) error {
+func (rh roundHistory) killCount(kill events.Kill, killTime time.Duration) error {
 	if !playerConnected(kill.Killer) || !playerConnected(kill.Victim) {
 		return errUnconnectedKillerOrVictim
 	}
@@ -61,7 +62,7 @@ func (rh roundHistory) killCount(kill events.Kill) error {
 
 	// add kill to round kill feed
 	currRound := rh.Rounds[len(rh.Rounds)-1]
-	currRound.KillFeed = append(currRound.KillFeed, newRoundKill(kill, currRound.StartedAt))
+	currRound.KillFeed = append(currRound.KillFeed, newRoundKill(kill, currRound.Time, killTime))
 
 	// remove victim from team survivors list
 	switch kill.Victim.Team {
@@ -77,20 +78,20 @@ func (rh roundHistory) killCount(kill events.Kill) error {
 }
 
 type round struct {
-	StartedAt time.Time
-	TeamA     *roundTeam
-	TeamB     *roundTeam
-	KillFeed  []*roundKill
-	Reason    events.RoundEndReason
+	TeamA    *roundTeam
+	TeamB    *roundTeam
+	KillFeed []*roundKill
+	Time     time.Duration
+	Reason   events.RoundEndReason
 }
 
-func newRound(ts *common.TeamState) *round {
+func newRound(ts *common.TeamState, currTime time.Duration) *round {
 	return &round{
-		TeamA:     newRoundTeam(ts.Members(), ts.Team()),
-		TeamB:     newRoundTeam(ts.Opponent.Members(), ts.Opponent.Team()),
-		KillFeed:  make([]*roundKill, 0, 20),
-		Reason:    events.RoundEndReasonStillInProgress,
-		StartedAt: time.Now(),
+		TeamA:    newRoundTeam(ts.Members(), ts.Team()),
+		TeamB:    newRoundTeam(ts.Opponent.Members(), ts.Opponent.Team()),
+		KillFeed: make([]*roundKill, 0, 20),
+		Reason:   events.RoundEndReasonStillInProgress,
+		Time:     currTime,
 	}
 }
 
@@ -158,7 +159,7 @@ type roundKill struct {
 	Killer        uint64
 	Victim        uint64
 	Assister      uint64
-	SinceStart    uint16 // seconds
+	SinceStart    uint16
 	Headshot      bool
 	Wallbang      bool
 	KillerBlind   bool
@@ -170,7 +171,7 @@ type roundKill struct {
 	Weapon        common.EquipmentType
 }
 
-func newRoundKill(kill events.Kill, roundStartedAt time.Time) *roundKill {
+func newRoundKill(kill events.Kill, roundTime, killTime time.Duration) *roundKill {
 	k := &roundKill{
 		Killer:       kill.Killer.SteamID64,
 		KillerSide:   kill.Killer.Team,
@@ -180,7 +181,7 @@ func newRoundKill(kill events.Kill, roundStartedAt time.Time) *roundKill {
 		KillerBlind:  kill.AttackerBlind,
 		ThroughSmoke: kill.ThroughSmoke,
 		NoScope:      kill.NoScope,
-		SinceStart:   uint16(time.Since(roundStartedAt).Seconds()),
+		SinceStart:   uint16((killTime - roundTime).Seconds()),
 		Weapon:       kill.Weapon.Type,
 	}
 
