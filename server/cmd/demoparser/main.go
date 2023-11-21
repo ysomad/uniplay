@@ -40,8 +40,8 @@ func uploadDemoHandlerV1(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-		AddSource: true,
-		Level:     slog.LevelInfo,
+		AddSource: false,
+		Level:     slog.LevelError,
 	})))
 	http.HandleFunc("/v1/demos", uploadDemoHandlerV1)
 	http.ListenAndServe(":8080", nil)

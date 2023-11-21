@@ -126,7 +126,7 @@ func Test_gameState_detectKnifeRound(t *testing.T) {
 	}
 }
 
-func Test_gameState_collectStats(t *testing.T) {
+func Test_gameState_gameStarted(t *testing.T) {
 	t.Parallel()
 	type fields struct {
 		knifeRound bool
@@ -168,7 +168,7 @@ func Test_gameState_collectStats(t *testing.T) {
 				knifeRound: tt.fields.knifeRound,
 				started:    tt.fields.started,
 			}
-			got := gs.collectStats()
+			got := gs.gameStarted()
 			assert.Equal(t, tt.want, got)
 		})
 	}

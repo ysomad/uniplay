@@ -81,7 +81,7 @@ type round struct {
 	TeamA    *roundTeam
 	TeamB    *roundTeam
 	KillFeed []*roundKill
-	Time     time.Duration
+	Time     time.Duration // time elapsed since demo start
 	Reason   events.RoundEndReason
 }
 

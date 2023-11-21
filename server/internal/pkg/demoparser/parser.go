@@ -70,9 +70,7 @@ func (p *parser) Parse() error {
 	p.RegisterEventHandler(p.playerFlashedHandler)
 
 	p.RegisterEventHandler(p.matchStartHandler)
-	// p.RegisterEventHandler(p.matchStartedChangedHandler)
 	p.RegisterEventHandler(p.roundFreezetimeEndHandler)
-	p.RegisterEventHandler(p.teamSideSwitchHandler)
 	p.RegisterEventHandler(p.roundMVPAnnouncementHandler)
 
 	p.RegisterEventHandler(p.roundStartHandler)
@@ -123,7 +121,7 @@ func (p *parser) Parse() error {
 }
 
 func (p *parser) roundStartHandler(e events.RoundStart) {
-	if !p.gameState.collectStats() {
+	if !p.gameState.gameStarted() {
 		slog.Info("round start event skip",
 			"knife_round", p.gameState.knifeRound,
 			"game_started", p.gameState.started)
@@ -134,7 +132,7 @@ func (p *parser) roundStartHandler(e events.RoundStart) {
 }
 
 func (p *parser) roundEndHandler(e events.RoundEnd) {
-	if !p.gameState.collectStats() {
+	if !p.gameState.gameStarted() {
 		slog.Info("round end event skip")
 		return
 	}
@@ -142,19 +140,6 @@ func (p *parser) roundEndHandler(e events.RoundEnd) {
 	if err := p.rounds.endCurrent(e); err != nil {
 		slog.Error("current round not ended: %w", err)
 	}
-}
-
-func (p *parser) matchStartedChangedHandler(e events.MatchStartedChanged) {
-	// https://github.com/markus-wa/demoinfocs-golang/discussions/366
-	// if e.OldIsStarted || !e.NewIsStarted {
-	// 	return
-	// }
-	//
-	// p.gameState.started = true
-	// team := p.GameState().TeamCounterTerrorists()
-	// p.gameState.teamA = newTeam(team.ClanName(), team.Flag(), team.Team(), team.Members())
-	// team = p.GameState().TeamTerrorists()
-	// p.gameState.teamB = newTeam(team.ClanName(), team.Flag(), team.Team(), team.Members())
 }
 
 func (p *parser) matchStartHandler(e events.MatchStart) {
@@ -167,7 +152,7 @@ func (p *parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
 }
 
 func (p *parser) killHandler(e events.Kill) {
-	if !p.gameState.collectStats() {
+	if !p.gameState.gameStarted() {
 		slog.Info("skipped kill event",
 			"knife_round", p.gameState.knifeRound,
 			"game_started", p.gameState.started)
@@ -204,14 +189,14 @@ func (p *parser) killHandler(e events.Kill) {
 			p.weaponStats.incr(e.Killer.SteamID64, eventSmokeKill, e.Weapon.Type)
 		}
 	} else {
-		slog.Error("kill by unconnected player", "event", e)
+		slog.Error("kill by unconnected player", "event", e, "killer", e.Killer)
 	}
 
 	if playerConnected(e.Victim) {
 		p.playerStats.incr(e.Victim.SteamID64, eventDeath)
 		p.weaponStats.incr(e.Victim.SteamID64, eventDeath, e.Weapon.Type)
 	} else {
-		slog.Error("killed unconnected player", "event", e)
+		slog.Error("killed unconnected player", "event", e, "victim", e.Victim)
 	}
 
 	if playerConnected(e.Assister) {
@@ -222,16 +207,22 @@ func (p *parser) killHandler(e events.Kill) {
 			p.playerStats.incr(e.Assister.SteamID64, eventFBAssist)
 		}
 	} else {
-		slog.Info("kill assist by unconnected player", "event", e)
+		slog.Info("kill assist by unconnected player", "event", e, "assister", e.Assister)
 	}
 
 	if err := p.rounds.killCount(e, p.CurrentTime()); err != nil {
-		slog.Error("kill not counted", "err", err.Error(), "kill", e)
+		slog.Error("kill not counted",
+			"err", err.Error(),
+			"kill", e,
+			"killer", e.Killer,
+			"assister", e.Assister,
+			"victim", e.Victim,
+			"weapon", e.Weapon)
 	}
 }
 
 func (p *parser) hurtHandler(e events.PlayerHurt) {
-	if !p.gameState.collectStats() {
+	if !p.gameState.gameStarted() {
 		slog.Info("skipped player hurt event",
 			"knife_round", p.gameState.knifeRound,
 			"game_started", p.gameState.started)
@@ -266,20 +257,8 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 	}
 }
 
-func (p *parser) teamSideSwitchHandler(_ events.TeamSideSwitch) {
-	slog.Info("team side switch")
-
-	// if err := p.gameState.teamA.swapSide(); err != nil {
-	// 	slog.Error("team A side not swapped", "err", err.Error())
-	// }
-	//
-	// if err := p.gameState.teamB.swapSide(); err != nil {
-	// 	slog.Error("team B side not swapped", "err", err.Error())
-	// }
-}
-
 func (p *parser) weaponFireHandler(e events.WeaponFire) {
-	if !p.gameState.collectStats() {
+	if !p.gameState.gameStarted() {
 		slog.Info("skipped weapon fire event",
 			"knife_round", p.gameState.knifeRound,
 			"game_started", p.gameState.started)
@@ -292,16 +271,13 @@ func (p *parser) weaponFireHandler(e events.WeaponFire) {
 	}
 
 	if e.Weapon == nil {
-		slog.Error("fire from nil weapon",
-			"steam_id", e.Shooter.SteamID64,
-			"name", e.Shooter.Name)
+		slog.Error("fire from nil weapon", "shooter", e.Shooter)
 		return
 	}
 
 	if !equipValid(e.Weapon.Type) {
 		slog.Error("fire from invalid weapon",
-			"steam_id", e.Shooter.SteamID64,
-			"name", e.Shooter.Name,
+			"shooter", e.Shooter,
 			"weapon", e.Weapon.String())
 		return
 	}
@@ -310,7 +286,7 @@ func (p *parser) weaponFireHandler(e events.WeaponFire) {
 }
 
 func (p *parser) bombPlantedHandler(e events.BombPlanted) {
-	if !p.gameState.collectStats() {
+	if !p.gameState.gameStarted() {
 		slog.Info("skipped bomd planted event",
 			"knife_round", p.gameState.knifeRound,
 			"game_started", p.gameState.started)
@@ -318,9 +294,7 @@ func (p *parser) bombPlantedHandler(e events.BombPlanted) {
 	}
 
 	if !playerConnected(e.Player) {
-		slog.Error("bomb planted by unconnected player",
-			"site", e.Site,
-			"player", e.Player)
+		slog.Error("bomb planted by unconnected player", "event", e)
 		return
 	}
 
@@ -328,7 +302,7 @@ func (p *parser) bombPlantedHandler(e events.BombPlanted) {
 }
 
 func (p *parser) bombDefusedHandler(e events.BombDefused) {
-	if !p.gameState.collectStats() {
+	if !p.gameState.gameStarted() {
 		slog.Info("skipped bomd defused event",
 			"knife_round", p.gameState.knifeRound,
 			"game_started", p.gameState.started)
@@ -336,9 +310,7 @@ func (p *parser) bombDefusedHandler(e events.BombDefused) {
 	}
 
 	if !playerConnected(e.Player) {
-		slog.Error("bomb defused by unconnected player",
-			"site", e.Site,
-			"player", e.Player)
+		slog.Error("bomb defused by unconnected player", "event", e)
 		return
 	}
 
@@ -346,7 +318,7 @@ func (p *parser) bombDefusedHandler(e events.BombDefused) {
 }
 
 func (p *parser) playerFlashedHandler(e events.PlayerFlashed) {
-	if !p.gameState.collectStats() {
+	if !p.gameState.gameStarted() {
 		slog.Info("skipped player flashed event",
 			"knife_round", p.gameState.knifeRound,
 			"game_started", p.gameState.started)
@@ -354,25 +326,25 @@ func (p *parser) playerFlashedHandler(e events.PlayerFlashed) {
 	}
 
 	if playerSpectator(e.Player) {
-		slog.Info("flashed spectator", "player", e.Player)
+		slog.Info("flashed spectator", "player", e.Player, "attacker", e.Attacker)
 		return
 	}
 
 	if playerConnected(e.Player) {
 		p.playerStats.incr(e.Player.SteamID64, eventBecameBlind)
 	} else {
-		slog.Error("flashed by unconnected player", "player", e.Player)
+		slog.Error("flashed by unconnected player", "player", e.Player, "attacker", e.Attacker)
 	}
 
 	if playerConnected(e.Attacker) {
 		p.playerStats.incr(e.Attacker.SteamID64, eventBlindedPlayer)
 	} else {
-		slog.Error("unconnected player flashed other player", "attacker", e.Attacker)
+		slog.Error("unconnected player flashed other player", "attacker", e.Attacker, "player", e.Player)
 	}
 }
 
 func (p *parser) roundMVPAnnouncementHandler(e events.RoundMVPAnnouncement) {
-	if !p.gameState.collectStats() {
+	if !p.gameState.gameStarted() {
 		slog.Info("skipped mvp announcement event",
 			"knife_round", p.gameState.knifeRound,
 			"game_started", p.gameState.started)
@@ -380,7 +352,7 @@ func (p *parser) roundMVPAnnouncementHandler(e events.RoundMVPAnnouncement) {
 	}
 
 	if !playerConnected(e.Player) {
-		slog.Error("announced mvp for unconnected player", "player", e.Player)
+		slog.Error("announced mvp for unconnected player", "player", e.Player, "reason", e.Reason)
 		return
 	}
 
