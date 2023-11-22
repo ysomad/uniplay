@@ -140,7 +140,7 @@ func newRoundTeamPlayer(inventory map[int]*common.Equipment) roundTeamPlayer {
 
 	for _, eq := range inventory {
 		if eq == nil {
-			slog.Error("nil equipment when creating round player")
+			slog.Error("nil equipment not added to round team player inventory")
 			continue
 		}
 
