@@ -2,8 +2,3 @@
 test-data/
 .vscode/
 .idea/
-traces.txt
-playerstats.json
-rounds.json
-weaponstats.json
-gamestate.json
