@@ -120,6 +120,7 @@ type roundTeam struct {
 	Cash      int // cash at start of round, must be set on round start
 	CashSpend int // during round, must be set on round end
 	EqValue   int // equipment value on round start, must be set on round end
+	Score     int
 	Side      common.Team
 }
 
@@ -150,8 +151,11 @@ func (rt *roundTeam) onRoundEnd(ts *common.TeamState) {
 	if ts.Team() == rt.Side {
 		rt.CashSpend = ts.MoneySpentThisRound()
 		rt.EqValue = ts.FreezeTimeEndEquipmentValue()
+		rt.Score = ts.Score()
 	} else {
-		slog.Error("money spent this round, eq value not set for team", "team", rt, "state", ts)
+		slog.Error("got invalid team state on round end",
+			"team", rt,
+			"state", ts)
 	}
 }
 

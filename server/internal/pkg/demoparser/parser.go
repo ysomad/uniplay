@@ -8,6 +8,7 @@ import (
 	"mime/multipart"
 	"os"
 
+	"github.com/google/uuid"
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/events"
@@ -21,15 +22,18 @@ type parser struct {
 	gameState   *gameState
 	rounds      roundHistory
 	demosize    int64
+	demoID      uuid.UUID
 }
 
-func New(demofile io.Reader, demoheader *multipart.FileHeader) (*parser, error) {
+func New(demofile io.ReadSeeker, demoheader *multipart.FileHeader) (*parser, error) {
 	d, err := newDemo(demofile, demoheader)
 	if err != nil {
 		return nil, fmt.Errorf("demo not created: %w", err)
 	}
+	slog.Info("demo id", "uuid", d.id)
 	return &parser{
 		Parser:      demoinfocs.NewParser(d),
+		demoID:      d.id,
 		demosize:    d.size,
 		gameState:   &gameState{},
 		playerStats: make(playerStatsMap, 20),
@@ -39,37 +43,12 @@ func New(demofile io.Reader, demoheader *multipart.FileHeader) (*parser, error) 
 }
 
 func (p *parser) Parse() error {
-	h, err := p.ParseHeader()
-	if err != nil {
-		return fmt.Errorf("demo header not parsed: %w", err)
-	}
-
-	slog.Info("parsed demo header", "header", h)
-
-	dh := &demoHeader{
-		server:         h.ServerName,
-		client:         h.ClientName,
-		mapName:        h.MapName,
-		playbackTicks:  h.PlaybackTicks,
-		playbackFrames: h.PlaybackFrames,
-		signonLength:   h.SignonLength,
-		playbackTime:   h.PlaybackTime,
-		filesize:       p.demosize,
-	}
-
-	// TODO: skip validation because file header comes empty from demoinfocs
-	// if err := dh.validate(); err != nil {
-	// 	return fmt.Errorf("parsed invalid demo header: %w", err)
-	// }
-
-	slog.Info("generated demo id", "id", dh.uuid())
-
 	p.RegisterEventHandler(p.killHandler)
 	p.RegisterEventHandler(p.hurtHandler)
 	p.RegisterEventHandler(p.weaponFireHandler)
+
 	p.RegisterEventHandler(p.playerFlashedHandler)
 
-	p.RegisterEventHandler(p.matchStartHandler)
 	p.RegisterEventHandler(p.roundFreezetimeEndHandler)
 	p.RegisterEventHandler(p.roundMVPAnnouncementHandler)
 
@@ -84,7 +63,7 @@ func (p *parser) Parse() error {
 		slog.Info("map", "val", msg.GameSessionConfig.GetS1Mapname())
 	})
 
-	if err = p.ParseToEnd(); err != nil {
+	if err := p.ParseToEnd(); err != nil {
 		return fmt.Errorf("demo not parsed: %w", err)
 	}
 
@@ -121,10 +100,12 @@ func (p *parser) Parse() error {
 }
 
 func (p *parser) roundStartHandler(e events.RoundStart) {
-	if !p.gameState.gameStarted() {
+	started := p.GameState().IsMatchStarted()
+
+	if p.gameState.knifeRound || !started {
 		slog.Info("round start event skip",
 			"knife_round", p.gameState.knifeRound,
-			"game_started", p.gameState.started)
+			"game_started", started)
 		return
 	}
 
@@ -132,8 +113,13 @@ func (p *parser) roundStartHandler(e events.RoundStart) {
 }
 
 func (p *parser) roundEndHandler(e events.RoundEnd) {
-	if !p.gameState.gameStarted() {
-		slog.Info("round end event skip")
+	started := p.GameState().IsMatchStarted()
+
+	if p.gameState.knifeRound || !started {
+		slog.Info("round end event skip",
+			"event", e,
+			"knife_round", p.gameState.knifeRound,
+			"game_started", started)
 		return
 	}
 
@@ -142,20 +128,19 @@ func (p *parser) roundEndHandler(e events.RoundEnd) {
 	}
 }
 
-func (p *parser) matchStartHandler(e events.MatchStart) {
-	slog.Info("MATCH START")
-	p.gameState.started = true
-}
-
 func (p *parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
 	p.gameState.detectKnifeRound(p.GameState().TeamTerrorists().Members())
+	p.gameState.detectKnifeRound(p.GameState().TeamCounterTerrorists().Members())
 }
 
 func (p *parser) killHandler(e events.Kill) {
-	if !p.gameState.gameStarted() {
+	started := p.GameState().IsMatchStarted()
+
+	if p.gameState.knifeRound || !started {
 		slog.Info("skipped kill event",
 			"knife_round", p.gameState.knifeRound,
-			"game_started", p.gameState.started)
+			"game_started", started,
+			"weapon", e.Weapon.String())
 		return
 	}
 
@@ -222,10 +207,13 @@ func (p *parser) killHandler(e events.Kill) {
 }
 
 func (p *parser) hurtHandler(e events.PlayerHurt) {
-	if !p.gameState.gameStarted() {
+	started := p.GameState().IsMatchStarted()
+
+	if p.gameState.knifeRound || !started {
 		slog.Info("skipped player hurt event",
 			"knife_round", p.gameState.knifeRound,
-			"game_started", p.gameState.started)
+			"game_started", started,
+			"weapon", e.Weapon.String())
 		return
 	}
 
@@ -258,10 +246,13 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 }
 
 func (p *parser) weaponFireHandler(e events.WeaponFire) {
-	if !p.gameState.gameStarted() {
+	started := p.GameState().IsMatchStarted()
+
+	if p.gameState.knifeRound || !started {
 		slog.Info("skipped weapon fire event",
 			"knife_round", p.gameState.knifeRound,
-			"game_started", p.gameState.started)
+			"game_started", started,
+			"weapon", e.Weapon.String())
 		return
 	}
 
@@ -286,10 +277,12 @@ func (p *parser) weaponFireHandler(e events.WeaponFire) {
 }
 
 func (p *parser) bombPlantedHandler(e events.BombPlanted) {
-	if !p.gameState.gameStarted() {
+	started := p.GameState().IsMatchStarted()
+
+	if p.gameState.knifeRound || !started {
 		slog.Info("skipped bomd planted event",
 			"knife_round", p.gameState.knifeRound,
-			"game_started", p.gameState.started)
+			"game_started", started)
 		return
 	}
 
@@ -302,10 +295,12 @@ func (p *parser) bombPlantedHandler(e events.BombPlanted) {
 }
 
 func (p *parser) bombDefusedHandler(e events.BombDefused) {
-	if !p.gameState.gameStarted() {
+	started := p.GameState().IsMatchStarted()
+
+	if p.gameState.knifeRound || !started {
 		slog.Info("skipped bomd defused event",
 			"knife_round", p.gameState.knifeRound,
-			"game_started", p.gameState.started)
+			"game_started", started)
 		return
 	}
 
@@ -318,10 +313,12 @@ func (p *parser) bombDefusedHandler(e events.BombDefused) {
 }
 
 func (p *parser) playerFlashedHandler(e events.PlayerFlashed) {
-	if !p.gameState.gameStarted() {
+	started := p.GameState().IsMatchStarted()
+
+	if p.gameState.knifeRound || !started {
 		slog.Info("skipped player flashed event",
 			"knife_round", p.gameState.knifeRound,
-			"game_started", p.gameState.started)
+			"game_started", started)
 		return
 	}
 
@@ -344,10 +341,12 @@ func (p *parser) playerFlashedHandler(e events.PlayerFlashed) {
 }
 
 func (p *parser) roundMVPAnnouncementHandler(e events.RoundMVPAnnouncement) {
-	if !p.gameState.gameStarted() {
+	started := p.GameState().IsMatchStarted()
+
+	if p.gameState.knifeRound || !started {
 		slog.Info("skipped mvp announcement event",
 			"knife_round", p.gameState.knifeRound,
-			"game_started", p.gameState.started)
+			"game_started", started)
 		return
 	}
 

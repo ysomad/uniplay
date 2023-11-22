@@ -1,7 +1,7 @@
 {
   "76561197978835160": {
     "Kills": {
-      "Total": 14,
+      "Total": 13,
       "HS": 6,
       "Blind": 0,
       "Wallbang": 0,
@@ -9,8 +9,8 @@
       "NoScope": 0
     },
     "Damage": {
-      "Dealt": 1497,
-      "Taken": 1410,
+      "Dealt": 1524,
+      "Taken": 1540,
       "DealtWithGrenade": 146
     },
     "Bomb": {
@@ -34,15 +34,15 @@
       "NoScope": 0
     },
     "Damage": {
-      "Dealt": 1895,
-      "Taken": 1676,
+      "Dealt": 1907,
+      "Taken": 1800,
       "DealtWithGrenade": 193
     },
     "Bomb": {
       "Planted": 1,
       "Defused": 0
     },
-    "Deaths": 13,
+    "Deaths": 14,
     "Assists": 7,
     "FlashbangAssists": 2,
     "MVPs": 3,
@@ -60,14 +60,14 @@
     },
     "Damage": {
       "Dealt": 1700,
-      "Taken": 1543,
+      "Taken": 1656,
       "DealtWithGrenade": 206
     },
     "Bomb": {
       "Planted": 1,
       "Defused": 0
     },
-    "Deaths": 13,
+    "Deaths": 14,
     "Assists": 7,
     "FlashbangAssists": 2,
     "MVPs": 1,
@@ -85,14 +85,14 @@
     },
     "Damage": {
       "Dealt": 781,
-      "Taken": 1945,
+      "Taken": 2141,
       "DealtWithGrenade": 50
     },
     "Bomb": {
       "Planted": 0,
       "Defused": 0
     },
-    "Deaths": 15,
+    "Deaths": 16,
     "Assists": 2,
     "FlashbangAssists": 0,
     "MVPs": 0,
@@ -101,7 +101,7 @@
   },
   "76561198058883409": {
     "Kills": {
-      "Total": 21,
+      "Total": 20,
       "HS": 13,
       "Blind": 0,
       "Wallbang": 0,
@@ -110,7 +110,7 @@
     },
     "Damage": {
       "Dealt": 2565,
-      "Taken": 1081,
+      "Taken": 1192,
       "DealtWithGrenade": 256
     },
     "Bomb": {
@@ -127,15 +127,15 @@
   "76561198063336407": {
     "Kills": {
       "Total": 17,
-      "HS": 11,
+      "HS": 12,
       "Blind": 0,
       "Wallbang": 0,
       "Smoke": 2,
       "NoScope": 0
     },
     "Damage": {
-      "Dealt": 2202,
-      "Taken": 1005,
+      "Dealt": 2503,
+      "Taken": 1131,
       "DealtWithGrenade": 92
     },
     "Bomb": {
@@ -151,15 +151,15 @@
   },
   "76561198096708443": {
     "Kills": {
-      "Total": 6,
-      "HS": 1,
+      "Total": 8,
+      "HS": 3,
       "Blind": 0,
       "Wallbang": 0,
       "Smoke": 2,
       "NoScope": 0
     },
     "Damage": {
-      "Dealt": 965,
+      "Dealt": 1202,
       "Taken": 2288,
       "DealtWithGrenade": 136
     },
@@ -185,7 +185,7 @@
     },
     "Damage": {
       "Dealt": 1232,
-      "Taken": 1972,
+      "Taken": 1984,
       "DealtWithGrenade": 57
     },
     "Bomb": {
@@ -201,16 +201,16 @@
   },
   "76561198171689321": {
     "Kills": {
-      "Total": 11,
-      "HS": 3,
+      "Total": 14,
+      "HS": 6,
       "Blind": 0,
       "Wallbang": 0,
       "Smoke": 1,
       "NoScope": 0
     },
     "Damage": {
-      "Dealt": 1808,
-      "Taken": 1972,
+      "Dealt": 2168,
+      "Taken": 2014,
       "DealtWithGrenade": 73
     },
     "Bomb": {
@@ -220,7 +220,7 @@
     "Deaths": 13,
     "Assists": 7,
     "FlashbangAssists": 0,
-    "MVPs": 3,
+    "MVPs": 4,
     "BlindedPlayers": 19,
     "BlindedTimes": 13
   },
@@ -234,8 +234,8 @@
       "NoScope": 0
     },
     "Damage": {
-      "Dealt": 2018,
-      "Taken": 1774,
+      "Dealt": 2025,
+      "Taken": 1869,
       "DealtWithGrenade": 117
     },
     "Bomb": {

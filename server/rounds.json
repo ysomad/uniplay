@@ -4,8 +4,126 @@
       "TeamA": {
         "Survivors": {},
         "Cash": 4000,
+        "CashSpend": 3250,
+        "EqValue": 4250,
+        "Score": 0,
+        "Side": 2
+      },
+      "TeamB": {
+        "Survivors": {
+          "76561198096708443": {},
+          "76561198134401925": {},
+          "76561198171689321": {},
+          "76561198253891911": {}
+        },
+        "Cash": 4000,
+        "CashSpend": 3250,
+        "EqValue": 4250,
+        "Score": 1,
+        "Side": 3
+      },
+      "KillFeed": [
+        {
+          "Killer": 76561198171689321,
+          "Victim": 76561198058883409,
+          "Assister": 0,
+          "SinceStart": 40,
+          "Headshot": true,
+          "Wallbang": false,
+          "KillerBlind": false,
+          "ThroughSmoke": false,
+          "NoScope": false,
+          "AssistedFlash": false,
+          "KillerSide": 3,
+          "AssisterSide": 0,
+          "Weapon": 9
+        },
+        {
+          "Killer": 76561198096708443,
+          "Victim": 76561197989744167,
+          "Assister": 0,
+          "SinceStart": 42,
+          "Headshot": true,
+          "Wallbang": false,
+          "KillerBlind": false,
+          "ThroughSmoke": false,
+          "NoScope": false,
+          "AssistedFlash": false,
+          "KillerSide": 3,
+          "AssisterSide": 0,
+          "Weapon": 9
+        },
+        {
+          "Killer": 76561198096708443,
+          "Victim": 76561198024615867,
+          "Assister": 0,
+          "SinceStart": 42,
+          "Headshot": true,
+          "Wallbang": false,
+          "KillerBlind": false,
+          "ThroughSmoke": false,
+          "NoScope": false,
+          "AssistedFlash": false,
+          "KillerSide": 3,
+          "AssisterSide": 0,
+          "Weapon": 9
+        },
+        {
+          "Killer": 76561198171689321,
+          "Victim": 76561197978835160,
+          "Assister": 0,
+          "SinceStart": 49,
+          "Headshot": true,
+          "Wallbang": false,
+          "KillerBlind": false,
+          "ThroughSmoke": false,
+          "NoScope": false,
+          "AssistedFlash": false,
+          "KillerSide": 3,
+          "AssisterSide": 0,
+          "Weapon": 9
+        },
+        {
+          "Killer": 76561198063336407,
+          "Victim": 76561198034202275,
+          "Assister": 0,
+          "SinceStart": 55,
+          "Headshot": true,
+          "Wallbang": false,
+          "KillerBlind": false,
+          "ThroughSmoke": false,
+          "NoScope": false,
+          "AssistedFlash": false,
+          "KillerSide": 2,
+          "AssisterSide": 0,
+          "Weapon": 2
+        },
+        {
+          "Killer": 76561198171689321,
+          "Victim": 76561198063336407,
+          "Assister": 0,
+          "SinceStart": 62,
+          "Headshot": true,
+          "Wallbang": false,
+          "KillerBlind": false,
+          "ThroughSmoke": false,
+          "NoScope": false,
+          "AssistedFlash": false,
+          "KillerSide": 3,
+          "AssisterSide": 0,
+          "Weapon": 9
+        }
+      ],
+      "Time": 52468748288,
+      "Reason": 8
+    },
+    {
+      "TeamA": {
+        "Survivors": {},
+        "Cash": 10550,
         "CashSpend": 2100,
         "EqValue": 2000,
+        "Score": 0,
         "Side": 2
       },
       "TeamB": {
@@ -13,9 +131,10 @@
           "76561198171689321": {},
           "76561198253891911": {}
         },
-        "Cash": 4000,
+        "Cash": 18500,
         "CashSpend": 17150,
         "EqValue": 15500,
+        "Score": 2,
         "Side": 3
       },
       "KillFeed": [
@@ -23,7 +142,7 @@
           "Killer": 76561198171689321,
           "Victim": 76561198058883409,
           "Assister": 76561198253891911,
-          "SinceStart": 132,
+          "SinceStart": 63,
           "Headshot": false,
           "Wallbang": false,
           "KillerBlind": false,
@@ -38,7 +157,7 @@
           "Killer": 76561198034202275,
           "Victim": 76561197978835160,
           "Assister": 76561198171689321,
-          "SinceStart": 133,
+          "SinceStart": 63,
           "Headshot": true,
           "Wallbang": false,
           "KillerBlind": false,
@@ -53,7 +172,7 @@
           "Killer": 76561198063336407,
           "Victim": 76561198034202275,
           "Assister": 0,
-          "SinceStart": 133,
+          "SinceStart": 63,
           "Headshot": true,
           "Wallbang": false,
           "KillerBlind": false,
@@ -68,7 +187,7 @@
           "Killer": 76561197989744167,
           "Victim": 76561198096708443,
           "Assister": 0,
-          "SinceStart": 138,
+          "SinceStart": 68,
           "Headshot": false,
           "Wallbang": false,
           "KillerBlind": false,
@@ -83,7 +202,7 @@
           "Killer": 76561198253891911,
           "Victim": 76561197989744167,
           "Assister": 76561198034202275,
-          "SinceStart": 139,
+          "SinceStart": 69,
           "Headshot": true,
           "Wallbang": false,
           "KillerBlind": false,
@@ -98,7 +217,7 @@
           "Killer": 76561198253891911,
           "Victim": 76561198063336407,
           "Assister": 0,
-          "SinceStart": 148,
+          "SinceStart": 78,
           "Headshot": true,
           "Wallbang": false,
           "KillerBlind": false,
@@ -113,7 +232,7 @@
           "Killer": 76561198024615867,
           "Victim": 76561198134401925,
           "Assister": 0,
-          "SinceStart": 150,
+          "SinceStart": 81,
           "Headshot": true,
           "Wallbang": false,
           "KillerBlind": false,
@@ -128,7 +247,7 @@
           "Killer": 76561198171689321,
           "Victim": 76561198024615867,
           "Assister": 76561198134401925,
-          "SinceStart": 164,
+          "SinceStart": 94,
           "Headshot": true,
           "Wallbang": false,
           "KillerBlind": false,
@@ -140,7 +259,7 @@
           "Weapon": 305
         }
       ],
-      "Time": 52468748288,
+      "Time": 121984376832,
       "Reason": 8
     },
     {
@@ -153,6 +272,7 @@
         "Cash": 21350,
         "CashSpend": 21100,
         "EqValue": 22100,
+        "Score": 1,
         "Side": 2
       },
       "TeamB": {
@@ -160,6 +280,7 @@
         "Cash": 20300,
         "CashSpend": 16800,
         "EqValue": 24450,
+        "Score": 2,
         "Side": 3
       },
       "KillFeed": [
@@ -284,6 +405,7 @@
         "Cash": 18000,
         "CashSpend": 12900,
         "EqValue": 25300,
+        "Score": 2,
         "Side": 2
       },
       "TeamB": {
@@ -291,6 +413,7 @@
         "Cash": 11400,
         "CashSpend": 11000,
         "EqValue": 10300,
+        "Score": 2,
         "Side": 3
       },
       "KillFeed": [
@@ -385,6 +508,7 @@
         "Cash": 23150,
         "CashSpend": 3500,
         "EqValue": 26400,
+        "Score": 3,
         "Side": 2
       },
       "TeamB": {
@@ -392,6 +516,7 @@
         "Cash": 9900,
         "CashSpend": 700,
         "EqValue": 1200,
+        "Score": 2,
         "Side": 3
       },
       "KillFeed": [
@@ -480,6 +605,7 @@
         "Cash": 37400,
         "CashSpend": 2800,
         "EqValue": 26300,
+        "Score": 4,
         "Side": 2
       },
       "TeamB": {
@@ -489,6 +615,7 @@
         "Cash": 21200,
         "CashSpend": 21000,
         "EqValue": 22400,
+        "Score": 2,
         "Side": 3
       },
       "KillFeed": [
@@ -643,6 +770,7 @@
         "Cash": 53600,
         "CashSpend": 26250,
         "EqValue": 27250,
+        "Score": 5,
         "Side": 2
       },
       "TeamB": {
@@ -650,6 +778,7 @@
         "Cash": 16200,
         "CashSpend": 14150,
         "EqValue": 16100,
+        "Score": 2,
         "Side": 3
       },
       "KillFeed": [
@@ -743,6 +872,7 @@
         "Cash": 45400,
         "CashSpend": 2400,
         "EqValue": 27750,
+        "Score": 6,
         "Side": 2
       },
       "TeamB": {
@@ -750,6 +880,7 @@
         "Cash": 19050,
         "CashSpend": 17750,
         "EqValue": 18750,
+        "Score": 2,
         "Side": 3
       },
       "KillFeed": [
@@ -853,6 +984,7 @@
         "Cash": 61050,
         "CashSpend": 7900,
         "EqValue": 26000,
+        "Score": 6,
         "Side": 2
       },
       "TeamB": {
@@ -865,6 +997,7 @@
         "Cash": 18600,
         "CashSpend": 18250,
         "EqValue": 15550,
+        "Score": 3,
         "Side": 3
       },
       "KillFeed": [
@@ -972,6 +1105,7 @@
         "Cash": 60450,
         "CashSpend": 26650,
         "EqValue": 27450,
+        "Score": 7,
         "Side": 2
       },
       "TeamB": {
@@ -979,6 +1113,7 @@
         "Cash": 18700,
         "CashSpend": 10300,
         "EqValue": 25950,
+        "Score": 3,
         "Side": 3
       },
       "KillFeed": [
@@ -1099,6 +1234,7 @@
         "Cash": 51450,
         "CashSpend": 12600,
         "EqValue": 27550,
+        "Score": 8,
         "Side": 2
       },
       "TeamB": {
@@ -1106,6 +1242,7 @@
         "Cash": 23500,
         "CashSpend": 22900,
         "EqValue": 24500,
+        "Score": 3,
         "Side": 3
       },
       "KillFeed": [
@@ -1256,6 +1393,7 @@
         "Cash": 56900,
         "CashSpend": 24500,
         "EqValue": 28150,
+        "Score": 9,
         "Side": 2
       },
       "TeamB": {
@@ -1263,6 +1401,7 @@
         "Cash": 19100,
         "CashSpend": 18950,
         "EqValue": 19950,
+        "Score": 3,
         "Side": 3
       },
       "KillFeed": [
@@ -1416,6 +1555,7 @@
         "Cash": 4000,
         "CashSpend": 3400,
         "EqValue": 3550,
+        "Score": 4,
         "Side": 2
       },
       "TeamB": {
@@ -1423,6 +1563,7 @@
         "Cash": 4000,
         "CashSpend": 3400,
         "EqValue": 4200,
+        "Score": 9,
         "Side": 3
       },
       "KillFeed": [
@@ -1526,6 +1667,7 @@
         "Cash": 18650,
         "CashSpend": 18350,
         "EqValue": 20500,
+        "Score": 4,
         "Side": 2
       },
       "TeamB": {
@@ -1535,6 +1677,7 @@
         "Cash": 10400,
         "CashSpend": 9850,
         "EqValue": 10150,
+        "Score": 10,
         "Side": 3
       },
       "KillFeed": [
@@ -1683,6 +1826,7 @@
         "Cash": 12800,
         "CashSpend": 12500,
         "EqValue": 11550,
+        "Score": 4,
         "Side": 2
       },
       "TeamB": {
@@ -1694,6 +1838,7 @@
         "Cash": 19850,
         "CashSpend": 18050,
         "EqValue": 22300,
+        "Score": 11,
         "Side": 3
       },
       "KillFeed": [
@@ -1812,6 +1957,7 @@
         "Cash": 10700,
         "CashSpend": 9950,
         "EqValue": 10200,
+        "Score": 4,
         "Side": 2
       },
       "TeamB": {
@@ -1823,6 +1969,7 @@
         "Cash": 20450,
         "CashSpend": 12000,
         "EqValue": 25800,
+        "Score": 12,
         "Side": 3
       },
       "KillFeed": [
@@ -1944,6 +2091,7 @@
         "Cash": 13350,
         "CashSpend": 13200,
         "EqValue": 14800,
+        "Score": 5,
         "Side": 2
       },
       "TeamB": {
@@ -1951,6 +2099,7 @@
         "Cash": 26200,
         "CashSpend": 14500,
         "EqValue": 29300,
+        "Score": 12,
         "Side": 3
       },
       "KillFeed": [
@@ -2084,13 +2233,19 @@
         "Cash": 18200,
         "CashSpend": 9500,
         "EqValue": 13100,
+        "Score": 5,
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Survivors": {
+          "76561197978835160": {},
+          "76561198058883409": {},
+          "76561198063336407": {}
+        },
         "Cash": 19600,
         "CashSpend": 17700,
         "EqValue": 18300,
+        "Score": 13,
         "Side": 3
       },
       "KillFeed": [
@@ -2198,51 +2353,6 @@
           "KillerSide": 3,
           "AssisterSide": 3,
           "Weapon": 102
-        },
-        {
-          "Killer": 76561198063336407,
-          "Victim": 76561198063336407,
-          "Assister": 0,
-          "SinceStart": 132,
-          "Headshot": false,
-          "Wallbang": false,
-          "KillerBlind": false,
-          "ThroughSmoke": false,
-          "NoScope": false,
-          "AssistedFlash": false,
-          "KillerSide": 3,
-          "AssisterSide": 0,
-          "Weapon": 407
-        },
-        {
-          "Killer": 76561197978835160,
-          "Victim": 76561197978835160,
-          "Assister": 0,
-          "SinceStart": 135,
-          "Headshot": false,
-          "Wallbang": false,
-          "KillerBlind": false,
-          "ThroughSmoke": false,
-          "NoScope": false,
-          "AssistedFlash": false,
-          "KillerSide": 3,
-          "AssisterSide": 0,
-          "Weapon": 407
-        },
-        {
-          "Killer": 76561198058883409,
-          "Victim": 76561198058883409,
-          "Assister": 0,
-          "SinceStart": 146,
-          "Headshot": false,
-          "Wallbang": false,
-          "KillerBlind": false,
-          "ThroughSmoke": false,
-          "NoScope": false,
-          "AssistedFlash": false,
-          "KillerSide": 3,
-          "AssisterSide": 0,
-          "Weapon": 407
         }
       ],
       "Time": 1693031202816,

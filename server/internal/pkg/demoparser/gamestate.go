@@ -8,7 +8,6 @@ import (
 
 type gameState struct {
 	knifeRound bool
-	started    bool
 }
 
 func (gs *gameState) detectKnifeRound(pp []*common.Player) {
@@ -23,12 +22,4 @@ func (gs *gameState) detectKnifeRound(pp []*common.Player) {
 	}
 
 	slog.Info("knife round set to", "knife_round", gs.knifeRound)
-}
-
-func (gs *gameState) gameStarted() bool {
-	if gs.knifeRound || !gs.started {
-		return false
-	}
-
-	return true
 }
