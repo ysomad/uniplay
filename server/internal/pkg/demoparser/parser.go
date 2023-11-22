@@ -30,8 +30,10 @@ func New(demofile io.ReadSeeker, demoheader *multipart.FileHeader) (*parser, err
 	if err != nil {
 		return nil, fmt.Errorf("demo not created: %w", err)
 	}
+
 	slog.Info("demo id", "uuid", d.id)
-	return &parser{
+
+	p := &parser{
 		Parser:      demoinfocs.NewParser(d),
 		demoID:      d.id,
 		demosize:    d.size,
@@ -39,30 +41,14 @@ func New(demofile io.ReadSeeker, demoheader *multipart.FileHeader) (*parser, err
 		playerStats: make(playerStatsMap, 20),
 		weaponStats: make(weaponStatsMap, 20),
 		rounds:      newRoundHistory(),
-	}, nil
+	}
+
+	p.attachHandlers()
+
+	return p, nil
 }
 
 func (p *parser) Parse() error {
-	p.RegisterEventHandler(p.killHandler)
-	p.RegisterEventHandler(p.hurtHandler)
-	p.RegisterEventHandler(p.weaponFireHandler)
-
-	p.RegisterEventHandler(p.playerFlashedHandler)
-
-	p.RegisterEventHandler(p.roundFreezetimeEndHandler)
-	p.RegisterEventHandler(p.roundMVPAnnouncementHandler)
-
-	p.RegisterEventHandler(p.roundStartHandler)
-	p.RegisterEventHandler(p.roundEndHandler)
-
-	p.RegisterEventHandler(p.bombDefusedHandler)
-	p.RegisterEventHandler(p.bombPlantedHandler)
-
-	p.RegisterNetMessageHandler(func(msg *msgs2.CSVCMsg_ServerInfo) {
-		slog.Info("server ip", "val", msg.GameSessionConfig.GetServerIpAddress())
-		slog.Info("map", "val", msg.GameSessionConfig.GetS1Mapname())
-	})
-
 	if err := p.ParseToEnd(); err != nil {
 		return fmt.Errorf("demo not parsed: %w", err)
 	}
@@ -97,6 +83,28 @@ func (p *parser) Parse() error {
 	}
 
 	return nil
+}
+
+func (p *parser) attachHandlers() {
+	p.RegisterEventHandler(p.killHandler)
+	p.RegisterEventHandler(p.hurtHandler)
+	p.RegisterEventHandler(p.weaponFireHandler)
+
+	p.RegisterEventHandler(p.playerFlashedHandler)
+
+	p.RegisterEventHandler(p.roundFreezetimeEndHandler)
+	p.RegisterEventHandler(p.roundMVPAnnouncementHandler)
+
+	p.RegisterEventHandler(p.roundStartHandler)
+	p.RegisterEventHandler(p.roundEndHandler)
+
+	p.RegisterEventHandler(p.bombDefusedHandler)
+	p.RegisterEventHandler(p.bombPlantedHandler)
+
+	p.RegisterNetMessageHandler(func(msg *msgs2.CSVCMsg_ServerInfo) {
+		slog.Info("server ip", "val", msg.GameSessionConfig.GetServerIpAddress())
+		slog.Info("map", "val", msg.GameSessionConfig.GetS1Mapname())
+	})
 }
 
 func (p *parser) roundStartHandler(e events.RoundStart) {
