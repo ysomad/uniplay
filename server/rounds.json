@@ -2,10 +2,48 @@
   "Rounds": [
     {
       "TeamA": {
-        "Survivors": {
-          "76561197964604204": {},
-          "76561198000969901": {},
-          "76561198120557348": {}
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 700,
+            "Survived": true
+          },
+          "76561198000969901": {
+            "Inventory": [
+              404,
+              405,
+              2
+            ],
+            "CashSpend": 650,
+            "Survived": true
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 650,
+            "Survived": true
+          }
         },
         "Cash": 4000,
         "CashSpend": 3300,
@@ -14,7 +52,48 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 700,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 800,
+            "Survived": false
+          }
+        },
         "Cash": 4000,
         "CashSpend": 3450,
         "EqValue": 4250,
@@ -133,10 +212,48 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561197964604204": {},
-          "76561198000969901": {},
-          "76561198073117127": {}
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              2,
+              405
+            ],
+            "CashSpend": 3150,
+            "Survived": true
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4000,
+            "Survived": true
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2800,
+            "Survived": true
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              2,
+              404
+            ],
+            "CashSpend": 4000,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4000,
+            "Survived": false
+          }
         },
         "Cash": 18750,
         "CashSpend": 17950,
@@ -145,7 +262,48 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2000,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              9,
+              405
+            ],
+            "CashSpend": 2000,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2000,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 1900,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2100,
+            "Survived": false
+          }
+        },
         "Cash": 10250,
         "CashSpend": 10000,
         "EqValue": 8300,
@@ -264,7 +422,53 @@
     },
     {
       "TeamA": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              4,
+              505,
+              303
+            ],
+            "CashSpend": 1100,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              303,
+              405,
+              2
+            ],
+            "CashSpend": 3500,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              2,
+              303
+            ],
+            "CashSpend": 0,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3250,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              2,
+              404,
+              405
+            ],
+            "CashSpend": 2200,
+            "Survived": false
+          }
+        },
         "Cash": 18850,
         "CashSpend": 10050,
         "EqValue": 22650,
@@ -272,8 +476,47 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {
-          "76561198134401925": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              9,
+              405
+            ],
+            "CashSpend": 300,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              9,
+              405
+            ],
+            "CashSpend": 700,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 600,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 1150,
+            "Survived": true
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 300,
+            "Survived": false
+          }
         },
         "Cash": 12950,
         "CashSpend": 3050,
@@ -423,9 +666,48 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561197964604204": {},
-          "76561198000969901": {}
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              404,
+              405,
+              2
+            ],
+            "CashSpend": 4000,
+            "Survived": true
+          },
+          "76561198000969901": {
+            "Inventory": [
+              2,
+              405
+            ],
+            "CashSpend": 2800,
+            "Survived": true
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4700,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              2,
+              405
+            ],
+            "CashSpend": 1400,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3350,
+            "Survived": false
+          }
         },
         "Cash": 17000,
         "CashSpend": 16250,
@@ -434,7 +716,50 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 5300,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3100,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              9,
+              405
+            ],
+            "CashSpend": 5300,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              504,
+              303,
+              405,
+              5
+            ],
+            "CashSpend": 4300,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 5300,
+            "Survived": false
+          }
+        },
         "Cash": 27650,
         "CashSpend": 23300,
         "EqValue": 27950,
@@ -568,11 +893,50 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561197964604204": {},
-          "76561198000969901": {},
-          "76561198073117127": {},
-          "76561198120557348": {}
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              2,
+              303
+            ],
+            "CashSpend": 4100,
+            "Survived": true
+          },
+          "76561198000969901": {
+            "Inventory": [
+              303,
+              404,
+              405,
+              2
+            ],
+            "CashSpend": 3300,
+            "Survived": true
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3700,
+            "Survived": true
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2200,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2200,
+            "Survived": true
+          }
         },
         "Cash": 18800,
         "CashSpend": 15500,
@@ -581,7 +945,48 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              9,
+              405
+            ],
+            "CashSpend": 0,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 1700,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 300,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 3550,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 1950,
+            "Survived": false
+          }
+        },
         "Cash": 14750,
         "CashSpend": 7500,
         "EqValue": 4550,
@@ -685,7 +1090,60 @@
     },
     {
       "TeamA": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              2,
+              303,
+              502,
+              506
+            ],
+            "CashSpend": 500,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              2,
+              303,
+              505
+            ],
+            "CashSpend": 700,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              303,
+              404,
+              405,
+              2
+            ],
+            "CashSpend": 800,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4800,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              504,
+              505,
+              502,
+              506,
+              405,
+              2,
+              303
+            ],
+            "CashSpend": 0,
+            "Survived": false
+          }
+        },
         "Cash": 21050,
         "CashSpend": 6800,
         "EqValue": 24800,
@@ -693,9 +1151,47 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {
-          "76561198134401925": {},
-          "76561198146207066": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4350,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 5400,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4050,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 2800,
+            "Survived": true
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3300,
+            "Survived": true
+          }
         },
         "Cash": 20150,
         "CashSpend": 19900,
@@ -830,7 +1326,49 @@
     },
     {
       "TeamA": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              2,
+              405
+            ],
+            "CashSpend": 5100,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4500,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4200,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              2,
+              404
+            ],
+            "CashSpend": 1500,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 6250,
+            "Survived": false
+          }
+        },
         "Cash": 22150,
         "CashSpend": 21550,
         "EqValue": 22150,
@@ -838,9 +1376,51 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {
-          "76561198028292758": {},
-          "76561198044045107": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3350,
+            "Survived": true
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2400,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2400,
+            "Survived": true
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              1,
+              505,
+              305
+            ],
+            "CashSpend": 3900,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9,
+              309,
+              504
+            ],
+            "CashSpend": 3800,
+            "Survived": false
+          }
         },
         "Cash": 18100,
         "CashSpend": 15850,
@@ -975,7 +1555,49 @@
     },
     {
       "TeamA": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2400,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 1150,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 1350,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 700,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              2,
+              404
+            ],
+            "CashSpend": 700,
+            "Survived": false
+          }
+        },
         "Cash": 11000,
         "CashSpend": 6300,
         "EqValue": 3550,
@@ -983,11 +1605,53 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {
-          "76561198028292758": {},
-          "76561198044045107": {},
-          "76561198134401925": {},
-          "76561198146207066": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              9,
+              505,
+              303,
+              504
+            ],
+            "CashSpend": 3800,
+            "Survived": true
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2550,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              303,
+              405,
+              9,
+              504,
+              502
+            ],
+            "CashSpend": 3900,
+            "Survived": true
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 2400,
+            "Survived": true
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3250,
+            "Survived": true
+          }
         },
         "Cash": 20300,
         "CashSpend": 15900,
@@ -1092,11 +1756,48 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561197964604204": {},
-          "76561198000969901": {},
-          "76561198073117127": {},
-          "76561198120557348": {}
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              2,
+              404
+            ],
+            "CashSpend": 2400,
+            "Survived": true
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3900,
+            "Survived": true
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2500,
+            "Survived": true
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3500,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3600,
+            "Survived": true
+          }
         },
         "Cash": 17000,
         "CashSpend": 15900,
@@ -1105,7 +1806,58 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              305,
+              505,
+              502,
+              7
+            ],
+            "CashSpend": 500,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2800,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              303,
+              405,
+              9
+            ],
+            "CashSpend": 1400,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              1,
+              503,
+              506,
+              303,
+              504
+            ],
+            "CashSpend": 700,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              505,
+              4,
+              405,
+              102
+            ],
+            "CashSpend": 5650,
+            "Survived": false
+          }
+        },
         "Cash": 23650,
         "CashSpend": 11050,
         "EqValue": 30750,
@@ -1209,8 +1961,56 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561198107540058": {}
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              305,
+              503,
+              405,
+              7,
+              504
+            ],
+            "CashSpend": 800,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              2,
+              303,
+              404
+            ],
+            "CashSpend": 1000,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              4,
+              303,
+              505
+            ],
+            "CashSpend": 900,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2100,
+            "Survived": true
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              2,
+              309,
+              504
+            ],
+            "CashSpend": 3300,
+            "Survived": false
+          }
         },
         "Cash": 18950,
         "CashSpend": 8100,
@@ -1219,7 +2019,48 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4350,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4400,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4350,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 4800,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 1500,
+            "Survived": false
+          }
+        },
         "Cash": 19700,
         "CashSpend": 19400,
         "EqValue": 20200,
@@ -1368,7 +2209,51 @@
     },
     {
       "TeamA": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 5100,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4700,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              2,
+              404
+            ],
+            "CashSpend": 4500,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              504,
+              405,
+              2,
+              309
+            ],
+            "CashSpend": 3400,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2200,
+            "Survived": false
+          }
+        },
         "Cash": 28500,
         "CashSpend": 19900,
         "EqValue": 26750,
@@ -1376,8 +2261,47 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {
-          "76561198028292758": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 0,
+            "Survived": true
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 1700,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 0,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 300,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 200,
+            "Survived": false
+          }
         },
         "Cash": 11000,
         "CashSpend": 2200,
@@ -1527,7 +2451,49 @@
     },
     {
       "TeamA": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              2,
+              405
+            ],
+            "CashSpend": 3900,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3300,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4700,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              2,
+              404
+            ],
+            "CashSpend": 3900,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4750,
+            "Survived": false
+          }
+        },
         "Cash": 20900,
         "CashSpend": 20550,
         "EqValue": 17600,
@@ -1535,9 +2501,49 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {
-          "76561198044045107": {},
-          "76561198134401925": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              9,
+              303,
+              504
+            ],
+            "CashSpend": 7550,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3700,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 5700,
+            "Survived": true
+          },
+          "76561198134401925": {
+            "Inventory": [
+              1,
+              405
+            ],
+            "CashSpend": 5450,
+            "Survived": true
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 5100,
+            "Survived": false
+          }
         },
         "Cash": 28100,
         "CashSpend": 27500,
@@ -1672,8 +2678,48 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561198028292758": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 700,
+            "Survived": true
+          },
+          "76561198034202275": {
+            "Inventory": [
+              404,
+              405,
+              2
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              2,
+              405
+            ],
+            "CashSpend": 800,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              2,
+              405
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          }
         },
         "Cash": 4000,
         "CashSpend": 3450,
@@ -1682,7 +2728,48 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 700,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 650,
+            "Survived": false
+          }
+        },
         "Cash": 4000,
         "CashSpend": 3300,
         "EqValue": 3600,
@@ -1831,8 +2918,48 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561198146207066": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              3,
+              405
+            ],
+            "CashSpend": 3900,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4000,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3600,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              2,
+              404,
+              405
+            ],
+            "CashSpend": 3450,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3250,
+            "Survived": true
+          }
         },
         "Cash": 18600,
         "CashSpend": 18200,
@@ -1841,7 +2968,48 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2100,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 1650,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              9,
+              405
+            ],
+            "CashSpend": 2550,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 1950,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2300,
+            "Survived": false
+          }
+        },
         "Cash": 11400,
         "CashSpend": 10550,
         "EqValue": 10950,
@@ -1990,9 +3158,51 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561198044045107": {},
-          "76561198134401925": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              2,
+              404,
+              405
+            ],
+            "CashSpend": 3050,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2050,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2200,
+            "Survived": true
+          },
+          "76561198134401925": {
+            "Inventory": [
+              2,
+              405
+            ],
+            "CashSpend": 1700,
+            "Survived": true
+          },
+          "76561198146207066": {
+            "Inventory": [
+              504,
+              303,
+              505,
+              405,
+              2
+            ],
+            "CashSpend": 3400,
+            "Survived": false
+          }
         },
         "Cash": 19050,
         "CashSpend": 12400,
@@ -2001,7 +3211,48 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 1000,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 1550,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 1350,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 0,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 1350,
+            "Survived": false
+          }
+        },
         "Cash": 14050,
         "CashSpend": 5250,
         "EqValue": 4450,
@@ -2135,7 +3386,52 @@
     },
     {
       "TeamA": {
-        "Survivors": {},
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2200,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4400,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              303,
+              504,
+              4,
+              404
+            ],
+            "CashSpend": 3700,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              303,
+              405,
+              4
+            ],
+            "CashSpend": 3900,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2200,
+            "Survived": false
+          }
+        },
         "Cash": 25000,
         "CashSpend": 16400,
         "EqValue": 26000,
@@ -2143,8 +3439,47 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {
-          "76561198107540058": {}
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4950,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4450,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4350,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 5350,
+            "Survived": true
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4750,
+            "Survived": false
+          }
         },
         "Cash": 24200,
         "CashSpend": 23850,
@@ -2294,8 +3629,48 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561198146207066": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4900,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2200,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4800,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4000,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              2,
+              404
+            ],
+            "CashSpend": 4600,
+            "Survived": true
+          }
         },
         "Cash": 21100,
         "CashSpend": 20500,
@@ -2304,7 +3679,50 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3650,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3750,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2400,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              504,
+              405,
+              1,
+              303
+            ],
+            "CashSpend": 4100,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3950,
+            "Survived": false
+          }
+        },
         "Cash": 19650,
         "CashSpend": 17850,
         "EqValue": 22800,
@@ -2453,8 +3871,49 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561198034202275": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3200,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              2,
+              404
+            ],
+            "CashSpend": 3100,
+            "Survived": true
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4000,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              2,
+              405
+            ],
+            "CashSpend": 2200,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              2,
+              303,
+              405
+            ],
+            "CashSpend": 3800,
+            "Survived": false
+          }
         },
         "Cash": 18650,
         "CashSpend": 16300,
@@ -2463,8 +3922,47 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {
-          "76561198000969901": {}
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2350,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 2350,
+            "Survived": true
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4100,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 3000,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              9,
+              405
+            ],
+            "CashSpend": 2300,
+            "Survived": false
+          }
         },
         "Cash": 15000,
         "CashSpend": 14100,
@@ -2599,8 +4097,48 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561198146207066": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2050,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              2,
+              405
+            ],
+            "CashSpend": 4400,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3550,
+            "Survived": false
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              2,
+              404
+            ],
+            "CashSpend": 4900,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 4200,
+            "Survived": true
+          }
         },
         "Cash": 21350,
         "CashSpend": 19100,
@@ -2609,7 +4147,51 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              9,
+              405
+            ],
+            "CashSpend": 2800,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              4,
+              505,
+              303,
+              504
+            ],
+            "CashSpend": 3500,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3000,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 2800,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3550,
+            "Survived": false
+          }
+        },
         "Cash": 16600,
         "CashSpend": 15650,
         "EqValue": 20800,
@@ -2758,9 +4340,49 @@
     },
     {
       "TeamA": {
-        "Survivors": {
-          "76561198044045107": {},
-          "76561198146207066": {}
+        "Players": {
+          "76561198028292758": {
+            "Inventory": [
+              405,
+              2,
+              404
+            ],
+            "CashSpend": 4900,
+            "Survived": false
+          },
+          "76561198034202275": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3700,
+            "Survived": false
+          },
+          "76561198044045107": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 3500,
+            "Survived": true
+          },
+          "76561198134401925": {
+            "Inventory": [
+              405,
+              2
+            ],
+            "CashSpend": 2200,
+            "Survived": false
+          },
+          "76561198146207066": {
+            "Inventory": [
+              303,
+              405,
+              2
+            ],
+            "CashSpend": 3900,
+            "Survived": true
+          }
         },
         "Cash": 20300,
         "CashSpend": 18200,
@@ -2769,7 +4391,48 @@
         "Side": 2
       },
       "TeamB": {
-        "Survivors": {},
+        "Players": {
+          "76561197964604204": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3850,
+            "Survived": false
+          },
+          "76561198000969901": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3500,
+            "Survived": false
+          },
+          "76561198073117127": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 4200,
+            "Survived": false
+          },
+          "76561198107540058": {
+            "Inventory": [
+              405,
+              1
+            ],
+            "CashSpend": 4150,
+            "Survived": false
+          },
+          "76561198120557348": {
+            "Inventory": [
+              405,
+              9
+            ],
+            "CashSpend": 3750,
+            "Survived": false
+          }
+        },
         "Cash": 19450,
         "CashSpend": 19450,
         "EqValue": 20450,
