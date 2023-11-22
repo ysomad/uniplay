@@ -13,13 +13,19 @@ type gameState struct {
 func (gs *gameState) detectKnifeRound(pp []*common.Player) {
 	gs.knifeRound = false
 
+	playersWithKnifeOnly := 0
+
 	for _, p := range pp {
 		weapons := p.Weapons()
 		if len(weapons) == 1 && weapons[0].Type == common.EqKnife {
-			gs.knifeRound = true
-			break
+			slog.Info("player has only knife", "player", p.Name)
+			playersWithKnifeOnly++
 		}
 	}
 
-	slog.Info("knife round set to", "knife_round", gs.knifeRound)
+	if playersWithKnifeOnly == len(pp) {
+		gs.knifeRound = true
+	}
+
+	slog.Info("knife round set", "knife_round", gs.knifeRound)
 }

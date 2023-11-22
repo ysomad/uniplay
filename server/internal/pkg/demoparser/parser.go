@@ -137,8 +137,9 @@ func (p *parser) roundEndHandler(e events.RoundEnd) {
 }
 
 func (p *parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
-	p.gameState.detectKnifeRound(p.GameState().TeamTerrorists().Members())
-	p.gameState.detectKnifeRound(p.GameState().TeamCounterTerrorists().Members())
+	gs := p.GameState()
+	allPlayers := append(gs.TeamTerrorists().Members(), gs.TeamCounterTerrorists().Members()...)
+	p.gameState.detectKnifeRound(allPlayers)
 }
 
 func (p *parser) killHandler(e events.Kill) {
