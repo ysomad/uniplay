@@ -108,7 +108,8 @@ func (p *parser) attachHandlers() {
 }
 
 func (p *parser) roundStartHandler(e events.RoundStart) {
-	started := p.GameState().IsMatchStarted()
+	gs := p.GameState()
+	started := gs.IsMatchStarted()
 
 	if p.gameState.knifeRound || !started {
 		slog.Info("round start event skip",
@@ -117,7 +118,16 @@ func (p *parser) roundStartHandler(e events.RoundStart) {
 		return
 	}
 
-	p.rounds.start(p.GameState().TeamTerrorists(), p.CurrentTime())
+	t := gs.TeamTerrorists()
+	ct := gs.TeamCounterTerrorists()
+
+	p.rounds.start(roundTeamState{
+		members:         t.Members(),
+		side:            t.Team(),
+		opponentMembers: ct.Members(),
+		opponentSide:    ct.Team(),
+		currTime:        p.CurrentTime(),
+	})
 }
 
 func (p *parser) roundEndHandler(e events.RoundEnd) {

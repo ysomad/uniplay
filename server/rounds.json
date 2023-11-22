@@ -13,9 +13,9 @@
           },
           "76561198000969901": {
             "Inventory": [
+              2,
               404,
-              405,
-              2
+              405
             ],
             "CashSpend": 650,
             "Survived": true
@@ -215,8 +215,8 @@
         "Players": {
           "76561197964604204": {
             "Inventory": [
-              2,
-              405
+              405,
+              2
             ],
             "CashSpend": 3150,
             "Survived": true
@@ -273,8 +273,8 @@
           },
           "76561198034202275": {
             "Inventory": [
-              9,
-              405
+              405,
+              9
             ],
             "CashSpend": 2000,
             "Survived": false
@@ -461,9 +461,9 @@
           },
           "76561198120557348": {
             "Inventory": [
+              405,
               2,
-              404,
-              405
+              404
             ],
             "CashSpend": 2200,
             "Survived": false
@@ -479,24 +479,24 @@
         "Players": {
           "76561198028292758": {
             "Inventory": [
-              9,
-              405
+              405,
+              9
             ],
             "CashSpend": 300,
             "Survived": false
           },
           "76561198034202275": {
             "Inventory": [
-              9,
-              405
+              405,
+              9
             ],
             "CashSpend": 700,
             "Survived": false
           },
           "76561198044045107": {
             "Inventory": [
-              405,
-              9
+              9,
+              405
             ],
             "CashSpend": 600,
             "Survived": false
@@ -678,8 +678,8 @@
           },
           "76561198000969901": {
             "Inventory": [
-              2,
-              405
+              405,
+              2
             ],
             "CashSpend": 2800,
             "Survived": true
@@ -694,8 +694,8 @@
           },
           "76561198107540058": {
             "Inventory": [
-              2,
-              405
+              405,
+              2
             ],
             "CashSpend": 1400,
             "Survived": false
@@ -735,18 +735,18 @@
           },
           "76561198044045107": {
             "Inventory": [
-              9,
-              405
+              405,
+              9
             ],
             "CashSpend": 5300,
             "Survived": false
           },
           "76561198134401925": {
             "Inventory": [
-              504,
-              303,
               405,
-              5
+              5,
+              504,
+              303
             ],
             "CashSpend": 4300,
             "Survived": false
@@ -896,19 +896,19 @@
         "Players": {
           "76561197964604204": {
             "Inventory": [
-              405,
               2,
-              303
+              303,
+              405
             ],
             "CashSpend": 4100,
             "Survived": true
           },
           "76561198000969901": {
             "Inventory": [
-              303,
-              404,
               405,
-              2
+              2,
+              303,
+              404
             ],
             "CashSpend": 3300,
             "Survived": true
@@ -948,8 +948,8 @@
         "Players": {
           "76561198028292758": {
             "Inventory": [
-              9,
-              405
+              405,
+              9
             ],
             "CashSpend": 0,
             "Survived": false
@@ -1104,20 +1104,20 @@
           },
           "76561198000969901": {
             "Inventory": [
-              405,
-              2,
               303,
-              505
+              505,
+              405,
+              2
             ],
             "CashSpend": 700,
             "Survived": false
           },
           "76561198073117127": {
             "Inventory": [
-              303,
-              404,
               405,
-              2
+              2,
+              303,
+              404
             ],
             "CashSpend": 800,
             "Survived": false
@@ -1132,13 +1132,13 @@
           },
           "76561198120557348": {
             "Inventory": [
+              405,
+              2,
+              303,
               504,
               505,
               502,
-              506,
-              405,
-              2,
-              303
+              506
             ],
             "CashSpend": 0,
             "Survived": false
@@ -1154,8 +1154,8 @@
         "Players": {
           "76561198028292758": {
             "Inventory": [
-              405,
-              9
+              9,
+              405
             ],
             "CashSpend": 4350,
             "Survived": false
@@ -1329,8 +1329,8 @@
         "Players": {
           "76561197964604204": {
             "Inventory": [
-              2,
-              405
+              405,
+              2
             ],
             "CashSpend": 5100,
             "Survived": false
@@ -1403,20 +1403,20 @@
           },
           "76561198134401925": {
             "Inventory": [
+              305,
               405,
               1,
-              505,
-              305
+              505
             ],
             "CashSpend": 3900,
             "Survived": false
           },
           "76561198146207066": {
             "Inventory": [
+              504,
               405,
               9,
-              309,
-              504
+              309
             ],
             "CashSpend": 3800,
             "Survived": false
@@ -1590,9 +1590,9 @@
           },
           "76561198120557348": {
             "Inventory": [
+              404,
               405,
-              2,
-              404
+              2
             ],
             "CashSpend": 700,
             "Survived": false
@@ -1638,8 +1638,8 @@
           },
           "76561198134401925": {
             "Inventory": [
-              405,
-              1
+              1,
+              405
             ],
             "CashSpend": 2400,
             "Survived": true
@@ -1776,24 +1776,24 @@
           },
           "76561198073117127": {
             "Inventory": [
-              405,
-              2
+              2,
+              405
             ],
             "CashSpend": 2500,
             "Survived": true
           },
           "76561198107540058": {
             "Inventory": [
-              405,
-              2
+              2,
+              405
             ],
             "CashSpend": 3500,
             "Survived": false
           },
           "76561198120557348": {
             "Inventory": [
-              405,
-              2
+              2,
+              405
             ],
             "CashSpend": 3600,
             "Survived": true
@@ -1828,9 +1828,9 @@
           },
           "76561198044045107": {
             "Inventory": [
-              303,
               405,
-              9
+              9,
+              303
             ],
             "CashSpend": 1400,
             "Survived": false
@@ -1849,10 +1849,10 @@
           },
           "76561198146207066": {
             "Inventory": [
-              505,
               4,
               405,
-              102
+              102,
+              505
             ],
             "CashSpend": 5650,
             "Survived": false
@@ -1964,11 +1964,11 @@
         "Players": {
           "76561197964604204": {
             "Inventory": [
-              305,
-              503,
               405,
               7,
-              504
+              504,
+              305,
+              503
             ],
             "CashSpend": 800,
             "Survived": false
@@ -2022,8 +2022,8 @@
         "Players": {
           "76561198028292758": {
             "Inventory": [
-              405,
-              9
+              9,
+              405
             ],
             "CashSpend": 4350,
             "Survived": false
@@ -2212,8 +2212,8 @@
         "Players": {
           "76561197964604204": {
             "Inventory": [
-              405,
-              2
+              2,
+              405
             ],
             "CashSpend": 5100,
             "Survived": false
@@ -2237,10 +2237,10 @@
           },
           "76561198107540058": {
             "Inventory": [
+              309,
               504,
               405,
-              2,
-              309
+              2
             ],
             "CashSpend": 3400,
             "Survived": false
@@ -2454,16 +2454,16 @@
         "Players": {
           "76561197964604204": {
             "Inventory": [
-              2,
-              405
+              405,
+              2
             ],
             "CashSpend": 3900,
             "Survived": false
           },
           "76561198000969901": {
             "Inventory": [
-              405,
-              2
+              2,
+              405
             ],
             "CashSpend": 3300,
             "Survived": false
@@ -2681,17 +2681,17 @@
         "Players": {
           "76561198028292758": {
             "Inventory": [
-              405,
-              2
+              2,
+              405
             ],
             "CashSpend": 700,
             "Survived": true
           },
           "76561198034202275": {
             "Inventory": [
-              404,
               405,
-              2
+              2,
+              404
             ],
             "CashSpend": 650,
             "Survived": false
@@ -2706,16 +2706,16 @@
           },
           "76561198134401925": {
             "Inventory": [
-              2,
-              405
+              405,
+              2
             ],
             "CashSpend": 800,
             "Survived": false
           },
           "76561198146207066": {
             "Inventory": [
-              2,
-              405
+              405,
+              2
             ],
             "CashSpend": 650,
             "Survived": false
@@ -2921,8 +2921,8 @@
         "Players": {
           "76561198028292758": {
             "Inventory": [
-              3,
-              405
+              405,
+              3
             ],
             "CashSpend": 3900,
             "Survived": false
@@ -2945,9 +2945,9 @@
           },
           "76561198134401925": {
             "Inventory": [
+              405,
               2,
-              404,
-              405
+              404
             ],
             "CashSpend": 3450,
             "Survived": false
@@ -2987,16 +2987,16 @@
           },
           "76561198073117127": {
             "Inventory": [
-              9,
-              405
+              405,
+              9
             ],
             "CashSpend": 2550,
             "Survived": false
           },
           "76561198107540058": {
             "Inventory": [
-              405,
-              1
+              1,
+              405
             ],
             "CashSpend": 1950,
             "Survived": false
@@ -3186,8 +3186,8 @@
           },
           "76561198134401925": {
             "Inventory": [
-              2,
-              405
+              405,
+              2
             ],
             "CashSpend": 1700,
             "Survived": true
@@ -3405,28 +3405,28 @@
           },
           "76561198044045107": {
             "Inventory": [
-              405,
               303,
               504,
               4,
-              404
+              404,
+              405
             ],
             "CashSpend": 3700,
             "Survived": false
           },
           "76561198134401925": {
             "Inventory": [
+              4,
               303,
-              405,
-              4
+              405
             ],
             "CashSpend": 3900,
             "Survived": false
           },
           "76561198146207066": {
             "Inventory": [
-              405,
-              2
+              2,
+              405
             ],
             "CashSpend": 2200,
             "Survived": false
@@ -3442,8 +3442,8 @@
         "Players": {
           "76561197964604204": {
             "Inventory": [
-              405,
-              9
+              9,
+              405
             ],
             "CashSpend": 4950,
             "Survived": false
@@ -3706,10 +3706,10 @@
           },
           "76561198107540058": {
             "Inventory": [
-              504,
               405,
               1,
-              303
+              303,
+              504
             ],
             "CashSpend": 4100,
             "Survived": false
@@ -3907,9 +3907,9 @@
           },
           "76561198146207066": {
             "Inventory": [
+              405,
               2,
-              303,
-              405
+              303
             ],
             "CashSpend": 3800,
             "Survived": false
@@ -3957,8 +3957,8 @@
           },
           "76561198120557348": {
             "Inventory": [
-              9,
-              405
+              405,
+              9
             ],
             "CashSpend": 2300,
             "Survived": false
@@ -4108,8 +4108,8 @@
           },
           "76561198034202275": {
             "Inventory": [
-              2,
-              405
+              405,
+              2
             ],
             "CashSpend": 4400,
             "Survived": false
@@ -4150,19 +4150,19 @@
         "Players": {
           "76561197964604204": {
             "Inventory": [
-              9,
-              405
+              405,
+              9
             ],
             "CashSpend": 2800,
             "Survived": false
           },
           "76561198000969901": {
             "Inventory": [
-              405,
               4,
               505,
               303,
-              504
+              504,
+              405
             ],
             "CashSpend": 3500,
             "Survived": false
@@ -4343,9 +4343,9 @@
         "Players": {
           "76561198028292758": {
             "Inventory": [
-              405,
               2,
-              404
+              404,
+              405
             ],
             "CashSpend": 4900,
             "Survived": false

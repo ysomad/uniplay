@@ -23,20 +23,28 @@ func newRoundHistory() roundHistory {
 	return roundHistory{Rounds: make([]*round, 0, 50)}
 }
 
+type roundTeamState struct {
+	members         []*common.Player
+	opponentMembers []*common.Player
+	side            common.Team
+	opponentSide    common.Team
+	currTime        time.Duration
+}
+
 // start appends new round into rounds.
 // currTime is time elapsed since demo start.
-func (rh *roundHistory) start(ts *common.TeamState, currTime time.Duration) {
-	if len(ts.Members()) <= 0 {
-		slog.Info("skipping round start for empty team")
+func (rh *roundHistory) start(ts roundTeamState) {
+	if len(ts.members) <= 0 {
+		slog.Info("skipping round start for empty team", "team_state", ts)
 		return
 	}
 
-	if ts.Members()[0].Money() <= 0 {
-		slog.Info("skipping round start for no cash member")
+	if ts.members[0].Money() <= 0 {
+		slog.Info("skipping round start for no cash member", "team_state", ts)
 		return
 	}
 
-	rh.Rounds = append(rh.Rounds, newRound(ts, currTime))
+	rh.Rounds = append(rh.Rounds, newRound(ts))
 }
 
 // endCurrent ends latest rounds in rounds history.
@@ -87,13 +95,13 @@ type round struct {
 	Reason   events.RoundEndReason
 }
 
-func newRound(ts *common.TeamState, currTime time.Duration) *round {
+func newRound(p roundTeamState) *round {
 	return &round{
-		TeamA:    newRoundTeam(ts.Members(), ts.Team()),
-		TeamB:    newRoundTeam(ts.Opponent.Members(), ts.Opponent.Team()),
+		TeamA:    newRoundTeam(p.members, p.side),
+		TeamB:    newRoundTeam(p.opponentMembers, p.opponentSide),
 		KillFeed: make([]*roundKill, 0, 20),
 		Reason:   events.RoundEndReasonStillInProgress,
-		Time:     currTime,
+		Time:     p.currTime,
 	}
 }
 
@@ -117,14 +125,14 @@ func (r *round) end(winner, loser *common.TeamState, reason events.RoundEndReaso
 	r.Reason = reason
 }
 
-type roundPlayer struct {
+type roundTeamPlayer struct {
 	Inventory []common.EquipmentType
 	CashSpend int
 	Survived  bool
 }
 
-func newRoundPlayer(inventory map[int]*common.Equipment) roundPlayer {
-	p := roundPlayer{
+func newRoundTeamPlayer(inventory map[int]*common.Equipment) roundTeamPlayer {
+	p := roundTeamPlayer{
 		Inventory: make([]common.EquipmentType, 0, len(inventory)),
 		CashSpend: 0,
 		Survived:  true,
@@ -143,7 +151,7 @@ func newRoundPlayer(inventory map[int]*common.Equipment) roundPlayer {
 }
 
 type roundTeam struct {
-	Players   map[uint64]roundPlayer
+	Players   map[uint64]roundTeamPlayer
 	Cash      int // cash at start of round, must be set on round start
 	CashSpend int // during round, must be set on round end
 	EqValue   int // equipment value on round start, must be set on round end
@@ -154,7 +162,7 @@ type roundTeam struct {
 // newRoundTeam must be created at round start.
 func newRoundTeam(members []*common.Player, side common.Team) *roundTeam {
 	cash := 0
-	players := make(map[uint64]roundPlayer, len(members))
+	players := make(map[uint64]roundTeamPlayer, len(members))
 
 	for _, m := range members {
 		if !playerConnected(m) {
@@ -167,7 +175,7 @@ func newRoundTeam(members []*common.Player, side common.Team) *roundTeam {
 			continue
 		}
 
-		players[m.SteamID64] = newRoundPlayer(m.Inventory)
+		players[m.SteamID64] = newRoundTeamPlayer(m.Inventory)
 		cash += m.Money()
 	}
 
