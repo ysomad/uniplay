@@ -104,7 +104,7 @@ func Test_playerConnected(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := playerConnected(tt.args.pl)
+			got := isPlayerConnected(tt.args.pl)
 			assert.Equal(t, tt.want, got)
 		})
 	}
@@ -166,7 +166,7 @@ func Test_playerSpectator(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := playerSpectator(tt.args.pl)
+			got := isPlayerSpectator(tt.args.pl)
 			assert.Equal(t, tt.want, got)
 		})
 	}

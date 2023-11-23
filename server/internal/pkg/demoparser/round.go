@@ -64,7 +64,7 @@ func (rh *roundHistory) endCurrent(e events.RoundEnd) error {
 
 // killCount appends kill to last round kill feed.
 func (rh roundHistory) killCount(kill events.Kill, killTime time.Duration) error {
-	if !playerConnected(kill.Killer) || !playerConnected(kill.Victim) {
+	if !isPlayerConnected(kill.Killer) || !isPlayerConnected(kill.Victim) {
 		return errUnconnectedKillerOrVictim
 	}
 
@@ -184,7 +184,7 @@ func newRoundTeam(pp []*common.Player) *roundTeam {
 	players := make(map[uint64]roundTeamPlayer, len(pp))
 
 	for _, p := range pp {
-		if !playerConnected(p) {
+		if !isPlayerConnected(p) {
 			slog.Error("player not added to round team", "player", p)
 			continue
 		}
@@ -296,7 +296,7 @@ func newRoundKill(kill events.Kill, roundTime, killTime time.Duration) *roundKil
 		Weapon:       kill.Weapon.Type,
 	}
 
-	if playerConnected(kill.Assister) {
+	if isPlayerConnected(kill.Assister) {
 		k.Assister = kill.Assister.SteamID64
 		k.AssisterSide = kill.Assister.Team
 		k.AssistedFlash = kill.AssistedFlash

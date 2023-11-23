@@ -4,7 +4,7 @@ import (
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
 )
 
-func playerConnected(p *common.Player) bool {
+func isPlayerConnected(p *common.Player) bool {
 	if p == nil {
 		return false
 	}
@@ -18,7 +18,7 @@ func playerConnected(p *common.Player) bool {
 	return true
 }
 
-func playerSpectator(p *common.Player) bool {
+func isPlayerSpectator(p *common.Player) bool {
 	if p == nil {
 		return true
 	}
