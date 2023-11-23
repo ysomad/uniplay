@@ -23,28 +23,32 @@ func newRoundHistory() roundHistory {
 	return roundHistory{Rounds: make([]*round, 0, 50)}
 }
 
-type roundTeamState struct {
-	members         []*common.Player
-	opponentMembers []*common.Player
-	side            common.Team
-	opponentSide    common.Team
-	currTime        time.Duration
+// cleanup returns only ended rounds.
+// there is a situations when game is restarting and round has no freeze time and round end events.
+func (rh roundHistory) cleanup() []*round {
+	rr := make([]*round, 0, len(rh.Rounds))
+
+	for _, r := range rh.Rounds {
+		// filter not ended rounds
+		if r.Reason == events.RoundEndReasonStillInProgress {
+			continue
+		}
+
+		rr = append(rr, r)
+	}
+
+	return rr
 }
 
 // start appends new round into rounds.
 // currTime is time elapsed since demo start.
-func (rh *roundHistory) start(ts roundTeamState) {
-	if len(ts.members) <= 0 {
-		slog.Info("skipping round start for empty team", "team_state", ts)
+func (rh *roundHistory) start(t, ct []*common.Player, currTime time.Duration) {
+	if len(t) <= 0 || len(ct) <= 0 {
+		slog.Info("skipping round start for empty team", "t_players", t, "ct_players", ct)
 		return
 	}
 
-	if ts.members[0].Money() <= 0 {
-		slog.Info("skipping round start for no cash member", "team_state", ts)
-		return
-	}
-
-	rh.Rounds = append(rh.Rounds, newRound(ts))
+	rh.Rounds = append(rh.Rounds, newRound(t, ct, currTime))
 }
 
 // endCurrent ends latest rounds in rounds history.
@@ -74,12 +78,10 @@ func (rh roundHistory) killCount(kill events.Kill, killTime time.Duration) error
 
 	// remove victim from team survivors list
 	switch kill.Victim.Team {
-	case currRound.TeamA.Side:
-		// delete(currRound.TeamA.Survivors, kill.Victim.SteamID64)
-		currRound.TeamA.killCount(kill.Victim.SteamID64)
-	case currRound.TeamB.Side:
-		// delete(currRound.TeamB.Survivors, kill.Victim.SteamID64)
-		currRound.TeamB.killCount(kill.Victim.SteamID64)
+	case currRound.T.Side:
+		currRound.T.killCount(kill.Victim.SteamID64)
+	case currRound.CT.Side:
+		currRound.CT.killCount(kill.Victim.SteamID64)
 	default:
 		return errInvalidVictimSide
 	}
@@ -87,38 +89,61 @@ func (rh roundHistory) killCount(kill events.Kill, killTime time.Duration) error
 	return nil
 }
 
+// currNum returns current round number.
+func (rh roundHistory) currNum() int {
+	return len(rh.Rounds)
+}
+
+func (rh roundHistory) current() (*round, error) {
+	if len(rh.Rounds) < 1 {
+		return nil, errors.New("no rounds found")
+	}
+
+	return rh.Rounds[len(rh.Rounds)-1], nil
+}
+
 type round struct {
-	TeamA    *roundTeam
-	TeamB    *roundTeam
+	T        *roundTeam
+	CT       *roundTeam
 	KillFeed []*roundKill
 	Time     time.Duration // time elapsed since demo start
 	Reason   events.RoundEndReason
 }
 
-func newRound(p roundTeamState) *round {
+func newRound(t, ct []*common.Player, currTime time.Duration) *round {
 	return &round{
-		TeamA:    newRoundTeam(p.members, p.side),
-		TeamB:    newRoundTeam(p.opponentMembers, p.opponentSide),
+		T:        newRoundTeam(t),
+		CT:       newRoundTeam(ct),
 		KillFeed: make([]*roundKill, 0, 20),
 		Reason:   events.RoundEndReasonStillInProgress,
-		Time:     p.currTime,
+		Time:     currTime,
+	}
+}
+
+// setWeapons saves players weapons to round team.
+func (r *round) setWeapons(t, ct []*common.Player) {
+	for _, m := range t {
+		r.T.setPlayerWeapons(m)
+	}
+	for _, m := range ct {
+		r.CT.setPlayerWeapons(m)
 	}
 }
 
 func (r *round) end(winner, loser *common.TeamState, reason events.RoundEndReason) {
 	switch winner.Team() {
-	case r.TeamA.Side:
-		r.TeamA.onRoundEnd(winner)
-		r.TeamB.onRoundEnd(loser)
-	case r.TeamB.Side:
-		r.TeamA.onRoundEnd(loser)
-		r.TeamB.onRoundEnd(winner)
+	case r.T.Side:
+		r.T.onRoundEnd(winner)
+		r.CT.onRoundEnd(loser)
+	case r.CT.Side:
+		r.T.onRoundEnd(loser)
+		r.CT.onRoundEnd(winner)
 	default:
 		slog.Error("round not ended",
 			"winner", winner,
 			"loser", loser,
-			"team_a", r.TeamA,
-			"team_b", r.TeamB)
+			"t", r.T,
+			"ct", r.CT)
 		return
 	}
 
@@ -126,28 +151,21 @@ func (r *round) end(winner, loser *common.TeamState, reason events.RoundEndReaso
 }
 
 type roundTeamPlayer struct {
-	Inventory []common.EquipmentType
+	Weapons   []string
 	CashSpend int
+	Armor     bool
+	Helmet    bool
+	DefuseKit bool
 	Survived  bool
+	Side      common.Team
 }
 
-func newRoundTeamPlayer(inventory map[int]*common.Equipment) roundTeamPlayer {
-	p := roundTeamPlayer{
-		Inventory: make([]common.EquipmentType, 0, len(inventory)),
+func newRoundTeamPlayer(side common.Team) roundTeamPlayer {
+	return roundTeamPlayer{
 		CashSpend: 0,
 		Survived:  true,
+		Side:      side,
 	}
-
-	for _, eq := range inventory {
-		if eq == nil {
-			slog.Error("nil equipment not added to round team player inventory")
-			continue
-		}
-
-		p.Inventory = append(p.Inventory, eq.Type)
-	}
-
-	return p
 }
 
 type roundTeam struct {
@@ -160,30 +178,41 @@ type roundTeam struct {
 }
 
 // newRoundTeam must be created at round start.
-func newRoundTeam(members []*common.Player, side common.Team) *roundTeam {
+func newRoundTeam(pp []*common.Player) *roundTeam {
 	cash := 0
-	players := make(map[uint64]roundTeamPlayer, len(members))
+	players := make(map[uint64]roundTeamPlayer, len(pp))
 
-	for _, m := range members {
-		if !playerConnected(m) {
-			slog.Error("player not added to round team", "player", m)
+	for _, p := range pp {
+		if !playerConnected(p) {
+			slog.Error("player not added to round team", "player", p)
 			continue
 		}
 
-		if m.Inventory == nil {
-			slog.Error("player has empty inventory when creating round team", "player", m)
-			continue
-		}
-
-		players[m.SteamID64] = newRoundTeamPlayer(m.Inventory)
-		cash += m.Money()
+		players[p.SteamID64] = newRoundTeamPlayer(p.Team)
+		cash += p.Money()
 	}
 
 	return &roundTeam{
 		Cash:    cash,
-		Side:    side,
+		Side:    pp[0].Team,
 		Players: players,
 	}
+}
+
+// setPlayerWeapons saves player weapons into round team.
+func (rt *roundTeam) setPlayerWeapons(p *common.Player) {
+	pl := rt.Players[p.SteamID64]
+
+	pl.Weapons = make([]string, 0, len(p.Inventory))
+	pl.Helmet = p.HasHelmet()
+	pl.Armor = p.Armor() > 0
+	pl.DefuseKit = p.HasDefuseKit()
+
+	for _, eq := range p.Inventory {
+		pl.Weapons = append(pl.Weapons, eq.String())
+	}
+
+	rt.Players[p.SteamID64] = pl
 }
 
 // killCount sets survived to false for specified player.

@@ -54,6 +54,7 @@ func (p *parser) Parse() error {
 	}
 
 	p.weaponStats.calculateUnobtainableStats()
+	rounds := p.rounds.cleanup()
 
 	playerStatsBytes, err := json.MarshalIndent(p.playerStats, "", "  ")
 	if err != nil {
@@ -73,7 +74,7 @@ func (p *parser) Parse() error {
 		return err
 	}
 
-	roundsBytes, err := json.MarshalIndent(p.rounds, "", "  ")
+	roundsBytes, err := json.MarshalIndent(rounds, "", "  ")
 	if err != nil {
 		return err
 	}
@@ -109,57 +110,52 @@ func (p *parser) attachHandlers() {
 
 func (p *parser) roundStartHandler(e events.RoundStart) {
 	gs := p.GameState()
-	started := gs.IsMatchStarted()
 
-	if p.gameState.knifeRound || !started {
-		slog.Info("round start event skip",
-			"knife_round", p.gameState.knifeRound,
-			"game_started", started)
+	if p.gameState.knifeRound || !gs.IsMatchStarted() {
 		return
 	}
 
-	t := gs.TeamTerrorists()
-	ct := gs.TeamCounterTerrorists()
+	p.rounds.start(
+		gs.TeamTerrorists().Members(),
+		gs.TeamCounterTerrorists().Members(),
+		p.CurrentTime())
 
-	p.rounds.start(roundTeamState{
-		members:         t.Members(),
-		side:            t.Team(),
-		opponentMembers: ct.Members(),
-		opponentSide:    ct.Team(),
-		currTime:        p.CurrentTime(),
-	})
-}
-
-func (p *parser) roundEndHandler(e events.RoundEnd) {
-	started := p.GameState().IsMatchStarted()
-
-	if p.gameState.knifeRound || !started {
-		slog.Info("round end event skip",
-			"event", e,
-			"knife_round", p.gameState.knifeRound,
-			"game_started", started)
-		return
-	}
-
-	if err := p.rounds.endCurrent(e); err != nil {
-		slog.Error("current round not ended: %w", err)
-	}
+	slog.Info("round started", "num", p.rounds.currNum())
 }
 
 func (p *parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
 	gs := p.GameState()
 	allPlayers := append(gs.TeamTerrorists().Members(), gs.TeamCounterTerrorists().Members()...)
 	p.gameState.detectKnifeRound(allPlayers)
+
+	if p.gameState.knifeRound || !gs.IsMatchStarted() {
+		return
+	}
+
+	round, err := p.rounds.current()
+	if err != nil {
+		slog.Error("current round not found", "err", err.Error())
+		return
+	}
+
+	round.setWeapons(gs.TeamTerrorists().Members(), gs.TeamCounterTerrorists().Members())
+}
+
+func (p *parser) roundEndHandler(e events.RoundEnd) {
+	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
+		return
+	}
+
+	if err := p.rounds.endCurrent(e); err != nil {
+		slog.Error("current round not ended: %w", err)
+		return
+	}
+
+	slog.Info("round ended", "num", p.rounds.currNum())
 }
 
 func (p *parser) killHandler(e events.Kill) {
-	started := p.GameState().IsMatchStarted()
-
-	if p.gameState.knifeRound || !started {
-		slog.Info("skipped kill event",
-			"knife_round", p.gameState.knifeRound,
-			"game_started", started,
-			"weapon", e.Weapon.String())
+	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
 
@@ -226,13 +222,7 @@ func (p *parser) killHandler(e events.Kill) {
 }
 
 func (p *parser) hurtHandler(e events.PlayerHurt) {
-	started := p.GameState().IsMatchStarted()
-
-	if p.gameState.knifeRound || !started {
-		slog.Info("skipped player hurt event",
-			"knife_round", p.gameState.knifeRound,
-			"game_started", started,
-			"weapon", e.Weapon.String())
+	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
 
@@ -265,13 +255,7 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 }
 
 func (p *parser) weaponFireHandler(e events.WeaponFire) {
-	started := p.GameState().IsMatchStarted()
-
-	if p.gameState.knifeRound || !started {
-		slog.Info("skipped weapon fire event",
-			"knife_round", p.gameState.knifeRound,
-			"game_started", started,
-			"weapon", e.Weapon.String())
+	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
 
@@ -296,12 +280,7 @@ func (p *parser) weaponFireHandler(e events.WeaponFire) {
 }
 
 func (p *parser) bombPlantedHandler(e events.BombPlanted) {
-	started := p.GameState().IsMatchStarted()
-
-	if p.gameState.knifeRound || !started {
-		slog.Info("skipped bomd planted event",
-			"knife_round", p.gameState.knifeRound,
-			"game_started", started)
+	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
 
@@ -314,12 +293,7 @@ func (p *parser) bombPlantedHandler(e events.BombPlanted) {
 }
 
 func (p *parser) bombDefusedHandler(e events.BombDefused) {
-	started := p.GameState().IsMatchStarted()
-
-	if p.gameState.knifeRound || !started {
-		slog.Info("skipped bomd defused event",
-			"knife_round", p.gameState.knifeRound,
-			"game_started", started)
+	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
 
@@ -332,17 +306,12 @@ func (p *parser) bombDefusedHandler(e events.BombDefused) {
 }
 
 func (p *parser) playerFlashedHandler(e events.PlayerFlashed) {
-	started := p.GameState().IsMatchStarted()
-
-	if p.gameState.knifeRound || !started {
-		slog.Info("skipped player flashed event",
-			"knife_round", p.gameState.knifeRound,
-			"game_started", started)
+	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
 
 	if playerSpectator(e.Player) {
-		slog.Info("flashed spectator", "player", e.Player, "attacker", e.Attacker)
+		slog.Debug("flashed spectator", "player", e.Player, "attacker", e.Attacker)
 		return
 	}
 
@@ -360,12 +329,7 @@ func (p *parser) playerFlashedHandler(e events.PlayerFlashed) {
 }
 
 func (p *parser) roundMVPAnnouncementHandler(e events.RoundMVPAnnouncement) {
-	started := p.GameState().IsMatchStarted()
-
-	if p.gameState.knifeRound || !started {
-		slog.Info("skipped mvp announcement event",
-			"knife_round", p.gameState.knifeRound,
-			"game_started", started)
+	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
 

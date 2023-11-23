@@ -23,7 +23,7 @@ func (gs *gameState) detectKnifeRound(pp []*common.Player) {
 		}
 	}
 
-	if playersWithKnifeOnly == len(pp) {
+	if playersWithKnifeOnly == len(pp) && len(pp) >= 1 {
 		gs.knifeRound = true
 	}
 

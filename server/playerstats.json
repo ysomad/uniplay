@@ -1,7 +1,32 @@
 {
-  "76561197964604204": {
+  "76561197987713664": {
     "Kills": {
-      "Total": 13,
+      "Total": 16,
+      "HS": 6,
+      "Blind": 1,
+      "Wallbang": 0,
+      "Smoke": 3,
+      "NoScope": 0
+    },
+    "Damage": {
+      "Dealt": 2224,
+      "Taken": 2027,
+      "DealtWithGrenade": 49
+    },
+    "Bomb": {
+      "Planted": 1,
+      "Defused": 0
+    },
+    "Deaths": 15,
+    "Assists": 3,
+    "FlashbangAssists": 1,
+    "MVPs": 3,
+    "BlindedPlayers": 25,
+    "BlindedTimes": 15
+  },
+  "76561198005107817": {
+    "Kills": {
+      "Total": 12,
       "HS": 6,
       "Blind": 0,
       "Wallbang": 0,
@@ -9,244 +34,219 @@
       "NoScope": 0
     },
     "Damage": {
-      "Dealt": 1822,
-      "Taken": 1921,
-      "DealtWithGrenade": 102
+      "Dealt": 1632,
+      "Taken": 2480,
+      "DealtWithGrenade": 94
+    },
+    "Bomb": {
+      "Planted": 0,
+      "Defused": 0
+    },
+    "Deaths": 18,
+    "Assists": 3,
+    "FlashbangAssists": 1,
+    "MVPs": 2,
+    "BlindedPlayers": 11,
+    "BlindedTimes": 16
+  },
+  "76561198021715100": {
+    "Kills": {
+      "Total": 12,
+      "HS": 7,
+      "Blind": 1,
+      "Wallbang": 0,
+      "Smoke": 0,
+      "NoScope": 0
+    },
+    "Damage": {
+      "Dealt": 1630,
+      "Taken": 2197,
+      "DealtWithGrenade": 115
+    },
+    "Bomb": {
+      "Planted": 0,
+      "Defused": 0
+    },
+    "Deaths": 15,
+    "Assists": 5,
+    "FlashbangAssists": 0,
+    "MVPs": 1,
+    "BlindedPlayers": 10,
+    "BlindedTimes": 27
+  },
+  "76561198028458803": {
+    "Kills": {
+      "Total": 14,
+      "HS": 6,
+      "Blind": 0,
+      "Wallbang": 1,
+      "Smoke": 0,
+      "NoScope": 0
+    },
+    "Damage": {
+      "Dealt": 1976,
+      "Taken": 1623,
+      "DealtWithGrenade": 186
+    },
+    "Bomb": {
+      "Planted": 2,
+      "Defused": 0
+    },
+    "Deaths": 13,
+    "Assists": 3,
+    "FlashbangAssists": 1,
+    "MVPs": 2,
+    "BlindedPlayers": 18,
+    "BlindedTimes": 14
+  },
+  "76561198060367310": {
+    "Kills": {
+      "Total": 11,
+      "HS": 2,
+      "Blind": 0,
+      "Wallbang": 1,
+      "Smoke": 1,
+      "NoScope": 0
+    },
+    "Damage": {
+      "Dealt": 1681,
+      "Taken": 1263,
+      "DealtWithGrenade": 81
+    },
+    "Bomb": {
+      "Planted": 2,
+      "Defused": 0
+    },
+    "Deaths": 8,
+    "Assists": 2,
+    "FlashbangAssists": 0,
+    "MVPs": 2,
+    "BlindedPlayers": 43,
+    "BlindedTimes": 30
+  },
+  "76561198066693739": {
+    "Kills": {
+      "Total": 24,
+      "HS": 16,
+      "Blind": 1,
+      "Wallbang": 0,
+      "Smoke": 3,
+      "NoScope": 0
+    },
+    "Damage": {
+      "Dealt": 2910,
+      "Taken": 1454,
+      "DealtWithGrenade": 104
+    },
+    "Bomb": {
+      "Planted": 0,
+      "Defused": 0
+    },
+    "Deaths": 10,
+    "Assists": 2,
+    "FlashbangAssists": 0,
+    "MVPs": 3,
+    "BlindedPlayers": 19,
+    "BlindedTimes": 18
+  },
+  "76561198107142008": {
+    "Kills": {
+      "Total": 8,
+      "HS": 6,
+      "Blind": 0,
+      "Wallbang": 0,
+      "Smoke": 0,
+      "NoScope": 0
+    },
+    "Damage": {
+      "Dealt": 1277,
+      "Taken": 2842,
+      "DealtWithGrenade": 38
+    },
+    "Bomb": {
+      "Planted": 1,
+      "Defused": 0
+    },
+    "Deaths": 22,
+    "Assists": 6,
+    "FlashbangAssists": 3,
+    "MVPs": 1,
+    "BlindedPlayers": 18,
+    "BlindedTimes": 27
+  },
+  "76561198191236195": {
+    "Kills": {
+      "Total": 11,
+      "HS": 5,
+      "Blind": 1,
+      "Wallbang": 0,
+      "Smoke": 1,
+      "NoScope": 0
+    },
+    "Damage": {
+      "Dealt": 1465,
+      "Taken": 1966,
+      "DealtWithGrenade": 71
     },
     "Bomb": {
       "Planted": 4,
       "Defused": 0
     },
-    "Deaths": 15,
-    "Assists": 10,
-    "FlashbangAssists": 2,
-    "MVPs": 2,
-    "BlindedPlayers": 59,
-    "BlindedTimes": 10
-  },
-  "76561198000969901": {
-    "Kills": {
-      "Total": 18,
-      "HS": 11,
-      "Blind": 0,
-      "Wallbang": 0,
-      "Smoke": 2,
-      "NoScope": 0
-    },
-    "Damage": {
-      "Dealt": 2723,
-      "Taken": 2089,
-      "DealtWithGrenade": 67
-    },
-    "Bomb": {
-      "Planted": 0,
-      "Defused": 0
-    },
     "Deaths": 14,
-    "Assists": 3,
-    "FlashbangAssists": 0,
-    "MVPs": 1,
-    "BlindedPlayers": 7,
-    "BlindedTimes": 15
-  },
-  "76561198028292758": {
-    "Kills": {
-      "Total": 14,
-      "HS": 6,
-      "Blind": 1,
-      "Wallbang": 0,
-      "Smoke": 1,
-      "NoScope": 0
-    },
-    "Damage": {
-      "Dealt": 2241,
-      "Taken": 2343,
-      "DealtWithGrenade": 164
-    },
-    "Bomb": {
-      "Planted": 1,
-      "Defused": 1
-    },
-    "Deaths": 16,
-    "Assists": 8,
-    "FlashbangAssists": 0,
-    "MVPs": 1,
-    "BlindedPlayers": 29,
-    "BlindedTimes": 23
-  },
-  "76561198034202275": {
-    "Kills": {
-      "Total": 14,
-      "HS": 9,
-      "Blind": 0,
-      "Wallbang": 0,
-      "Smoke": 0,
-      "NoScope": 0
-    },
-    "Damage": {
-      "Dealt": 1990,
-      "Taken": 2534,
-      "DealtWithGrenade": 0
-    },
-    "Bomb": {
-      "Planted": 1,
-      "Defused": 0
-    },
-    "Deaths": 20,
-    "Assists": 4,
-    "FlashbangAssists": 0,
-    "MVPs": 3,
-    "BlindedPlayers": 5,
-    "BlindedTimes": 21
-  },
-  "76561198044045107": {
-    "Kills": {
-      "Total": 19,
-      "HS": 9,
-      "Blind": 1,
-      "Wallbang": 0,
-      "Smoke": 1,
-      "NoScope": 0
-    },
-    "Damage": {
-      "Dealt": 2248,
-      "Taken": 2235,
-      "DealtWithGrenade": 154
-    },
-    "Bomb": {
-      "Planted": 2,
-      "Defused": 0
-    },
-    "Deaths": 15,
-    "Assists": 2,
-    "FlashbangAssists": 0,
-    "MVPs": 5,
-    "BlindedPlayers": 19,
-    "BlindedTimes": 25
-  },
-  "76561198073117127": {
-    "Kills": {
-      "Total": 16,
-      "HS": 10,
-      "Blind": 0,
-      "Wallbang": 0,
-      "Smoke": 1,
-      "NoScope": 0
-    },
-    "Damage": {
-      "Dealt": 2240,
-      "Taken": 2399,
-      "DealtWithGrenade": 126
-    },
-    "Bomb": {
-      "Planted": 0,
-      "Defused": 0
-    },
-    "Deaths": 17,
-    "Assists": 8,
-    "FlashbangAssists": 0,
-    "MVPs": 0,
-    "BlindedPlayers": 14,
-    "BlindedTimes": 24
-  },
-  "76561198107540058": {
-    "Kills": {
-      "Total": 10,
-      "HS": 6,
-      "Blind": 0,
-      "Wallbang": 0,
-      "Smoke": 0,
-      "NoScope": 0
-    },
-    "Damage": {
-      "Dealt": 1587,
-      "Taken": 2421,
-      "DealtWithGrenade": 113
-    },
-    "Bomb": {
-      "Planted": 2,
-      "Defused": 1
-    },
-    "Deaths": 18,
-    "Assists": 3,
-    "FlashbangAssists": 0,
-    "MVPs": 2,
-    "BlindedPlayers": 10,
-    "BlindedTimes": 26
-  },
-  "76561198120557348": {
-    "Kills": {
-      "Total": 22,
-      "HS": 19,
-      "Blind": 0,
-      "Wallbang": 0,
-      "Smoke": 1,
-      "NoScope": 0
-    },
-    "Damage": {
-      "Dealt": 3038,
-      "Taken": 2266,
-      "DealtWithGrenade": 17
-    },
-    "Bomb": {
-      "Planted": 0,
-      "Defused": 0
-    },
-    "Deaths": 17,
-    "Assists": 2,
-    "FlashbangAssists": 1,
-    "MVPs": 2,
-    "BlindedPlayers": 20,
-    "BlindedTimes": 18
-  },
-  "76561198134401925": {
-    "Kills": {
-      "Total": 12,
-      "HS": 9,
-      "Blind": 1,
-      "Wallbang": 1,
-      "Smoke": 0,
-      "NoScope": 0
-    },
-    "Damage": {
-      "Dealt": 1823,
-      "Taken": 2208,
-      "DealtWithGrenade": 14
-    },
-    "Bomb": {
-      "Planted": 1,
-      "Defused": 0
-    },
-    "Deaths": 15,
     "Assists": 6,
     "FlashbangAssists": 0,
-    "MVPs": 1,
-    "BlindedPlayers": 24,
-    "BlindedTimes": 23
+    "MVPs": 3,
+    "BlindedPlayers": 17,
+    "BlindedTimes": 20
   },
-  "76561198146207066": {
+  "76561198248953762": {
     "Kills": {
-      "Total": 22,
-      "HS": 8,
-      "Blind": 1,
-      "Wallbang": 1,
-      "Smoke": 1,
+      "Total": 9,
+      "HS": 5,
+      "Blind": 0,
+      "Wallbang": 2,
+      "Smoke": 0,
       "NoScope": 0
     },
     "Damage": {
-      "Dealt": 2736,
-      "Taken": 2055,
-      "DealtWithGrenade": 117
+      "Dealt": 1421,
+      "Taken": 1739,
+      "DealtWithGrenade": 42
     },
     "Bomb": {
-      "Planted": 2,
-      "Defused": 0
+      "Planted": 1,
+      "Defused": 1
     },
     "Deaths": 14,
-    "Assists": 7,
-    "FlashbangAssists": 2,
-    "MVPs": 3,
-    "BlindedPlayers": 16,
+    "Assists": 4,
+    "FlashbangAssists": 1,
+    "MVPs": 1,
+    "BlindedPlayers": 30,
     "BlindedTimes": 18
+  },
+  "76561198306519263": {
+    "Kills": {
+      "Total": 24,
+      "HS": 12,
+      "Blind": 2,
+      "Wallbang": 1,
+      "Smoke": 4,
+      "NoScope": 0
+    },
+    "Damage": {
+      "Dealt": 2871,
+      "Taken": 1672,
+      "DealtWithGrenade": 153
+    },
+    "Bomb": {
+      "Planted": 1,
+      "Defused": 0
+    },
+    "Deaths": 12,
+    "Assists": 3,
+    "FlashbangAssists": 1,
+    "MVPs": 4,
+    "BlindedPlayers": 24,
+    "BlindedTimes": 30
   }
 }
