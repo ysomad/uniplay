@@ -194,7 +194,6 @@ func (p *parser) killHandler(e events.Kill) {
 
 	if playerConnected(e.Victim) {
 		p.playerStats.incr(e.Victim.SteamID64, eventDeath)
-		p.weaponStats.incr(e.Victim.SteamID64, eventDeath, e.Weapon.Type)
 	} else {
 		slog.Error("killed unconnected player", "event", e, "victim", e.Victim)
 	}

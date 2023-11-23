@@ -216,7 +216,6 @@ type weaponStats struct {
 	Kills    *killStats
 	Accuracy *accuracyStats
 	Damage   dmgStats
-	Deaths   int
 	Assists  int
 	Shots    int
 }
@@ -242,8 +241,6 @@ func (ws *weaponStats) add(e event, v int) {
 		ws.Kills.Smoke += v
 	case eventNoScopeKill:
 		ws.Kills.NoScope += v
-	case eventDeath:
-		ws.Deaths += v
 	case eventAssist:
 		ws.Assists += v
 	case eventDmgDealt:

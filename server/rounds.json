@@ -12,6 +12,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -24,6 +25,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -37,21 +39,22 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198107142008": {
           "Weapons": [
+            "Flashbang",
             "Knife",
             "Glock-18",
-            "Smoke Grenade",
-            "Flashbang",
-            "C4"
+            "Smoke Grenade"
           ],
           "CashSpend": 700,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         },
@@ -64,6 +67,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         }
@@ -78,41 +82,18 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
-            "USP-S",
-            "Knife"
+            "Knife",
+            "USP-S"
           ],
           "CashSpend": 650,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198060367310": {
-          "Weapons": [
-            "P2000",
-            "Knife"
-          ],
-          "CashSpend": 650,
-          "Armor": true,
-          "Helmet": false,
-          "DefuseKit": false,
-          "Survived": true,
-          "Side": 3
-        },
-        "76561198066693739": {
-          "Weapons": [
-            "P2000",
-            "Knife"
-          ],
-          "CashSpend": 650,
-          "Armor": true,
-          "Helmet": false,
-          "DefuseKit": false,
-          "Survived": false,
-          "Side": 3
-        },
-        "76561198191236195": {
           "Weapons": [
             "Knife",
             "P2000"
@@ -121,18 +102,46 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
-        "76561198306519263": {
+        "76561198066693739": {
           "Weapons": [
-            "USP-S",
+            "Knife",
+            "P2000"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "P2000",
             "Knife"
           ],
           "CashSpend": 650,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         }
@@ -265,6 +274,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -277,6 +287,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -289,19 +300,20 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198107142008": {
           "Weapons": [
             "Knife",
-            "Glock-18",
-            "C4"
+            "Glock-18"
           ],
           "CashSpend": 0,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         },
@@ -314,6 +326,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         }
@@ -328,80 +341,85 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
-            "Incendiary Grenade",
             "HE Grenade",
             "Smoke Grenade",
             "Flashbang",
             "Knife",
             "USP-S",
-            "MP9"
+            "MP9",
+            "Incendiary Grenade"
           ],
           "CashSpend": 3650,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198060367310": {
           "Weapons": [
-            "Smoke Grenade",
             "Knife",
             "P2000",
             "Flashbang",
-            "FAMAS"
+            "FAMAS",
+            "Smoke Grenade"
           ],
           "CashSpend": 3350,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198066693739": {
           "Weapons": [
-            "MP9",
             "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
             "Knife",
-            "P2000"
+            "P2000",
+            "MP9"
           ],
           "CashSpend": 3250,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198191236195": {
           "Weapons": [
+            "Knife",
+            "P2000",
             "FAMAS",
             "Smoke Grenade",
-            "HE Grenade",
-            "Knife",
-            "P2000"
+            "HE Grenade"
           ],
           "CashSpend": 3650,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198306519263": {
           "Weapons": [
-            "Smoke Grenade",
-            "HE Grenade",
-            "Flashbang",
             "Knife",
             "USP-S",
-            "M4A4"
+            "M4A4",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang"
           ],
           "CashSpend": 4250,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         }
@@ -497,20 +515,53 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
+            "Knife",
             "Glock-18",
             "AK-47",
             "Smoke Grenade",
-            "Flashbang",
-            "Knife"
+            "Flashbang"
           ],
           "CashSpend": 4300,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Molotov"
+          ],
+          "CashSpend": 4400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 4300,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198107142008": {
           "Weapons": [
             "AK-47",
             "Smoke Grenade",
@@ -522,37 +573,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
-          "Survived": false,
-          "Side": 2
-        },
-        "76561198028458803": {
-          "Weapons": [
-            "HE Grenade",
-            "Knife",
-            "Glock-18",
-            "C4",
-            "AK-47",
-            "Smoke Grenade"
-          ],
-          "CashSpend": 4300,
-          "Armor": true,
-          "Helmet": true,
-          "DefuseKit": false,
-          "Survived": true,
-          "Side": 2
-        },
-        "76561198107142008": {
-          "Weapons": [
-            "Glock-18",
-            "AK-47",
-            "Smoke Grenade",
-            "Molotov",
-            "Knife"
-          ],
-          "CashSpend": 4400,
-          "Armor": true,
-          "Helmet": true,
-          "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -568,6 +589,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         }
@@ -594,73 +616,78 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198060367310": {
           "Weapons": [
+            "Flashbang",
             "FAMAS",
             "Incendiary Grenade",
             "Smoke Grenade",
             "Knife",
+            "P2000"
+          ],
+          "CashSpend": 1500,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "HE Grenade",
+            "Knife",
+            "MP9",
+            "Smoke Grenade",
+            "Flashbang",
+            "Desert Eagle",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 900,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Knife",
             "P2000",
+            "FAMAS"
+          ],
+          "CashSpend": 1800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "M4A4",
+            "Smoke Grenade",
+            "Incendiary Grenade",
+            "HE Grenade",
             "Flashbang"
           ],
           "CashSpend": 1500,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
-          "Survived": false,
-          "Side": 3
-        },
-        "76561198066693739": {
-          "Weapons": [
-            "Knife",
-            "MP9",
-            "Smoke Grenade",
-            "Flashbang",
-            "Desert Eagle",
-            "Incendiary Grenade",
-            "HE Grenade"
-          ],
-          "CashSpend": 900,
-          "Armor": true,
-          "Helmet": true,
-          "DefuseKit": false,
-          "Survived": false,
-          "Side": 3
-        },
-        "76561198191236195": {
-          "Weapons": [
-            "P2000",
-            "FAMAS",
-            "Smoke Grenade",
-            "Flashbang",
-            "HE Grenade",
-            "Incendiary Grenade",
-            "Knife"
-          ],
-          "CashSpend": 1800,
-          "Armor": true,
-          "Helmet": true,
-          "DefuseKit": true,
-          "Survived": false,
-          "Side": 3
-        },
-        "76561198306519263": {
-          "Weapons": [
-            "M4A4",
-            "Smoke Grenade",
-            "Incendiary Grenade",
-            "HE Grenade",
-            "Flashbang",
-            "Knife",
-            "USP-S"
-          ],
-          "CashSpend": 1500,
-          "Armor": true,
-          "Helmet": true,
-          "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -806,80 +833,84 @@
             "Glock-18",
             "AK-47",
             "Smoke Grenade",
-            "C4",
             "Flashbang"
           ],
           "CashSpend": 3800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": true,
           "Side": 2
         },
         "76561198005107817": {
           "Weapons": [
+            "Galil AR",
             "Flashbang",
             "Smoke Grenade",
             "Molotov",
             "HE Grenade",
             "Knife",
-            "Glock-18",
-            "Galil AR"
+            "Glock-18"
           ],
           "CashSpend": 3700,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198028458803": {
           "Weapons": [
-            "Smoke Grenade",
-            "HE Grenade",
             "Molotov",
             "Knife",
             "Glock-18",
-            "AK-47"
+            "AK-47",
+            "Smoke Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 3700,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198107142008": {
           "Weapons": [
-            "AK-47",
-            "Molotov",
-            "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
             "Knife",
-            "Glock-18"
+            "Glock-18",
+            "AK-47",
+            "Molotov",
+            "Smoke Grenade"
           ],
           "CashSpend": 2200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198248953762": {
           "Weapons": [
-            "HE Grenade",
-            "Molotov",
             "Knife",
             "Glock-18",
             "AK-47",
             "Flashbang",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov"
           ],
           "CashSpend": 2400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         }
@@ -894,39 +925,42 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
-            "Knife",
-            "Desert Eagle"
+            "Desert Eagle",
+            "Knife"
           ],
           "CashSpend": 1600,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198060367310": {
           "Weapons": [
-            "Smoke Grenade",
             "Knife",
-            "P2000"
+            "P2000",
+            "Smoke Grenade"
           ],
           "CashSpend": 0,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198066693739": {
           "Weapons": [
+            "Knife",
             "P2000",
-            "M4A1",
-            "Knife"
+            "M4A1"
           ],
           "CashSpend": 3550,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
@@ -939,6 +973,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -952,6 +987,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -1032,17 +1068,18 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
+            "Smoke Grenade",
             "HE Grenade",
             "Knife",
             "Glock-18",
             "AK-47",
-            "Flashbang",
-            "Smoke Grenade"
+            "Flashbang"
           ],
           "CashSpend": 1000,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
@@ -1060,58 +1097,61 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198028458803": {
           "Weapons": [
+            "Knife",
+            "Glock-18",
             "AK-47",
             "Molotov",
             "HE Grenade",
             "Smoke Grenade",
-            "Flashbang",
-            "Knife",
-            "Glock-18"
+            "Flashbang"
           ],
           "CashSpend": 1200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198107142008": {
           "Weapons": [
+            "Molotov",
             "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
             "Knife",
             "Glock-18",
-            "AK-47",
-            "Molotov"
+            "AK-47"
           ],
           "CashSpend": 4900,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198248953762": {
           "Weapons": [
-            "HE Grenade",
-            "C4",
             "Molotov",
             "Smoke Grenade",
             "Flashbang",
             "Knife",
             "Glock-18",
-            "AK-47"
+            "AK-47",
+            "HE Grenade"
           ],
           "CashSpend": 1100,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": true,
           "Side": 2
         }
@@ -1126,47 +1166,50 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
-            "HE Grenade",
-            "Flashbang",
             "Knife",
             "USP-S",
             "M4A1",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Flashbang"
           ],
           "CashSpend": 4950,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198060367310": {
           "Weapons": [
+            "Knife",
             "P2000",
-            "AWP",
-            "Knife"
+            "AWP"
           ],
           "CashSpend": 5400,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198066693739": {
           "Weapons": [
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
             "Knife",
             "M4A1",
             "Five-SeveN",
-            "Incendiary Grenade",
-            "HE Grenade",
-            "Smoke Grenade",
-            "Flashbang"
+            "Incendiary Grenade"
           ],
           "CashSpend": 1750,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
@@ -1182,22 +1225,24 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198306519263": {
           "Weapons": [
+            "Knife",
+            "USP-S",
             "M4A1",
             "Smoke Grenade",
             "Incendiary Grenade",
-            "Flashbang",
-            "Knife",
-            "USP-S"
+            "Flashbang"
           ],
           "CashSpend": 4650,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         }
@@ -1278,84 +1323,88 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
-            "Molotov",
-            "Knife",
             "Glock-18",
             "AK-47",
             "Flashbang",
             "Smoke Grenade",
+            "HE Grenade",
+            "Molotov",
+            "Knife"
+          ],
+          "CashSpend": 1200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Flashbang",
+            "Molotov"
+          ],
+          "CashSpend": 4800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Molotov",
             "HE Grenade"
           ],
           "CashSpend": 1200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
-          "Survived": false,
-          "Side": 2
-        },
-        "76561198005107817": {
-          "Weapons": [
-            "AK-47",
-            "Flashbang",
-            "Molotov",
-            "Knife",
-            "Glock-18",
-            "C4"
-          ],
-          "CashSpend": 4800,
-          "Armor": true,
-          "Helmet": true,
-          "DefuseKit": false,
-          "Survived": false,
-          "Side": 2
-        },
-        "76561198028458803": {
-          "Weapons": [
-            "HE Grenade",
-            "Smoke Grenade",
-            "Flashbang",
-            "Knife",
-            "Glock-18",
-            "AK-47",
-            "Molotov"
-          ],
-          "CashSpend": 1200,
-          "Armor": true,
-          "Helmet": true,
-          "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198107142008": {
           "Weapons": [
+            "Molotov",
             "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
             "AK-47",
             "Knife",
-            "Glock-18",
-            "Molotov"
+            "Glock-18"
           ],
           "CashSpend": 2200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198248953762": {
           "Weapons": [
+            "Knife",
             "Glock-18",
             "HE Grenade",
             "Flashbang",
             "Smoke Grenade",
-            "AK-47",
-            "Knife"
+            "AK-47"
           ],
           "CashSpend": 3400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         }
@@ -1370,17 +1419,18 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
+            "HE Grenade",
             "Smoke Grenade",
             "Flashbang",
             "Knife",
             "USP-S",
-            "M4A1",
-            "HE Grenade"
+            "M4A1"
           ],
           "CashSpend": 2450,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
@@ -1397,54 +1447,58 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198066693739": {
           "Weapons": [
+            "Five-SeveN",
             "M4A1",
             "Smoke Grenade",
             "Incendiary Grenade",
             "HE Grenade",
             "Flashbang",
-            "Knife",
-            "Five-SeveN"
+            "Knife"
           ],
           "CashSpend": 4300,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198191236195": {
           "Weapons": [
+            "P2000",
             "MP9",
             "Incendiary Grenade",
             "HE Grenade",
-            "Knife",
-            "P2000"
+            "Knife"
           ],
           "CashSpend": 2550,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198306519263": {
           "Weapons": [
-            "Knife",
-            "USP-S",
             "Flashbang",
             "AK-47",
             "Incendiary Grenade",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Knife",
+            "USP-S"
           ],
           "CashSpend": 1850,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -1565,23 +1619,25 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198005107817": {
           "Weapons": [
-            "HE Grenade",
             "Molotov",
             "Knife",
             "Glock-18",
             "AK-47",
             "Flashbang",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 2200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -1599,41 +1655,43 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198107142008": {
           "Weapons": [
-            "HE Grenade",
             "Knife",
             "Glock-18",
-            "C4",
             "Molotov",
             "Smoke Grenade",
             "Galil AR",
-            "Flashbang"
+            "Flashbang",
+            "HE Grenade"
           ],
           "CashSpend": 2200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         },
         "76561198248953762": {
           "Weapons": [
-            "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
             "Knife",
             "Glock-18",
             "AK-47",
-            "Molotov"
+            "Molotov",
+            "Smoke Grenade"
           ],
           "CashSpend": 5100,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         }
@@ -1648,86 +1706,91 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
+            "HE Grenade",
             "Smoke Grenade",
             "Knife",
             "USP-S",
             "Flashbang",
             "AK-47",
-            "Molotov",
-            "HE Grenade"
+            "Molotov"
           ],
           "CashSpend": 3500,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198060367310": {
           "Weapons": [
-            "Flashbang",
-            "Incendiary Grenade",
-            "Smoke Grenade",
             "HE Grenade",
             "Knife",
             "P2000",
-            "AWP"
+            "AWP",
+            "Flashbang",
+            "Incendiary Grenade",
+            "Smoke Grenade"
           ],
           "CashSpend": 1400,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198066693739": {
           "Weapons": [
+            "Flashbang",
             "Knife",
             "Five-SeveN",
             "Molotov",
             "AK-47",
             "HE Grenade",
-            "Smoke Grenade",
-            "Flashbang"
+            "Smoke Grenade"
           ],
           "CashSpend": 800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198191236195": {
           "Weapons": [
+            "Incendiary Grenade",
             "Knife",
             "P2000",
             "MP9",
             "Smoke Grenade",
             "HE Grenade",
-            "Flashbang",
-            "Incendiary Grenade"
+            "Flashbang"
           ],
           "CashSpend": 1800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198306519263": {
           "Weapons": [
-            "Knife",
-            "USP-S",
             "Flashbang",
             "Smoke Grenade",
             "HE Grenade",
             "Incendiary Grenade",
-            "M4A1"
+            "M4A1",
+            "Knife",
+            "USP-S"
           ],
           "CashSpend": 2800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -1883,35 +1946,36 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
-            "C4",
-            "Knife",
-            "Glock-18",
-            "AWP",
             "Flashbang",
             "Smoke Grenade",
-            "HE Grenade"
+            "HE Grenade",
+            "Knife",
+            "Glock-18",
+            "AWP"
           ],
           "CashSpend": 2400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         },
         "76561198005107817": {
           "Weapons": [
-            "HE Grenade",
-            "Flashbang",
-            "Molotov",
             "Knife",
             "Glock-18",
             "Galil AR",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang",
+            "Molotov"
           ],
           "CashSpend": 3600,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -1928,6 +1992,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -1942,22 +2007,24 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198248953762": {
           "Weapons": [
-            "Molotov",
             "Knife",
             "Glock-18",
             "Galil AR",
             "Flashbang",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Molotov"
           ],
           "CashSpend": 3900,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         }
@@ -1981,72 +2048,77 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198060367310": {
           "Weapons": [
+            "Knife",
             "P2000",
             "MP9",
             "Incendiary Grenade",
             "Smoke Grenade",
             "Flashbang",
-            "HE Grenade",
-            "Knife"
+            "HE Grenade"
           ],
           "CashSpend": 4350,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198066693739": {
           "Weapons": [
-            "Knife",
             "P2000",
             "M4A1",
             "Smoke Grenade",
             "Flashbang",
-            "HE Grenade"
+            "HE Grenade",
+            "Knife"
           ],
           "CashSpend": 4950,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198191236195": {
           "Weapons": [
+            "Flashbang",
             "Knife",
             "P2000",
             "MP9",
             "Smoke Grenade",
             "Incendiary Grenade",
-            "HE Grenade",
-            "Flashbang"
+            "HE Grenade"
           ],
           "CashSpend": 3300,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198306519263": {
           "Weapons": [
-            "USP-S",
             "M4A1",
             "Smoke Grenade",
             "Flashbang",
             "Incendiary Grenade",
-            "Knife"
+            "Knife",
+            "USP-S"
           ],
           "CashSpend": 4250,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         }
@@ -2180,6 +2252,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -2192,6 +2265,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -2205,6 +2279,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -2217,19 +2292,20 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198248953762": {
           "Weapons": [
             "Knife",
-            "Desert Eagle",
-            "C4"
+            "Desert Eagle"
           ],
           "CashSpend": 1350,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         }
@@ -2244,51 +2320,54 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
+            "Knife",
+            "USP-S",
+            "M4A1",
             "Incendiary Grenade",
             "HE Grenade",
             "Smoke Grenade",
-            "Flashbang",
-            "Knife",
-            "USP-S",
-            "M4A1"
+            "Flashbang"
           ],
           "CashSpend": 2000,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198060367310": {
           "Weapons": [
-            "HE Grenade",
-            "AWP",
             "Knife",
             "P2000",
             "Incendiary Grenade",
             "Smoke Grenade",
-            "Flashbang"
+            "Flashbang",
+            "HE Grenade",
+            "AWP"
           ],
           "CashSpend": 2800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198066693739": {
           "Weapons": [
+            "M4A1",
+            "Smoke Grenade",
             "Incendiary Grenade",
             "Flashbang",
             "Knife",
-            "P2000",
-            "M4A1",
-            "Smoke Grenade"
+            "P2000"
           ],
           "CashSpend": 3800,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
@@ -2306,6 +2385,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
@@ -2322,6 +2402,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -2447,25 +2528,27 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
-            "Knife",
-            "Glock-18"
+            "Glock-18",
+            "Knife"
           ],
           "CashSpend": 0,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198005107817": {
           "Weapons": [
-            "Knife",
-            "Glock-18"
+            "Glock-18",
+            "Knife"
           ],
           "CashSpend": 0,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -2478,6 +2561,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -2490,12 +2574,12 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198248953762": {
           "Weapons": [
-            "C4",
             "Knife",
             "Glock-18"
           ],
@@ -2503,6 +2587,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         }
@@ -2517,83 +2602,88 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
+            "M4A1",
             "Knife",
             "USP-S",
-            "Flashbang",
-            "M4A1"
+            "Flashbang"
           ],
           "CashSpend": 4450,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198060367310": {
           "Weapons": [
-            "Knife",
-            "P2000",
             "Flashbang",
             "AWP",
             "Smoke Grenade",
             "HE Grenade",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "Knife",
+            "P2000"
           ],
           "CashSpend": 1400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198066693739": {
           "Weapons": [
+            "Knife",
+            "P2000",
+            "Flashbang",
             "Smoke Grenade",
             "M4A1",
             "Incendiary Grenade",
-            "HE Grenade",
-            "Knife",
-            "P2000",
-            "Flashbang"
+            "HE Grenade"
           ],
           "CashSpend": 3800,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198191236195": {
           "Weapons": [
+            "M4A1",
+            "Flashbang",
+            "Desert Eagle",
             "Smoke Grenade",
             "HE Grenade",
             "Incendiary Grenade",
-            "Knife",
-            "M4A1",
-            "Flashbang",
-            "Desert Eagle"
+            "Knife"
           ],
           "CashSpend": 1200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198306519263": {
           "Weapons": [
+            "Knife",
             "USP-S",
             "Flashbang",
             "Smoke Grenade",
             "HE Grenade",
             "Incendiary Grenade",
-            "M4A1",
-            "Knife"
+            "M4A1"
           ],
           "CashSpend": 2800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         }
@@ -2704,33 +2794,34 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
+            "AK-47",
+            "Smoke Grenade",
             "Flashbang",
             "Knife",
-            "Glock-18",
-            "AK-47",
-            "Smoke Grenade"
+            "Glock-18"
           ],
           "CashSpend": 4400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198005107817": {
           "Weapons": [
-            "Smoke Grenade",
-            "Molotov",
-            "C4",
             "Knife",
             "Glock-18",
             "AK-47",
-            "Flashbang"
+            "Flashbang",
+            "Smoke Grenade",
+            "Molotov"
           ],
           "CashSpend": 4600,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         },
@@ -2747,38 +2838,41 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198107142008": {
           "Weapons": [
+            "AK-47",
             "Flashbang",
             "Molotov",
             "Smoke Grenade",
             "Knife",
-            "Glock-18",
-            "AK-47"
+            "Glock-18"
           ],
           "CashSpend": 4800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198248953762": {
           "Weapons": [
-            "Flashbang",
-            "Smoke Grenade",
-            "Molotov",
             "Knife",
             "Glock-18",
-            "AK-47"
+            "AK-47",
+            "Flashbang",
+            "Smoke Grenade",
+            "Molotov"
           ],
           "CashSpend": 4600,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         }
@@ -2793,52 +2887,55 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
-            "Knife",
             "USP-S",
             "Flashbang",
             "M4A1",
             "Smoke Grenade",
             "Incendiary Grenade",
-            "HE Grenade"
+            "HE Grenade",
+            "Knife"
           ],
           "CashSpend": 1300,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198060367310": {
           "Weapons": [
-            "Incendiary Grenade",
-            "Knife",
-            "P2000",
             "Flashbang",
             "AWP",
             "HE Grenade",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Incendiary Grenade",
+            "Knife",
+            "P2000"
           ],
           "CashSpend": 1100,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198066693739": {
           "Weapons": [
-            "HE Grenade",
-            "Smoke Grenade",
             "Knife",
             "P2000",
             "Flashbang",
             "M4A1",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Smoke Grenade"
           ],
           "CashSpend": 600,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
@@ -2856,23 +2953,25 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198306519263": {
           "Weapons": [
-            "Knife",
-            "Flashbang",
             "Smoke Grenade",
             "HE Grenade",
             "M4A1",
             "Desert Eagle",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "Knife",
+            "Flashbang"
           ],
           "CashSpend": 600,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -3013,80 +3112,84 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
-            "Smoke Grenade",
             "HE Grenade",
             "Knife",
             "Glock-18",
             "MAC-10",
-            "Flashbang"
+            "Flashbang",
+            "Smoke Grenade"
           ],
           "CashSpend": 3050,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198005107817": {
           "Weapons": [
+            "Molotov",
             "Knife",
             "Glock-18",
             "MAC-10",
             "Flashbang",
-            "Smoke Grenade",
-            "Molotov"
+            "Smoke Grenade"
           ],
           "CashSpend": 2950,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198028458803": {
           "Weapons": [
-            "Knife",
-            "Glock-18",
-            "MAC-10",
             "Smoke Grenade",
             "HE Grenade",
-            "Flashbang"
+            "Flashbang",
+            "Knife",
+            "Glock-18",
+            "MAC-10"
           ],
           "CashSpend": 2850,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198107142008": {
           "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
             "Knife",
             "Glock-18",
-            "C4",
-            "AK-47",
-            "Smoke Grenade",
-            "Flashbang"
+            "AK-47"
           ],
           "CashSpend": 4200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         },
         "76561198248953762": {
           "Weapons": [
-            "Desert Eagle",
             "Molotov",
             "Knife",
             "Smoke Grenade",
-            "Flashbang"
+            "Flashbang",
+            "Desert Eagle"
           ],
           "CashSpend": 2800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         }
@@ -3101,86 +3204,91 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
+            "USP-S",
+            "M4A1",
             "Incendiary Grenade",
             "HE Grenade",
             "Smoke Grenade",
             "Flashbang",
-            "Knife",
-            "USP-S",
-            "M4A1"
+            "Knife"
           ],
           "CashSpend": 2400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198060367310": {
           "Weapons": [
-            "Knife",
             "P2000",
             "AWP",
             "Incendiary Grenade",
             "Smoke Grenade",
             "Flashbang",
-            "HE Grenade"
+            "HE Grenade",
+            "Knife"
           ],
           "CashSpend": 4500,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198066693739": {
           "Weapons": [
+            "Flashbang",
+            "Desert Eagle",
             "Knife",
             "Smoke Grenade",
             "AK-47",
             "Incendiary Grenade",
-            "HE Grenade",
-            "Flashbang",
-            "Desert Eagle"
+            "HE Grenade"
           ],
           "CashSpend": 2800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198191236195": {
           "Weapons": [
-            "Knife",
             "P2000",
             "M4A1",
             "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "Knife"
           ],
           "CashSpend": 4950,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198306519263": {
           "Weapons": [
+            "Flashbang",
+            "Smoke Grenade",
             "HE Grenade",
             "Incendiary Grenade",
             "Five-SeveN",
             "Knife",
-            "M4A4",
-            "Flashbang",
-            "Smoke Grenade"
+            "M4A4"
           ],
           "CashSpend": 6400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -3321,70 +3429,74 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
-            "Knife",
             "Glock-18",
             "Smoke Grenade",
             "Flashbang",
-            "Decoy Grenade"
+            "Decoy Grenade",
+            "Knife"
           ],
           "CashSpend": 750,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198060367310": {
           "Weapons": [
-            "Knife",
-            "Glock-18",
             "Smoke Grenade",
             "Flashbang",
-            "Decoy Grenade"
+            "Decoy Grenade",
+            "Knife",
+            "Glock-18"
           ],
           "CashSpend": 750,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198066693739": {
           "Weapons": [
-            "Glock-18",
-            "Knife"
+            "Knife",
+            "Glock-18"
           ],
           "CashSpend": 650,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198191236195": {
           "Weapons": [
             "Knife",
-            "Glock-18",
-            "C4"
+            "Glock-18"
           ],
           "CashSpend": 650,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": true,
           "Side": 2
         },
         "76561198306519263": {
           "Weapons": [
+            "Molotov",
             "Knife",
             "Glock-18",
-            "Smoke Grenade",
-            "Molotov"
+            "Smoke Grenade"
           ],
           "CashSpend": 700,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         }
@@ -3399,26 +3511,28 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
-            "Knife",
-            "Dual Berettas"
+            "Dual Berettas",
+            "Knife"
           ],
           "CashSpend": 650,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198005107817": {
           "Weapons": [
-            "Knife",
             "USP-S",
-            "Flashbang"
+            "Flashbang",
+            "Knife"
           ],
           "CashSpend": 800,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -3431,6 +3545,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -3444,6 +3559,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -3457,6 +3573,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -3609,38 +3726,41 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198060367310": {
           "Weapons": [
-            "Knife",
             "Dual Berettas",
             "Galil AR",
             "Smoke Grenade",
-            "Flashbang"
+            "Flashbang",
+            "Knife"
           ],
           "CashSpend": 3300,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198066693739": {
           "Weapons": [
-            "Molotov",
-            "Flashbang",
-            "HE Grenade",
             "Knife",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Molotov",
+            "Flashbang",
+            "HE Grenade"
           ],
           "CashSpend": 4600,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -3657,22 +3777,23 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198306519263": {
           "Weapons": [
+            "Galil AR",
+            "Smoke Grenade",
             "Flashbang",
             "Knife",
-            "Glock-18",
-            "C4",
-            "Galil AR",
-            "Smoke Grenade"
+            "Glock-18"
           ],
           "CashSpend": 3300,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": true,
           "Side": 2
         }
@@ -3694,6 +3815,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -3706,6 +3828,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -3718,18 +3841,20 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198107142008": {
           "Weapons": [
-            "Knife",
-            "USP-S"
+            "USP-S",
+            "Knife"
           ],
           "CashSpend": 0,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -3742,6 +3867,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -3852,35 +3978,36 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
+            "Knife",
+            "Glock-18",
             "Molotov",
             "HE Grenade",
             "Smoke Grenade",
             "Flashbang",
-            "AK-47",
-            "Knife",
-            "Glock-18"
+            "AK-47"
           ],
           "CashSpend": 2700,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198060367310": {
           "Weapons": [
+            "AK-47",
             "Knife",
             "Dual Berettas",
             "Flashbang",
-            "C4",
             "Molotov",
-            "HE Grenade",
-            "AK-47"
+            "HE Grenade"
           ],
           "CashSpend": 900,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": true,
           "Side": 2
         },
@@ -3898,39 +4025,42 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198191236195": {
           "Weapons": [
+            "Knife",
             "Galil AR",
             "Smoke Grenade",
             "Molotov",
             "Flashbang",
-            "P2000",
-            "Knife"
+            "P2000"
           ],
           "CashSpend": 500,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198306519263": {
           "Weapons": [
+            "Knife",
+            "Glock-18",
+            "Galil AR",
             "Flashbang",
             "Smoke Grenade",
             "HE Grenade",
-            "Molotov",
-            "Knife",
-            "Glock-18",
-            "Galil AR"
+            "Molotov"
           ],
           "CashSpend": 1000,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         }
@@ -3955,6 +4085,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
@@ -3971,22 +4102,24 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198028458803": {
           "Weapons": [
-            "Smoke Grenade",
-            "HE Grenade",
-            "Flashbang",
             "Knife",
             "USP-S",
-            "M4A1"
+            "M4A1",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang"
           ],
           "CashSpend": 4350,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -4002,21 +4135,23 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198248953762": {
           "Weapons": [
+            "Knife",
             "P2000",
             "M4A1",
             "Smoke Grenade",
-            "HE Grenade",
-            "Knife"
+            "HE Grenade"
           ],
           "CashSpend": 4500,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -4112,18 +4247,19 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
+            "AK-47",
+            "Molotov",
+            "HE Grenade",
             "Smoke Grenade",
             "Flashbang",
             "Knife",
-            "Glock-18",
-            "AK-47",
-            "Molotov",
-            "HE Grenade"
+            "Glock-18"
           ],
           "CashSpend": 1200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
@@ -4141,23 +4277,25 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198066693739": {
           "Weapons": [
+            "M4A1",
+            "Molotov",
             "HE Grenade",
             "Knife",
             "Glock-18",
             "Smoke Grenade",
-            "Flashbang",
-            "M4A1",
-            "Molotov"
+            "Flashbang"
           ],
           "CashSpend": 700,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
@@ -4175,24 +4313,25 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198306519263": {
           "Weapons": [
+            "Knife",
             "Glock-18",
             "HE Grenade",
             "M4A1",
             "Molotov",
             "Smoke Grenade",
-            "Flashbang",
-            "C4",
-            "Knife"
+            "Flashbang"
           ],
           "CashSpend": 1100,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": true,
           "Side": 2
         }
@@ -4207,29 +4346,31 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
+            "HE Grenade",
             "Knife",
             "USP-S",
             "M4A1",
-            "Flashbang",
-            "HE Grenade"
+            "Flashbang"
           ],
           "CashSpend": 300,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198005107817": {
           "Weapons": [
-            "HE Grenade",
             "Knife",
-            "Desert Eagle"
+            "Desert Eagle",
+            "HE Grenade"
           ],
           "CashSpend": 1000,
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -4243,6 +4384,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
@@ -4255,6 +4397,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -4268,6 +4411,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }
@@ -4363,18 +4507,19 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
+            "Knife",
+            "Glock-18",
             "AK-47",
             "Flashbang",
             "Molotov",
             "HE Grenade",
-            "Smoke Grenade",
-            "Knife",
-            "Glock-18"
+            "Smoke Grenade"
           ],
           "CashSpend": 1000,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -4391,58 +4536,61 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198066693739": {
           "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
             "Knife",
             "Glock-18",
             "M4A1",
             "Molotov",
-            "HE Grenade",
-            "Smoke Grenade",
-            "Flashbang"
+            "HE Grenade"
           ],
           "CashSpend": 1200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198191236195": {
           "Weapons": [
-            "Glock-18",
             "AK-47",
             "Flashbang",
             "Smoke Grenade",
             "HE Grenade",
             "Molotov",
-            "Knife"
+            "Knife",
+            "Glock-18"
           ],
           "CashSpend": 2200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198306519263": {
           "Weapons": [
-            "Flashbang",
-            "Smoke Grenade",
-            "C4",
-            "Knife",
             "Glock-18",
             "HE Grenade",
             "M4A1",
-            "Molotov"
+            "Molotov",
+            "Flashbang",
+            "Smoke Grenade",
+            "Knife"
           ],
           "CashSpend": 500,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         }
@@ -4457,82 +4605,87 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
+            "USP-S",
+            "AWP",
             "Smoke Grenade",
             "HE Grenade",
             "Incendiary Grenade",
-            "Knife",
-            "USP-S",
-            "AWP"
+            "Knife"
           ],
           "CashSpend": 6350,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198005107817": {
           "Weapons": [
-            "Knife",
-            "USP-S",
             "M4A4",
             "Smoke Grenade",
             "HE Grenade",
             "Incendiary Grenade",
-            "Flashbang"
+            "Flashbang",
+            "Knife",
+            "USP-S"
           ],
           "CashSpend": 5150,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198028458803": {
           "Weapons": [
-            "Knife",
-            "Desert Eagle",
-            "M4A1",
             "HE Grenade",
             "Smoke Grenade",
-            "Flashbang"
+            "Flashbang",
+            "Knife",
+            "Desert Eagle",
+            "M4A1"
           ],
           "CashSpend": 4300,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198107142008": {
           "Weapons": [
-            "USP-S",
-            "M4A1",
-            "Incendiary Grenade",
             "Flashbang",
             "HE Grenade",
-            "Knife"
+            "Knife",
+            "USP-S",
+            "M4A1",
+            "Incendiary Grenade"
           ],
           "CashSpend": 4950,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198248953762": {
           "Weapons": [
-            "M4A1",
-            "Flashbang",
-            "Smoke Grenade",
             "HE Grenade",
             "Knife",
-            "P2000"
+            "P2000",
+            "M4A1",
+            "Flashbang",
+            "Smoke Grenade"
           ],
           "CashSpend": 4950,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         }
@@ -4643,85 +4796,89 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
+            "Flashbang",
+            "Molotov",
             "Knife",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade",
-            "Flashbang",
-            "Molotov"
+            "Smoke Grenade"
           ],
           "CashSpend": 4800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198060367310": {
           "Weapons": [
-            "Smoke Grenade",
-            "Flashbang",
             "Knife",
             "Glock-18",
             "AWP",
-            "Molotov"
+            "Molotov",
+            "Smoke Grenade",
+            "Flashbang"
           ],
           "CashSpend": 4800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198066693739": {
           "Weapons": [
-            "Glock-18",
             "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
             "Molotov",
             "AK-47",
-            "Knife"
+            "Knife",
+            "Glock-18"
           ],
           "CashSpend": 6950,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198191236195": {
           "Weapons": [
-            "HE Grenade",
-            "Molotov",
             "Flashbang",
             "Knife",
             "Glock-18",
-            "C4",
             "AK-47",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov"
           ],
           "CashSpend": 2200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         },
         "76561198306519263": {
           "Weapons": [
+            "AK-47",
+            "Flashbang",
+            "Smoke Grenade",
             "HE Grenade",
             "Molotov",
             "Knife",
-            "Glock-18",
-            "AK-47",
-            "Flashbang",
-            "Smoke Grenade"
+            "Glock-18"
           ],
           "CashSpend": 7800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         }
@@ -4748,6 +4905,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
@@ -4765,23 +4923,25 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198028458803": {
           "Weapons": [
+            "Knife",
             "Desert Eagle",
             "Flashbang",
             "M4A1",
             "Incendiary Grenade",
             "HE Grenade",
-            "Smoke Grenade",
-            "Knife"
+            "Smoke Grenade"
           ],
           "CashSpend": 4100,
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -4799,23 +4959,25 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198248953762": {
           "Weapons": [
+            "Knife",
             "P2000",
             "M4A1",
             "Flashbang",
             "Smoke Grenade",
             "HE Grenade",
-            "Incendiary Grenade",
-            "Knife"
+            "Incendiary Grenade"
           ],
           "CashSpend": 750,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         }
@@ -4951,6 +5113,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -4965,37 +5128,40 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198066693739": {
           "Weapons": [
-            "AK-47",
-            "Smoke Grenade",
             "Flashbang",
             "Knife",
-            "Glock-18"
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade"
           ],
           "CashSpend": 4200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198191236195": {
           "Weapons": [
-            "Knife",
-            "Glock-18",
             "Galil AR",
             "Smoke Grenade",
             "HE Grenade",
-            "Flashbang"
+            "Flashbang",
+            "Knife",
+            "Glock-18"
           ],
           "CashSpend": 4000,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -5003,7 +5169,6 @@
           "Weapons": [
             "Knife",
             "Glock-18",
-            "C4",
             "AK-47",
             "Smoke Grenade",
             "Molotov",
@@ -5013,6 +5178,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         }
@@ -5027,52 +5193,55 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
-            "USP-S",
             "AWP",
             "Flashbang",
             "Smoke Grenade",
             "HE Grenade",
             "Incendiary Grenade",
-            "Knife"
+            "Knife",
+            "USP-S"
           ],
           "CashSpend": 1400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198005107817": {
           "Weapons": [
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Knife",
             "USP-S",
             "Smoke Grenade",
             "AK-47",
-            "Flashbang",
-            "Incendiary Grenade",
-            "HE Grenade",
-            "Knife"
+            "Flashbang"
           ],
           "CashSpend": 3800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198028458803": {
           "Weapons": [
-            "HE Grenade",
             "Smoke Grenade",
             "Knife",
             "USP-S",
             "Flashbang",
             "M4A1",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 2200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
@@ -5090,23 +5259,25 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198248953762": {
           "Weapons": [
-            "Knife",
             "P2000",
             "Flashbang",
             "Smoke Grenade",
             "AK-47",
             "Molotov",
-            "HE Grenade"
+            "HE Grenade",
+            "Knife"
           ],
           "CashSpend": 3200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         }
@@ -5255,13 +5426,13 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
         "76561198060367310": {
           "Weapons": [
             "Knife",
-            "C4",
             "Smoke Grenade",
             "Glock-18"
           ],
@@ -5269,6 +5440,7 @@
           "Armor": false,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": false,
           "Side": 2
         },
@@ -5281,6 +5453,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -5294,6 +5467,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -5307,6 +5481,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         }
@@ -5321,86 +5496,91 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
+            "Knife",
+            "USP-S",
+            "Flashbang",
             "Smoke Grenade",
             "HE Grenade",
             "Incendiary Grenade",
-            "AWP",
-            "Knife",
-            "USP-S",
-            "Flashbang"
+            "AWP"
           ],
           "CashSpend": 5300,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198005107817": {
           "Weapons": [
+            "HE Grenade",
+            "Incendiary Grenade",
             "Knife",
             "USP-S",
             "M4A4",
             "Flashbang",
-            "Smoke Grenade",
-            "HE Grenade",
-            "Incendiary Grenade"
+            "Smoke Grenade"
           ],
           "CashSpend": 5500,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198028458803": {
           "Weapons": [
-            "Smoke Grenade",
             "AK-47",
             "Molotov",
             "HE Grenade",
             "Flashbang",
             "Knife",
-            "USP-S"
+            "USP-S",
+            "Smoke Grenade"
           ],
           "CashSpend": 900,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         },
         "76561198107142008": {
           "Weapons": [
-            "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
             "M4A1",
             "Knife",
             "USP-S",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "Smoke Grenade"
           ],
           "CashSpend": 2800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198248953762": {
           "Weapons": [
+            "P2000",
+            "Smoke Grenade",
+            "M4A1",
             "Incendiary Grenade",
             "HE Grenade",
             "Flashbang",
-            "Knife",
-            "P2000",
-            "Smoke Grenade",
-            "M4A1"
+            "Knife"
           ],
           "CashSpend": 4000,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         }
@@ -5511,17 +5691,18 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
-            "Knife",
-            "Glock-18",
-            "AK-47",
             "Smoke Grenade",
             "Flashbang",
-            "Molotov"
+            "Molotov",
+            "Knife",
+            "Glock-18",
+            "AK-47"
           ],
           "CashSpend": 4600,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 2
         },
@@ -5537,56 +5718,59 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198066693739": {
           "Weapons": [
+            "AK-47",
             "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
             "Molotov",
             "Knife",
-            "Glock-18",
-            "C4",
-            "AK-47"
+            "Glock-18"
           ],
           "CashSpend": 4900,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": true,
           "Side": 2
         },
         "76561198191236195": {
           "Weapons": [
+            "Glock-18",
+            "AK-47",
             "Smoke Grenade",
             "Molotov",
             "Flashbang",
-            "Knife",
-            "Glock-18",
-            "AK-47"
+            "Knife"
           ],
           "CashSpend": 4600,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198306519263": {
           "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
             "Molotov",
             "Knife",
             "Glock-18",
-            "AK-47",
-            "Smoke Grenade",
-            "Flashbang"
+            "AK-47"
           ],
           "CashSpend": 4800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         }
@@ -5601,85 +5785,90 @@
       "Players": {
         "76561197987713664": {
           "Weapons": [
+            "HE Grenade",
             "Incendiary Grenade",
             "Smoke Grenade",
             "Knife",
             "Flashbang",
             "AWP",
-            "Desert Eagle",
-            "HE Grenade"
+            "Desert Eagle"
           ],
           "CashSpend": 1400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198005107817": {
           "Weapons": [
-            "M4A4",
-            "Desert Eagle",
-            "Smoke Grenade",
             "HE Grenade",
             "Incendiary Grenade",
             "Flashbang",
-            "Knife"
+            "Knife",
+            "M4A4",
+            "Desert Eagle",
+            "Smoke Grenade"
           ],
           "CashSpend": 1400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198028458803": {
           "Weapons": [
-            "Flashbang",
-            "AK-47",
-            "Knife",
             "USP-S",
             "Incendiary Grenade",
             "HE Grenade",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Flashbang",
+            "AK-47",
+            "Knife"
           ],
           "CashSpend": 4300,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198107142008": {
           "Weapons": [
-            "Smoke Grenade",
-            "Flashbang",
-            "HE Grenade",
             "Knife",
             "USP-S",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade"
           ],
           "CashSpend": 2800,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198248953762": {
           "Weapons": [
+            "Incendiary Grenade",
+            "HE Grenade",
             "Smoke Grenade",
             "Flashbang",
             "Knife",
             "P2000",
-            "M4A1",
-            "Incendiary Grenade",
-            "HE Grenade"
+            "M4A1"
           ],
           "CashSpend": 1400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": true,
           "Side": 3
         }
@@ -5775,52 +5964,55 @@
       "Players": {
         "76561198021715100": {
           "Weapons": [
-            "AK-47",
             "Molotov",
             "Flashbang",
             "Knife",
             "Glock-18",
             "Smoke Grenade",
+            "HE Grenade",
+            "AK-47"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AWP",
+            "Molotov",
+            "Smoke Grenade",
+            "Flashbang",
             "HE Grenade"
           ],
           "CashSpend": 2200,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
-          "Survived": false,
-          "Side": 2
-        },
-        "76561198060367310": {
-          "Weapons": [
-            "Smoke Grenade",
-            "Flashbang",
-            "HE Grenade",
-            "Knife",
-            "Glock-18",
-            "AWP",
-            "Molotov"
-          ],
-          "CashSpend": 2200,
-          "Armor": true,
-          "Helmet": true,
-          "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
         "76561198066693739": {
           "Weapons": [
-            "HE Grenade",
-            "Flashbang",
             "M4A1",
             "Smoke Grenade",
             "Molotov",
             "Knife",
-            "Glock-18"
+            "Glock-18",
+            "HE Grenade",
+            "Flashbang"
           ],
           "CashSpend": 3400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         },
@@ -5829,7 +6021,6 @@
             "Smoke Grenade",
             "Molotov",
             "Flashbang",
-            "C4",
             "Knife",
             "Glock-18",
             "AK-47"
@@ -5838,23 +6029,25 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": true,
           "Survived": true,
           "Side": 2
         },
         "76561198306519263": {
           "Weapons": [
-            "Knife",
-            "Glock-18",
-            "AK-47",
             "Flashbang",
             "Smoke Grenade",
             "HE Grenade",
-            "Molotov"
+            "Molotov",
+            "Knife",
+            "Glock-18",
+            "AK-47"
           ],
           "CashSpend": 1400,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": true,
           "Side": 2
         }
@@ -5881,23 +6074,25 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
         "76561198005107817": {
           "Weapons": [
-            "M4A4",
-            "Smoke Grenade",
-            "HE Grenade",
             "Incendiary Grenade",
             "Flashbang",
             "Knife",
-            "USP-S"
+            "USP-S",
+            "M4A4",
+            "Smoke Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 5300,
           "Armor": true,
           "Helmet": true,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -5915,6 +6110,7 @@
           "Armor": true,
           "Helmet": false,
           "DefuseKit": false,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -5931,6 +6127,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         },
@@ -5948,6 +6145,7 @@
           "Armor": true,
           "Helmet": true,
           "DefuseKit": true,
+          "Bomb": false,
           "Survived": false,
           "Side": 3
         }

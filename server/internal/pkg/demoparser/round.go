@@ -156,6 +156,7 @@ type roundTeamPlayer struct {
 	Armor     bool
 	Helmet    bool
 	DefuseKit bool
+	Bomb      bool
 	Survived  bool
 	Side      common.Team
 }
@@ -209,6 +210,11 @@ func (rt *roundTeam) setPlayerWeapons(p *common.Player) {
 	pl.DefuseKit = p.HasDefuseKit()
 
 	for _, eq := range p.Inventory {
+		if eq.Type == common.EqBomb {
+			pl.Bomb = true
+			continue
+		}
+
 		pl.Weapons = append(pl.Weapons, eq.String())
 	}
 
