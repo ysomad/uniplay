@@ -13,7 +13,7 @@ serve:
     host: 127.0.0.1
 
 selfservice:
-  default_browser_return_url: https://uni-play.ru/auth/
+  default_browser_return_url: https://uni-play.ru
   allowed_return_urls:
     - https://uni-play.ru
 
