@@ -89,7 +89,7 @@ services:
       - PORT=4455
       - SECURITY_MODE=
       - KRATOS_PUBLIC_URL=http://kratos:4433/
-      - KRATOS_BROWSER_URL=https://uni-play.ru/
+      - KRATOS_BROWSER_URL=https://uni-play.ru/auth
     networks:
       - intranet
     restart: on-failure
