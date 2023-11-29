@@ -27,7 +27,7 @@ services:
       interval: 30s
       timeout: 60s
       retries: 5
-      start_period: 80s 
+      start_period: 80s
     networks:
       - intranet
 
@@ -88,8 +88,7 @@ services:
     environment:
       - PORT=4455
       - SECURITY_MODE=
-      - KRATOS_PUBLIC_URL=https://uni-play.ru
-      - KRATOS_BROWSER_URL=https://uni-play.ru/auth
+      - KRATOS_PUBLIC_URL=https://uni-play.ru/
     networks:
       - intranet
     restart: on-failure
