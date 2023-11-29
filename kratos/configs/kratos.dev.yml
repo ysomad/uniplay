@@ -4,18 +4,18 @@ dsn: memory
 
 serve:
   public:
-    base_url: http://127.0.0.1:4433/
+    base_url: https://uni-play.ru/
     host: 127.0.0.1
     cors:
       enabled: true
   admin:
-    base_url: http://kratos:4434/
+    base_url: http://127.0.0.1:4434/
     host: 127.0.0.1
 
 selfservice:
   default_browser_return_url: https://uni-play.ru/auth/
   allowed_return_urls:
-    - https://uni-play.ru/
+    - https://uni-play.ru
 
   methods:
     password:
@@ -29,7 +29,7 @@ selfservice:
 
   flows:
     error:
-      ui_url: https://uni-play.ru/auth/error
+      ui_url: https://uni-play.ru/auth/errors
 
     settings:
       ui_url: https://uni-play.ru/auth/settings
@@ -46,7 +46,7 @@ selfservice:
       ui_url: https://uni-play.ru/auth/verification
       use: code
       after:
-        default_browser_return_url: https://uni-play.ru/auth
+        default_browser_return_url: https://uni-play.ru/auth/
 
     logout:
       after:
