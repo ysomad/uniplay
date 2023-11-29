@@ -8,10 +8,10 @@ serve:
     cors:
       enabled: true
   admin:
-    base_url: http://kratos:4434/
+    base_url: http://127.0.0.1:4434/
 
 selfservice:
-  default_browser_return_url: https://uni-play.ru/
+  default_browser_return_url: https://uni-play.ru/auth/
   allowed_return_urls:
     - https://uni-play.ru/
 
@@ -27,36 +27,36 @@ selfservice:
 
   flows:
     error:
-      ui_url: https://uni-play.ru/error
+      ui_url: https://uni-play.ru/auth/error
 
     settings:
-      ui_url: https://uni-play.ru/settings
+      ui_url: https://uni-play.ru/auth/settings
       privileged_session_max_age: 15m
       required_aal: highest_available
 
     recovery:
       enabled: true
-      ui_url: https://uni-play.ru/recovery
+      ui_url: https://uni-play.ru/auth/recovery
       use: code
 
     verification:
       enabled: true
-      ui_url: https://uni-play.ru/verification
+      ui_url: https://uni-play.ru/auth/verification
       use: code
       after:
-        default_browser_return_url: https://uni-play.ru/
+        default_browser_return_url: https://uni-play.ru/auth
 
     logout:
       after:
-        default_browser_return_url: https://uni-play.ru/login
+        default_browser_return_url: https://uni-play.ru/auth/login
 
     login:
-      ui_url: https://uni-play.ru/login
+      ui_url: https://uni-play.ru/auth/login
       lifespan: 10m
 
     registration:
       lifespan: 10m
-      ui_url: https://uni-play.ru/registration
+      ui_url: https://uni-play.ru/auth/registration
       after:
         password:
           hooks:
