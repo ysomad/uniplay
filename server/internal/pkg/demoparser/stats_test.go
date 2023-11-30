@@ -455,19 +455,6 @@ func Test_weaponStats_add(t *testing.T) {
 			},
 		},
 		{
-			name: "Add Death",
-			fields: fields{
-				deaths: 0,
-			},
-			args: args{
-				e: eventDeath,
-				v: 1,
-			},
-			want: &weaponStats{
-				Deaths: 1,
-			},
-		},
-		{
 			name: "Add Assist",
 			fields: fields{
 				assists: 0,
@@ -616,7 +603,6 @@ func Test_weaponStats_add(t *testing.T) {
 				Hits:    tt.fields.hits,
 				Kills:   tt.fields.kills,
 				Damage:  tt.fields.damage,
-				Deaths:  tt.fields.deaths,
 				Assists: tt.fields.assists,
 				Shots:   tt.fields.shots,
 			}
