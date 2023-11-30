@@ -1,0 +1,6254 @@
+[
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "P250",
+            "Flashbang"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Flashbang",
+            "Knife",
+            "Glock-18",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 700,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 800,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 4000,
+      "CashSpend": 3450,
+      "EqValue": 4750,
+      "Score": 0,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "P2000",
+            "Knife"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "P2000",
+            "Knife"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "P2000"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        }
+      },
+      "Cash": 4000,
+      "CashSpend": 3250,
+      "EqValue": 4250,
+      "Score": 1,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 190,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 9
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198066693739,
+        "Assister": 0,
+        "SinceStart": 212,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 3
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 215,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 3
+      },
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561197987713664,
+        "Assister": 76561198066693739,
+        "SinceStart": 234,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 1
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 241,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 9
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 244,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 9
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198248953762,
+        "Assister": 0,
+        "SinceStart": 255,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 9
+      }
+    ],
+    "Time": 2000000000,
+    "Reason": 8
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle"
+          ],
+          "CashSpend": 700,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Glock-18",
+            "Knife"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 10650,
+      "CashSpend": 700,
+      "EqValue": 1500,
+      "Score": 0,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "MP9",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 3650,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "Flashbang",
+            "FAMAS",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 3350,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "P2000",
+            "MP9",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "Knife"
+          ],
+          "CashSpend": 3250,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "FAMAS",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Knife",
+            "P2000"
+          ],
+          "CashSpend": 3650,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "M4A4",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 4250,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        }
+      },
+      "Cash": 18500,
+      "CashSpend": 18150,
+      "EqValue": 20000,
+      "Score": 2,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 74,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 102
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 85,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 102
+      },
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561198248953762,
+        "Assister": 0,
+        "SinceStart": 86,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 302
+      },
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 91,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 102
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 92,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 102
+      }
+    ],
+    "Time": 264531247104,
+    "Reason": 8
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "Glock-18",
+            "AK-47"
+          ],
+          "CashSpend": 4300,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Molotov",
+            "Knife"
+          ],
+          "CashSpend": 4400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "HE Grenade",
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 4300,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Molotov"
+          ],
+          "CashSpend": 4400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 4200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 21950,
+      "CashSpend": 21600,
+      "EqValue": 22900,
+      "Score": 1,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Knife",
+            "USP-S",
+            "MP9",
+            "Flashbang",
+            "Incendiary Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 1200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "FAMAS",
+            "Incendiary Grenade",
+            "Smoke Grenade",
+            "Knife",
+            "P2000",
+            "Flashbang"
+          ],
+          "CashSpend": 1500,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Knife",
+            "MP9",
+            "Smoke Grenade",
+            "Flashbang",
+            "Desert Eagle",
+            "Incendiary Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 900,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Knife",
+            "P2000",
+            "FAMAS",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 1800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "M4A4",
+            "Smoke Grenade",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Flashbang",
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 1500,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 19300,
+      "CashSpend": 6900,
+      "EqValue": 24300,
+      "Score": 2,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 52,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198107142008,
+        "Assister": 76561198021715100,
+        "SinceStart": 54,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 304
+      },
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198306519263,
+        "Assister": 76561197987713664,
+        "SinceStart": 56,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198005107817,
+        "Assister": 76561198021715100,
+        "SinceStart": 62,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 102
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198066693739,
+        "Assister": 0,
+        "SinceStart": 63,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561198248953762,
+        "Assister": 0,
+        "SinceStart": 89,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 302
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198191236195,
+        "Assister": 76561198248953762,
+        "SinceStart": 123,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198060367310,
+        "Assister": 0,
+        "SinceStart": 138,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      }
+    ],
+    "Time": 364156256256,
+    "Reason": 9
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
+            "Molotov",
+            "Knife",
+            "Glock-18",
+            "AK-47"
+          ],
+          "CashSpend": 3800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Galil AR",
+            "Flashbang",
+            "Smoke Grenade",
+            "Molotov",
+            "HE Grenade",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 3700,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "HE Grenade",
+            "Molotov",
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 3700,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Molotov"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov",
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Flashbang"
+          ],
+          "CashSpend": 2400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        }
+      },
+      "Cash": 18400,
+      "CashSpend": 15800,
+      "EqValue": 24400,
+      "Score": 2,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle"
+          ],
+          "CashSpend": 1600,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "M4A1"
+          ],
+          "CashSpend": 3550,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "Five-SeveN"
+          ],
+          "CashSpend": 500,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle",
+            "Flashbang"
+          ],
+          "CashSpend": 900,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 20600,
+      "CashSpend": 6550,
+      "EqValue": 6650,
+      "Score": 2,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 73,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198107142008,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 112,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 113,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 4
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198306519263,
+        "Assister": 0,
+        "SinceStart": 124,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      }
+    ],
+    "Time": 510000005120,
+    "Reason": 1
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Knife",
+            "Glock-18",
+            "AK-47"
+          ],
+          "CashSpend": 1000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Galil AR",
+            "Flashbang",
+            "Smoke Grenade",
+            "Molotov",
+            "HE Grenade",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 1200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "AK-47",
+            "Molotov",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 1200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Molotov",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade"
+          ],
+          "CashSpend": 4900,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Molotov",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "HE Grenade"
+          ],
+          "CashSpend": 1100,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": true,
+          "Side": 2
+        }
+      },
+      "Cash": 21300,
+      "CashSpend": 9400,
+      "EqValue": 24400,
+      "Score": 3,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "M4A1",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Flashbang",
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 4950,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "AWP"
+          ],
+          "CashSpend": 5400,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "M4A1",
+            "Five-SeveN",
+            "Incendiary Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 1750,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "M4A1",
+            "Smoke Grenade",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 4450,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Incendiary Grenade",
+            "Flashbang",
+            "Knife",
+            "USP-S",
+            "M4A1",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 4650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        }
+      },
+      "Cash": 23850,
+      "CashSpend": 21200,
+      "EqValue": 26050,
+      "Score": 2,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198248953762,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 58,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 92,
+        "Headshot": false,
+        "Wallbang": true,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 309
+      },
+      {
+        "Killer": 76561198248953762,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 120,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 129,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      }
+    ],
+    "Time": 654046855168,
+    "Reason": 1
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov"
+          ],
+          "CashSpend": 1200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "AK-47",
+            "Flashbang",
+            "Molotov",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 4800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Molotov",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "Glock-18",
+            "AK-47"
+          ],
+          "CashSpend": 1200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Flashbang",
+            "HE Grenade",
+            "AK-47",
+            "Knife",
+            "Glock-18",
+            "Molotov",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Smoke Grenade",
+            "AK-47",
+            "Knife",
+            "Glock-18",
+            "HE Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 3400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 30300,
+      "CashSpend": 12800,
+      "EqValue": 25200,
+      "Score": 3,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Flashbang",
+            "Knife",
+            "USP-S",
+            "M4A1",
+            "HE Grenade",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 2450,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Flashbang",
+            "Knife",
+            "P2000",
+            "AWP",
+            "Smoke Grenade",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 2000,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "M4A1",
+            "Smoke Grenade",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Flashbang",
+            "Knife",
+            "Five-SeveN"
+          ],
+          "CashSpend": 4300,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "MP9",
+            "Incendiary Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 2550,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "Flashbang",
+            "AK-47",
+            "Incendiary Grenade",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 1850,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 15050,
+      "CashSpend": 13150,
+      "EqValue": 27600,
+      "Score": 3,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198248953762,
+        "Assister": 0,
+        "SinceStart": 100,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 101,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": true,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198005107817,
+        "Assister": 76561198021715100,
+        "SinceStart": 102,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198306519263,
+        "Assister": 76561198107142008,
+        "SinceStart": 102,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 103,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 103,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      }
+    ],
+    "Time": 823749967872,
+    "Reason": 8
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Flashbang",
+            "Smoke Grenade",
+            "Knife",
+            "Glock-18",
+            "AK-47"
+          ],
+          "CashSpend": 6900,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov",
+            "Knife",
+            "Glock-18",
+            "AK-47"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 6700,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Molotov",
+            "Smoke Grenade",
+            "Galil AR",
+            "Flashbang",
+            "HE Grenade",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Glock-18",
+            "AK-47",
+            "Molotov",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "Knife"
+          ],
+          "CashSpend": 5100,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 24800,
+      "CashSpend": 23100,
+      "EqValue": 24500,
+      "Score": 4,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Molotov",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Knife",
+            "USP-S",
+            "Flashbang",
+            "AK-47"
+          ],
+          "CashSpend": 3500,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Smoke Grenade",
+            "HE Grenade",
+            "Knife",
+            "P2000",
+            "AWP",
+            "Flashbang",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 1400,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "Five-SeveN",
+            "Molotov",
+            "AK-47"
+          ],
+          "CashSpend": 800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "MP9",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 1800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Incendiary Grenade",
+            "M4A1",
+            "Knife",
+            "USP-S",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 19650,
+      "CashSpend": 10300,
+      "EqValue": 28100,
+      "Score": 3,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198306519263,
+        "Assister": 0,
+        "SinceStart": 90,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 90,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 92,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 92,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": true,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198248953762,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 125,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561198248953762,
+        "Assister": 0,
+        "SinceStart": 125,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 309
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 132,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198066693739,
+        "Assister": 76561197987713664,
+        "SinceStart": 186,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198060367310,
+        "Assister": 76561198248953762,
+        "SinceStart": 189,
+        "Headshot": true,
+        "Wallbang": true,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      }
+    ],
+    "Time": 934218760192,
+    "Reason": 9
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Smoke Grenade",
+            "HE Grenade",
+            "Knife",
+            "Glock-18",
+            "AWP",
+            "Flashbang"
+          ],
+          "CashSpend": 2400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Galil AR",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang",
+            "Molotov",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 3600,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Knife",
+            "Glock-18",
+            "Flashbang",
+            "Molotov",
+            "AK-47"
+          ],
+          "CashSpend": 3000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Knife",
+            "Glock-18",
+            "AK-47"
+          ],
+          "CashSpend": 4000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "Galil AR",
+            "Flashbang",
+            "Smoke Grenade",
+            "Molotov"
+          ],
+          "CashSpend": 3900,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 19750,
+      "CashSpend": 16900,
+      "EqValue": 24450,
+      "Score": 4,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "M4A1",
+            "HE Grenade",
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Flashbang",
+            "HE Grenade",
+            "Knife",
+            "P2000",
+            "MP9",
+            "Incendiary Grenade",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 4350,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "M4A1",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "Knife",
+            "P2000"
+          ],
+          "CashSpend": 4950,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "MP9",
+            "Smoke Grenade",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 3300,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "M4A1",
+            "Smoke Grenade",
+            "Flashbang",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 4250,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        }
+      },
+      "Cash": 19850,
+      "CashSpend": 19650,
+      "EqValue": 21850,
+      "Score": 4,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 79,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 80,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198248953762,
+        "Victim": 76561198060367310,
+        "Assister": 0,
+        "SinceStart": 95,
+        "Headshot": true,
+        "Wallbang": true,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 301
+      },
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561198248953762,
+        "Assister": 76561198060367310,
+        "SinceStart": 98,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 102
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 105,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 130,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 153,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      }
+    ],
+    "Time": 1130734419968,
+    "Reason": 8
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "Galil AR"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle"
+          ],
+          "CashSpend": 1350,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 2000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle"
+          ],
+          "CashSpend": 700,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle"
+          ],
+          "CashSpend": 1350,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 10450,
+      "CashSpend": 8200,
+      "EqValue": 8400,
+      "Score": 4,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "USP-S",
+            "M4A1",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 2000,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Flashbang",
+            "HE Grenade",
+            "AWP",
+            "Knife",
+            "P2000",
+            "Incendiary Grenade",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "M4A1",
+            "Smoke Grenade",
+            "Incendiary Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 3800,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "M4A1",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 3000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "USP-S",
+            "Flashbang",
+            "AK-47",
+            "Smoke Grenade",
+            "Incendiary Grenade",
+            "Knife"
+          ],
+          "CashSpend": 3500,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 18250,
+      "CashSpend": 15100,
+      "EqValue": 29100,
+      "Score": 5,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198248953762,
+        "Assister": 0,
+        "SinceStart": 76,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198306519263,
+        "Assister": 76561198248953762,
+        "SinceStart": 81,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 301
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 82,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 4
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 85,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 94,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 95,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 107,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      }
+    ],
+    "Time": 1290875043840,
+    "Reason": 8
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle"
+          ],
+          "CashSpend": 700,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 12350,
+      "CashSpend": 700,
+      "EqValue": 1500,
+      "Score": 4,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "Flashbang",
+            "M4A1"
+          ],
+          "CashSpend": 4450,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "P2000",
+            "Flashbang",
+            "AWP",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Knife"
+          ],
+          "CashSpend": 1400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "Flashbang",
+            "Smoke Grenade",
+            "M4A1",
+            "Incendiary Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 3800,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "M4A1",
+            "Flashbang",
+            "Desert Eagle",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Knife"
+          ],
+          "CashSpend": 1200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "M4A1",
+            "Knife",
+            "USP-S",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        }
+      },
+      "Cash": 20900,
+      "CashSpend": 13650,
+      "EqValue": 29550,
+      "Score": 6,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198248953762,
+        "Assister": 76561198191236195,
+        "SinceStart": 42,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 43,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561197987713664,
+        "Assister": 76561198191236195,
+        "SinceStart": 44,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 44,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198107142008,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 45,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 2
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 46,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      }
+    ],
+    "Time": 1405656236032,
+    "Reason": 8
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 4400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "AK-47",
+            "Flashbang",
+            "Smoke Grenade",
+            "Molotov",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 4600,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "AK-47",
+            "Smoke Grenade",
+            "Molotov",
+            "Flashbang",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 4600,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Flashbang",
+            "Molotov",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 4800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "AK-47",
+            "Flashbang",
+            "Smoke Grenade",
+            "Molotov",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 4600,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 23950,
+      "CashSpend": 23000,
+      "EqValue": 24000,
+      "Score": 4,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "Flashbang",
+            "M4A1",
+            "Smoke Grenade",
+            "Incendiary Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 1300,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "P2000",
+            "Flashbang",
+            "AWP",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Incendiary Grenade",
+            "Knife"
+          ],
+          "CashSpend": 1100,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "Flashbang",
+            "M4A1",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 600,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "M4A4",
+            "Knife",
+            "P2000",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 5550,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Incendiary Grenade",
+            "Knife",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "M4A1",
+            "Desert Eagle"
+          ],
+          "CashSpend": 600,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 25000,
+      "CashSpend": 9150,
+      "EqValue": 31000,
+      "Score": 7,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561198248953762,
+        "Assister": 0,
+        "SinceStart": 42,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 309
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 49,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 67,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 78,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": true,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 304
+      },
+      {
+        "Killer": 76561198107142008,
+        "Victim": 76561198306519263,
+        "Assister": 76561198005107817,
+        "SinceStart": 81,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198107142008,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 85,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198107142008,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 86,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561198107142008,
+        "Assister": 76561198191236195,
+        "SinceStart": 91,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 309
+      }
+    ],
+    "Time": 1458968723456,
+    "Reason": 8
+  },
+  {
+    "T": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "MAC-10",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 3050,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "MAC-10",
+            "Flashbang",
+            "Smoke Grenade",
+            "Molotov"
+          ],
+          "CashSpend": 2950,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "MAC-10",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 2850,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "AK-47",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 4200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
+            "Desert Eagle",
+            "Molotov",
+            "Knife"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        }
+      },
+      "Cash": 16350,
+      "CashSpend": 15850,
+      "EqValue": 16650,
+      "Score": 5,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "M4A1",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 2400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "HE Grenade",
+            "Knife",
+            "P2000",
+            "AWP",
+            "Incendiary Grenade",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 4500,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Desert Eagle",
+            "Knife",
+            "Smoke Grenade",
+            "AK-47",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Incendiary Grenade",
+            "Knife",
+            "P2000",
+            "M4A1",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade"
+          ],
+          "CashSpend": 4950,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "M4A4",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Five-SeveN"
+          ],
+          "CashSpend": 6400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 33200,
+      "CashSpend": 21050,
+      "EqValue": 31000,
+      "Score": 7,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 30,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": true,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561197987713664,
+        "Assister": 76561198066693739,
+        "SinceStart": 30,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 304
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198306519263,
+        "Assister": 76561198107142008,
+        "SinceStart": 31,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 104
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198066693739,
+        "Assister": 76561198248953762,
+        "SinceStart": 32,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": true,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 104
+      },
+      {
+        "Killer": 76561198248953762,
+        "Victim": 76561198060367310,
+        "Assister": 0,
+        "SinceStart": 82,
+        "Headshot": true,
+        "Wallbang": true,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 4
+      },
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 87,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 89,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 91,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      }
+    ],
+    "Time": 1557609316352,
+    "Reason": 9
+  },
+  {
+    "T": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "Smoke Grenade",
+            "Flashbang",
+            "Decoy Grenade"
+          ],
+          "CashSpend": 750,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Decoy Grenade",
+            "Knife",
+            "Glock-18",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 750,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "Smoke Grenade",
+            "Molotov"
+          ],
+          "CashSpend": 700,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 4000,
+      "CashSpend": 3500,
+      "EqValue": 4500,
+      "Score": 8,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "Dual Berettas"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "Flashbang"
+          ],
+          "CashSpend": 800,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Dual Berettas",
+            "Knife"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Knife",
+            "Dual Berettas",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "Flashbang",
+            "P2000"
+          ],
+          "CashSpend": 800,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 4000,
+      "CashSpend": 3550,
+      "EqValue": 4250,
+      "Score": 5,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198248953762,
+        "Victim": 76561198021715100,
+        "Assister": 76561198005107817,
+        "SinceStart": 278,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": true,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 1
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198107142008,
+        "Assister": 76561198191236195,
+        "SinceStart": 281,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 2
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198306519263,
+        "Assister": 0,
+        "SinceStart": 287,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 6
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 289,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 2
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 295,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 2
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198248953762,
+        "Assister": 0,
+        "SinceStart": 296,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 2
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198066693739,
+        "Assister": 0,
+        "SinceStart": 312,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 6
+      },
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561198028458803,
+        "Assister": 76561198005107817,
+        "SinceStart": 314,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 3,
+        "Weapon": 2
+      }
+    ],
+    "Time": 1657234391040,
+    "Reason": 9
+  },
+  {
+    "T": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Glock-18",
+            "MAC-10",
+            "Molotov",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 3250,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Dual Berettas",
+            "Galil AR",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 3300,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Molotov",
+            "Flashbang",
+            "HE Grenade"
+          ],
+          "CashSpend": 4600,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "Galil AR",
+            "Smoke Grenade",
+            "Molotov",
+            "Flashbang"
+          ],
+          "CashSpend": 4000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Galil AR",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 3300,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": true,
+          "Side": 2
+        }
+      },
+      "Cash": 18550,
+      "CashSpend": 18450,
+      "EqValue": 19850,
+      "Score": 9,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 300,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle"
+          ],
+          "CashSpend": 700,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "P2000"
+          ],
+          "CashSpend": 0,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 10850,
+      "CashSpend": 1000,
+      "EqValue": 1500,
+      "Score": 5,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 30,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 30,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 30,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198248953762,
+        "Assister": 0,
+        "SinceStart": 30,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198066693739,
+        "Assister": 0,
+        "SinceStart": 31,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 4
+      },
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 38,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 104
+      }
+    ],
+    "Time": 1979234385920,
+    "Reason": 9
+  },
+  {
+    "T": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "Molotov",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "AK-47"
+          ],
+          "CashSpend": 2700,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Knife",
+            "Dual Berettas",
+            "Flashbang",
+            "Molotov",
+            "HE Grenade",
+            "AK-47"
+          ],
+          "CashSpend": 900,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "Galil AR",
+            "Knife",
+            "Glock-18",
+            "Molotov"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "P2000",
+            "Knife",
+            "Galil AR",
+            "Smoke Grenade",
+            "Molotov",
+            "Flashbang"
+          ],
+          "CashSpend": 500,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Glock-18",
+            "Galil AR",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov",
+            "Knife"
+          ],
+          "CashSpend": 1000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        }
+      },
+      "Cash": 18450,
+      "CashSpend": 7300,
+      "EqValue": 22700,
+      "Score": 10,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "M4A1",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 4400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "FAMAS",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 4250,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "USP-S",
+            "M4A1",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 4350,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Knife",
+            "USP-S",
+            "M4A1",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 4450,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "M4A1",
+            "Smoke Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 4500,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 22150,
+      "CashSpend": 21950,
+      "EqValue": 22950,
+      "Score": 5,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561198107142008,
+        "Assister": 76561198306519263,
+        "SinceStart": 39,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 42,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 301
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 57,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 301
+      },
+      {
+        "Killer": 76561198248953762,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 70,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561198248953762,
+        "Assister": 76561198191236195,
+        "SinceStart": 86,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      }
+    ],
+    "Time": 2024281210880,
+    "Reason": 1
+  },
+  {
+    "T": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Molotov",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 1200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "HE Grenade",
+            "Molotov",
+            "Knife",
+            "Dual Berettas",
+            "Flashbang",
+            "AK-47",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 1200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "M4A1",
+            "Molotov",
+            "HE Grenade",
+            "Knife",
+            "Glock-18",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 700,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 4900,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Glock-18",
+            "HE Grenade",
+            "M4A1",
+            "Molotov",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 1100,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": true,
+          "Side": 2
+        }
+      },
+      "Cash": 30150,
+      "CashSpend": 9100,
+      "EqValue": 26000,
+      "Score": 11,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "HE Grenade",
+            "Knife",
+            "USP-S",
+            "M4A1",
+            "Flashbang"
+          ],
+          "CashSpend": 300,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "HE Grenade",
+            "Knife",
+            "Desert Eagle"
+          ],
+          "CashSpend": 1000,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 1650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Desert Eagle",
+            "Knife"
+          ],
+          "CashSpend": 1350,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 1650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 15000,
+      "CashSpend": 5950,
+      "EqValue": 10250,
+      "Score": 5,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561198005107817,
+        "Assister": 76561198021715100,
+        "SinceStart": 51,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 75,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 76,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561197987713664,
+        "Assister": 76561198191236195,
+        "SinceStart": 77,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198248953762,
+        "Assister": 0,
+        "SinceStart": 101,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 305
+      }
+    ],
+    "Time": 2122921934848,
+    "Reason": 1
+  },
+  {
+    "T": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Flashbang",
+            "Molotov",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Knife",
+            "Glock-18",
+            "AK-47"
+          ],
+          "CashSpend": 1000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Molotov",
+            "AWP",
+            "Knife",
+            "Dual Berettas",
+            "Flashbang",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 5750,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "Glock-18",
+            "M4A1",
+            "Molotov"
+          ],
+          "CashSpend": 1200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "HE Grenade",
+            "M4A1",
+            "Molotov",
+            "Flashbang",
+            "Smoke Grenade",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 500,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 40050,
+      "CashSpend": 10650,
+      "EqValue": 27950,
+      "Score": 11,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "AWP",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 6350,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Incendiary Grenade",
+            "Flashbang",
+            "Knife",
+            "USP-S",
+            "M4A4",
+            "Smoke Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 5150,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle",
+            "M4A1",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 4300,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "HE Grenade",
+            "Knife",
+            "USP-S",
+            "M4A1",
+            "Incendiary Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 4950,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Knife",
+            "P2000",
+            "M4A1"
+          ],
+          "CashSpend": 4950,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        }
+      },
+      "Cash": 26350,
+      "CashSpend": 25700,
+      "EqValue": 28450,
+      "Score": 6,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 37,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 309
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198191236195,
+        "Assister": 76561198028458803,
+        "SinceStart": 43,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 309
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198066693739,
+        "Assister": 0,
+        "SinceStart": 45,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 309
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 49,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": true,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198306519263,
+        "Assister": 76561198107142008,
+        "SinceStart": 54,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198060367310,
+        "Assister": 0,
+        "SinceStart": 55,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      }
+    ],
+    "Time": 2269703045120,
+    "Reason": 8
+  },
+  {
+    "T": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Flashbang",
+            "Molotov",
+            "Knife"
+          ],
+          "CashSpend": 4800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Glock-18",
+            "AWP",
+            "Molotov",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 4800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "Molotov",
+            "AK-47"
+          ],
+          "CashSpend": 6950,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov",
+            "Flashbang",
+            "Knife",
+            "Glock-18",
+            "AK-47"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "AK-47",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 7800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 36700,
+      "CashSpend": 26550,
+      "EqValue": 27350,
+      "Score": 11,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "AWP",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "M4A4",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 1250,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Flashbang",
+            "M4A1",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Knife",
+            "Desert Eagle"
+          ],
+          "CashSpend": 4100,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "Incendiary Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "M4A1"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "M4A1",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 750,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        }
+      },
+      "Cash": 17800,
+      "CashSpend": 9700,
+      "EqValue": 30500,
+      "Score": 7,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 47,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 48,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 49,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 304
+      },
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198306519263,
+        "Assister": 76561198028458803,
+        "SinceStart": 49,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": true,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 304
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198066693739,
+        "Assister": 0,
+        "SinceStart": 50,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 309
+      },
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198060367310,
+        "Assister": 0,
+        "SinceStart": 96,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 304
+      },
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 96,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 304
+      }
+    ],
+    "Time": 2332421783552,
+    "Reason": 8
+  },
+  {
+    "T": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Molotov",
+            "Knife"
+          ],
+          "CashSpend": 4800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Knife",
+            "Flashbang",
+            "Smoke Grenade",
+            "Dual Berettas"
+          ],
+          "CashSpend": 2000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "AK-47",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 4200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "Galil AR",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 4000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Molotov",
+            "Flashbang"
+          ],
+          "CashSpend": 4600,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 20250,
+      "CashSpend": 19600,
+      "EqValue": 20200,
+      "Score": 11,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Knife",
+            "USP-S",
+            "AWP"
+          ],
+          "CashSpend": 1400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "USP-S",
+            "Smoke Grenade",
+            "AK-47",
+            "Flashbang",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Knife"
+          ],
+          "CashSpend": 3800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Flashbang",
+            "M4A1",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Smoke Grenade",
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "USP-S",
+            "Incendiary Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "M4A1",
+            "Knife"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "Flashbang",
+            "Smoke Grenade",
+            "AK-47",
+            "Molotov",
+            "HE Grenade"
+          ],
+          "CashSpend": 3200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        }
+      },
+      "Cash": 25650,
+      "CashSpend": 13400,
+      "EqValue": 29550,
+      "Score": 8,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198248953762,
+        "Victim": 76561198066693739,
+        "Assister": 76561198028458803,
+        "SinceStart": 30,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": true,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 54,
+        "Headshot": false,
+        "Wallbang": true,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198306519263,
+        "Assister": 0,
+        "SinceStart": 56,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 309
+      },
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 61,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198191236195,
+        "Assister": 76561197987713664,
+        "SinceStart": 61,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": true,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 64,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198028458803,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 76,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198248953762,
+        "Victim": 76561198060367310,
+        "Assister": 0,
+        "SinceStart": 77,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 303
+      }
+    ],
+    "Time": 2436156358656,
+    "Reason": 7
+  },
+  {
+    "T": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 1650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Glock-18",
+            "Knife"
+          ],
+          "CashSpend": 600,
+          "Armor": false,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Knife",
+            "Desert Eagle"
+          ],
+          "CashSpend": 1350,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "Tec-9",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 1800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Desert Eagle",
+            "Smoke Grenade",
+            "Knife"
+          ],
+          "CashSpend": 1650,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        }
+      },
+      "Cash": 17850,
+      "CashSpend": 7050,
+      "EqValue": 6950,
+      "Score": 11,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "AWP"
+          ],
+          "CashSpend": 5300,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "M4A4",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 5500,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Smoke Grenade",
+            "AK-47",
+            "Molotov",
+            "HE Grenade",
+            "Flashbang",
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 900,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Flashbang",
+            "HE Grenade",
+            "M4A1",
+            "Knife",
+            "USP-S",
+            "Incendiary Grenade",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Knife",
+            "P2000",
+            "Smoke Grenade",
+            "M4A1",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 4000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        }
+      },
+      "Cash": 31350,
+      "CashSpend": 18500,
+      "EqValue": 30350,
+      "Score": 9,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198021715100,
+        "Assister": 76561198107142008,
+        "SinceStart": 149,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": true,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 304
+      },
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198306519263,
+        "Assister": 76561198107142008,
+        "SinceStart": 150,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": true,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 304
+      },
+      {
+        "Killer": 76561198107142008,
+        "Victim": 76561198060367310,
+        "Assister": 0,
+        "SinceStart": 162,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198107142008,
+        "Victim": 76561198191236195,
+        "Assister": 0,
+        "SinceStart": 164,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198107142008,
+        "Assister": 76561198060367310,
+        "SinceStart": 164,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 4
+      },
+      {
+        "Killer": 76561197987713664,
+        "Victim": 76561198066693739,
+        "Assister": 0,
+        "SinceStart": 166,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 309
+      }
+    ],
+    "Time": 2534359433216,
+    "Reason": 8
+  },
+  {
+    "T": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Flashbang",
+            "Molotov"
+          ],
+          "CashSpend": 4600,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AWP",
+            "Smoke Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 6100,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "Molotov"
+          ],
+          "CashSpend": 4900,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Molotov",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 4600,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Flashbang",
+            "Molotov"
+          ],
+          "CashSpend": 4800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        }
+      },
+      "Cash": 25600,
+      "CashSpend": 25000,
+      "EqValue": 26000,
+      "Score": 12,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Knife",
+            "Flashbang",
+            "AWP",
+            "Desert Eagle",
+            "HE Grenade",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 1400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "M4A4",
+            "Desert Eagle",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 1400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "Flashbang",
+            "AK-47",
+            "Knife",
+            "USP-S",
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 4300,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "Flashbang",
+            "HE Grenade",
+            "Knife",
+            "USP-S",
+            "Incendiary Grenade",
+            "Smoke Grenade"
+          ],
+          "CashSpend": 2800,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "P2000",
+            "M4A1",
+            "Incendiary Grenade"
+          ],
+          "CashSpend": 1400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 3
+        }
+      },
+      "Cash": 30400,
+      "CashSpend": 11300,
+      "EqValue": 28650,
+      "Score": 9,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198005107817,
+        "Victim": 76561198021715100,
+        "Assister": 76561198107142008,
+        "SinceStart": 42,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": true,
+        "KillerSide": 3,
+        "AssisterSide": 3,
+        "Weapon": 304
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 45,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 73,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 309
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198028458803,
+        "Assister": 0,
+        "SinceStart": 106,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198066693739,
+        "Victim": 76561198107142008,
+        "Assister": 0,
+        "SinceStart": 109,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      }
+    ],
+    "Time": 2707593625600,
+    "Reason": 1
+  },
+  {
+    "T": {
+      "Players": {
+        "76561198021715100": {
+          "Weapons": [
+            "Glock-18",
+            "Smoke Grenade",
+            "HE Grenade",
+            "AK-47",
+            "Molotov",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 2
+        },
+        "76561198060367310": {
+          "Weapons": [
+            "AWP",
+            "Molotov",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "Knife",
+            "Glock-18"
+          ],
+          "CashSpend": 2200,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198066693739": {
+          "Weapons": [
+            "Flashbang",
+            "M4A1",
+            "Smoke Grenade",
+            "Molotov",
+            "Knife",
+            "Glock-18",
+            "HE Grenade"
+          ],
+          "CashSpend": 3400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198191236195": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Smoke Grenade",
+            "Molotov",
+            "Flashbang"
+          ],
+          "CashSpend": 1400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": true,
+          "Survived": true,
+          "Side": 2
+        },
+        "76561198306519263": {
+          "Weapons": [
+            "Knife",
+            "Glock-18",
+            "AK-47",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Molotov"
+          ],
+          "CashSpend": 1400,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": true,
+          "Side": 2
+        }
+      },
+      "Cash": 19400,
+      "CashSpend": 10600,
+      "EqValue": 27650,
+      "Score": 13,
+      "Side": 2
+    },
+    "CT": {
+      "Players": {
+        "76561197987713664": {
+          "Weapons": [
+            "AWP",
+            "Flashbang",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Knife",
+            "USP-S"
+          ],
+          "CashSpend": 5900,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198005107817": {
+          "Weapons": [
+            "Knife",
+            "USP-S",
+            "M4A4",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Flashbang"
+          ],
+          "CashSpend": 5300,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198028458803": {
+          "Weapons": [
+            "USP-S",
+            "M4A1",
+            "Smoke Grenade",
+            "HE Grenade",
+            "Flashbang",
+            "Incendiary Grenade",
+            "Knife"
+          ],
+          "CashSpend": 4350,
+          "Armor": true,
+          "Helmet": false,
+          "DefuseKit": false,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198107142008": {
+          "Weapons": [
+            "USP-S",
+            "Smoke Grenade",
+            "HE Grenade",
+            "M4A1",
+            "Flashbang",
+            "Knife"
+          ],
+          "CashSpend": 3000,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        },
+        "76561198248953762": {
+          "Weapons": [
+            "Smoke Grenade",
+            "Flashbang",
+            "Knife",
+            "P2000",
+            "M4A1",
+            "Incendiary Grenade",
+            "HE Grenade"
+          ],
+          "CashSpend": 6150,
+          "Armor": true,
+          "Helmet": true,
+          "DefuseKit": true,
+          "Bomb": false,
+          "Survived": false,
+          "Side": 3
+        }
+      },
+      "Cash": 26400,
+      "CashSpend": 24700,
+      "EqValue": 30000,
+      "Score": 9,
+      "Side": 3
+    },
+    "KillFeed": [
+      {
+        "Killer": 76561198021715100,
+        "Victim": 76561197987713664,
+        "Assister": 0,
+        "SinceStart": 78,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": true,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198060367310,
+        "Victim": 76561198005107817,
+        "Assister": 0,
+        "SinceStart": 80,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 0,
+        "Weapon": 309
+      },
+      {
+        "Killer": 76561198107142008,
+        "Victim": 76561198021715100,
+        "Assister": 0,
+        "SinceStart": 80,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 3,
+        "AssisterSide": 0,
+        "Weapon": 305
+      },
+      {
+        "Killer": 76561198306519263,
+        "Victim": 76561198107142008,
+        "Assister": 76561198021715100,
+        "SinceStart": 81,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561198028458803,
+        "Assister": 76561198306519263,
+        "SinceStart": 104,
+        "Headshot": false,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": true,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      },
+      {
+        "Killer": 76561198191236195,
+        "Victim": 76561198248953762,
+        "Assister": 76561198306519263,
+        "SinceStart": 106,
+        "Headshot": true,
+        "Wallbang": false,
+        "KillerBlind": false,
+        "ThroughSmoke": false,
+        "NoScope": false,
+        "AssistedFlash": false,
+        "KillerSide": 2,
+        "AssisterSide": 2,
+        "Weapon": 303
+      }
+    ],
+    "Time": 2876124954624,
+    "Reason": 9
+  }
+]

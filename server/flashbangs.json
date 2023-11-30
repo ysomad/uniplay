@@ -1,0 +1,1312 @@
+{
+  "76561197987713664": [
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 4,
+      "Duration": 1851830528
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 4,
+      "Duration": 1869281024
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198060367310,
+      "RoundNum": 4,
+      "Duration": 596884736
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198005107817,
+      "RoundNum": 4,
+      "Duration": 3937713152
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 4,
+      "Duration": 3664794880
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198005107817,
+      "RoundNum": 5,
+      "Duration": 1904593408
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561197987713664,
+      "RoundNum": 6,
+      "Duration": 2330590976
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 6,
+      "Duration": 427568640
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198060367310,
+      "RoundNum": 6,
+      "Duration": 558704192
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 7,
+      "Duration": 3183563520
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198060367310,
+      "RoundNum": 7,
+      "Duration": 359296096
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561197987713664,
+      "RoundNum": 8,
+      "Duration": 711246272
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 8,
+      "Duration": 574636544
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198005107817,
+      "RoundNum": 12,
+      "Duration": 4638671872
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 12,
+      "Duration": 851675648
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 12,
+      "Duration": 817120064
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561197987713664,
+      "RoundNum": 19,
+      "Duration": 675623296
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 19,
+      "Duration": 784532032
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198191236195,
+      "RoundNum": 20,
+      "Duration": 4598165504
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 20,
+      "Duration": 1834108672
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198191236195,
+      "RoundNum": 22,
+      "Duration": 1009326464
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 22,
+      "Duration": 972150976
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 23,
+      "Duration": 3066873344
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198021715100,
+      "RoundNum": 23,
+      "Duration": 913633472
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 23,
+      "Duration": 4284443392
+    }
+  ],
+  "76561198005107817": [
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561197987713664,
+      "RoundNum": 5,
+      "Duration": 502671712
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 7,
+      "Duration": 3824725760
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198060367310,
+      "RoundNum": 7,
+      "Duration": 3691607040
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 7,
+      "Duration": 4663834624
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 9,
+      "Duration": 4518780416
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 9,
+      "Duration": 738222400
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 13,
+      "Duration": 1841717632
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 13,
+      "Duration": 917124480
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198005107817,
+      "RoundNum": 13,
+      "Duration": 681448576
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198021715100,
+      "RoundNum": 14,
+      "Duration": 4686343680
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 20,
+      "Duration": 929752000
+    }
+  ],
+  "76561198021715100": [
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198021715100,
+      "RoundNum": 8,
+      "Duration": 833134784
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 12,
+      "Duration": 959810112
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 12,
+      "Duration": 2652580096
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198028458803,
+      "RoundNum": 13,
+      "Duration": 405056992
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198248953762,
+      "RoundNum": 13,
+      "Duration": 3488194048
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 13,
+      "Duration": 4226663680
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 14,
+      "Duration": 3267540992
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 14,
+      "Duration": 302324768
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 16,
+      "Duration": 668131904
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561197987713664,
+      "RoundNum": 23,
+      "Duration": 4068906240
+    }
+  ],
+  "76561198028458803": [
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 7,
+      "Duration": 829870400
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 7,
+      "Duration": 812198464
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 7,
+      "Duration": 668291392
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 7,
+      "Duration": 2862986752
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 7,
+      "Duration": 591985856
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198005107817,
+      "RoundNum": 7,
+      "Duration": 673982080
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 7,
+      "Duration": 507788896
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198248953762,
+      "RoundNum": 16,
+      "Duration": 127704128
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198066693739,
+      "RoundNum": 16,
+      "Duration": 309365920
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 18,
+      "Duration": 4922089472
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 18,
+      "Duration": 4024361984
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198107142008,
+      "RoundNum": 18,
+      "Duration": 931438336
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198107142008,
+      "RoundNum": 19,
+      "Duration": 914417536
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198028458803,
+      "RoundNum": 20,
+      "Duration": 2025390592
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198066693739,
+      "RoundNum": 20,
+      "Duration": 4296439808
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198107142008,
+      "RoundNum": 22,
+      "Duration": 1784520448
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 23,
+      "Duration": 1253173888
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198005107817,
+      "RoundNum": 23,
+      "Duration": 172749824
+    }
+  ],
+  "76561198060367310": [
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 4,
+      "Duration": 329305952
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198021715100,
+      "RoundNum": 4,
+      "Duration": 324089312
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 4,
+      "Duration": 593496192
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198005107817,
+      "RoundNum": 4,
+      "Duration": 3784046848
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198107142008,
+      "RoundNum": 4,
+      "Duration": 4336702464
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 4,
+      "Duration": 944752832
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561197987713664,
+      "RoundNum": 4,
+      "Duration": 4364156416
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 4,
+      "Duration": 586848576
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198107142008,
+      "RoundNum": 4,
+      "Duration": 845206144
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 7,
+      "Duration": 1269775360
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 9,
+      "Duration": 205809072
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198005107817,
+      "RoundNum": 9,
+      "Duration": 3915875328
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 12,
+      "Duration": 890100608
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198021715100,
+      "RoundNum": 12,
+      "Duration": 3378853120
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198191236195,
+      "RoundNum": 12,
+      "Duration": 3301170432
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 12,
+      "Duration": 3195023360
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 12,
+      "Duration": 879460096
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561197987713664,
+      "RoundNum": 12,
+      "Duration": 159371200
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198021715100,
+      "RoundNum": 12,
+      "Duration": 1878906240
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198191236195,
+      "RoundNum": 12,
+      "Duration": 1801269504
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 12,
+      "Duration": 1695068416
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 14,
+      "Duration": 3303337728
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 18,
+      "Duration": 431156736
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 18,
+      "Duration": 387487552
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 18,
+      "Duration": 847010112
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 18,
+      "Duration": 430867072
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 18,
+      "Duration": 2914125056
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 18,
+      "Duration": 865067392
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 18,
+      "Duration": 714520832
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 20,
+      "Duration": 3885987328
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 20,
+      "Duration": 900493568
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 20,
+      "Duration": 2947153152
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 20,
+      "Duration": 2050522112
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 20,
+      "Duration": 876020544
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 20,
+      "Duration": 907470720
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198060367310,
+      "RoundNum": 20,
+      "Duration": 100682824
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 20,
+      "Duration": 967438208
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 20,
+      "Duration": 767125760
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 20,
+      "Duration": 160972608
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561197987713664,
+      "RoundNum": 20,
+      "Duration": 131362336
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198060367310,
+      "RoundNum": 20,
+      "Duration": 812539904
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 22,
+      "Duration": 910175808
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 22,
+      "Duration": 728826176
+    }
+  ],
+  "76561198066693739": [
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561197987713664,
+      "RoundNum": 3,
+      "Duration": 4340373504
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198191236195,
+      "RoundNum": 7,
+      "Duration": 315695008
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561197987713664,
+      "RoundNum": 8,
+      "Duration": 3319445760
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198021715100,
+      "RoundNum": 8,
+      "Duration": 245872416
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198107142008,
+      "RoundNum": 8,
+      "Duration": 2412486400
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 9,
+      "Duration": 922429120
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198248953762,
+      "RoundNum": 9,
+      "Duration": 903537792
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 12,
+      "Duration": 4028410368
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198021715100,
+      "RoundNum": 12,
+      "Duration": 3935226112
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198191236195,
+      "RoundNum": 12,
+      "Duration": 2851922432
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 12,
+      "Duration": 2183593728
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198005107817,
+      "RoundNum": 12,
+      "Duration": 1802976128
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561197987713664,
+      "RoundNum": 19,
+      "Duration": 3423166720
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 20,
+      "Duration": 3682947840
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 20,
+      "Duration": 273567520
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 20,
+      "Duration": 3860622080
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 22,
+      "Duration": 3762354176
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 23,
+      "Duration": 2706459392
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 23,
+      "Duration": 3795331072
+    }
+  ],
+  "76561198107142008": [
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198005107817,
+      "RoundNum": 12,
+      "Duration": 5232504320
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 12,
+      "Duration": 3122085888
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 12,
+      "Duration": 4236718592
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 12,
+      "Duration": 556067200
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 12,
+      "Duration": 3776391936
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198060367310,
+      "RoundNum": 12,
+      "Duration": 3136667392
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 18,
+      "Duration": 3922016256
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198107142008,
+      "RoundNum": 18,
+      "Duration": 794894720
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 20,
+      "Duration": 4347908608
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198107142008,
+      "RoundNum": 20,
+      "Duration": 661366464
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 21,
+      "Duration": 1783908864
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198021715100,
+      "RoundNum": 21,
+      "Duration": 925766336
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198005107817,
+      "RoundNum": 21,
+      "Duration": 1947689088
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198107142008,
+      "RoundNum": 21,
+      "Duration": 804444160
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198191236195,
+      "RoundNum": 22,
+      "Duration": 4305650176
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 22,
+      "Duration": 4191233536
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198191236195,
+      "RoundNum": 23,
+      "Duration": 2980405504
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 23,
+      "Duration": 2206298880
+    }
+  ],
+  "76561198191236195": [
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198066693739,
+      "RoundNum": 8,
+      "Duration": 818745856
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198191236195,
+      "RoundNum": 8,
+      "Duration": 642865152
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198248953762,
+      "RoundNum": 9,
+      "Duration": 669189440
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 16,
+      "Duration": 297543968
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 16,
+      "Duration": 2053584384
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 16,
+      "Duration": 2077071488
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198005107817,
+      "RoundNum": 16,
+      "Duration": 796196608
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 16,
+      "Duration": 154369280
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 22,
+      "Duration": 2543284992
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 22,
+      "Duration": 2865657856
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 22,
+      "Duration": 1541441152
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 22,
+      "Duration": 2917187328
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 23,
+      "Duration": 1488162304
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 23,
+      "Duration": 2519436288
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 23,
+      "Duration": 2087936896
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 23,
+      "Duration": 1055130944
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 23,
+      "Duration": 1097656192
+    }
+  ],
+  "76561198248953762": [
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 6,
+      "Duration": 783453120
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561197987713664,
+      "RoundNum": 6,
+      "Duration": 3351060480
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 6,
+      "Duration": 815412992
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 6,
+      "Duration": 1727909120
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 6,
+      "Duration": 235574880
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 7,
+      "Duration": 553403904
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 7,
+      "Duration": 1604163840
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 7,
+      "Duration": 2950187264
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561197987713664,
+      "RoundNum": 9,
+      "Duration": 3396147712
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 9,
+      "Duration": 680148864
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 9,
+      "Duration": 4236522752
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 9,
+      "Duration": 1024533376
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 9,
+      "Duration": 1913118976
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 9,
+      "Duration": 3946003968
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 13,
+      "Duration": 648481728
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 13,
+      "Duration": 297816736
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561197987713664,
+      "RoundNum": 13,
+      "Duration": 868981888
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 13,
+      "Duration": 3381969152
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 13,
+      "Duration": 3973454336
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198005107817,
+      "RoundNum": 13,
+      "Duration": 364493504
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 13,
+      "Duration": 855753984
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 13,
+      "Duration": 3898698496
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 13,
+      "Duration": 873985984
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561197987713664,
+      "RoundNum": 13,
+      "Duration": 860162944
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198066693739,
+      "RoundNum": 13,
+      "Duration": 3948111616
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198005107817,
+      "RoundNum": 13,
+      "Duration": 443115136
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 13,
+      "Duration": 851357184
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198248953762,
+      "RoundNum": 14,
+      "Duration": 585363392
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 20,
+      "Duration": 3797994752
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198248953762,
+      "RoundNum": 23,
+      "Duration": 992761344
+    }
+  ],
+  "76561198306519263": [
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198306519263,
+      "RoundNum": 3,
+      "Duration": 1046046272
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 7,
+      "Duration": 1597900416
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198021715100,
+      "RoundNum": 8,
+      "Duration": 708129856
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198060367310,
+      "RoundNum": 9,
+      "Duration": 184842688
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198005107817,
+      "RoundNum": 12,
+      "Duration": 753065024
+    },
+    {
+      "ThrowerSide": 3,
+      "Victim": 76561198107142008,
+      "RoundNum": 12,
+      "Duration": 547732416
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198191236195,
+      "RoundNum": 16,
+      "Duration": 130156712
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198060367310,
+      "RoundNum": 16,
+      "Duration": 971179200
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 17,
+      "Duration": 3535529728
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 18,
+      "Duration": 909412096
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198060367310,
+      "RoundNum": 18,
+      "Duration": 2819567616
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 18,
+      "Duration": 4366218240
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 19,
+      "Duration": 1816770176
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 19,
+      "Duration": 740070848
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 19,
+      "Duration": 723876352
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 19,
+      "Duration": 4461850624
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 22,
+      "Duration": 3275097856
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198248953762,
+      "RoundNum": 22,
+      "Duration": 136610416
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 22,
+      "Duration": 624188416
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198306519263,
+      "RoundNum": 22,
+      "Duration": 4481206784
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198021715100,
+      "RoundNum": 22,
+      "Duration": 4515609600
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198005107817,
+      "RoundNum": 22,
+      "Duration": 1675201024
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198107142008,
+      "RoundNum": 22,
+      "Duration": 319448000
+    },
+    {
+      "ThrowerSide": 2,
+      "Victim": 76561198028458803,
+      "RoundNum": 23,
+      "Duration": 4898859008
+    }
+  ]
+}
