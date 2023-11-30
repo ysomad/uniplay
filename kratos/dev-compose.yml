@@ -88,7 +88,7 @@ services:
     environment:
       - PORT=3000
       - SECURITY_MODE=
-      - KRATOS_PUBLIC_URL=https://dev.uni-play.ru/kratos/
+      - KRATOS_PUBLIC_URL=https://dev.uni-play.ru/kratos
     networks:
       - intranet
     restart: on-failure
