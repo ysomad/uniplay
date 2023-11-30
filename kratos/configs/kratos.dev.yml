@@ -4,7 +4,7 @@ dsn: memory
 
 serve:
   public:
-    base_url: https://uni-play.ru/
+    base_url: https://dev.uni-play.ru/auth/api/
     host: 127.0.0.1
     cors:
       enabled: true
@@ -13,9 +13,9 @@ serve:
     host: 127.0.0.1
 
 selfservice:
-  default_browser_return_url: https://uni-play.ru/auth/
+  default_browser_return_url: https://dev.uni-play.ru/auth/
   allowed_return_urls:
-    - https://uni-play.ru
+    - https://dev.uni-play.ru
 
   methods:
     password:
@@ -29,36 +29,36 @@ selfservice:
 
   flows:
     error:
-      ui_url: https://uni-play.ru/auth/errors
+      ui_url: https://dev.uni-play.ru/auth/errors
 
     settings:
-      ui_url: https://uni-play.ru/auth/settings
+      ui_url: https://dev.uni-play.ru/auth/settings
       privileged_session_max_age: 15m
       required_aal: highest_available
 
     recovery:
       enabled: true
-      ui_url: https://uni-play.ru/auth/recovery
+      ui_url: https://dev.uni-play.ru/auth/recovery
       use: code
 
     verification:
       enabled: true
-      ui_url: https://uni-play.ru/auth/verification
+      ui_url: https://dev.uni-play.ru/auth/verification
       use: code
       after:
-        default_browser_return_url: https://uni-play.ru/auth/
+        default_browser_return_url: https://dev.uni-play.ru/auth/
 
     logout:
       after:
-        default_browser_return_url: https://uni-play.ru/auth/login
+        default_browser_return_url: https://dev.uni-play.ru/auth/login
 
     login:
-      ui_url: https://uni-play.ru/auth/login
+      ui_url: https://dev.uni-play.ru/auth/login
       lifespan: 10m
 
     registration:
       lifespan: 10m
-      ui_url: https://uni-play.ru/auth/registration
+      ui_url: https://dev.uni-play.ru/auth/registration
       after:
         password:
           hooks:
