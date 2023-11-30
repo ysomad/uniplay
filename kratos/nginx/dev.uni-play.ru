@@ -15,15 +15,12 @@ server {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
-
     listen 80;
     server_name dev.uni-play.ru;
     return 404; # managed by Certbot
 }
 
 server {
-    server_name dev.uni-play.ru;
-
     listen 443 ssl; # managed by Certbot
     ssl_certificate /etc/letsencrypt/live/dev.uni-play.ru/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/dev.uni-play.ru/privkey.pem; # managed by Certbot
@@ -31,13 +28,14 @@ server {
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
     location /kratos {
-	rewrite ^/kratos/(.*)$ /$1 break;
+        rewrite ^/kratos/(.*)$ /$1 break;
+
         proxy_pass http://public_api;
-	proxy_redirect off;
-	proxy_http_version 1.1;
-	proxy_set_header host $host;
-	proxy_set_header x-real-ip $remote_addr;
-	proxy_set_header x-forwarded-for $proxy_add_x_forwarded_for;	
+        proxy_redirect off;
+        proxy_http_version 1.1;
+        proxy_set_header host $host;
+        proxy_set_header x-real-ip $remote_addr;
+        proxy_set_header x-forwarded-for $proxy_add_x_forwarded_for;
     }
 
     location /admin {
@@ -73,7 +71,7 @@ server {
     }
 
     location /auth {
-	rewrite /auth/(.*) /$1  break;
+        rewrite /auth/(.*) /$1  break;
 
         proxy_pass http://ui_node;
         proxy_redirect          off;
@@ -87,5 +85,4 @@ server {
     location @error401 {
         return 302 https://dev.uni-play.ru/auth/login;
     }
-
 }
