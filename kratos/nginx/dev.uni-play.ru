@@ -11,21 +11,7 @@ upstream admin_api {
 }
 
 server {
-    if ($host = dev.uni-play.ru) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-    listen 80;
     server_name dev.uni-play.ru;
-    return 404; # managed by Certbot
-}
-
-server {
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/dev.uni-play.ru/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/dev.uni-play.ru/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
     location /kratos {
         rewrite ^/kratos/(.*)$ /$1 break;
