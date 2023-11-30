@@ -5,7 +5,7 @@
 ## identity ##
 #
 identity:
-  
+
   ## All JSON Schemas for Identity Traits ##
   #
   # Note that identities that used the "default_schema_url" field in older kratos versions will be corrupted unless you specify their schema url with the id "default" in this list.
@@ -17,7 +17,7 @@ identity:
   #     url: https://foo.bar.com/path/to/employee.traits.schema.json
   #   - id: employee-v2
   #     url: file://path/to/employee.v2.traits.schema.json
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export IDENTITY_SCHEMAS=<value>
@@ -57,7 +57,7 @@ identity:
 # - mysql://user:secret@tcp(mysqld:3306)/database?max_conns=20&max_idle_conns=4
 # - cockroach://user@cockroachdb:26257/database?sslmode=disable&max_conns=20&max_idle_conns=4
 # - sqlite:///var/lib/sqlite/db.sqlite?_fk=true&mode=rwc
-# 
+#
 # Set this value using environment variables on
 # - Linux/macOS:
 #    $ export DSN=<value>
@@ -71,7 +71,7 @@ dsn: "postgres://user:
 ## selfservice ##
 #
 selfservice:
-  
+
   ## Redirect browsers to set URL per default ##
   #
   # Ory Kratos redirects to this URL per default on completion of self-service flows and other browser interaction. Read this [article for more information on browser redirects](https://www.ory.sh/kratos/docs/concepts/browser-redirect-flow-completion).
@@ -79,7 +79,7 @@ selfservice:
   # Examples:
   # - https://my-app.com/dashboard
   # - /dashboard
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export SELFSERVICE_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -91,15 +91,15 @@ selfservice:
   ## flows ##
   #
   flows:
-    
+
     ## logout ##
     #
     logout:
-      
+
       ## after ##
       #
       after:
-        
+
         ## Redirect browsers to set URL per default ##
         #
         # Ory Kratos redirects to this URL per default on completion of self-service flows and other browser interaction. Read this [article for more information on browser redirects](https://www.ory.sh/kratos/docs/concepts/browser-redirect-flow-completion).
@@ -107,7 +107,7 @@ selfservice:
         # Examples:
         # - https://my-app.com/dashboard
         # - /dashboard
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export SELFSERVICE_FLOWS_LOGOUT_AFTER_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -119,7 +119,7 @@ selfservice:
     ## registration ##
     #
     registration:
-      
+
       ## Provide Login Hints on Failed Registration ##
       #
       # When registration fails because an account with the given credentials or addresses previously signed up, provide login hints about available methods to sign in to the user.
@@ -142,7 +142,7 @@ selfservice:
       #
       # Examples:
       # - https://my-app.com/signup
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_REGISTRATION_UI_URL=<value>
@@ -159,7 +159,7 @@ selfservice:
       # - 1h
       # - 1m
       # - 1s
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_REGISTRATION_LIFESPAN=<value>
@@ -171,7 +171,7 @@ selfservice:
       ## before ##
       #
       before:
-        
+
         ## hooks ##
         #
         # Set this value using environment variables on
@@ -198,11 +198,11 @@ selfservice:
       ## after ##
       #
       after:
-        
+
         ## password ##
         #
         password:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -221,7 +221,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_REGISTRATION_AFTER_PASSWORD_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -233,7 +233,7 @@ selfservice:
         ## webauthn ##
         #
         webauthn:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -252,7 +252,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_REGISTRATION_AFTER_WEBAUTHN_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -264,7 +264,7 @@ selfservice:
         ## oidc ##
         #
         oidc:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -283,7 +283,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_REGISTRATION_AFTER_OIDC_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -295,7 +295,7 @@ selfservice:
         ## code ##
         #
         code:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -314,7 +314,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_REGISTRATION_AFTER_CODE_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -353,7 +353,7 @@ selfservice:
         # Examples:
         # - https://my-app.com/dashboard
         # - /dashboard
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export SELFSERVICE_FLOWS_REGISTRATION_AFTER_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -379,7 +379,7 @@ selfservice:
     ## login ##
     #
     login:
-      
+
       ## lifespan ##
       #
       # Default value: 1h
@@ -388,7 +388,7 @@ selfservice:
       # - 1h
       # - 1m
       # - 1s
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_LOGIN_LIFESPAN=<value>
@@ -400,7 +400,7 @@ selfservice:
       ## before ##
       #
       before:
-        
+
         ## hooks ##
         #
         # Set this value using environment variables on
@@ -427,11 +427,11 @@ selfservice:
       ## after ##
       #
       after:
-        
+
         ## password ##
         #
         password:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -450,7 +450,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_LOGIN_AFTER_PASSWORD_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -462,7 +462,7 @@ selfservice:
         ## webauthn ##
         #
         webauthn:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -481,7 +481,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_LOGIN_AFTER_WEBAUTHN_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -493,7 +493,7 @@ selfservice:
         ## oidc ##
         #
         oidc:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -512,7 +512,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_LOGIN_AFTER_OIDC_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -524,7 +524,7 @@ selfservice:
         ## code ##
         #
         code:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -543,7 +543,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_LOGIN_AFTER_CODE_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -555,7 +555,7 @@ selfservice:
         ## totp ##
         #
         totp:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -574,7 +574,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_LOGIN_AFTER_TOTP_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -586,7 +586,7 @@ selfservice:
         ## lookup_secret ##
         #
         lookup_secret:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -605,7 +605,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_LOGIN_AFTER_LOOKUP_SECRET_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -644,7 +644,7 @@ selfservice:
         # Examples:
         # - https://my-app.com/dashboard
         # - /dashboard
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export SELFSERVICE_FLOWS_LOGIN_AFTER_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -661,7 +661,7 @@ selfservice:
       #
       # Examples:
       # - https://my-app.com/login
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_LOGIN_UI_URL=<value>
@@ -673,7 +673,7 @@ selfservice:
     ## Email and Phone Verification and Account Activation Configuration ##
     #
     verification:
-      
+
       ## Verify UI URL ##
       #
       # URL where the Ory Verify UI is hosted. This is the page where users activate and / or verify their email or telephone number. Check the [reference implementation](https://github.com/ory/kratos-selfservice-ui-node).
@@ -682,7 +682,7 @@ selfservice:
       #
       # Examples:
       # - https://my-app.com/verify
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_VERIFICATION_UI_URL=<value>
@@ -694,7 +694,7 @@ selfservice:
       ## after ##
       #
       after:
-        
+
         ## hooks ##
         #
         # Set this value using environment variables on
@@ -725,7 +725,7 @@ selfservice:
         # Examples:
         # - https://my-app.com/dashboard
         # - /dashboard
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export SELFSERVICE_FLOWS_VERIFICATION_AFTER_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -744,7 +744,7 @@ selfservice:
       # - 1h
       # - 1m
       # - 1s
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_VERIFICATION_LIFESPAN=<value>
@@ -756,7 +756,7 @@ selfservice:
       ## before ##
       #
       before:
-        
+
         ## hooks ##
         #
         # Set this value using environment variables on
@@ -789,7 +789,7 @@ selfservice:
       # One of:
       # - link
       # - code
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_VERIFICATION_USE=<value>
@@ -829,7 +829,7 @@ selfservice:
     ## Account Recovery Configuration ##
     #
     recovery:
-      
+
       ## Recovery UI URL ##
       #
       # URL where the Ory Recovery UI is hosted. This is the page where users request and complete account recovery. Check the [reference implementation](https://github.com/ory/kratos-selfservice-ui-node).
@@ -838,7 +838,7 @@ selfservice:
       #
       # Examples:
       # - https://my-app.com/verify
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_RECOVERY_UI_URL=<value>
@@ -850,7 +850,7 @@ selfservice:
       ## after ##
       #
       after:
-        
+
         ## hooks ##
         #
         # Set this value using environment variables on
@@ -881,7 +881,7 @@ selfservice:
         # Examples:
         # - https://my-app.com/dashboard
         # - /dashboard
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export SELFSERVICE_FLOWS_RECOVERY_AFTER_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -900,7 +900,7 @@ selfservice:
       # - 1h
       # - 1m
       # - 1s
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_RECOVERY_LIFESPAN=<value>
@@ -912,7 +912,7 @@ selfservice:
       ## before ##
       #
       before:
-        
+
         ## hooks ##
         #
         # Set this value using environment variables on
@@ -945,7 +945,7 @@ selfservice:
       # One of:
       # - link
       # - code
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_RECOVERY_USE=<value>
@@ -985,7 +985,7 @@ selfservice:
     ## error ##
     #
     error:
-      
+
       ## Ory Kratos Error UI URL ##
       #
       # URL where the Ory Kratos Error UI is hosted. Check the [reference implementation](https://github.com/ory/kratos-selfservice-ui-node).
@@ -994,7 +994,7 @@ selfservice:
       #
       # Examples:
       # - https://my-app.com/kratos-error
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_ERROR_UI_URL=<value>
@@ -1006,7 +1006,7 @@ selfservice:
     ## settings ##
     #
     settings:
-      
+
       ## lifespan ##
       #
       # Default value: 1h
@@ -1015,7 +1015,7 @@ selfservice:
       # - 1h
       # - 1m
       # - 1s
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_SETTINGS_LIFESPAN=<value>
@@ -1032,7 +1032,7 @@ selfservice:
       # - 1h
       # - 1m
       # - 1s
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_SETTINGS_PRIVILEGED_SESSION_MAX_AGE=<value>
@@ -1050,7 +1050,7 @@ selfservice:
       # One of:
       # - aal1
       # - highest_available
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_SETTINGS_REQUIRED_AAL=<value>
@@ -1062,11 +1062,11 @@ selfservice:
       ## after ##
       #
       after:
-        
+
         ## password ##
         #
         password:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -1097,7 +1097,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_SETTINGS_AFTER_PASSWORD_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -1109,7 +1109,7 @@ selfservice:
         ## totp ##
         #
         totp:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -1140,7 +1140,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_SETTINGS_AFTER_TOTP_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -1152,7 +1152,7 @@ selfservice:
         ## oidc ##
         #
         oidc:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -1183,7 +1183,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_SETTINGS_AFTER_OIDC_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -1195,7 +1195,7 @@ selfservice:
         ## webauthn ##
         #
         webauthn:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -1226,7 +1226,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_SETTINGS_AFTER_WEBAUTHN_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -1238,7 +1238,7 @@ selfservice:
         ## lookup_secret ##
         #
         lookup_secret:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -1269,7 +1269,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_SETTINGS_AFTER_LOOKUP_SECRET_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -1281,7 +1281,7 @@ selfservice:
         ## profile ##
         #
         profile:
-          
+
           ## hooks ##
           #
           # Set this value using environment variables on
@@ -1312,7 +1312,7 @@ selfservice:
           # Examples:
           # - https://my-app.com/dashboard
           # - /dashboard
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_FLOWS_SETTINGS_AFTER_PROFILE_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -1351,7 +1351,7 @@ selfservice:
         # Examples:
         # - https://my-app.com/dashboard
         # - /dashboard
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export SELFSERVICE_FLOWS_SETTINGS_AFTER_DEFAULT_BROWSER_RETURN_URL=<value>
@@ -1363,7 +1363,7 @@ selfservice:
       ## before ##
       #
       before:
-        
+
         ## hooks ##
         #
         # Set this value using environment variables on
@@ -1395,7 +1395,7 @@ selfservice:
       #
       # Examples:
       # - https://my-app.com/user/settings
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SELFSERVICE_FLOWS_SETTINGS_UI_URL=<value>
@@ -1407,17 +1407,17 @@ selfservice:
   ## methods ##
   #
   methods:
-    
+
     ## link ##
     #
     link:
-      
+
       ## Link Configuration ##
       #
       # Additional configuration for the link strategy.
       #
       config:
-        
+
         ## How long a link is valid for ##
         #
         # Default value: 1h
@@ -1426,7 +1426,7 @@ selfservice:
         # - 1h
         # - 1m
         # - 1s
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export SELFSERVICE_METHODS_LINK_CONFIG_LIFESPAN=<value>
@@ -1439,7 +1439,7 @@ selfservice:
         #
         # Examples:
         # - https://my-app.com
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export SELFSERVICE_METHODS_LINK_CONFIG_BASE_URL=<value>
@@ -1463,7 +1463,7 @@ selfservice:
     ## code ##
     #
     code:
-      
+
       ## Passwordless Login Fallback Enabled ##
       #
       # This setting allows the code method to always login a user with code if they have registered with another authentication method such as password or social sign in.
@@ -1495,7 +1495,7 @@ selfservice:
       # Additional configuration for the code strategy.
       #
       config:
-        
+
         ## How long a code is valid for ##
         #
         # Default value: 1h
@@ -1504,7 +1504,7 @@ selfservice:
         # - 1h
         # - 1m
         # - 1s
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export SELFSERVICE_METHODS_CODE_CONFIG_LIFESPAN=<value>
@@ -1528,13 +1528,13 @@ selfservice:
     ## password ##
     #
     password:
-      
+
       ## Password Configuration ##
       #
       # Define how passwords are validated.
       #
       config:
-        
+
         ## Enable the HaveIBeenPwned API ##
         #
         # If set to false the password validation does not utilize the Have I Been Pwnd API.
@@ -1638,11 +1638,11 @@ selfservice:
     ## totp ##
     #
     totp:
-      
+
       ## TOTP Configuration ##
       #
       config:
-        
+
         ## TOTP Issuer ##
         #
         # The issuer (e.g. a domain name) will be shown in the TOTP app (e.g. Google Authenticator). It helps the user differentiate between different codes.
@@ -1670,7 +1670,7 @@ selfservice:
     ## lookup_secret ##
     #
     lookup_secret:
-      
+
       ## Enables the lookup secret method ##
       #
       # Default value: false
@@ -1686,22 +1686,22 @@ selfservice:
     ## webauthn ##
     #
     webauthn:
-      
+
       ## WebAuthn Configuration ##
       #
       config:
-        
+
         ## Relying Party (RP) Config ##
         #
         rp:
-          
+
           ## Relying Party Identifier ##
           #
           # The id must be a subset of the domain currently in the browser.
           #
           # Examples:
           # - ory.sh
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_METHODS_WEBAUTHN_CONFIG_RP_ID=<value>
@@ -1716,7 +1716,7 @@ selfservice:
           #
           # Examples:
           # - Ory Foundation
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_METHODS_WEBAUTHN_CONFIG_RP_DISPLAY_NAME=<value>
@@ -1731,7 +1731,7 @@ selfservice:
           #
           # Examples:
           # - https://www.ory.sh/an-icon.png
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export SELFSERVICE_METHODS_WEBAUTHN_CONFIG_RP_ICON=<value>
@@ -1775,11 +1775,11 @@ selfservice:
     # This can be set as an environment variable by supplying it as a JSON object.
     #
     oidc:
-      
+
       ## config ##
       #
       config:
-        
+
         ## OpenID Connect and OAuth2 Providers ##
         #
         # A list and configuration of OAuth2 and OpenID Connect providers Ory Kratos should integrate with.
@@ -1824,7 +1824,7 @@ selfservice:
         #
         # Examples:
         # - https://auth.myexample.org/
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export SELFSERVICE_METHODS_OIDC_CONFIG_BASE_REDIRECT_URI=<value>
@@ -1848,7 +1848,7 @@ selfservice:
     ## profile ##
     #
     profile:
-      
+
       ## Enables Profile Management Method ##
       #
       # Default value: true
@@ -1870,7 +1870,7 @@ selfservice:
   #   - /dashboard
   #   - https://www.my-app.com/
   #   - https://*.my-app.com/
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export SELFSERVICE_ALLOWED_RETURN_URLS=<value>
@@ -1888,13 +1888,13 @@ selfservice:
 # The courier is responsible for sending and delivering messages over email, sms, and other means.
 #
 courier:
-  
+
   ## SMTP Configuration ##
   #
   # Configures outgoing emails using the SMTP protocol.
   #
   smtp:
-    
+
     ## SMTP connection string ##
     #
     # This URI will be used to connect to the SMTP server. Use the scheme smtps for implicit TLS sessions or smtp for explicit StartTLS/cleartext sessions. Please note that TLS is always enforced with certificate trust verification by default for security reasons on both schemes. With the smtp scheme you can use the query parameter (`?disable_starttls=true`) to allow cleartext sessions or (`?disable_starttls=false`) to enforce StartTLS (default behaviour). Additionally, use the query parameter to allow (`?skip_ssl_verify=true`) or disallow (`?skip_ssl_verify=false`) self-signed TLS certificates (default behaviour) on both implicit and explicit TLS sessions.
@@ -1914,7 +1914,7 @@ courier:
     # - smtps://subdomain.my-mailserver:1234/?server_name=my-mailserver (allows TLS to
     #   work if the server is hosted on a sudomain that uses a non-wildcard domain
     #   certificate)
-    # 
+    #
     # Set this value using environment variables on
     # - Linux/macOS:
     #    $ export COURIER_SMTP_CONNECTION_URI=<value>
@@ -1955,7 +1955,7 @@ courier:
     #
     # Examples:
     # - Bob
-    # 
+    #
     # Set this value using environment variables on
     # - Linux/macOS:
     #    $ export COURIER_SMTP_FROM_NAME=<value>
@@ -1972,9 +1972,9 @@ courier:
     # - X-SES-SOURCE-ARN: arn:aws:ses:us-west-2:123456789012:identity/example.com
     #   X-SES-FROM-ARN: arn:aws:ses:us-west-2:123456789012:identity/example.com
     #   X-SES-RETURN-PATH-ARN: arn:aws:ses:us-west-2:123456789012:identity/example.com
-    # 
+    #
     headers:
-      
+
       ## X-SES-SOURCE-ARN ##
       #
       # Set this value using environment variables on
@@ -2037,7 +2037,7 @@ courier:
   #
   # Examples:
   # - /conf/courier-templates
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export COURIER_TEMPLATE_OVERRIDE_PATH=<value>
@@ -2055,7 +2055,7 @@ courier:
   # Examples:
   # - 10
   # - 60
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export COURIER_MESSAGE_RETRIES=<value>
@@ -2069,7 +2069,7 @@ courier:
   # Configures the dispatch worker.
   #
   worker:
-    
+
     ## pull_wait ##
     #
     # Defines how long the worker waits before pulling messages from the queue again.
@@ -2107,7 +2107,7 @@ courier:
   # One of:
   # - smtp
   # - http
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export COURIER_DELIVERY_STRATEGY=<value>
@@ -2121,11 +2121,11 @@ courier:
   # Configures outgoing emails using HTTP.
   #
   http:
-    
+
     ## request_config ##
     #
     request_config:
-      
+
       ## method ##
       #
       # The HTTP method to use (GET, POST, etc). Defaults to POST.
@@ -2151,7 +2151,7 @@ courier:
       # - file://./body.jsonnet
       # - base64://ZnVuY3Rpb24oY3R4KSB7CiAgaWRlbnRpdHlfaWQ6IGlmIGN0eFsiaWRlbnRpdHkiXSAhPSBudWxsIHRoZW4gY3R4LmlkZW50aXR5LmlkLAp9=
       # - https://oryapis.com/default_body.jsonnet
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export COURIER_HTTP_REQUEST_CONFIG_BODY=<value>
@@ -2165,7 +2165,7 @@ courier:
       # Define which auth mechanism to use for auth with the HTTP email provider
       #
       auth:
-        
+
         ## type ##
         #
         # Set this value using environment variables on
@@ -2179,7 +2179,7 @@ courier:
         ## config ##
         #
         config:
-          
+
           ## name ##
           #
           # Set this value using environment variables on
@@ -2216,7 +2216,7 @@ courier:
       #
       # Examples:
       # - https://example.com/api/v1/email
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export COURIER_HTTP_REQUEST_CONFIG_URL=<value>
@@ -2230,7 +2230,7 @@ courier:
   # Configures outgoing sms messages using HTTP protocol with generic SMS provider
   #
   sms:
-    
+
     ## SMS Sender Address ##
     #
     # The recipient of a sms will see this as the sender address.
@@ -2248,14 +2248,14 @@ courier:
     ## request_config ##
     #
     request_config:
-      
+
       ## HTTP address of API endpoint ##
       #
       # This URL will be used to connect to the SMS provider.
       #
       # Examples:
       # - https://api.twillio.com/sms/send
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export COURIER_SMS_REQUEST_CONFIG_URL=<value>
@@ -2285,7 +2285,7 @@ courier:
       # - file://./body.jsonnet
       # - base64://ZnVuY3Rpb24oY3R4KSB7CiAgaWRlbnRpdHlfaWQ6IGlmIGN0eFsiaWRlbnRpdHkiXSAhPSBudWxsIHRoZW4gY3R4LmlkZW50aXR5LmlkLAp9=
       # - https://oryapis.com/default_body.jsonnet
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export COURIER_SMS_REQUEST_CONFIG_BODY=<value>
@@ -2299,7 +2299,7 @@ courier:
       # Define which auth mechanism to use for auth with the SMS provider
       #
       auth:
-        
+
         ## type ##
         #
         # Set this value using environment variables on
@@ -2313,7 +2313,7 @@ courier:
         ## config ##
         #
         config:
-          
+
           ## name ##
           #
           # Set this value using environment variables on
@@ -2361,26 +2361,26 @@ courier:
   ## templates ##
   #
   templates:
-    
+
     ## recovery_code ##
     #
     recovery_code:
-      
+
       ## valid ##
       #
       valid:
-        
+
         ## email ##
         #
         email:
-          
+
           ## subject ##
           #
           # Examples:
           # - file://path/to/subject.gotmpl
           # - https://foo.bar.com/path/to/subject.gotmpl
           # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export COURIER_TEMPLATES_RECOVERY_CODE_VALID_EMAIL_SUBJECT=<value>
@@ -2392,16 +2392,16 @@ courier:
           ## body ##
           #
           body:
-            
+
             ## html ##
             #
-            # The default template used for sending out emails. The template can contain HTML 
+            # The default template used for sending out emails. The template can contain HTML
             #
             # Examples:
             # - file://path/to/body.html.gotmpl
             # - https://foo.bar.com/path/to/body.html.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_RECOVERY_CODE_VALID_EMAIL_BODY_HTML=<value>
@@ -2418,7 +2418,7 @@ courier:
             # - file://path/to/body.plaintext.gotmpl
             # - https://foo.bar.com/path/to/body.plaintext.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQp7eyAuUmVjb3ZlcnlVUkwgfX0K
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_RECOVERY_CODE_VALID_EMAIL_BODY_PLAINTEXT=<value>
@@ -2430,18 +2430,18 @@ courier:
       ## invalid ##
       #
       invalid:
-        
+
         ## email ##
         #
         email:
-          
+
           ## subject ##
           #
           # Examples:
           # - file://path/to/subject.gotmpl
           # - https://foo.bar.com/path/to/subject.gotmpl
           # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export COURIER_TEMPLATES_RECOVERY_CODE_INVALID_EMAIL_SUBJECT=<value>
@@ -2453,16 +2453,16 @@ courier:
           ## body ##
           #
           body:
-            
+
             ## html ##
             #
-            # The default template used for sending out emails. The template can contain HTML 
+            # The default template used for sending out emails. The template can contain HTML
             #
             # Examples:
             # - file://path/to/body.html.gotmpl
             # - https://foo.bar.com/path/to/body.html.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_RECOVERY_CODE_INVALID_EMAIL_BODY_HTML=<value>
@@ -2479,7 +2479,7 @@ courier:
             # - file://path/to/body.plaintext.gotmpl
             # - https://foo.bar.com/path/to/body.plaintext.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQp7eyAuUmVjb3ZlcnlVUkwgfX0K
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_RECOVERY_CODE_INVALID_EMAIL_BODY_PLAINTEXT=<value>
@@ -2491,22 +2491,22 @@ courier:
     ## verification ##
     #
     verification:
-      
+
       ## valid ##
       #
       valid:
-        
+
         ## email ##
         #
         email:
-          
+
           ## subject ##
           #
           # Examples:
           # - file://path/to/subject.gotmpl
           # - https://foo.bar.com/path/to/subject.gotmpl
           # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export COURIER_TEMPLATES_VERIFICATION_VALID_EMAIL_SUBJECT=<value>
@@ -2518,16 +2518,16 @@ courier:
           ## body ##
           #
           body:
-            
+
             ## html ##
             #
-            # The default template used for sending out emails. The template can contain HTML 
+            # The default template used for sending out emails. The template can contain HTML
             #
             # Examples:
             # - file://path/to/body.html.gotmpl
             # - https://foo.bar.com/path/to/body.html.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_VERIFICATION_VALID_EMAIL_BODY_HTML=<value>
@@ -2544,7 +2544,7 @@ courier:
             # - file://path/to/body.plaintext.gotmpl
             # - https://foo.bar.com/path/to/body.plaintext.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQp7eyAuUmVjb3ZlcnlVUkwgfX0K
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_VERIFICATION_VALID_EMAIL_BODY_PLAINTEXT=<value>
@@ -2556,18 +2556,18 @@ courier:
       ## invalid ##
       #
       invalid:
-        
+
         ## email ##
         #
         email:
-          
+
           ## subject ##
           #
           # Examples:
           # - file://path/to/subject.gotmpl
           # - https://foo.bar.com/path/to/subject.gotmpl
           # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export COURIER_TEMPLATES_VERIFICATION_INVALID_EMAIL_SUBJECT=<value>
@@ -2579,16 +2579,16 @@ courier:
           ## body ##
           #
           body:
-            
+
             ## html ##
             #
-            # The default template used for sending out emails. The template can contain HTML 
+            # The default template used for sending out emails. The template can contain HTML
             #
             # Examples:
             # - file://path/to/body.html.gotmpl
             # - https://foo.bar.com/path/to/body.html.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_VERIFICATION_INVALID_EMAIL_BODY_HTML=<value>
@@ -2605,7 +2605,7 @@ courier:
             # - file://path/to/body.plaintext.gotmpl
             # - https://foo.bar.com/path/to/body.plaintext.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQp7eyAuUmVjb3ZlcnlVUkwgfX0K
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_VERIFICATION_INVALID_EMAIL_BODY_PLAINTEXT=<value>
@@ -2617,22 +2617,22 @@ courier:
     ## verification_code ##
     #
     verification_code:
-      
+
       ## valid ##
       #
       valid:
-        
+
         ## email ##
         #
         email:
-          
+
           ## subject ##
           #
           # Examples:
           # - file://path/to/subject.gotmpl
           # - https://foo.bar.com/path/to/subject.gotmpl
           # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export COURIER_TEMPLATES_VERIFICATION_CODE_VALID_EMAIL_SUBJECT=<value>
@@ -2644,16 +2644,16 @@ courier:
           ## body ##
           #
           body:
-            
+
             ## html ##
             #
-            # The default template used for sending out emails. The template can contain HTML 
+            # The default template used for sending out emails. The template can contain HTML
             #
             # Examples:
             # - file://path/to/body.html.gotmpl
             # - https://foo.bar.com/path/to/body.html.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_VERIFICATION_CODE_VALID_EMAIL_BODY_HTML=<value>
@@ -2670,7 +2670,7 @@ courier:
             # - file://path/to/body.plaintext.gotmpl
             # - https://foo.bar.com/path/to/body.plaintext.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQp7eyAuUmVjb3ZlcnlVUkwgfX0K
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_VERIFICATION_CODE_VALID_EMAIL_BODY_PLAINTEXT=<value>
@@ -2682,18 +2682,18 @@ courier:
       ## invalid ##
       #
       invalid:
-        
+
         ## email ##
         #
         email:
-          
+
           ## subject ##
           #
           # Examples:
           # - file://path/to/subject.gotmpl
           # - https://foo.bar.com/path/to/subject.gotmpl
           # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export COURIER_TEMPLATES_VERIFICATION_CODE_INVALID_EMAIL_SUBJECT=<value>
@@ -2705,16 +2705,16 @@ courier:
           ## body ##
           #
           body:
-            
+
             ## html ##
             #
-            # The default template used for sending out emails. The template can contain HTML 
+            # The default template used for sending out emails. The template can contain HTML
             #
             # Examples:
             # - file://path/to/body.html.gotmpl
             # - https://foo.bar.com/path/to/body.html.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_VERIFICATION_CODE_INVALID_EMAIL_BODY_HTML=<value>
@@ -2731,7 +2731,7 @@ courier:
             # - file://path/to/body.plaintext.gotmpl
             # - https://foo.bar.com/path/to/body.plaintext.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQp7eyAuUmVjb3ZlcnlVUkwgfX0K
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_VERIFICATION_CODE_INVALID_EMAIL_BODY_PLAINTEXT=<value>
@@ -2743,22 +2743,22 @@ courier:
     ## registration_code ##
     #
     registration_code:
-      
+
       ## valid ##
       #
       valid:
-        
+
         ## email ##
         #
         email:
-          
+
           ## subject ##
           #
           # Examples:
           # - file://path/to/subject.gotmpl
           # - https://foo.bar.com/path/to/subject.gotmpl
           # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export COURIER_TEMPLATES_REGISTRATION_CODE_VALID_EMAIL_SUBJECT=<value>
@@ -2770,16 +2770,16 @@ courier:
           ## body ##
           #
           body:
-            
+
             ## html ##
             #
-            # The default template used for sending out emails. The template can contain HTML 
+            # The default template used for sending out emails. The template can contain HTML
             #
             # Examples:
             # - file://path/to/body.html.gotmpl
             # - https://foo.bar.com/path/to/body.html.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_REGISTRATION_CODE_VALID_EMAIL_BODY_HTML=<value>
@@ -2796,7 +2796,7 @@ courier:
             # - file://path/to/body.plaintext.gotmpl
             # - https://foo.bar.com/path/to/body.plaintext.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQp7eyAuUmVjb3ZlcnlVUkwgfX0K
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_REGISTRATION_CODE_VALID_EMAIL_BODY_PLAINTEXT=<value>
@@ -2808,22 +2808,22 @@ courier:
     ## login_code ##
     #
     login_code:
-      
+
       ## valid ##
       #
       valid:
-        
+
         ## email ##
         #
         email:
-          
+
           ## subject ##
           #
           # Examples:
           # - file://path/to/subject.gotmpl
           # - https://foo.bar.com/path/to/subject.gotmpl
           # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export COURIER_TEMPLATES_LOGIN_CODE_VALID_EMAIL_SUBJECT=<value>
@@ -2835,16 +2835,16 @@ courier:
           ## body ##
           #
           body:
-            
+
             ## html ##
             #
-            # The default template used for sending out emails. The template can contain HTML 
+            # The default template used for sending out emails. The template can contain HTML
             #
             # Examples:
             # - file://path/to/body.html.gotmpl
             # - https://foo.bar.com/path/to/body.html.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_LOGIN_CODE_VALID_EMAIL_BODY_HTML=<value>
@@ -2861,7 +2861,7 @@ courier:
             # - file://path/to/body.plaintext.gotmpl
             # - https://foo.bar.com/path/to/body.plaintext.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQp7eyAuUmVjb3ZlcnlVUkwgfX0K
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_LOGIN_CODE_VALID_EMAIL_BODY_PLAINTEXT=<value>
@@ -2873,22 +2873,22 @@ courier:
     ## recovery ##
     #
     recovery:
-      
+
       ## valid ##
       #
       valid:
-        
+
         ## email ##
         #
         email:
-          
+
           ## subject ##
           #
           # Examples:
           # - file://path/to/subject.gotmpl
           # - https://foo.bar.com/path/to/subject.gotmpl
           # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export COURIER_TEMPLATES_RECOVERY_VALID_EMAIL_SUBJECT=<value>
@@ -2900,16 +2900,16 @@ courier:
           ## body ##
           #
           body:
-            
+
             ## html ##
             #
-            # The default template used for sending out emails. The template can contain HTML 
+            # The default template used for sending out emails. The template can contain HTML
             #
             # Examples:
             # - file://path/to/body.html.gotmpl
             # - https://foo.bar.com/path/to/body.html.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_RECOVERY_VALID_EMAIL_BODY_HTML=<value>
@@ -2926,7 +2926,7 @@ courier:
             # - file://path/to/body.plaintext.gotmpl
             # - https://foo.bar.com/path/to/body.plaintext.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQp7eyAuUmVjb3ZlcnlVUkwgfX0K
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_RECOVERY_VALID_EMAIL_BODY_PLAINTEXT=<value>
@@ -2938,18 +2938,18 @@ courier:
       ## invalid ##
       #
       invalid:
-        
+
         ## email ##
         #
         email:
-          
+
           ## subject ##
           #
           # Examples:
           # - file://path/to/subject.gotmpl
           # - https://foo.bar.com/path/to/subject.gotmpl
           # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-          # 
+          #
           # Set this value using environment variables on
           # - Linux/macOS:
           #    $ export COURIER_TEMPLATES_RECOVERY_INVALID_EMAIL_SUBJECT=<value>
@@ -2961,16 +2961,16 @@ courier:
           ## body ##
           #
           body:
-            
+
             ## html ##
             #
-            # The default template used for sending out emails. The template can contain HTML 
+            # The default template used for sending out emails. The template can contain HTML
             #
             # Examples:
             # - file://path/to/body.html.gotmpl
             # - https://foo.bar.com/path/to/body.html.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQo8YSBocmVmPSJ7eyAuUmVjb3ZlcnlVUkwgfX0iPnt7IC5SZWNvdmVyeVVSTCB9fTwvYT4
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_RECOVERY_INVALID_EMAIL_BODY_HTML=<value>
@@ -2987,7 +2987,7 @@ courier:
             # - file://path/to/body.plaintext.gotmpl
             # - https://foo.bar.com/path/to/body.plaintext.gotmpl
             # - base64://e3sgZGVmaW5lIGFmLVpBIH19CkhhbGxvLAoKSGVyc3RlbCBqb3UgcmVrZW5pbmcgZGV1ciBoaWVyZGllIHNrYWtlbCB0ZSB2b2xnOgp7ey0gZW5kIC19fQoKe3sgZGVmaW5lIGVuLVVTIH19CkhpLAoKcGxlYXNlIHJlY292ZXIgYWNjZXNzIHRvIHlvdXIgYWNjb3VudCBieSBjbGlja2luZyB0aGUgZm9sbG93aW5nIGxpbms6Cnt7LSBlbmQgLX19Cgp7ey0gaWYgZXEgLmxhbmcgImFmLVpBIiAtfX0KCnt7IHRlbXBsYXRlICJhZi1aQSIgLiB9fQoKe3stIGVsc2UgLX19Cgp7eyB0ZW1wbGF0ZSAiZW4tVVMiIH19Cgp7ey0gZW5kIC19fQp7eyAuUmVjb3ZlcnlVUkwgfX0K
-            # 
+            #
             # Set this value using environment variables on
             # - Linux/macOS:
             #    $ export COURIER_TEMPLATES_RECOVERY_INVALID_EMAIL_BODY_PLAINTEXT=<value>
@@ -2999,16 +2999,16 @@ courier:
 ## OAuth2 Provider Configuration ##
 #
 oauth2_provider:
-  
+
   ## HTTP Request Headers ##
   #
   # These headers will be passed in HTTP request to the OAuth2 Provider.
   #
   # Examples:
   # - Authorization: Bearer some-token
-  # 
+  #
   headers:
-    
+
     ## Authorization ##
     #
     # Set this value using environment variables on
@@ -3040,7 +3040,7 @@ oauth2_provider:
   # Examples:
   # - https://some-slug.projects.oryapis.com
   # - https://domain-of-ory-hydra:4445
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export OAUTH2_PROVIDER_URL=<value>
@@ -3052,7 +3052,7 @@ oauth2_provider:
 ## Configure Preview Features ##
 #
 preview:
-  
+
   ## Default Read Consistency Level ##
   #
   # The default consistency level to use when reading from the database. Defaults to `strong` to not break existing API contracts. Only set this to `eventual` if you can accept that other read APIs will suddenly return eventually consistent results. It is only effective in Ory Network.
@@ -3062,7 +3062,7 @@ preview:
   # One of:
   # - strong
   # - eventual
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export PREVIEW_DEFAULT_READ_CONSISTENCY_LEVEL=<value>
@@ -3074,17 +3074,17 @@ preview:
 ## serve ##
 #
 serve:
-  
+
   ## public ##
   #
   public:
-    
+
     ## cors ##
     #
     # Configures Cross Origin Resource Sharing for public endpoints.
     #
     cors:
-      
+
       ## allowed_origins ##
       #
       # A list of origins a cross-domain request can be executed from. If the special * value is present in the list, all origins will be allowed. An origin may contain a wildcard (*) to replace 0 or more characters (i.e.: http://*.domain.com). Only one wildcard can be used per origin.
@@ -3095,7 +3095,7 @@ serve:
       # - - https://example.com
       #   - https://*.example.com
       #   - https://*.foo.example.com
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export SERVE_PUBLIC_CORS_ALLOWED_ORIGINS=<value>
@@ -3229,7 +3229,7 @@ serve:
     # Examples:
     # - https://my-app.com/
     # - https://my-app.com/.ory/kratos/public
-    # 
+    #
     # Set this value using environment variables on
     # - Linux/macOS:
     #    $ export SERVE_PUBLIC_BASE_URL=<value>
@@ -3264,7 +3264,7 @@ serve:
     #
     # Examples:
     # - 4433
-    # 
+    #
     # Set this value using environment variables on
     # - Linux/macOS:
     #    $ export SERVE_PUBLIC_PORT=<value>
@@ -3278,7 +3278,7 @@ serve:
     # Sets the permissions of the unix socket
     #
     socket:
-      
+
       ## group ##
       #
       # Group of unix socket. If empty, the group will be the primary group of the user running Kratos.
@@ -3326,11 +3326,11 @@ serve:
     # Configure HTTP over TLS (HTTPS). All options can also be set using environment variables by replacing dots (`.`) with underscores (`_`) and uppercasing the key. For example, `some.prefix.tls.key.path` becomes `export SOME_PREFIX_TLS_KEY_PATH`. If all keys are left undefined, TLS will be disabled.
     #
     tls:
-      
+
       ## TLS Certificate (PEM) ##
       #
       cert:
-        
+
         ## base64 ##
         #
         # Set this value using environment variables on
@@ -3354,7 +3354,7 @@ serve:
       ## Private Key (PEM) ##
       #
       key:
-        
+
         ## base64 ##
         #
         # Set this value using environment variables on
@@ -3378,7 +3378,7 @@ serve:
     ## request_log ##
     #
     request_log:
-      
+
       ## Disable health endpoints request logging ##
       #
       # Disable request logging for /health/alive and /health/ready endpoints
@@ -3396,14 +3396,14 @@ serve:
   ## admin ##
   #
   admin:
-    
+
     ## Admin Base URL ##
     #
     # The URL where the admin endpoint is exposed at.
     #
     # Examples:
     # - https://kratos.private-network:4434/
-    # 
+    #
     # Set this value using environment variables on
     # - Linux/macOS:
     #    $ export SERVE_ADMIN_BASE_URL=<value>
@@ -3438,7 +3438,7 @@ serve:
     #
     # Examples:
     # - 4434
-    # 
+    #
     # Set this value using environment variables on
     # - Linux/macOS:
     #    $ export SERVE_ADMIN_PORT=<value>
@@ -3452,7 +3452,7 @@ serve:
     # Sets the permissions of the unix socket
     #
     socket:
-      
+
       ## group ##
       #
       # Group of unix socket. If empty, the group will be the primary group of the user running Kratos.
@@ -3500,11 +3500,11 @@ serve:
     # Configure HTTP over TLS (HTTPS). All options can also be set using environment variables by replacing dots (`.`) with underscores (`_`) and uppercasing the key. For example, `some.prefix.tls.key.path` becomes `export SOME_PREFIX_TLS_KEY_PATH`. If all keys are left undefined, TLS will be disabled.
     #
     tls:
-      
+
       ## TLS Certificate (PEM) ##
       #
       cert:
-        
+
         ## base64 ##
         #
         # Set this value using environment variables on
@@ -3528,7 +3528,7 @@ serve:
       ## Private Key (PEM) ##
       #
       key:
-        
+
         ## base64 ##
         #
         # Set this value using environment variables on
@@ -3552,7 +3552,7 @@ serve:
     ## request_log ##
     #
     request_log:
-      
+
       ## Disable health endpoints request logging ##
       #
       # Disable request logging for /health/alive and /health/ready endpoints
@@ -3572,7 +3572,7 @@ serve:
 # Configure distributed tracing using OpenTelemetry
 #
 tracing:
-  
+
   ## service_name ##
   #
   # Specifies the service name to use on the tracer.
@@ -3582,7 +3582,7 @@ tracing:
   # - Ory Kratos
   # - Ory Keto
   # - Ory Oathkeeper
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export TRACING_SERVICE_NAME=<value>
@@ -3594,24 +3594,24 @@ tracing:
   ## providers ##
   #
   providers:
-    
+
     ## zipkin ##
     #
     # Configures the zipkin tracing backend.
     #
     zipkin:
-      
+
       ## sampling ##
       #
       sampling:
-        
+
         ## sampling_ratio ##
         #
         # Sampling ratio for spans.
         #
         # Examples:
         # - 0.4
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export TRACING_PROVIDERS_ZIPKIN_SAMPLING_SAMPLING_RATIO=<value>
@@ -3626,7 +3626,7 @@ tracing:
       #
       # Examples:
       # - http://localhost:9411/api/v2/spans
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export TRACING_PROVIDERS_ZIPKIN_SERVER_URL=<value>
@@ -3640,7 +3640,7 @@ tracing:
     # Configures the OTLP tracing backend.
     #
     otlp:
-      
+
       ## insecure ##
       #
       # Will use HTTP if set to true; defaults to HTTPS.
@@ -3656,14 +3656,14 @@ tracing:
       ## sampling ##
       #
       sampling:
-        
+
         ## sampling_ratio ##
         #
         # Sampling ratio for spans.
         #
         # Examples:
         # - 0.4
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export TRACING_PROVIDERS_OTLP_SAMPLING_SAMPLING_RATIO=<value>
@@ -3678,7 +3678,7 @@ tracing:
       #
       # Examples:
       # - localhost:4318
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export TRACING_PROVIDERS_OTLP_SERVER_URL=<value>
@@ -3692,18 +3692,18 @@ tracing:
     # Configures the jaeger tracing backend.
     #
     jaeger:
-      
+
       ## sampling ##
       #
       sampling:
-        
+
         ## trace_id_ratio ##
         #
         # Trace Id ratio sample
         #
         # Examples:
         # - 0.5
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export TRACING_PROVIDERS_JAEGER_SAMPLING_TRACE_ID_RATIO=<value>
@@ -3718,7 +3718,7 @@ tracing:
         #
         # Examples:
         # - http://localhost:5778/sampling
-        # 
+        #
         # Set this value using environment variables on
         # - Linux/macOS:
         #    $ export TRACING_PROVIDERS_JAEGER_SAMPLING_SERVER_URL=<value>
@@ -3733,7 +3733,7 @@ tracing:
       #
       # Examples:
       # - 127.0.0.1:6831
-      # 
+      #
       # Set this value using environment variables on
       # - Linux/macOS:
       #    $ export TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS=<value>
@@ -3750,10 +3750,10 @@ tracing:
   # - jaeger
   # - otel
   # - zipkin
-  # 
+  #
   # Examples:
   # - jaeger
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export TRACING_PROVIDER=<value>
@@ -3767,7 +3767,7 @@ tracing:
 # Configure logging using the following options. Logging will always be sent to stdout and stderr.
 #
 log:
-  
+
   ## Leak Sensitive Log Values ##
   #
   # If set will leak sensitive values (e.g. emails) in the logs.
@@ -3799,7 +3799,7 @@ log:
   # One of:
   # - json
   # - text
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export LOG_FORMAT=<value>
@@ -3822,7 +3822,7 @@ log:
   # - error
   # - fatal
   # - panic
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export LOG_LEVEL=<value>
@@ -3834,7 +3834,7 @@ log:
 ## secrets ##
 #
 secrets:
-  
+
   ## Signing Keys for Cookies ##
   #
   # The first secret in the array is used for encrypting cookies while all other keys are used to decrypt older cookies that were signed with that old secret.
@@ -3877,11 +3877,11 @@ secrets:
 ## Hashing Algorithm Configuration ##
 #
 hashers:
-  
+
   ## Configuration for the Argon2id hasher. ##
   #
   argon2:
-    
+
     ## iterations ##
     #
     # Default value: 1
@@ -3995,7 +3995,7 @@ hashers:
   ## Configuration for the Bcrypt hasher. Minimum is 4 when --dev flag is used and 12 otherwise. ##
   #
   bcrypt:
-    
+
     ## cost ##
     #
     # Default value: 12
@@ -4022,7 +4022,7 @@ hashers:
   # One of:
   # - argon2
   # - bcrypt
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export HASHERS_ALGORITHM=<value>
@@ -4034,7 +4034,7 @@ hashers:
 ## Cipher Algorithm Configuration ##
 #
 ciphers:
-  
+
   ## ciphering algorithm ##
   #
   # One of the values: noop, aes, xchacha20-poly1305
@@ -4045,7 +4045,7 @@ ciphers:
   # - noop
   # - aes
   # - xchacha20-poly1305
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export CIPHERS_ALGORITHM=<value>
@@ -4059,7 +4059,7 @@ ciphers:
 # Configure the HTTP Cookies. Applies to both CSRF and session cookies.
 #
 cookies:
-  
+
   ## HTTP  Cookie Path ##
   #
   # Sets the session and CSRF cookie path. Use with care!
@@ -4084,7 +4084,7 @@ cookies:
   # - Strict
   # - Lax
   # - None
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export COOKIES_SAME_SITE=<value>
@@ -4108,7 +4108,7 @@ cookies:
 ## session ##
 #
 session:
-  
+
   ## Session Lifespan ##
   #
   # Defines how long a session is active. Once that lifespan has been reached, the user needs to sign in again.
@@ -4119,7 +4119,7 @@ session:
   # - 1h
   # - 1m
   # - 1s
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export SESSION_LIFESPAN=<value>
@@ -4131,7 +4131,7 @@ session:
   ## cookie ##
   #
   cookie:
-    
+
     ## Session Cookie Name ##
     #
     # Sets the session cookie name. Use with care!
@@ -4180,7 +4180,7 @@ session:
     # - Strict
     # - Lax
     # - None
-    # 
+    #
     # Set this value using environment variables on
     # - Linux/macOS:
     #    $ export SESSION_COOKIE_SAME_SITE=<value>
@@ -4209,7 +4209,7 @@ session:
   # - 1h
   # - 1m
   # - 1s
-  # 
+  #
   # Set this value using environment variables on
   # - Linux/macOS:
   #    $ export SESSION_EARLIEST_POSSIBLE_EXTEND=<value>
@@ -4223,23 +4223,23 @@ session:
   # Control how the `/sessions/whoami` endpoint is behaving.
   #
   whoami:
-    
+
     ## Tokenizer configuration ##
     #
     # Configure the tokenizer, responsible for converting a session into a token format such as JWT.
     #
     tokenizer:
-      
+
       ## Tokenizer templates ##
       #
       # A list of different templates that govern how a session is converted to a token format.
       #
       templates:
-        
+
         ## a ##
         #
         a:
-          
+
           ## jwks_url ##
           #
           # Set this value using environment variables on
@@ -4279,7 +4279,7 @@ session:
     # One of:
     # - aal1
     # - highest_available
-    # 
+    #
     # Set this value using environment variables on
     # - Linux/macOS:
     #    $ export SESSION_WHOAMI_REQUIRED_AAL=<value>
@@ -4294,7 +4294,7 @@ session:
 #
 # Examples:
 # - v0.5.0-alpha.1
-# 
+#
 # Set this value using environment variables on
 # - Linux/macOS:
 #    $ export VERSION=<value>
@@ -4361,7 +4361,7 @@ watch-courier: false
 #
 # Examples:
 # - 4434
-# 
+#
 # Set this value using environment variables on
 # - Linux/macOS:
 #    $ export EXPOSE-METRICS-PORT=<value>
@@ -4388,18 +4388,18 @@ config:
 # Configure how outgoing network calls behave.
 #
 clients:
-  
+
   ## Global HTTP client configuration ##
   #
   # Configure how outgoing HTTP calls behave.
   #
   http:
-    
+
     ## Add exempt URLs to private IP ranges ##
     #
     # Allows the given URLs to be called despite them being in the private IP range. URLs need to have an exact and case-sensitive match to be excempt.
     #
-    # Default value: 
+    # Default value:
     #
     # Set this value using environment variables on
     # - Linux/macOS:
@@ -4427,7 +4427,7 @@ clients:
 ## Feature flags ##
 #
 feature_flags:
-  
+
   ## Enable new flow transitions using `continue_with` items ##
   #
   # If enabled allows new flow transitions using `continue_with` items.
@@ -4460,7 +4460,7 @@ feature_flags:
 #
 # Secifies which organizations are available. Only effective in the Ory Network.
 #
-# Default value: 
+# Default value:
 #
 # Set this value using environment variables on
 # - Linux/macOS:
@@ -4475,19 +4475,19 @@ organizations: []
 # Miscellaneous settings used in database related tasks (cleanup, etc.)
 #
 database:
-  
+
   ## Database cleanup settings ##
   #
   # Settings that controls how the database cleanup process is configured (delays, batch size, etc.)
   #
   cleanup:
-    
+
     ## Delays between various database cleanup phases ##
     #
     # Configures delays between each step of the cleanup process. It is useful to tune the process so it will be efficient and performant.
     #
     sleep:
-      
+
       ## Delay between each table cleanups ##
       #
       # Controls the delay time between cleaning each table in one cleanup iteration
