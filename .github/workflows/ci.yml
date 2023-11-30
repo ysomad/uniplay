@@ -48,12 +48,15 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
-  golangci-lint:
+  server-lint:
     name: server / lint
     runs-on: ubuntu-latest
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v3
 
+      - name: go to server dir
+        run: cd server
+
       - name: golangci-lint
-        uses: reviewdog/action-golangci-lint@v2
+        uses: reviewdog/action-golangci-lint@v3
