@@ -62,7 +62,7 @@ services:
       - .env
     environment:
       - DSN=postgres://kratos:secret@kratos-pg:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
-      - LOG_LEVEL=info
+      - LOG_LEVEL=debug
     command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
     volumes:
       - type: volume
@@ -84,11 +84,11 @@ services:
   kratos-selfservice-ui-node:
     image: oryd/kratos-selfservice-ui-node:v1.0.0
     ports:
-      - "4455:4455"
+      - "3000:3000"
     environment:
-      - PORT=4455
+      - PORT=3000
       - SECURITY_MODE=
-      - KRATOS_PUBLIC_URL=https://dev.uni-play.ru/auth/api/
+      - KRATOS_PUBLIC_URL=https://dev.uni-play.ru/kratos/
     networks:
       - intranet
     restart: on-failure

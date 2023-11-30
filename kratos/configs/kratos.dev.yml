@@ -4,12 +4,12 @@ dsn: memory
 
 serve:
   public:
-    base_url: https://dev.uni-play.ru/auth/api/
+    base_url: https://dev.uni-play.ru/kratos/
     host: 127.0.0.1
     cors:
       enabled: true
   admin:
-    base_url: http://127.0.0.1:4434/
+    base_url: http://127.0.0.1:8081/
     host: 127.0.0.1
 
 selfservice:
