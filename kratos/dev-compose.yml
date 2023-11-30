@@ -83,12 +83,12 @@ services:
 
   kratos-selfservice-ui-node:
     image: oryd/kratos-selfservice-ui-node:v1.0.0
-    ports:
+    ports: 
       - "3000:3000"
     environment:
       - PORT=3000
       - SECURITY_MODE=
-      - KRATOS_PUBLIC_URL=https://dev.uni-play.ru/kratos
+      - KRATOS_PUBLIC_URL=https://dev.uni-play.ru/kratos/
     networks:
       - intranet
     restart: on-failure

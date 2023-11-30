@@ -4,7 +4,7 @@ dsn: memory
 
 serve:
   public:
-    base_url: https://dev.uni-play.ru/
+    base_url: https://dev.uni-play.ru/kratos/
     cors:
       enabled: true
   admin:
