@@ -1,5 +1,5 @@
 upstream ui_node {
-    server 127.0.0.1:3000;
+    server 127.0.0.1:4455;
 }
 
 upstream public_api {
