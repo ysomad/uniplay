@@ -1,11 +1,16 @@
 app:
   name: uniplay
-  version: 0.2
+  version: 0.2.0
   environment: local
 
 http:
-  host: 0.0.0.0
+  host: 127.0.0.1
   port: 8080
+
+kratos:
+  url: http://127.0.0.1:4433
+  client_timeout: 1s
+  debug: true
 
 log:
   level: debug
