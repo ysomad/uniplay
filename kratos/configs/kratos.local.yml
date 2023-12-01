@@ -1,7 +1,3 @@
-version: v1.0.0
-
-dsn: memory
-
 serve:
   public:
     base_url: http://127.0.0.1:4433/

@@ -34,7 +34,7 @@ services:
   kratos-migrate:
     depends_on:
       - kratos-pg
-    image: oryd/kratos:v1.0.0
+    image: oryd/kratos:${VERSION:?err}
     environment:
       - DSN=postgres://kratos:secret@kratos-pg:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
     volumes:
@@ -43,7 +43,7 @@ services:
         target: /var/lib/postgresql/data
         read_only: false
       - type: bind
-        source: ./configs/kratos.dev.yml
+        source: ${CONFIG_PATH:-./configs/kratos.local.yml}
         target: /etc/config/kratos/kratos.yml
     command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
     restart: on-failure
@@ -53,7 +53,7 @@ services:
   kratos:
     depends_on:
       - kratos-migrate
-    image: oryd/kratos:v1.0.0
+    image: oryd/kratos:${VERSION:?err}
     ports:
       - '4433:4433' # public
       - '4434:4434' # admin
@@ -62,7 +62,6 @@ services:
       - .env
     environment:
       - DSN=postgres://kratos:secret@kratos-pg:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
-      - LOG_LEVEL=debug
     command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
     volumes:
       - type: volume
@@ -70,7 +69,7 @@ services:
         target: /var/lib/postgresql/data
         read_only: false
       - type: bind
-        source: ./configs/kratos.dev.yml
+        source: ${CONFIG_PATH:-./configs/kratos.local.yml}
         target: /etc/config/kratos/kratos.yml
       - type: bind
         source: ./schemas/
@@ -82,13 +81,14 @@ services:
       - intranet
 
   kratos-selfservice-ui-node:
-    image: oryd/kratos-selfservice-ui-node:v1.0.0
-    ports: 
-      - "3000:3000"
+    image: oryd/kratos-selfservice-ui-node:${VERSION:?err}
+    ports:
+      - "4455:4455"
     environment:
-      - PORT=3000
+      - PORT=4455
       - SECURITY_MODE=
-      - KRATOS_PUBLIC_URL=https://dev.uni-play.ru/kratos/
+      - KRATOS_PUBLIC_URL=http://kratos:4433/
+      - KRATOS_BROWSER_URL=http://127.0.0.1:4433/
     networks:
       - intranet
     restart: on-failure
