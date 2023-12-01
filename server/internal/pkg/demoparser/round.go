@@ -210,6 +210,10 @@ func (rt *roundTeam) setPlayerWeapons(p *common.Player) {
 	pl.DefuseKit = p.HasDefuseKit()
 
 	for _, eq := range p.Inventory {
+		if eq.Type == common.EqKnife {
+			continue
+		}
+
 		if eq.Type == common.EqBomb {
 			pl.Bomb = true
 			continue
