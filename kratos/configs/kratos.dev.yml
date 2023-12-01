@@ -1,7 +1,3 @@
-version: v1.0.0
-
-dsn: memory
-
 serve:
   public:
     base_url: https://dev.uni-play.ru/kratos/
@@ -67,9 +63,9 @@ selfservice:
             - hook: session
 
 log:
-  level: debug
+  level: info
   format: text
-  leak_sensitive_values: true
+  leak_sensitive_values: false
 
 secrets:
   cookie:

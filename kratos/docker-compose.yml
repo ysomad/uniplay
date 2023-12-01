@@ -83,12 +83,12 @@ services:
   kratos-selfservice-ui-node:
     image: oryd/kratos-selfservice-ui-node:${VERSION:?err}
     ports:
-      - "4455:4455"
+      - "3000:3000"
+    env_file:
+      - .env
     environment:
-      - PORT=4455
+      - PORT=3000
       - SECURITY_MODE=
-      - KRATOS_PUBLIC_URL=http://kratos:4433/
-      - KRATOS_BROWSER_URL=http://127.0.0.1:4433/
     networks:
       - intranet
     restart: on-failure
