@@ -83,11 +83,11 @@ services:
   kratos-selfservice-ui-node:
     image: oryd/kratos-selfservice-ui-node:${VERSION:?err}
     ports:
-      - "3000:3000"
+      - "4455:4455"
     env_file:
       - .env
     environment:
-      - PORT=3000
+      - PORT=4455
       - SECURITY_MODE=
     networks:
       - intranet
