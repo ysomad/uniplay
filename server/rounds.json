@@ -326,12 +326,12 @@
         },
         "76561198134401925": {
           "Weapons": [
+            "Molotov",
             "HE Grenade",
             "Smoke Grenade",
             "Flashbang",
             "Glock-18",
-            "AK-47",
-            "Molotov"
+            "AK-47"
           ],
           "CashSpend": 3250,
           "Armor": true,
@@ -343,11 +343,11 @@
         },
         "76561198146207066": {
           "Weapons": [
-            "HE Grenade",
-            "Smoke Grenade",
             "Glock-18",
             "MAC-10",
-            "Molotov"
+            "Molotov",
+            "HE Grenade",
+            "Smoke Grenade"
           ],
           "CashSpend": 3250,
           "Armor": true,
@@ -578,11 +578,11 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
+            "Flashbang",
+            "Molotov",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade",
-            "Flashbang",
-            "Molotov"
+            "Smoke Grenade"
           ],
           "CashSpend": 4600,
           "Armor": true,
@@ -609,10 +609,10 @@
         },
         "76561198044045107": {
           "Weapons": [
-            "Flashbang",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Flashbang"
           ],
           "CashSpend": 4400,
           "Armor": true,
@@ -640,10 +640,10 @@
         },
         "76561198146207066": {
           "Weapons": [
+            "Flashbang",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade",
-            "Flashbang"
+            "Smoke Grenade"
           ],
           "CashSpend": 4400,
           "Armor": true,
@@ -680,11 +680,11 @@
         },
         "76561198028458803": {
           "Weapons": [
-            "Incendiary Grenade",
-            "Flashbang",
             "USP-S",
             "M4A1",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Incendiary Grenade",
+            "Flashbang"
           ],
           "CashSpend": 4650,
           "Armor": true,
@@ -712,11 +712,11 @@
         },
         "76561198131369187": {
           "Weapons": [
+            "Flashbang",
             "P2000",
             "M4A1",
             "Smoke Grenade",
-            "Incendiary Grenade",
-            "Flashbang"
+            "Incendiary Grenade"
           ],
           "CashSpend": 5300,
           "Armor": true,
@@ -728,10 +728,10 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "P2000",
             "M4A1",
             "Smoke Grenade",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "P2000"
           ],
           "CashSpend": 4800,
           "Armor": true,
@@ -905,12 +905,12 @@
       "Players": {
         "76561198005107817": {
           "Weapons": [
-            "Incendiary Grenade",
             "USP-S",
             "Flashbang",
             "AK-47",
             "Smoke Grenade",
-            "HE Grenade"
+            "HE Grenade",
+            "Incendiary Grenade"
           ],
           "CashSpend": 1600,
           "Armor": true,
@@ -922,12 +922,12 @@
         },
         "76561198028458803": {
           "Weapons": [
-            "Incendiary Grenade",
             "USP-S",
             "AK-47",
             "Flashbang",
             "Smoke Grenade",
-            "HE Grenade"
+            "HE Grenade",
+            "Incendiary Grenade"
           ],
           "CashSpend": 1550,
           "Armor": true,
@@ -956,11 +956,11 @@
         },
         "76561198131369187": {
           "Weapons": [
+            "HE Grenade",
+            "Incendiary Grenade",
             "P2000",
             "AK-47",
-            "Smoke Grenade",
-            "HE Grenade",
-            "Incendiary Grenade"
+            "Smoke Grenade"
           ],
           "CashSpend": 900,
           "Armor": true,
@@ -972,12 +972,12 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "Smoke Grenade",
-            "Flashbang",
-            "P2000",
             "M4A1",
             "Incendiary Grenade",
-            "HE Grenade"
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang",
+            "P2000"
           ],
           "CashSpend": 1200,
           "Armor": true,
@@ -1153,9 +1153,9 @@
         },
         "76561198034202275": {
           "Weapons": [
-            "Flashbang",
             "Desert Eagle",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Flashbang"
           ],
           "CashSpend": 3200,
           "Armor": false,
@@ -1218,12 +1218,12 @@
       "Players": {
         "76561198005107817": {
           "Weapons": [
-            "Incendiary Grenade",
-            "Flashbang",
             "USP-S",
             "M4A4",
             "Smoke Grenade",
-            "HE Grenade"
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Flashbang"
           ],
           "CashSpend": 5500,
           "Armor": true,
@@ -1235,12 +1235,12 @@
         },
         "76561198028458803": {
           "Weapons": [
+            "Smoke Grenade",
+            "HE Grenade",
             "Incendiary Grenade",
             "Flashbang",
             "USP-S",
-            "M4A1",
-            "Smoke Grenade",
-            "HE Grenade"
+            "M4A1"
           ],
           "CashSpend": 5300,
           "Armor": true,
@@ -1252,12 +1252,12 @@
         },
         "76561198107142008": {
           "Weapons": [
-            "Incendiary Grenade",
-            "Smoke Grenade",
-            "Flashbang",
             "HE Grenade",
             "USP-S",
-            "M4A4"
+            "M4A4",
+            "Incendiary Grenade",
+            "Smoke Grenade",
+            "Flashbang"
           ],
           "CashSpend": 2800,
           "Armor": true,
@@ -1269,12 +1269,12 @@
         },
         "76561198131369187": {
           "Weapons": [
+            "Incendiary Grenade",
+            "Flashbang",
             "P2000",
             "M4A1",
             "Smoke Grenade",
-            "HE Grenade",
-            "Incendiary Grenade",
-            "Flashbang"
+            "HE Grenade"
           ],
           "CashSpend": 5300,
           "Armor": true,
@@ -1286,12 +1286,12 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "Flashbang",
-            "AK-47",
             "Incendiary Grenade",
             "HE Grenade",
             "Smoke Grenade",
-            "P2000"
+            "P2000",
+            "Flashbang",
+            "AK-47"
           ],
           "CashSpend": 4300,
           "Armor": true,
@@ -1408,12 +1408,12 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
-            "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
             "Molotov",
             "Glock-18",
-            "AK-47"
+            "AK-47",
+            "Smoke Grenade"
           ],
           "CashSpend": 3900,
           "Armor": true,
@@ -1425,12 +1425,12 @@
         },
         "76561198034202275": {
           "Weapons": [
-            "Molotov",
-            "Glock-18",
             "AK-47",
             "Smoke Grenade",
             "Flashbang",
-            "HE Grenade"
+            "HE Grenade",
+            "Molotov",
+            "Glock-18"
           ],
           "CashSpend": 2200,
           "Armor": true,
@@ -1442,10 +1442,10 @@
         },
         "76561198044045107": {
           "Weapons": [
-            "Smoke Grenade",
-            "Flashbang",
             "Glock-18",
-            "AK-47"
+            "AK-47",
+            "Smoke Grenade",
+            "Flashbang"
           ],
           "CashSpend": 4200,
           "Armor": true,
@@ -1457,12 +1457,12 @@
         },
         "76561198134401925": {
           "Weapons": [
-            "Flashbang",
-            "Molotov",
-            "HE Grenade",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Flashbang",
+            "Molotov",
+            "HE Grenade"
           ],
           "CashSpend": 3900,
           "Armor": true,
@@ -1530,11 +1530,11 @@
         },
         "76561198107142008": {
           "Weapons": [
+            "USP-S",
             "M4A1",
             "Smoke Grenade",
             "Flashbang",
-            "Incendiary Grenade",
-            "USP-S"
+            "Incendiary Grenade"
           ],
           "CashSpend": 4050,
           "Armor": true,
@@ -1562,8 +1562,8 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "P2000",
-            "M4A1"
+            "M4A1",
+            "P2000"
           ],
           "CashSpend": 3550,
           "Armor": true,
@@ -1782,12 +1782,12 @@
       "Players": {
         "76561198005107817": {
           "Weapons": [
+            "HE Grenade",
+            "Incendiary Grenade",
             "Smoke Grenade",
             "Flashbang",
             "USP-S",
-            "M4A4",
-            "HE Grenade",
-            "Incendiary Grenade"
+            "M4A4"
           ],
           "CashSpend": 2400,
           "Armor": true,
@@ -1799,10 +1799,10 @@
         },
         "76561198028458803": {
           "Weapons": [
-            "Smoke Grenade",
-            "HE Grenade",
             "USP-S",
-            "M4A1"
+            "M4A1",
+            "Smoke Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 4500,
           "Armor": true,
@@ -1847,12 +1847,12 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "Incendiary Grenade",
-            "AK-47",
             "P2000",
             "Flashbang",
             "Smoke Grenade",
-            "HE Grenade"
+            "HE Grenade",
+            "Incendiary Grenade",
+            "AK-47"
           ],
           "CashSpend": 2800,
           "Armor": true,
@@ -2056,11 +2056,11 @@
       "Players": {
         "76561198005107817": {
           "Weapons": [
-            "HE Grenade",
-            "Incendiary Grenade",
             "MP9",
             "USP-S",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade"
           ],
           "CashSpend": 3450,
           "Armor": true,
@@ -2072,12 +2072,12 @@
         },
         "76561198028458803": {
           "Weapons": [
-            "HE Grenade",
-            "Smoke Grenade",
-            "USP-S",
             "M4A1",
             "Flashbang",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Smoke Grenade",
+            "USP-S"
           ],
           "CashSpend": 1200,
           "Armor": true,
@@ -2089,12 +2089,12 @@
         },
         "76561198107142008": {
           "Weapons": [
+            "Smoke Grenade",
+            "HE Grenade",
             "AK-47",
             "Flashbang",
             "Tec-9",
-            "Incendiary Grenade",
-            "Smoke Grenade",
-            "HE Grenade"
+            "Incendiary Grenade"
           ],
           "CashSpend": 1550,
           "Armor": true,
@@ -2123,9 +2123,9 @@
         },
         "76561198248953762": {
           "Weapons": [
+            "P2000",
             "M4A1",
-            "Smoke Grenade",
-            "P2000"
+            "Smoke Grenade"
           ],
           "CashSpend": 4600,
           "Armor": true,
@@ -2242,11 +2242,11 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
-            "Flashbang",
-            "Molotov",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Flashbang",
+            "Molotov"
           ],
           "CashSpend": 4800,
           "Armor": true,
@@ -2271,10 +2271,10 @@
         },
         "76561198044045107": {
           "Weapons": [
-            "Smoke Grenade",
-            "Molotov",
             "Glock-18",
-            "AK-47"
+            "AK-47",
+            "Smoke Grenade",
+            "Molotov"
           ],
           "CashSpend": 4400,
           "Armor": true,
@@ -2286,11 +2286,11 @@
         },
         "76561198134401925": {
           "Weapons": [
-            "Glock-18",
-            "AK-47",
             "Smoke Grenade",
             "Molotov",
-            "Flashbang"
+            "Flashbang",
+            "Glock-18",
+            "AK-47"
           ],
           "CashSpend": 4800,
           "Armor": true,
@@ -2302,11 +2302,11 @@
         },
         "76561198146207066": {
           "Weapons": [
-            "AK-47",
             "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
-            "Glock-18"
+            "Glock-18",
+            "AK-47"
           ],
           "CashSpend": 4700,
           "Armor": true,
@@ -2344,12 +2344,12 @@
         },
         "76561198028458803": {
           "Weapons": [
+            "USP-S",
             "M4A1",
             "Incendiary Grenade",
             "HE Grenade",
             "Smoke Grenade",
-            "Flashbang",
-            "USP-S"
+            "Flashbang"
           ],
           "CashSpend": 600,
           "Armor": true,
@@ -2378,11 +2378,11 @@
         },
         "76561198131369187": {
           "Weapons": [
-            "Incendiary Grenade",
             "Desert Eagle",
             "Smoke Grenade",
             "Flashbang",
-            "AWP"
+            "AWP",
+            "Incendiary Grenade"
           ],
           "CashSpend": 5350,
           "Armor": true,
@@ -2394,12 +2394,12 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "Smoke Grenade",
-            "Desert Eagle",
             "Incendiary Grenade",
             "HE Grenade",
             "Flashbang",
-            "M4A1"
+            "M4A1",
+            "Smoke Grenade",
+            "Desert Eagle"
           ],
           "CashSpend": 1100,
           "Armor": true,
@@ -2561,11 +2561,11 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
-            "Glock-18",
             "Galil AR",
             "Smoke Grenade",
             "Flashbang",
-            "Molotov"
+            "Molotov",
+            "Glock-18"
           ],
           "CashSpend": 3700,
           "Armor": true,
@@ -2603,10 +2603,10 @@
         },
         "76561198134401925": {
           "Weapons": [
+            "Flashbang",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade",
-            "Flashbang"
+            "Smoke Grenade"
           ],
           "CashSpend": 4200,
           "Armor": true,
@@ -2618,9 +2618,9 @@
         },
         "76561198146207066": {
           "Weapons": [
-            "HE Grenade",
             "Glock-18",
-            "AK-47"
+            "AK-47",
+            "HE Grenade"
           ],
           "CashSpend": 4000,
           "Armor": true,
@@ -2641,12 +2641,12 @@
       "Players": {
         "76561198005107817": {
           "Weapons": [
+            "M4A4",
+            "Flashbang",
             "Smoke Grenade",
             "HE Grenade",
             "Incendiary Grenade",
-            "USP-S",
-            "M4A4",
-            "Flashbang"
+            "USP-S"
           ],
           "CashSpend": 5500,
           "Armor": true,
@@ -2675,12 +2675,12 @@
         },
         "76561198107142008": {
           "Weapons": [
+            "M4A1",
+            "Incendiary Grenade",
             "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
-            "USP-S",
-            "M4A1",
-            "Incendiary Grenade"
+            "USP-S"
           ],
           "CashSpend": 5700,
           "Armor": true,
@@ -2709,12 +2709,12 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "HE Grenade",
-            "Incendiary Grenade",
-            "P2000",
             "M4A1",
             "Flashbang",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "P2000"
           ],
           "CashSpend": 5300,
           "Armor": true,
@@ -2846,8 +2846,8 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
-            "Glock-18",
-            "AK-47"
+            "AK-47",
+            "Glock-18"
           ],
           "CashSpend": 3700,
           "Armor": true,
@@ -2873,12 +2873,12 @@
         },
         "76561198044045107": {
           "Weapons": [
-            "Glock-18",
-            "MAC-10",
             "Molotov",
             "Smoke Grenade",
             "Flashbang",
-            "HE Grenade"
+            "HE Grenade",
+            "Glock-18",
+            "MAC-10"
           ],
           "CashSpend": 3250,
           "Armor": true,
@@ -2890,10 +2890,10 @@
         },
         "76561198134401925": {
           "Weapons": [
+            "Flashbang",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade",
-            "Flashbang"
+            "Smoke Grenade"
           ],
           "CashSpend": 4200,
           "Armor": true,
@@ -2905,11 +2905,11 @@
         },
         "76561198146207066": {
           "Weapons": [
-            "Smoke Grenade",
             "HE Grenade",
             "Flashbang",
             "Glock-18",
-            "Galil AR"
+            "Galil AR",
+            "Smoke Grenade"
           ],
           "CashSpend": 3600,
           "Armor": true,
@@ -2930,12 +2930,12 @@
       "Players": {
         "76561198005107817": {
           "Weapons": [
+            "USP-S",
+            "Flashbang",
             "M4A4",
             "HE Grenade",
             "Smoke Grenade",
-            "Incendiary Grenade",
-            "USP-S",
-            "Flashbang"
+            "Incendiary Grenade"
           ],
           "CashSpend": 2200,
           "Armor": true,
@@ -2947,12 +2947,12 @@
         },
         "76561198028458803": {
           "Weapons": [
+            "Incendiary Grenade",
             "HE Grenade",
             "Flashbang",
             "USP-S",
             "Smoke Grenade",
-            "M4A1",
-            "Incendiary Grenade"
+            "M4A1"
           ],
           "CashSpend": 1100,
           "Armor": true,
@@ -2964,12 +2964,12 @@
         },
         "76561198107142008": {
           "Weapons": [
-            "USP-S",
-            "M4A1",
             "Incendiary Grenade",
             "Smoke Grenade",
             "Flashbang",
-            "HE Grenade"
+            "HE Grenade",
+            "USP-S",
+            "M4A1"
           ],
           "CashSpend": 5700,
           "Armor": true,
@@ -2981,12 +2981,12 @@
         },
         "76561198131369187": {
           "Weapons": [
+            "P2000",
             "AWP",
             "HE Grenade",
             "Incendiary Grenade",
             "Smoke Grenade",
-            "Flashbang",
-            "P2000"
+            "Flashbang"
           ],
           "CashSpend": 1400,
           "Armor": true,
@@ -2998,12 +2998,12 @@
         },
         "76561198248953762": {
           "Weapons": [
+            "P2000",
             "Flashbang",
             "AK-47",
             "Incendiary Grenade",
             "HE Grenade",
-            "Smoke Grenade",
-            "P2000"
+            "Smoke Grenade"
           ],
           "CashSpend": 4300,
           "Armor": true,
@@ -3105,10 +3105,10 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
-            "Glock-18",
             "Galil AR",
             "Smoke Grenade",
-            "Molotov"
+            "Molotov",
+            "Glock-18"
           ],
           "CashSpend": 3500,
           "Armor": true,
@@ -3146,10 +3146,10 @@
         },
         "76561198134401925": {
           "Weapons": [
+            "Flashbang",
             "Glock-18",
             "Galil AR",
-            "Smoke Grenade",
-            "Flashbang"
+            "Smoke Grenade"
           ],
           "CashSpend": 3300,
           "Armor": true,
@@ -3202,12 +3202,12 @@
         },
         "76561198028458803": {
           "Weapons": [
+            "Smoke Grenade",
             "Desert Eagle",
             "M4A1",
             "Flashbang",
             "Incendiary Grenade",
-            "HE Grenade",
-            "Smoke Grenade"
+            "HE Grenade"
           ],
           "CashSpend": 2550,
           "Armor": true,
@@ -3219,11 +3219,11 @@
         },
         "76561198107142008": {
           "Weapons": [
+            "AK-47",
+            "Smoke Grenade",
             "Incendiary Grenade",
             "HE Grenade",
-            "Tec-9",
-            "AK-47",
-            "Smoke Grenade"
+            "Tec-9"
           ],
           "CashSpend": 1850,
           "Armor": true,
@@ -3235,12 +3235,12 @@
         },
         "76561198131369187": {
           "Weapons": [
+            "Five-SeveN",
             "AWP",
             "Smoke Grenade",
             "Flashbang",
             "Incendiary Grenade",
-            "HE Grenade",
-            "Five-SeveN"
+            "HE Grenade"
           ],
           "CashSpend": 1400,
           "Armor": true,
@@ -3252,12 +3252,12 @@
         },
         "76561198248953762": {
           "Weapons": [
+            "Incendiary Grenade",
             "HE Grenade",
             "Smoke Grenade",
             "Flashbang",
             "P2000",
-            "AK-47",
-            "Incendiary Grenade"
+            "AK-47"
           ],
           "CashSpend": 1400,
           "Armor": true,
@@ -3656,12 +3656,12 @@
         },
         "76561198028458803": {
           "Weapons": [
+            "HE Grenade",
+            "Molotov",
             "Flashbang",
             "Glock-18",
             "MAC-10",
-            "Smoke Grenade",
-            "HE Grenade",
-            "Molotov"
+            "Smoke Grenade"
           ],
           "CashSpend": 3250,
           "Armor": true,
@@ -3673,11 +3673,11 @@
         },
         "76561198107142008": {
           "Weapons": [
+            "USP-S",
+            "Galil AR",
             "Molotov",
             "Smoke Grenade",
-            "HE Grenade",
-            "USP-S",
-            "Galil AR"
+            "HE Grenade"
           ],
           "CashSpend": 3800,
           "Armor": true,
@@ -3689,10 +3689,10 @@
         },
         "76561198131369187": {
           "Weapons": [
-            "P2000",
-            "AK-47",
             "HE Grenade",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "P2000",
+            "AK-47"
           ],
           "CashSpend": 4300,
           "Armor": true,
@@ -3704,10 +3704,10 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "Glock-18",
-            "Galil AR",
             "Smoke Grenade",
-            "HE Grenade"
+            "HE Grenade",
+            "Glock-18",
+            "Galil AR"
           ],
           "CashSpend": 3400,
           "Armor": true,
@@ -3753,9 +3753,9 @@
         },
         "76561198044045107": {
           "Weapons": [
-            "USP-S",
             "MP9",
-            "HE Grenade"
+            "HE Grenade",
+            "USP-S"
           ],
           "CashSpend": 2200,
           "Armor": true,
@@ -3780,10 +3780,10 @@
         },
         "76561198146207066": {
           "Weapons": [
+            "Flashbang",
             "CZ75 Auto",
             "HE Grenade",
-            "Smoke Grenade",
-            "Flashbang"
+            "Smoke Grenade"
           ],
           "CashSpend": 2300,
           "Armor": true,
@@ -3915,8 +3915,8 @@
       "Players": {
         "76561198005107817": {
           "Weapons": [
-            "Glock-18",
-            "AK-47"
+            "AK-47",
+            "Glock-18"
           ],
           "CashSpend": 3700,
           "Armor": true,
@@ -3945,10 +3945,10 @@
         },
         "76561198107142008": {
           "Weapons": [
-            "Smoke Grenade",
-            "HE Grenade",
             "Glock-18",
-            "AK-47"
+            "AK-47",
+            "Smoke Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 4300,
           "Armor": true,
@@ -3960,10 +3960,10 @@
         },
         "76561198131369187": {
           "Weapons": [
-            "Glock-18",
             "Smoke Grenade",
             "HE Grenade",
-            "Molotov"
+            "Molotov",
+            "Glock-18"
           ],
           "CashSpend": 2000,
           "Armor": true,
@@ -3975,11 +3975,11 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "Smoke Grenade",
             "Glock-18",
             "AK-47",
             "Molotov",
-            "HE Grenade"
+            "HE Grenade",
+            "Smoke Grenade"
           ],
           "CashSpend": 3700,
           "Armor": true,
@@ -4000,9 +4000,9 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
+            "Flashbang",
             "Smoke Grenade",
-            "Nova",
-            "Flashbang"
+            "Nova"
           ],
           "CashSpend": 4750,
           "Armor": false,
@@ -4014,8 +4014,8 @@
         },
         "76561198034202275": {
           "Weapons": [
-            "AWP",
-            "USP-S"
+            "USP-S",
+            "AWP"
           ],
           "CashSpend": 2050,
           "Armor": true,
@@ -4054,12 +4054,12 @@
         },
         "76561198146207066": {
           "Weapons": [
-            "HE Grenade",
             "Flashbang",
             "Smoke Grenade",
             "USP-S",
             "Galil AR",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 2400,
           "Armor": true,
@@ -4263,10 +4263,10 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
-            "USP-S",
-            "M4A1",
             "Flashbang",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "USP-S",
+            "M4A1"
           ],
           "CashSpend": 4100,
           "Armor": true,
@@ -4327,12 +4327,12 @@
         },
         "76561198146207066": {
           "Weapons": [
+            "HE Grenade",
+            "Smoke Grenade",
             "USP-S",
             "Galil AR",
             "Flashbang",
-            "Incendiary Grenade",
-            "HE Grenade",
-            "Smoke Grenade"
+            "Incendiary Grenade"
           ],
           "CashSpend": 1600,
           "Armor": true,
@@ -4519,10 +4519,10 @@
         },
         "76561198034202275": {
           "Weapons": [
-            "Flashbang",
-            "Incendiary Grenade",
             "Desert Eagle",
-            "Galil AR"
+            "Galil AR",
+            "Flashbang",
+            "Incendiary Grenade"
           ],
           "CashSpend": 600,
           "Armor": true,
@@ -4690,10 +4690,10 @@
         },
         "76561198028458803": {
           "Weapons": [
-            "HE Grenade",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 4300,
           "Armor": true,
@@ -4705,10 +4705,10 @@
         },
         "76561198107142008": {
           "Weapons": [
-            "Glock-18",
             "AK-47",
             "Smoke Grenade",
-            "Flashbang"
+            "Flashbang",
+            "Glock-18"
           ],
           "CashSpend": 4200,
           "Armor": true,
@@ -4720,10 +4720,10 @@
         },
         "76561198131369187": {
           "Weapons": [
-            "Molotov",
-            "Flashbang",
             "Glock-18",
-            "AK-47"
+            "AK-47",
+            "Molotov",
+            "Flashbang"
           ],
           "CashSpend": 4500,
           "Armor": true,
@@ -4735,10 +4735,10 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "HE Grenade",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 4300,
           "Armor": true,
@@ -4776,12 +4776,12 @@
         },
         "76561198034202275": {
           "Weapons": [
-            "AWP",
             "HE Grenade",
             "Flashbang",
             "Incendiary Grenade",
             "Desert Eagle",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "AWP"
           ],
           "CashSpend": 5050,
           "Armor": true,
@@ -4810,12 +4810,12 @@
         },
         "76561198134401925": {
           "Weapons": [
+            "Desert Eagle",
+            "Incendiary Grenade",
             "Smoke Grenade",
             "HE Grenade",
             "AK-47",
-            "Flashbang",
-            "Desert Eagle",
-            "Incendiary Grenade"
+            "Flashbang"
           ],
           "CashSpend": 700,
           "Armor": true,
@@ -4827,12 +4827,12 @@
         },
         "76561198146207066": {
           "Weapons": [
-            "HE Grenade",
-            "Flashbang",
-            "Desert Eagle",
             "Smoke Grenade",
             "M4A1",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "HE Grenade",
+            "Flashbang",
+            "Desert Eagle"
           ],
           "CashSpend": 1550,
           "Armor": true,
@@ -5009,12 +5009,12 @@
         },
         "76561198028458803": {
           "Weapons": [
-            "Molotov",
-            "Flashbang",
             "Glock-18",
             "AK-47",
             "Smoke Grenade",
-            "HE Grenade"
+            "HE Grenade",
+            "Molotov",
+            "Flashbang"
           ],
           "CashSpend": 2200,
           "Armor": true,
@@ -5026,12 +5026,12 @@
         },
         "76561198107142008": {
           "Weapons": [
-            "MAC-10",
-            "Glock-18",
             "Molotov",
             "Smoke Grenade",
             "Flashbang",
-            "HE Grenade"
+            "HE Grenade",
+            "MAC-10",
+            "Glock-18"
           ],
           "CashSpend": 3250,
           "Armor": true,
@@ -5043,11 +5043,11 @@
         },
         "76561198131369187": {
           "Weapons": [
-            "HE Grenade",
-            "Smoke Grenade",
             "Glock-18",
             "Flashbang",
-            "AK-47"
+            "AK-47",
+            "HE Grenade",
+            "Smoke Grenade"
           ],
           "CashSpend": 3500,
           "Armor": true,
@@ -5059,8 +5059,8 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "AK-47",
-            "Glock-18"
+            "Glock-18",
+            "AK-47"
           ],
           "CashSpend": 3700,
           "Armor": true,
@@ -5081,11 +5081,11 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
+            "HE Grenade",
+            "Incendiary Grenade",
             "USP-S",
             "M4A4",
-            "Smoke Grenade",
-            "HE Grenade",
-            "Incendiary Grenade"
+            "Smoke Grenade"
           ],
           "CashSpend": 5300,
           "Armor": true,
@@ -5114,12 +5114,12 @@
         },
         "76561198044045107": {
           "Weapons": [
-            "HE Grenade",
-            "Incendiary Grenade",
-            "Flashbang",
             "USP-S",
             "M4A1",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade",
+            "Incendiary Grenade",
+            "Flashbang"
           ],
           "CashSpend": 8200,
           "Armor": true,
@@ -5131,12 +5131,12 @@
         },
         "76561198134401925": {
           "Weapons": [
-            "P2000",
-            "M4A1",
             "Incendiary Grenade",
             "HE Grenade",
             "Smoke Grenade",
-            "Flashbang"
+            "Flashbang",
+            "P2000",
+            "M4A1"
           ],
           "CashSpend": 6600,
           "Armor": true,
@@ -5148,12 +5148,12 @@
         },
         "76561198146207066": {
           "Weapons": [
+            "HE Grenade",
+            "Smoke Grenade",
             "Flashbang",
             "USP-S",
             "AWP",
-            "Incendiary Grenade",
-            "HE Grenade",
-            "Smoke Grenade"
+            "Incendiary Grenade"
           ],
           "CashSpend": 7550,
           "Armor": true,
@@ -5388,11 +5388,11 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
+            "Flashbang",
+            "USP-S",
             "MP9",
             "Smoke Grenade",
-            "Incendiary Grenade",
-            "Flashbang",
-            "USP-S"
+            "Incendiary Grenade"
           ],
           "CashSpend": 3350,
           "Armor": true,
@@ -5419,9 +5419,9 @@
         },
         "76561198044045107": {
           "Weapons": [
-            "Smoke Grenade",
             "USP-S",
-            "M4A1"
+            "M4A1",
+            "Smoke Grenade"
           ],
           "CashSpend": 3850,
           "Armor": true,
@@ -5433,11 +5433,11 @@
         },
         "76561198134401925": {
           "Weapons": [
+            "P2000",
             "Incendiary Grenade",
             "HE Grenade",
             "Smoke Grenade",
-            "Flashbang",
-            "P2000"
+            "Flashbang"
           ],
           "CashSpend": 2400,
           "Armor": true,
@@ -5570,10 +5570,10 @@
       "Players": {
         "76561198005107817": {
           "Weapons": [
-            "Flashbang",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Flashbang"
           ],
           "CashSpend": 4200,
           "Armor": true,
@@ -5599,12 +5599,12 @@
         },
         "76561198107142008": {
           "Weapons": [
-            "Smoke Grenade",
-            "Flashbang",
-            "HE Grenade",
             "Glock-18",
             "Galil AR",
-            "Molotov"
+            "Molotov",
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade"
           ],
           "CashSpend": 4000,
           "Armor": true,
@@ -5631,10 +5631,10 @@
         },
         "76561198248953762": {
           "Weapons": [
-            "HE Grenade",
             "Glock-18",
             "AK-47",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 4300,
           "Armor": true,
@@ -5655,12 +5655,12 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
-            "Flashbang",
-            "Glock-18",
-            "AK-47",
             "Smoke Grenade",
             "HE Grenade",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "Flashbang",
+            "Glock-18",
+            "AK-47"
           ],
           "CashSpend": 1000,
           "Armor": true,
@@ -5672,12 +5672,12 @@
         },
         "76561198034202275": {
           "Weapons": [
-            "Desert Eagle",
-            "M4A4",
-            "Smoke Grenade",
             "Flashbang",
             "HE Grenade",
-            "Incendiary Grenade"
+            "Incendiary Grenade",
+            "Desert Eagle",
+            "M4A4",
+            "Smoke Grenade"
           ],
           "CashSpend": 3500,
           "Armor": true,
@@ -5689,10 +5689,10 @@
         },
         "76561198044045107": {
           "Weapons": [
-            "HE Grenade",
             "USP-S",
             "M4A1",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "HE Grenade"
           ],
           "CashSpend": 3500,
           "Armor": true,
@@ -5704,12 +5704,12 @@
         },
         "76561198134401925": {
           "Weapons": [
-            "Flashbang",
-            "M4A1",
             "HE Grenade",
             "Incendiary Grenade",
             "P2000",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Flashbang",
+            "M4A1"
           ],
           "CashSpend": 900,
           "Armor": true,
@@ -5721,12 +5721,12 @@
         },
         "76561198146207066": {
           "Weapons": [
-            "AWP",
             "Incendiary Grenade",
             "HE Grenade",
             "Smoke Grenade",
             "Flashbang",
-            "USP-S"
+            "USP-S",
+            "AWP"
           ],
           "CashSpend": 1400,
           "Armor": true,
@@ -5899,9 +5899,9 @@
         },
         "76561198107142008": {
           "Weapons": [
+            "Flashbang",
             "Desert Eagle",
-            "HE Grenade",
-            "Flashbang"
+            "HE Grenade"
           ],
           "CashSpend": 1850,
           "Armor": true,
@@ -5948,12 +5948,12 @@
       "Players": {
         "76561198028292758": {
           "Weapons": [
-            "Flashbang",
-            "HE Grenade",
-            "Incendiary Grenade",
             "USP-S",
             "M4A1",
-            "Smoke Grenade"
+            "Smoke Grenade",
+            "Flashbang",
+            "HE Grenade",
+            "Incendiary Grenade"
           ],
           "CashSpend": 5700,
           "Armor": true,
@@ -5965,12 +5965,12 @@
         },
         "76561198034202275": {
           "Weapons": [
-            "Smoke Grenade",
-            "Flashbang",
             "HE Grenade",
             "Incendiary Grenade",
             "USP-S",
-            "M4A1"
+            "M4A1",
+            "Smoke Grenade",
+            "Flashbang"
           ],
           "CashSpend": 2800,
           "Armor": true,
@@ -5982,12 +5982,12 @@
         },
         "76561198044045107": {
           "Weapons": [
+            "Incendiary Grenade",
             "M4A1",
             "HE Grenade",
             "Flashbang",
             "USP-S",
-            "Smoke Grenade",
-            "Incendiary Grenade"
+            "Smoke Grenade"
           ],
           "CashSpend": 3400,
           "Armor": true,
@@ -5999,12 +5999,12 @@
         },
         "76561198134401925": {
           "Weapons": [
-            "Smoke Grenade",
-            "Flashbang",
             "M4A1",
             "P2000",
             "Incendiary Grenade",
-            "HE Grenade"
+            "HE Grenade",
+            "Smoke Grenade",
+            "Flashbang"
           ],
           "CashSpend": 7150,
           "Armor": true,

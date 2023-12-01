@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Uniplay demo API
+  version: 0.2.1
+tags:
+  - name: demo
+    description: CS2 demo
+paths:
+  /v1/demos:
+    put:
+      tags:
+        - demo
+      summary: Upload demo file for processing
+      description: Upload CS2 demo file, returns job id. To get job status use twirp uniplay proto API. File must have .dem extension.
+      operationId: uploadDemo
+      security:
+        - kratosAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                demo:
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadDemoResponse'
+        '400':
+          description: Invalid demo file
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    UploadDemoResponse:
+      type: object
+      properties:
+        demo_job_id:
+          type: string
+          format: uuid
+          example: adc9a0e1-0e58-43b7-9b9d-220c4217ba4f
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          example: Bad Request
+        msg:
+          type: string
+          example: 'demo not created: demo must have .dem file extension'
+  securitySchemes:
+    kratosAuth:
+      type: apiKey
+      name: ory_kratos_session
+      in: cookie
