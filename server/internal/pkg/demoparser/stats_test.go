@@ -282,7 +282,7 @@ func Test_playerStats_add(t *testing.T) {
 	}
 }
 
-func Test_equipValid(t *testing.T) {
+func Test_isWeapon(t *testing.T) {
 	t.Parallel()
 	type args struct {
 		e common.EquipmentType
@@ -337,7 +337,7 @@ func Test_equipValid(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := equipValid(tt.args.e)
+			got := isWeapon(tt.args.e)
 			assert.Equal(t, tt.want, got)
 		})
 	}

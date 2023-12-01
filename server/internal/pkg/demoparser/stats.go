@@ -153,8 +153,8 @@ func (ps *playerStats) add(e event, v int) {
 	}
 }
 
-// equipValid checks whether equipment is valid for dealing damage to other players or yourself.
-func equipValid(e common.EquipmentType) bool {
+// isWeapon checks whether equipment is valid for dealing damage to other players or yourself.
+func isWeapon(e common.EquipmentType) bool {
 	if e.Class() == common.EqClassUnknown ||
 		e == common.EqUnknown ||
 		e == common.EqKevlar ||
@@ -178,7 +178,7 @@ func (ws weaponStatsMap) add(steamID uint64, ev event, et common.EquipmentType, 
 		return
 	}
 
-	if !equipValid(et) {
+	if !isWeapon(et) {
 		return
 	}
 

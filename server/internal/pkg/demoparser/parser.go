@@ -279,7 +279,7 @@ func (p *parser) weaponFireHandler(e events.WeaponFire) {
 		return
 	}
 
-	if !equipValid(e.Weapon.Type) {
+	if !isWeapon(e.Weapon.Type) {
 		slog.Error("fire from invalid weapon",
 			"shooter", e.Shooter,
 			"weapon", e.Weapon.String())
