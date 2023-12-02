@@ -3,9 +3,7 @@ package demoparser
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"log/slog"
-	"mime/multipart"
 	"os"
 
 	"github.com/google/uuid"
@@ -26,18 +24,11 @@ type parser struct {
 	demoID      uuid.UUID
 }
 
-func New(demofile io.ReadSeeker, demoheader *multipart.FileHeader) (*parser, error) {
-	d, err := newDemo(demofile, demoheader)
-	if err != nil {
-		return nil, fmt.Errorf("demo not created: %w", err)
-	}
-
-	slog.Info("demo id", "uuid", d.id)
-
+func New(demo Demo) (*parser, error) {
 	p := &parser{
-		Parser:      demoinfocs.NewParser(d),
-		demoID:      d.id,
-		demosize:    d.size,
+		Parser:      demoinfocs.NewParser(demo),
+		demoID:      demo.ID,
+		demosize:    demo.Size,
 		gameState:   &gameState{},
 		playerStats: make(playerStatsMap, 20),
 		weaponStats: make(weaponStatsMap, 20),

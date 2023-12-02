@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/ilyakaznacheev/cleanenv"
@@ -10,12 +11,18 @@ import (
 )
 
 func main() {
+	var flags app.Flags
+
+	flag.BoolVar(&flags.Migrate, "migrate", false, "run migrations on start")
+	flag.StringVar(&flags.MigrationsDir, "migrations-dir", "./migrations", "path to migrations directory")
+	flag.StringVar(&flags.ConfigPath, "conf", "./configs/local.yml", "path to yml config")
+	flag.Parse()
+
 	var conf config.Config
 
-	// TODO: parse config from flag or ENVIRONMENT VARIABLE
-	if err := cleanenv.ReadConfig("./configs/local.yml", &conf); err != nil {
+	if err := cleanenv.ReadConfig(flags.ConfigPath, &conf); err != nil {
 		log.Fatalf("config parse error: %s", err)
 	}
 
-	app.Run(&conf)
+	app.Run(&conf, flags)
 }

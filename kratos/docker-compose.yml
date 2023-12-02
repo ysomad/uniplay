@@ -17,6 +17,7 @@ services:
         read_only: false
     ports:
       - "5433:5432"
+    command: -p 5433
     environment:
       - POSTGRES_USER=kratos
       - POSTGRES_PASSWORD=secret
@@ -31,7 +32,7 @@ services:
     env_file:
       - .env
     environment:
-      - DSN=postgres://kratos:secret@kratos-pg:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+      - DSN=postgres://kratos:secret@kratos-pg:5433/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
     volumes:
       - type: volume
         source: kratos-pg
@@ -56,7 +57,7 @@ services:
     env_file:
       - .env
     environment:
-      - DSN=postgres://kratos:secret@kratos-pg:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
+      - DSN=postgres://kratos:secret@kratos-pg:5433/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
     command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
     volumes:
       - type: volume

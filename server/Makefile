@@ -4,21 +4,13 @@ export
 export GOOSE_DRIVER=postgres
 export GOOSE_DBSTRING=${PG_URL}
 
-.PHONY: compose-dev
-compose-dev:
-	docker-compose up --build -d postgres && docker-compose logs -f
+.PHONY: compose-local
+compose-local:
+	docker-compose up --build -d postgres minio && docker-compose logs -f
 
 .PHONY: compose-up
 compose-up:
-	docker-compose up --build -d postgres jaeger prometheus grafana && docker-compose logs -f
-
-.PHONY: compose-all
-compose-all:
 	docker-compose up --build -d && docker-compose logs -f
-
-.PHONY: compose-min
-compose-min:
-	docker-compose up --build -d postgres app && docker-compose logs -f
 
 .PHONY: compose-down
 compose-down:

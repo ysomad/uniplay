@@ -2,7 +2,7 @@ package pgclient
 
 import (
 	"context"
-	"log"
+	"log/slog"
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
@@ -58,7 +58,7 @@ func New(connString string, opts ...Option) (*Client, error) {
 			break
 		}
 
-		log.Printf("trying connecting to postgres, attempts left: %d", c.connAttempts)
+		slog.Info("trying connecting to postgres", "attempts_left", c.connAttempts)
 		time.Sleep(c.connTimeout)
 		c.connAttempts--
 	}
@@ -68,6 +68,8 @@ func New(connString string, opts ...Option) (*Client, error) {
 	}
 
 	c.Builder = sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
+
+	slog.Info("connected to postgres")
 
 	return c, nil
 }

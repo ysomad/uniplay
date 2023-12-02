@@ -3,18 +3,23 @@ app:
   version: 0.2.1
   environment: local
 
+log:
+  level: debug
+
 http:
   host: 127.0.0.1
   port: 8080
 
 kratos:
   url: http://127.0.0.1:4433
-  client_timeout: 1s
-  debug: true
-  organizer_schema_id: organizer
+  client_timeout: 0.5s
+  debug: false
+  organizer_schema_id: user
 
-log:
-  level: debug
+object_storage:
+  endpoint: 127.0.0.1:9000
+  demo_bucket: demo
+  ssl: false
 
 postgres:
   max_connections: 1

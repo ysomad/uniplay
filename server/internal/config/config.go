@@ -7,11 +7,12 @@ import (
 )
 
 type Config struct {
-	App    App    `yaml:"app"`
-	HTTP   HTTP   `yaml:"http"`
-	Log    Log    `yaml:"log"`
-	PG     PG     `yaml:"postgres"`
-	Kratos Kratos `yaml:"kratos"`
+	App           App           `yaml:"app"`
+	HTTP          HTTP          `yaml:"http"`
+	Log           Log           `yaml:"log"`
+	ObjectStorage ObjectStorage `yaml:"object_storage"`
+	PG            PG            `yaml:"postgres"`
+	Kratos        Kratos        `yaml:"kratos"`
 }
 
 type (
@@ -34,9 +35,17 @@ type (
 
 	Kratos struct {
 		URL               string        `yaml:"url" env:"KRATOS_PUBLIC_URL" env-required:"true"`
-		ClientTimeout     time.Duration `yaml:"client_timeout" env-required:"true"`
-		Debug             bool          `yaml:"debug" env-required:"true"`
 		OrganizerSchemaID string        `yaml:"organizer_schema_id" env-required:"true"`
+		ClientTimeout     time.Duration `yaml:"client_timeout" env-required:"true"`
+		Debug             bool          `yaml:"debug"`
+	}
+
+	ObjectStorage struct {
+		Endpoint   string `yaml:"endpoint" env-required:"true"`
+		AccessKey  string `env:"S3_ACCESS_KEY" env-required:"true"`
+		SecretKey  string `env:"S3_SECRET_KEY" env-required:"true"`
+		DemoBucket string `yaml:"demo_bucket" env-required:"true"`
+		SSL        bool   `yaml:"ssl"`
 	}
 )
 

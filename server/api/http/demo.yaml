@@ -11,7 +11,7 @@ paths:
       tags:
         - demo
       summary: Upload demo file for processing
-      description: Upload CS2 demo file, returns job id. To get job status use twirp uniplay proto API. File must have .dem extension.
+      description: Upload CS2 demo file, returns demo id. To get demo status use twirp uniplay proto API. File must have .dem extension.
       operationId: uploadDemo
       security:
         - kratosAuth: []
@@ -49,7 +49,7 @@ components:
     UploadDemoResponse:
       type: object
       properties:
-        demo_job_id:
+        demo_id:
           type: string
           format: uuid
           example: adc9a0e1-0e58-43b7-9b9d-220c4217ba4f

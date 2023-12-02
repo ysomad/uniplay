@@ -51,7 +51,7 @@ func (d *testReadSeeker) Seek(offset int64, whence int) (int64, error) {
 	return d.offset, nil
 }
 
-func Test_newDemo(t *testing.T) {
+func TestNewDemo(t *testing.T) {
 	t.Parallel()
 	type args struct {
 		rc io.ReadSeeker
@@ -60,7 +60,7 @@ func Test_newDemo(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    demo
+		want    Demo
 		wantErr bool
 	}{
 		{
@@ -72,7 +72,7 @@ func Test_newDemo(t *testing.T) {
 					Size:     1337,
 				},
 			},
-			want:    demo{},
+			want:    Demo{},
 			wantErr: true,
 		},
 		{
@@ -81,7 +81,7 @@ func Test_newDemo(t *testing.T) {
 				rc: newTestReadSeeker([]byte("urmom")),
 				h:  &multipart.FileHeader{},
 			},
-			want:    demo{},
+			want:    Demo{},
 			wantErr: true,
 		},
 		{
@@ -93,7 +93,7 @@ func Test_newDemo(t *testing.T) {
 					Size:     0,
 				},
 			},
-			want:    demo{},
+			want:    Demo{},
 			wantErr: true,
 		},
 		{
@@ -105,7 +105,7 @@ func Test_newDemo(t *testing.T) {
 					Size:     -1488,
 				},
 			},
-			want:    demo{},
+			want:    Demo{},
 			wantErr: true,
 		},
 		{
@@ -117,7 +117,7 @@ func Test_newDemo(t *testing.T) {
 					Size:     322,
 				},
 			},
-			want:    demo{},
+			want:    Demo{},
 			wantErr: true,
 		},
 		{
@@ -129,7 +129,7 @@ func Test_newDemo(t *testing.T) {
 					Size:     322,
 				},
 			},
-			want:    demo{},
+			want:    Demo{},
 			wantErr: true,
 		},
 		{
@@ -141,7 +141,7 @@ func Test_newDemo(t *testing.T) {
 					Size:     322,
 				},
 			},
-			want:    demo{},
+			want:    Demo{},
 			wantErr: true,
 		},
 		{
@@ -153,7 +153,7 @@ func Test_newDemo(t *testing.T) {
 					Size:     666,
 				},
 			},
-			want:    demo{},
+			want:    Demo{},
 			wantErr: true,
 		},
 		{
@@ -165,17 +165,17 @@ func Test_newDemo(t *testing.T) {
 					Size:     10000,
 				},
 			},
-			want: demo{
+			want: Demo{
 				Reader: newTestReadSeeker([]byte("success")),
-				id:     uuid.UUID{0xec, 0x5b, 0x2d, 0xf0, 0xef, 0xa4, 0x33, 0x9f, 0xbe, 0xbb, 0xf0, 0x52, 0x73, 0xcc, 0xbf, 0x3a},
-				size:   10000,
+				ID:     uuid.UUID{0xec, 0x5b, 0x2d, 0xf0, 0xef, 0xa4, 0x33, 0x9f, 0xbe, 0xbb, 0xf0, 0x52, 0x73, 0xcc, 0xbf, 0x3a},
+				Size:   10000,
 			},
 			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := newDemo(tt.args.rc, tt.args.h)
+			got, err := NewDemo(tt.args.rc, tt.args.h)
 			assert.Equal(t, tt.wantErr, (err != nil))
 			assert.Equal(t, tt.want, got)
 		})
