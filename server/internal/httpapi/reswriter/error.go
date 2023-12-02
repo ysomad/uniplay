@@ -1,15 +1,15 @@
-// Package writer provides utility functions for writing HTTP responses in a standardized JSON format.
+// Package reswriter provides utility functions for writing HTTP responses in a standardized JSON format.
 //
 // The primary purpose of this package is to simplify the process of responding to HTTP requests with JSON-encoded error messages.
 // It includes functions to generate JSON responses for different scenarios, such as returning custom messages or standard HTTP status codes.
 //
 // Package Naming:
 //
-//	To avoid naming conflicts with the standard "http" package, this package is named "writer."
+//	To avoid naming conflicts with the standard "http" package, this package is named "reswriter."
 //	It provides functionality to write JSON-encoded responses to an http.ResponseWriter.
 //
 // P.S. ChatGPT is GOAT
-package writer
+package reswriter
 
 import (
 	"encoding/json"

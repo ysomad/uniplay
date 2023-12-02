@@ -9,7 +9,7 @@ import (
 
 	"github.com/ysomad/uniplay/internal/appctx"
 	"github.com/ysomad/uniplay/internal/config"
-	"github.com/ysomad/uniplay/internal/httpapi/writer"
+	"github.com/ysomad/uniplay/internal/httpapi/reswriter"
 )
 
 type kratos struct {
@@ -35,7 +35,7 @@ func (k kratos) SessionAuth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("ory_kratos_session")
 		if err != nil {
-			writer.Error(w, http.StatusUnauthorized, err)
+			reswriter.Error(w, http.StatusUnauthorized, err)
 			return
 		}
 
@@ -46,24 +46,24 @@ func (k kratos) SessionAuth(next http.Handler) http.Handler {
 			Cookie(cookie.String()).
 			Execute()
 		if err != nil {
-			writer.Error(w, http.StatusUnauthorized, err)
+			reswriter.Error(w, http.StatusUnauthorized, err)
 			return
 		}
 
 		if resp.StatusCode != http.StatusOK {
-			writer.Status(w, http.StatusUnauthorized)
+			reswriter.Status(w, http.StatusUnauthorized)
 			return
 		}
 
 		if !session.GetActive() {
-			writer.Status(w, http.StatusUnauthorized)
+			reswriter.Status(w, http.StatusUnauthorized)
 			return
 		}
 
 		identity := session.GetIdentity()
 
 		if identity.SchemaId != k.organizerSchemaID {
-			writer.Error(w, http.StatusForbidden,
+			reswriter.Error(w, http.StatusForbidden,
 				fmt.Errorf("%w, must be %s", errIdentityNotMatch, k.organizerSchemaID))
 			return
 		}

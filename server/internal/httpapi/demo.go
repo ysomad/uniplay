@@ -14,7 +14,7 @@ import (
 	"github.com/ysomad/uniplay/internal/appctx"
 	"github.com/ysomad/uniplay/internal/demoparser"
 	"github.com/ysomad/uniplay/internal/domain"
-	"github.com/ysomad/uniplay/internal/httpapi/writer"
+	"github.com/ysomad/uniplay/internal/httpapi/reswriter"
 	"github.com/ysomad/uniplay/internal/postgres"
 )
 
@@ -48,14 +48,14 @@ var errDemoTooLarge = errors.New("demo file is too large")
 
 func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
-		writer.Status(w, http.StatusMethodNotAllowed)
+		reswriter.Status(w, http.StatusMethodNotAllowed)
 		return
 	}
 
 	r.Body = http.MaxBytesReader(w, r.Body, demoMaxSize)
 
 	if err := r.ParseMultipartForm(demoMemoryMaxSize); err != nil {
-		writer.Error(w, http.StatusBadRequest,
+		reswriter.Error(w, http.StatusBadRequest,
 			fmt.Errorf("%w, must be equal or less than %dMB", errDemoTooLarge, demoMaxSize/1024/1024))
 		return
 	}
@@ -68,7 +68,7 @@ func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
 
 	demo, err := demoparser.NewDemo(file, fileHdr)
 	if err != nil {
-		writer.Error(w, http.StatusBadRequest, err)
+		reswriter.Error(w, http.StatusBadRequest, err)
 		return
 	}
 
@@ -76,7 +76,7 @@ func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
 
 	uploader, ok := appctx.IdentityID(ctx)
 	if !ok {
-		writer.Status(w, http.StatusUnauthorized)
+		reswriter.Status(w, http.StatusUnauthorized)
 		return
 	}
 
@@ -92,7 +92,7 @@ func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
 				Expires:      now.Add(demoTTL),
 			})
 		if err != nil {
-			writer.Error(w, http.StatusInternalServerError,
+			reswriter.Error(w, http.StatusInternalServerError,
 				fmt.Errorf("%w, reason: %w", errDemoNotUploaded, err))
 			return
 		}
@@ -108,7 +108,7 @@ func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil && !errors.Is(err, postgres.ErrDemoAlreadyExists) {
 		slog.Error("demo not saved to db", "error", err, "demo_id", demo.ID)
-		writer.Error(w, http.StatusInternalServerError, err)
+		reswriter.Error(w, http.StatusInternalServerError, err)
 		return
 	}
 
@@ -116,7 +116,7 @@ func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	if err := json.NewEncoder(w).Encode(uploadDemoRes{DemoID: demo.ID}); err != nil {
-		writer.Error(w, http.StatusInternalServerError, err)
+		reswriter.Error(w, http.StatusInternalServerError, err)
 		return
 	}
 }
