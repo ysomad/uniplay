@@ -1,6 +1,6 @@
 app:
   name: uniplay
-  version: 0.2.0
+  version: 0.2.1
   environment: local
 
 http:
@@ -11,6 +11,7 @@ kratos:
   url: http://127.0.0.1:4433
   client_timeout: 1s
   debug: true
+  organizer_schema_id: organizer
 
 log:
   level: debug

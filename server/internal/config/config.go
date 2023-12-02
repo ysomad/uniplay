@@ -33,9 +33,10 @@ type (
 	}
 
 	Kratos struct {
-		URL           string        `yaml:"url" env:"KRATOS_PUBLIC_URL" env-required:"true"`
-		ClientTimeout time.Duration `yaml:"client_timeout" env-required:"true"`
-		Debug         bool          `yaml:"debug" env-required:"true"`
+		URL               string        `yaml:"url" env:"KRATOS_PUBLIC_URL" env-required:"true"`
+		ClientTimeout     time.Duration `yaml:"client_timeout" env-required:"true"`
+		Debug             bool          `yaml:"debug" env-required:"true"`
+		OrganizerSchemaID string        `yaml:"organizer_schema_id" env-required:"true"`
 	}
 )
 

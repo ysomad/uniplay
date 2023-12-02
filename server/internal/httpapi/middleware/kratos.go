@@ -1,24 +1,26 @@
 package middleware
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 
 	ory "github.com/ory/client-go"
 
-	"github.com/ysomad/uniplay/internal/domain/identity"
-	"github.com/ysomad/uniplay/internal/errorx"
+	"github.com/ysomad/uniplay/internal/httpapi/writer"
 )
 
+var errIdentityNotMatch = errors.New("session identity not match")
+
 // NewSessionAuth returns middleware which is authenticates request for identity,
-// returns 401 if received session from kratos has identity schema id different from given schema.
+// returns 401 if received session from kratos has identity schema id different from given schema id.
 // Must be used only for requests from browser.
-func NewSessionAuth(client *ory.APIClient, identity identity.SchemaID) func(http.Handler) http.Handler {
+func NewSessionAuth(client *ory.APIClient, schemaID string) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			cookie, err := r.Cookie("ory_kratos_session")
 			if err != nil {
-				errorx.WriteError(w, http.StatusUnauthorized, err)
+				writer.Error(w, http.StatusUnauthorized, err)
 				return
 			}
 
@@ -27,22 +29,23 @@ func NewSessionAuth(client *ory.APIClient, identity identity.SchemaID) func(http
 				Cookie(cookie.String()).
 				Execute()
 			if err != nil {
-				errorx.WriteError(w, http.StatusUnauthorized, err)
+				writer.Error(w, http.StatusUnauthorized, err)
 				return
 			}
 
 			if resp.StatusCode != http.StatusOK {
-				errorx.WriteStatus(w, http.StatusUnauthorized)
+				writer.Status(w, http.StatusUnauthorized)
 				return
 			}
 
 			if !session.GetActive() {
-				errorx.WriteStatus(w, http.StatusUnauthorized)
+				writer.Status(w, http.StatusUnauthorized)
 				return
 			}
 
-			if session.GetIdentity().SchemaId != string(identity) {
-				errorx.WriteMessage(w, http.StatusForbidden, fmt.Sprintf("must have '%s' identity to use this endpoint", identity))
+			if session.GetIdentity().SchemaId != schemaID {
+				writer.Error(w, http.StatusForbidden,
+					fmt.Errorf("%w, must be %s", errIdentityNotMatch, schemaID))
 				return
 			}
 
