@@ -82,17 +82,12 @@ func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
 
 	now := time.Now()
 	filename := demo.Filename()
-	uploaded := false
 
 	// Check if demo uploaded before
 	if _, err = d.minio.StatObject(ctx, d.bucket, filename, minio.GetObjectOptions{}); err != nil {
-		slog.Info("object storage stat", "msg", err.Error())
-	} else {
-		uploaded = true
-	}
+		slog.Info("demo existence check", "msg", err.Error())
 
-	// Upload demo only if it its not already in object storage.
-	if !uploaded {
+		// Upload demo only if it its not already in object storage.
 		res, err := d.minio.PutObject(ctx, d.bucket, filename,
 			demo, demo.Size,
 			minio.PutObjectOptions{
