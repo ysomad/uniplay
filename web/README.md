@@ -2,6 +2,8 @@
 
 ## Generate connect client
 
+[Docs](https://connectrpc.com/docs/web/generating-code)
+
 Simply run: `npm run connect-gen`
 
 
