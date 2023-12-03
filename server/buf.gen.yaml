@@ -1,8 +1,14 @@
 version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/ysomad/uniplay/server/internal/gen
+    except:
+      - buf.build/bufbuild/protovalidate 
 plugins:
   - plugin: go
-    out: internal/gen/connect/
+    out: internal/gen
     opt: paths=source_relative
   - plugin: connect-go
-    out: internal/gen/connect/
+    out: internal/gen
     opt: paths=source_relative

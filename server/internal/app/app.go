@@ -9,6 +9,7 @@ import (
 	"syscall"
 
 	"connectrpc.com/connect"
+	"connectrpc.com/validate"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 	ory "github.com/ory/client-go"
@@ -16,7 +17,7 @@ import (
 	"github.com/ysomad/uniplay/server/internal/config"
 	v1 "github.com/ysomad/uniplay/server/internal/connect/cabin/v1"
 	"github.com/ysomad/uniplay/server/internal/connect/interceptor"
-	"github.com/ysomad/uniplay/server/internal/gen/connect/cabin/v1/demov1connect"
+	"github.com/ysomad/uniplay/server/internal/gen/api/proto/cabin/v1/cabinv1connect"
 	"github.com/ysomad/uniplay/server/internal/httpapi"
 	"github.com/ysomad/uniplay/server/internal/httpapi/middleware"
 	"github.com/ysomad/uniplay/server/internal/pkg/httpserver"
@@ -63,14 +64,21 @@ func Run(conf *config.Config, f Flags) {
 	slog.Debug("starting app", "config", conf)
 
 	// connect
+	validateInterceptor, err := validate.NewInterceptor()
+	if err != nil {
+		slog.Error("protovalidate interceptor not created", "error", err)
+		os.Exit(1)
+	}
+
 	demoServer := v1.NewDemoServer(demoStorage)
 
 	connectsrv := newConnectSrv(connectSrvDeps{
-		demosrv:    demoServer,
-		kratos:     kratosClient,
-		conf:       conf.Connect,
-		mw:         kratosMW,
-		kratosConf: conf.Kratos,
+		demosrv:             demoServer,
+		kratos:              kratosClient,
+		conf:                conf.Connect,
+		mw:                  kratosMW,
+		kratosConf:          conf.Kratos,
+		validateInterceptor: validateInterceptor,
 	})
 
 	// http
@@ -118,17 +126,22 @@ func newStdSrv(deps stdSrvDeps) *httpserver.Server {
 }
 
 type connectSrvDeps struct {
-	demosrv    *v1.DemoServer
-	kratos     *ory.APIClient
-	conf       config.Connect
-	mw         middleware.Kratos
-	kratosConf config.Kratos
+	demosrv             *v1.DemoServer
+	kratos              *ory.APIClient
+	conf                config.Connect
+	mw                  middleware.Kratos
+	kratosConf          config.Kratos
+	validateInterceptor *validate.Interceptor
 }
 
 func newConnectSrv(deps connectSrvDeps) *httpserver.Server {
 	defer slog.Info("connect server started", "host", deps.conf.Host, "port", deps.conf.Port)
 	mux := http.NewServeMux()
-	path, handler := demov1connect.NewDemoServiceHandler(deps.demosrv, connect.WithInterceptors(interceptor.NewAuth(deps.kratos, deps.kratosConf)))
+	path, handler := cabinv1connect.NewDemoServiceHandler(
+		deps.demosrv, connect.WithInterceptors(
+			deps.validateInterceptor,
+			interceptor.NewAuth(deps.kratos, deps.kratosConf),
+		))
 	mux.Handle(path, handler)
 	return httpserver.New(mux, httpserver.WithHostPort(deps.conf.Host, deps.conf.Port))
 }

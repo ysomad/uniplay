@@ -59,7 +59,7 @@ components:
         code:
           type: string
           example: Bad Request
-        msg:
+        message:
           type: string
           example: 'demo not created: demo must have .dem file extension'
   securitySchemes:

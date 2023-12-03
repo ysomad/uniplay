@@ -1,8 +1,9 @@
 syntax = "proto3";
 
 package cabin.v1;
-option go_package = "github.com/ysomad/uniplay/server/internal/gen/connect/cabin/v1;demov1";
+option go_package = "cabin/v1;demov1";
 
+import "buf/validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 
 service DemoService {
@@ -32,7 +33,7 @@ message Demo {
 }
 
 message GetDemoRequest {
-    string demo_id = 1; // required
+    string demo_id = 1 [(buf.validate.field).string.uuid = true]; // required
 }
 
 message GetDemoResponse {
