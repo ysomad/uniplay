@@ -6,9 +6,9 @@ import (
 
 type identityIDKey struct{}
 
-func IdentityID(ctx context.Context) (string, bool) {
-	e, ok := ctx.Value(identityIDKey{}).(string)
-	return e, ok
+func IdentityID(ctx context.Context) string {
+	e, _ := ctx.Value(identityIDKey{}).(string)
+	return e
 }
 
 func WithIdentityID(ctx context.Context, id string) context.Context {

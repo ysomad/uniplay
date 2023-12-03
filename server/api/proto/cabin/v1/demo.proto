@@ -11,6 +11,7 @@ service DemoService {
         option idempotency_level = NO_SIDE_EFFECTS;
     }
 
+    // ListDemos returns demos list of current user.
     rpc ListDemos(ListDemosRequest) returns (ListDemosResponse) {
         option idempotency_level = NO_SIDE_EFFECTS;
     }
@@ -25,11 +26,10 @@ enum DemoStatus {
 
 message Demo {
     string id = 1;
-    string identity_id = 2;
-    DemoStatus status = 3;
-    string reason = 4;
-    google.protobuf.Timestamp uploaded_at = 5;
-    google.protobuf.Timestamp processed_at = 6;
+    DemoStatus status = 2;
+    string reason = 3;
+    google.protobuf.Timestamp uploaded_at = 4;
+    google.protobuf.Timestamp processed_at = 5;
 }
 
 message GetDemoRequest {
@@ -41,9 +41,9 @@ message GetDemoResponse {
 }
 
 message ListDemosRequest {
-
+    DemoStatus status = 1;
 }
 
 message ListDemosResponse {
-
+    repeated Demo demos = 1;
 }

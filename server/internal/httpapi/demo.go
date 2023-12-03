@@ -73,22 +73,16 @@ func (d *DemoV1) Upload(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
-
-	uploader, ok := appctx.IdentityID(ctx)
-	if !ok {
-		reswriter.Status(w, http.StatusUnauthorized)
-		return
-	}
-
-	now := time.Now()
+	identityID := appctx.IdentityID(ctx)
 	filename := demo.Filename()
+	now := time.Now()
 
 	// Upload demo only if it its not already in object storage.
 	if _, err = d.minio.StatObject(ctx, d.bucket, filename, minio.GetObjectOptions{}); err != nil {
 		res, err := d.minio.PutObject(ctx, d.bucket, filename,
 			demo, demo.Size,
 			minio.PutObjectOptions{
-				UserMetadata: map[string]string{"uploader": uploader},
+				UserMetadata: map[string]string{"uploader": identityID},
 				Expires:      now.Add(demoTTL),
 			})
 		if err != nil {
@@ -101,10 +95,10 @@ func (d *DemoV1) Upload(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = d.storage.Save(ctx, domain.Demo{
-		ID:         demo.ID,
-		Status:     domain.DemoStatusAwaiting,
-		IdentityID: uploader,
 		UploadedAt: now,
+		Status:     domain.DemoStatusAwaiting,
+		IdentityID: identityID,
+		ID:         demo.ID,
 	})
 	if err != nil && !errors.Is(err, postgres.ErrDemoAlreadyExists) {
 		slog.Error("demo not saved to db", "error", err, "demo_id", demo.ID)

@@ -42,6 +42,7 @@ const (
 // DemoServiceClient is a client for the cabin.v1.DemoService service.
 type DemoServiceClient interface {
 	GetDemo(context.Context, *connect.Request[v1.GetDemoRequest]) (*connect.Response[v1.GetDemoResponse], error)
+	// ListDemos returns demos list of current user.
 	ListDemos(context.Context, *connect.Request[v1.ListDemosRequest]) (*connect.Response[v1.ListDemosResponse], error)
 }
 
@@ -89,6 +90,7 @@ func (c *demoServiceClient) ListDemos(ctx context.Context, req *connect.Request[
 // DemoServiceHandler is an implementation of the cabin.v1.DemoService service.
 type DemoServiceHandler interface {
 	GetDemo(context.Context, *connect.Request[v1.GetDemoRequest]) (*connect.Response[v1.GetDemoResponse], error)
+	// ListDemos returns demos list of current user.
 	ListDemos(context.Context, *connect.Request[v1.ListDemosRequest]) (*connect.Response[v1.ListDemosResponse], error)
 }
 

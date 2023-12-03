@@ -34,7 +34,7 @@ func NewDemoStorage(c *pgclient.Client) DemoStorage {
 func (s *DemoStorage) Save(ctx context.Context, d domain.Demo) error {
 	sql, args, err := s.Builder.
 		Insert(demoTable).
-		Columns("id, status, uploader, uploaded_at").
+		Columns("id, status, identity_id, uploaded_at").
 		Values(d.ID, d.Status, d.IdentityID, d.UploadedAt).
 		ToSql()
 	if err != nil {
@@ -53,11 +53,14 @@ func (s *DemoStorage) Save(ctx context.Context, d domain.Demo) error {
 	return nil
 }
 
-func (s *DemoStorage) GetOne(ctx context.Context, id string) (domain.Demo, error) {
+func (s *DemoStorage) GetOne(ctx context.Context, demoID, identityID string) (domain.Demo, error) {
 	sql, args, err := s.Builder.
 		Select("id, identity_id, status, reason, uploaded_at, processed_at").
 		From(demoTable).
-		Where(sq.Eq{"id": id}).
+		Where(sq.And{
+			sq.Eq{"id": demoID},
+			sq.Eq{"identity_id": identityID},
+		}).
 		ToSql()
 	if err != nil {
 		return domain.Demo{}, err
@@ -65,7 +68,7 @@ func (s *DemoStorage) GetOne(ctx context.Context, id string) (domain.Demo, error
 
 	rows, err := s.Pool.Query(ctx, sql, args...)
 	if err != nil {
-		return domain.Demo{}, fmt.Errorf("%w, demo_id = %s", err, id)
+		return domain.Demo{}, fmt.Errorf("%w, demo_id = %s", err, demoID)
 	}
 
 	res, err := pgx.CollectOneRow[pgmodel.Demo](rows, pgx.RowToStructByName)
@@ -85,4 +88,45 @@ func (s *DemoStorage) GetOne(ctx context.Context, id string) (domain.Demo, error
 		UploadedAt:  res.UploadedAt,
 		ProcessedAt: time.Time(res.ProcessedAt),
 	}, nil
+}
+
+func (s *DemoStorage) GetAll(ctx context.Context, identityID string, status domain.DemoStatus) ([]domain.Demo, error) {
+	b := s.Builder.
+		Select("id, identity_id, status, reason, uploaded_at, processed_at").
+		From(demoTable).
+		Where(sq.Eq{"identity_id": identityID})
+
+	if status.Valid() {
+		b = b.Where(sq.Eq{"status": status})
+	}
+
+	sql, args, err := b.ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := s.Pool.Query(ctx, sql, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	pgdemos, err := pgx.CollectRows[pgmodel.Demo](rows, pgx.RowToStructByName)
+	if err != nil {
+		return nil, err
+	}
+
+	demos := make([]domain.Demo, len(pgdemos))
+
+	for i, d := range pgdemos {
+		demos[i] = domain.Demo{
+			UploadedAt:  d.UploadedAt,
+			ProcessedAt: time.Time(d.ProcessedAt),
+			Status:      d.Status,
+			Reason:      string(d.Reason),
+			IdentityID:  d.IdentityID,
+			ID:          d.ID,
+		}
+	}
+
+	return demos, nil
 }

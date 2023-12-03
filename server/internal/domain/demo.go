@@ -14,6 +14,15 @@ const (
 	DemoStatusError     DemoStatus = "ERROR"
 )
 
+func (s DemoStatus) Valid() bool {
+	switch s {
+	case DemoStatusAwaiting, DemoStatusProcessed, DemoStatusError:
+		return true
+	default:
+		return false
+	}
+}
+
 type Demo struct {
 	UploadedAt  time.Time
 	ProcessedAt time.Time
