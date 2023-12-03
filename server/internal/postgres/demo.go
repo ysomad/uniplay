@@ -7,6 +7,7 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
+	"github.com/google/uuid"
 	"github.com/jackc/pgerrcode"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -53,7 +54,7 @@ func (s *DemoStorage) Save(ctx context.Context, d domain.Demo) error {
 	return nil
 }
 
-func (s *DemoStorage) GetOne(ctx context.Context, id string) (domain.Demo, error) {
+func (s *DemoStorage) GetOne(ctx context.Context, id uuid.UUID) (domain.Demo, error) {
 	sql, args, err := s.Builder.
 		Select("id, identity_id, status, reason, uploaded_at, processed_at").
 		From(demoTable).

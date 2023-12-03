@@ -7,6 +7,7 @@ import (
 	"connectrpc.com/connect"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	"github.com/google/uuid"
 	pb "github.com/ysomad/uniplay/server/internal/gen/connect/cabin/v1"
 	connectpb "github.com/ysomad/uniplay/server/internal/gen/connect/cabin/v1/demov1connect"
 	"github.com/ysomad/uniplay/server/internal/postgres"
@@ -23,7 +24,12 @@ func NewDemoServer(s postgres.DemoStorage) *DemoServer {
 }
 
 func (s *DemoServer) GetDemo(ctx context.Context, r *connect.Request[pb.GetDemoRequest]) (*connect.Response[pb.GetDemoResponse], error) {
-	demo, err := s.demo.GetOne(ctx, r.Msg.DemoId)
+	demoUUID, err := uuid.Parse(r.Msg.DemoId)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+	}
+
+	demo, err := s.demo.GetOne(ctx, demoUUID)
 	if err != nil {
 		if errors.Is(err, postgres.ErrDemoNotFound) {
 			return nil, connect.NewError(connect.CodeNotFound, err)

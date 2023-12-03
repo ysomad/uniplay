@@ -32,7 +32,7 @@ message Demo {
 }
 
 message GetDemoRequest {
-    string demo_id = 1;
+    string demo_id = 1; // required
 }
 
 message GetDemoResponse {
