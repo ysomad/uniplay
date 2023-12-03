@@ -8,12 +8,14 @@ import (
 	"os/signal"
 	"syscall"
 
+	"connectrpc.com/connect"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	"github.com/ory/client-go"
+	ory "github.com/ory/client-go"
 
 	"github.com/ysomad/uniplay/server/internal/config"
 	v1 "github.com/ysomad/uniplay/server/internal/connect/cabin/v1"
+	"github.com/ysomad/uniplay/server/internal/connect/interceptor"
 	"github.com/ysomad/uniplay/server/internal/gen/connect/cabin/v1/demov1connect"
 	"github.com/ysomad/uniplay/server/internal/httpapi"
 	"github.com/ysomad/uniplay/server/internal/httpapi/middleware"
@@ -37,10 +39,10 @@ func Run(conf *config.Config, f Flags) {
 		os.Exit(1)
 	}
 
-	kratosClient := client.NewAPIClient(&client.Configuration{
+	kratosClient := ory.NewAPIClient(&ory.Configuration{
 		UserAgent:  fmt.Sprintf("%s/%s/%s/go", conf.App.Name, conf.App.Ver, conf.App.Environment),
 		Debug:      conf.Kratos.Debug,
-		Servers:    []client.ServerConfiguration{{URL: conf.Kratos.URL}},
+		Servers:    []ory.ServerConfiguration{{URL: conf.Kratos.URL}},
 		HTTPClient: &http.Client{Timeout: conf.Kratos.ClientTimeout},
 	})
 
@@ -64,9 +66,11 @@ func Run(conf *config.Config, f Flags) {
 	demoServer := v1.NewDemoServer(demoStorage)
 
 	connectsrv := newConnectSrv(connectSrvDeps{
-		demosrv: demoServer,
-		conf:    conf.Connect,
-		mw:      kratosMW,
+		demosrv:    demoServer,
+		kratos:     kratosClient,
+		conf:       conf.Connect,
+		mw:         kratosMW,
+		kratosConf: conf.Kratos,
 	})
 
 	// http
@@ -114,15 +118,17 @@ func newStdSrv(deps stdSrvDeps) *httpserver.Server {
 }
 
 type connectSrvDeps struct {
-	demosrv *v1.DemoServer
-	conf    config.Connect
-	mw      middleware.Kratos
+	demosrv    *v1.DemoServer
+	kratos     *ory.APIClient
+	conf       config.Connect
+	mw         middleware.Kratos
+	kratosConf config.Kratos
 }
 
 func newConnectSrv(deps connectSrvDeps) *httpserver.Server {
 	defer slog.Info("connect server started", "host", deps.conf.Host, "port", deps.conf.Port)
 	mux := http.NewServeMux()
-	path, handler := demov1connect.NewDemoServiceHandler(deps.demosrv)
+	path, handler := demov1connect.NewDemoServiceHandler(deps.demosrv, connect.WithInterceptors(interceptor.NewAuth(deps.kratos, deps.kratosConf)))
 	mux.Handle(path, handler)
 	return httpserver.New(mux, httpserver.WithHostPort(deps.conf.Host, deps.conf.Port))
 }

@@ -9,3 +9,8 @@ CREATE TABLE IF NOT EXISTS demos (
     processed_at timestamptz
 );
 -- +goose StatementEnd
+
+-- +goose Down
+-- +goose StatementBegin
+DROP TABLE demos;
+-- +goose StatementEnd
