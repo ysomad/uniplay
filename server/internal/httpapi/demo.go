@@ -11,11 +11,11 @@ import (
 	"github.com/google/uuid"
 	"github.com/minio/minio-go/v7"
 
-	"github.com/ysomad/uniplay/internal/appctx"
-	"github.com/ysomad/uniplay/internal/demoparser"
-	"github.com/ysomad/uniplay/internal/domain"
-	"github.com/ysomad/uniplay/internal/httpapi/reswriter"
-	"github.com/ysomad/uniplay/internal/postgres"
+	"github.com/ysomad/uniplay/server/internal/appctx"
+	"github.com/ysomad/uniplay/server/internal/demoparser"
+	"github.com/ysomad/uniplay/server/internal/domain"
+	"github.com/ysomad/uniplay/server/internal/httpapi/reswriter"
+	"github.com/ysomad/uniplay/server/internal/postgres"
 )
 
 var errDemoNotUploaded = errors.New("demo not uploaded to storage")

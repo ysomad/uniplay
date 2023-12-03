@@ -1,4 +1,4 @@
-module github.com/ysomad/uniplay
+module github.com/ysomad/uniplay/server
 
 go 1.21
 

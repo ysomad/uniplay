@@ -7,8 +7,8 @@ import (
 	"github.com/jackc/pgerrcode"
 	"github.com/jackc/pgx/v5/pgconn"
 
-	"github.com/ysomad/uniplay/internal/domain"
-	"github.com/ysomad/uniplay/internal/postgres/pgclient"
+	"github.com/ysomad/uniplay/server/internal/domain"
+	"github.com/ysomad/uniplay/server/internal/postgres/pgclient"
 )
 
 var ErrDemoAlreadyExists = errors.New("demo already exists")

@@ -7,9 +7,9 @@ import (
 
 	ory "github.com/ory/client-go"
 
-	"github.com/ysomad/uniplay/internal/appctx"
-	"github.com/ysomad/uniplay/internal/config"
-	"github.com/ysomad/uniplay/internal/httpapi/reswriter"
+	"github.com/ysomad/uniplay/server/internal/appctx"
+	"github.com/ysomad/uniplay/server/internal/config"
+	"github.com/ysomad/uniplay/server/internal/httpapi/reswriter"
 )
 
 type kratos struct {

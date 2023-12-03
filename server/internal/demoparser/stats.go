@@ -4,7 +4,8 @@ import (
 	"log/slog"
 
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
-	"github.com/ysomad/uniplay/internal/pkg/stat"
+
+	"github.com/ysomad/uniplay/server/internal/pkg/stat"
 )
 
 type dmgStats struct {

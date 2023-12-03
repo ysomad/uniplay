@@ -12,12 +12,12 @@ import (
 	"github.com/minio/minio-go/v7/pkg/credentials"
 	"github.com/ory/client-go"
 
-	"github.com/ysomad/uniplay/internal/config"
-	"github.com/ysomad/uniplay/internal/httpapi"
-	"github.com/ysomad/uniplay/internal/httpapi/middleware"
-	"github.com/ysomad/uniplay/internal/pkg/httpserver"
-	"github.com/ysomad/uniplay/internal/postgres"
-	"github.com/ysomad/uniplay/internal/postgres/pgclient"
+	"github.com/ysomad/uniplay/server/internal/config"
+	"github.com/ysomad/uniplay/server/internal/httpapi"
+	"github.com/ysomad/uniplay/server/internal/httpapi/middleware"
+	"github.com/ysomad/uniplay/server/internal/pkg/httpserver"
+	"github.com/ysomad/uniplay/server/internal/postgres"
+	"github.com/ysomad/uniplay/server/internal/postgres/pgclient"
 )
 
 func Run(conf *config.Config, f Flags) {
