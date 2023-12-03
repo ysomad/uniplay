@@ -13,13 +13,13 @@ const (
 	defaultShutdownTimeout = 3 * time.Second
 )
 
-type server struct {
+type Server struct {
 	server          *http.Server
 	notify          chan error
 	shutdownTimeout time.Duration
 }
 
-func New(handler http.Handler, opts ...Option) *server {
+func New(handler http.Handler, opts ...Option) *Server {
 	httpServer := &http.Server{
 		Handler:      handler,
 		ReadTimeout:  defaultReadTimeout,
@@ -27,7 +27,7 @@ func New(handler http.Handler, opts ...Option) *server {
 		Addr:         defaultAddr,
 	}
 
-	s := &server{
+	s := &Server{
 		server:          httpServer,
 		notify:          make(chan error, 1),
 		shutdownTimeout: defaultShutdownTimeout,
@@ -42,16 +42,16 @@ func New(handler http.Handler, opts ...Option) *server {
 	return s
 }
 
-func (s *server) start() {
+func (s *Server) start() {
 	go func() {
 		s.notify <- s.server.ListenAndServe()
 		close(s.notify)
 	}()
 }
 
-func (s *server) Notify() <-chan error { return s.notify }
+func (s *Server) Notify() <-chan error { return s.notify }
 
-func (s *server) Shutdown() error {
+func (s *Server) Shutdown() error {
 	ctx, cancel := context.WithTimeout(context.Background(), s.shutdownTimeout)
 	defer cancel()
 

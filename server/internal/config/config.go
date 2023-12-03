@@ -13,6 +13,7 @@ type Config struct {
 	ObjectStorage ObjectStorage `yaml:"object_storage"`
 	PG            PG            `yaml:"postgres"`
 	Kratos        Kratos        `yaml:"kratos"`
+	Connect       Connect       `yaml:"connect"`
 }
 
 type (
@@ -23,6 +24,11 @@ type (
 	}
 
 	HTTP struct {
+		Host string `yaml:"host" env-required:"true"`
+		Port string `yaml:"port" env-required:"true"`
+	}
+
+	Connect struct {
 		Host string `yaml:"host" env-required:"true"`
 		Port string `yaml:"port" env-required:"true"`
 	}

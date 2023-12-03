@@ -10,6 +10,10 @@ http:
   host: 127.0.0.1
   port: 8080
 
+connect:
+  host: 127.0.0.1
+  port: 8081
+
 kratos:
   url: http://127.0.0.1:4433
   client_timeout: 0.5s

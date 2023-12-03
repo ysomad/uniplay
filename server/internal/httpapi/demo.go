@@ -24,14 +24,14 @@ type uploadDemoRes struct {
 	DemoID uuid.UUID `json:"demo_id"`
 }
 
-type demoV1 struct {
+type DemoV1 struct {
 	minio   *minio.Client
 	storage postgres.DemoStorage
 	bucket  string
 }
 
-func NewDemoV1(c *minio.Client, bucket string, s postgres.DemoStorage) *demoV1 {
-	return &demoV1{
+func NewDemoV1(c *minio.Client, bucket string, s postgres.DemoStorage) *DemoV1 {
+	return &DemoV1{
 		minio:   c,
 		bucket:  bucket,
 		storage: s,
@@ -46,7 +46,7 @@ const (
 
 var errDemoTooLarge = errors.New("demo file is too large")
 
-func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
+func (d *DemoV1) Upload(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
 		reswriter.Status(w, http.StatusMethodNotAllowed)
 		return

@@ -13,6 +13,8 @@ import (
 	"github.com/ory/client-go"
 
 	"github.com/ysomad/uniplay/server/internal/config"
+	v1 "github.com/ysomad/uniplay/server/internal/connect/cabin/v1"
+	"github.com/ysomad/uniplay/server/internal/gen/connect/cabin/v1/demov1connect"
 	"github.com/ysomad/uniplay/server/internal/httpapi"
 	"github.com/ysomad/uniplay/server/internal/httpapi/middleware"
 	"github.com/ysomad/uniplay/server/internal/pkg/httpserver"
@@ -29,7 +31,11 @@ func Run(conf *config.Config, f Flags) {
 		mustMigrate(conf.PG.URL, f.MigrationsDir)
 	}
 
-	slog.Debug("starting app", "config", conf)
+	pgClient, err := pgclient.New(conf.PG.URL, pgclient.WithMaxConns(conf.PG.MaxConns))
+	if err != nil {
+		slog.Error("postgres client not created", "error", err.Error())
+		os.Exit(1)
+	}
 
 	kratosClient := client.NewAPIClient(&client.Configuration{
 		UserAgent:  fmt.Sprintf("%s/%s/%s/go", conf.App.Name, conf.App.Ver, conf.App.Environment),
@@ -47,36 +53,76 @@ func Run(conf *config.Config, f Flags) {
 		os.Exit(1)
 	}
 
-	pgClient, err := pgclient.New(conf.PG.URL, pgclient.WithMaxConns(conf.PG.MaxConns))
-	if err != nil {
-		slog.Error("postgres client not created", "error", err.Error())
-		os.Exit(1)
-	}
-
-	demoStorage := postgres.DemoStorage{Client: pgClient}
-
-	demoV1 := httpapi.NewDemoV1(minioClient, conf.ObjectStorage.DemoBucket, demoStorage)
 	kratosMW := middleware.NewKratos(kratosClient, conf.Kratos)
-	mux := http.NewServeMux()
 
-	// TODO: replace with identity.Organizer in production
-	mux.Handle("/v1/demos", kratosMW.SessionAuth(http.HandlerFunc(demoV1.Upload)))
+	demoStorage := postgres.NewDemoStorage(pgClient)
+	demov1 := httpapi.NewDemoV1(minioClient, conf.ObjectStorage.DemoBucket, demoStorage)
 
-	srv := httpserver.New(mux, httpserver.WithHostPort(conf.HTTP.Host, conf.HTTP.Port))
+	slog.Debug("starting app", "config", conf)
 
-	slog.Info("http server started", "host", conf.HTTP.Host, "port", conf.HTTP.Port)
+	// connect
+	demoServer := v1.NewDemoServer(demoStorage)
+
+	connectsrv := newConnectSrv(connectSrvDeps{
+		demosrv: demoServer,
+		conf:    conf.Connect,
+		mw:      kratosMW,
+	})
+
+	// http
+	stdsrv := newStdSrv(stdSrvDeps{
+		conf:   conf.HTTP,
+		mw:     kratosMW,
+		demov1: demov1,
+		minio:  minioClient,
+	})
 
 	interrupt := make(chan os.Signal, 1)
-	signal.Notify(interrupt, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
+	defer signal.Stop(interrupt)
 
 	select {
 	case s := <-interrupt:
-		slog.Info("received signal from httpserver", "signal", s.String())
-	case err := <-srv.Notify():
-		slog.Error("got error from http server notify", "error", err.Error())
+		slog.Info("received interrupt signal", "signal", s.String())
+	case err := <-stdsrv.Notify():
+		slog.Error("got error from http server", "error", err.Error())
+	case err := <-connectsrv.Notify():
+		slog.Error("got error from connect server", "error", err.Error())
 	}
 
-	if err := srv.Shutdown(); err != nil {
+	if err := stdsrv.Shutdown(); err != nil {
 		slog.Error("got error on http server shutdown", "error", err.Error())
 	}
+
+	if err := connectsrv.Shutdown(); err != nil {
+		slog.Error("go error on connect server shutdown", "error", err.Error())
+	}
+}
+
+type stdSrvDeps struct {
+	demov1 *httpapi.DemoV1
+	minio  *minio.Client
+	conf   config.HTTP
+	mw     middleware.Kratos
+}
+
+func newStdSrv(deps stdSrvDeps) *httpserver.Server {
+	defer slog.Info("std http server started", "host", deps.conf.Host, "port", deps.conf.Port)
+	mux := http.NewServeMux()
+	mux.Handle("/v1/demos", deps.mw.SessionAuth(http.HandlerFunc(deps.demov1.Upload)))
+	return httpserver.New(mux, httpserver.WithHostPort(deps.conf.Host, deps.conf.Port))
+}
+
+type connectSrvDeps struct {
+	demosrv *v1.DemoServer
+	conf    config.Connect
+	mw      middleware.Kratos
+}
+
+func newConnectSrv(deps connectSrvDeps) *httpserver.Server {
+	defer slog.Info("connect server started", "host", deps.conf.Host, "port", deps.conf.Port)
+	mux := http.NewServeMux()
+	path, handler := demov1connect.NewDemoServiceHandler(deps.demosrv)
+	mux.Handle(path, handler)
+	return httpserver.New(mux, httpserver.WithHostPort(deps.conf.Host, deps.conf.Port))
 }

@@ -35,11 +35,14 @@ const (
 const (
 	// DemoServiceGetDemoProcedure is the fully-qualified name of the DemoService's GetDemo RPC.
 	DemoServiceGetDemoProcedure = "/cabin.v1.DemoService/GetDemo"
+	// DemoServiceListDemosProcedure is the fully-qualified name of the DemoService's ListDemos RPC.
+	DemoServiceListDemosProcedure = "/cabin.v1.DemoService/ListDemos"
 )
 
 // DemoServiceClient is a client for the cabin.v1.DemoService service.
 type DemoServiceClient interface {
 	GetDemo(context.Context, *connect.Request[v1.GetDemoRequest]) (*connect.Response[v1.GetDemoResponse], error)
+	ListDemos(context.Context, *connect.Request[v1.ListDemosRequest]) (*connect.Response[v1.ListDemosResponse], error)
 }
 
 // NewDemoServiceClient constructs a client for the cabin.v1.DemoService service. By default, it
@@ -58,12 +61,19 @@ func NewDemoServiceClient(httpClient connect.HTTPClient, baseURL string, opts ..
 			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 			connect.WithClientOptions(opts...),
 		),
+		listDemos: connect.NewClient[v1.ListDemosRequest, v1.ListDemosResponse](
+			httpClient,
+			baseURL+DemoServiceListDemosProcedure,
+			connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // demoServiceClient implements DemoServiceClient.
 type demoServiceClient struct {
-	getDemo *connect.Client[v1.GetDemoRequest, v1.GetDemoResponse]
+	getDemo   *connect.Client[v1.GetDemoRequest, v1.GetDemoResponse]
+	listDemos *connect.Client[v1.ListDemosRequest, v1.ListDemosResponse]
 }
 
 // GetDemo calls cabin.v1.DemoService.GetDemo.
@@ -71,9 +81,15 @@ func (c *demoServiceClient) GetDemo(ctx context.Context, req *connect.Request[v1
 	return c.getDemo.CallUnary(ctx, req)
 }
 
+// ListDemos calls cabin.v1.DemoService.ListDemos.
+func (c *demoServiceClient) ListDemos(ctx context.Context, req *connect.Request[v1.ListDemosRequest]) (*connect.Response[v1.ListDemosResponse], error) {
+	return c.listDemos.CallUnary(ctx, req)
+}
+
 // DemoServiceHandler is an implementation of the cabin.v1.DemoService service.
 type DemoServiceHandler interface {
 	GetDemo(context.Context, *connect.Request[v1.GetDemoRequest]) (*connect.Response[v1.GetDemoResponse], error)
+	ListDemos(context.Context, *connect.Request[v1.ListDemosRequest]) (*connect.Response[v1.ListDemosResponse], error)
 }
 
 // NewDemoServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -88,10 +104,18 @@ func NewDemoServiceHandler(svc DemoServiceHandler, opts ...connect.HandlerOption
 		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
 		connect.WithHandlerOptions(opts...),
 	)
+	demoServiceListDemosHandler := connect.NewUnaryHandler(
+		DemoServiceListDemosProcedure,
+		svc.ListDemos,
+		connect.WithIdempotency(connect.IdempotencyNoSideEffects),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/cabin.v1.DemoService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DemoServiceGetDemoProcedure:
 			demoServiceGetDemoHandler.ServeHTTP(w, r)
+		case DemoServiceListDemosProcedure:
+			demoServiceListDemosHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -103,4 +127,8 @@ type UnimplementedDemoServiceHandler struct{}
 
 func (UnimplementedDemoServiceHandler) GetDemo(context.Context, *connect.Request[v1.GetDemoRequest]) (*connect.Response[v1.GetDemoResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cabin.v1.DemoService.GetDemo is not implemented"))
+}
+
+func (UnimplementedDemoServiceHandler) ListDemos(context.Context, *connect.Request[v1.ListDemosRequest]) (*connect.Response[v1.ListDemosResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cabin.v1.DemoService.ListDemos is not implemented"))
 }

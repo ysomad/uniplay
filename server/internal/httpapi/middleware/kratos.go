@@ -12,26 +12,24 @@ import (
 	"github.com/ysomad/uniplay/server/internal/httpapi/reswriter"
 )
 
-type kratos struct {
+type Kratos struct {
 	client            *ory.APIClient
 	organizerSchemaID string
 }
 
-func NewKratos(client *ory.APIClient, conf config.Kratos) kratos {
-	return kratos{
+func NewKratos(client *ory.APIClient, conf config.Kratos) Kratos {
+	return Kratos{
 		client:            client,
 		organizerSchemaID: conf.OrganizerSchemaID,
 	}
 }
 
-var (
-	errIdentityNotMatch = errors.New("session identity not match")
-)
+var errIdentityNotMatch = errors.New("session identity not match")
 
 // SessionAuth returns middleware which is authenticates request.
 // returns 401 if received session from kratos has identity schema id different from given schema id.
 // Must be used only for requests from browser.
-func (k kratos) SessionAuth(next http.Handler) http.Handler {
+func (k Kratos) SessionAuth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("ory_kratos_session")
 		if err != nil {

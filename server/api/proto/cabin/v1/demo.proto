@@ -9,6 +9,10 @@ service DemoService {
     rpc GetDemo(GetDemoRequest) returns (GetDemoResponse) {
         option idempotency_level = NO_SIDE_EFFECTS;
     }
+
+    rpc ListDemos(ListDemosRequest) returns (ListDemosResponse) {
+        option idempotency_level = NO_SIDE_EFFECTS;
+    }
 }
 
 enum DemoStatus {
@@ -33,4 +37,12 @@ message GetDemoRequest {
 
 message GetDemoResponse {
     Demo demo = 1;
+}
+
+message ListDemosRequest {
+
+}
+
+message ListDemosResponse {
+
 }
