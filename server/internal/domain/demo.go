@@ -9,10 +9,9 @@ import (
 type DemoStatus string
 
 const (
-	DemoStatusUploaded   DemoStatus = "uploaded"
-	DemoStatusProcessing DemoStatus = "processing"
-	DemoStatusDone       DemoStatus = "done"
-	DemoStatusError      DemoStatus = "error"
+	DemoStatusAwaiting  DemoStatus = "AWAITING"
+	DemoStatusProcessed DemoStatus = "PROCESSED"
+	DemoStatusError     DemoStatus = "ERROR"
 )
 
 type Demo struct {
@@ -20,6 +19,6 @@ type Demo struct {
 	ProcessedAt time.Time
 	Status      DemoStatus
 	Reason      string
-	Uploader    string
+	IdentityID  string // uploader of a demo
 	ID          uuid.UUID
 }

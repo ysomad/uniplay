@@ -102,8 +102,8 @@ func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
 
 	err = d.storage.Save(ctx, domain.Demo{
 		ID:         demo.ID,
-		Status:     domain.DemoStatusUploaded,
-		Uploader:   uploader,
+		Status:     domain.DemoStatusAwaiting,
+		IdentityID: uploader,
 		UploadedAt: now,
 	})
 	if err != nil && !errors.Is(err, postgres.ErrDemoAlreadyExists) {

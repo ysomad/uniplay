@@ -21,7 +21,7 @@ func (s *DemoStorage) Save(ctx context.Context, d domain.Demo) error {
 	sql, args, err := s.Builder.
 		Insert("demos").
 		Columns("id, status, uploader, uploaded_at").
-		Values(d.ID, d.Status, d.Uploader, d.UploadedAt).
+		Values(d.ID, d.Status, d.IdentityID, d.UploadedAt).
 		ToSql()
 	if err != nil {
 		return err

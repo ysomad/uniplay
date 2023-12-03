@@ -3,6 +3,7 @@ module github.com/ysomad/uniplay
 go 1.21
 
 require (
+	connectrpc.com/connect v1.12.0
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/google/uuid v1.4.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
@@ -14,6 +15,7 @@ require (
 	github.com/pressly/goose/v3 v3.16.0
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
+	google.golang.org/protobuf v1.31.0
 )
 
 require (
@@ -58,7 +60,6 @@ require (
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3 // indirect
