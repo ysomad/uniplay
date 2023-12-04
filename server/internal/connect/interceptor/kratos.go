@@ -26,7 +26,7 @@ func sessionCookie(h http.Header) (string, error) {
 	}
 
 	for _, cookie := range strings.Split(cookieHdr, "; ") {
-		parts := strings.SplitN(cookie, "=", 2)
+		parts := strings.Split(cookie, "=")
 		if len(parts) == 2 && parts[0] == "ory_kratos_session" {
 			if cookie == "" {
 				return "", errors.New("empty session cookie")

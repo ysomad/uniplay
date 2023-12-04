@@ -14,29 +14,8 @@ import (
 	"github.com/ysomad/uniplay/server/internal/appctx"
 	"github.com/ysomad/uniplay/server/internal/demoparser"
 	"github.com/ysomad/uniplay/server/internal/domain"
-	"github.com/ysomad/uniplay/server/internal/httpapi/reswriter"
 	"github.com/ysomad/uniplay/server/internal/postgres"
 )
-
-var errDemoNotUploaded = errors.New("demo not uploaded to storage")
-
-type uploadDemoRes struct {
-	DemoID uuid.UUID `json:"demo_id"`
-}
-
-type DemoV1 struct {
-	minio   *minio.Client
-	storage postgres.DemoStorage
-	bucket  string
-}
-
-func NewDemoV1(c *minio.Client, bucket string, s postgres.DemoStorage) *DemoV1 {
-	return &DemoV1{
-		minio:   c,
-		bucket:  bucket,
-		storage: s,
-	}
-}
 
 const (
 	demoMaxSize       = 200 << 20
@@ -44,18 +23,31 @@ const (
 	demoTTL           = time.Hour * 24 * 7
 )
 
-var errDemoTooLarge = errors.New("demo file is too large")
+var (
+	errDemoNotUploaded = errors.New("demo not uploaded to storage")
+	errDemoTooLarge    = errors.New("demo file is too large")
+)
 
-func (d *DemoV1) Upload(w http.ResponseWriter, r *http.Request) {
+type demoV1 struct {
+	minio  *minio.Client
+	demo   postgres.DemoStorage
+	bucket string
+}
+
+type uploadDemoResponse struct {
+	DemoID uuid.UUID `json:"demo_id"`
+}
+
+func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
-		reswriter.Status(w, http.StatusMethodNotAllowed)
+		writeStatus(w, http.StatusMethodNotAllowed)
 		return
 	}
 
 	r.Body = http.MaxBytesReader(w, r.Body, demoMaxSize)
 
 	if err := r.ParseMultipartForm(demoMemoryMaxSize); err != nil {
-		reswriter.Error(w, http.StatusBadRequest,
+		writerError(w, http.StatusBadRequest,
 			fmt.Errorf("%w, must be equal or less than %dMB", errDemoTooLarge, demoMaxSize/1024/1024))
 		return
 	}
@@ -68,7 +60,7 @@ func (d *DemoV1) Upload(w http.ResponseWriter, r *http.Request) {
 
 	demo, err := demoparser.NewDemo(file, fileHdr)
 	if err != nil {
-		reswriter.Error(w, http.StatusBadRequest, err)
+		writerError(w, http.StatusBadRequest, err)
 		return
 	}
 
@@ -86,7 +78,7 @@ func (d *DemoV1) Upload(w http.ResponseWriter, r *http.Request) {
 				Expires:      now.Add(demoTTL),
 			})
 		if err != nil {
-			reswriter.Error(w, http.StatusInternalServerError,
+			writerError(w, http.StatusInternalServerError,
 				fmt.Errorf("%w, reason: %w", errDemoNotUploaded, err))
 			return
 		}
@@ -94,7 +86,7 @@ func (d *DemoV1) Upload(w http.ResponseWriter, r *http.Request) {
 		slog.Info("demo uploaded to object storage", "upload_info", res)
 	}
 
-	err = d.storage.Save(ctx, domain.Demo{
+	err = d.demo.Save(ctx, domain.Demo{
 		UploadedAt: now,
 		Status:     domain.DemoStatusAwaiting,
 		IdentityID: identityID,
@@ -102,15 +94,15 @@ func (d *DemoV1) Upload(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil && !errors.Is(err, postgres.ErrDemoAlreadyExists) {
 		slog.Error("demo not saved to db", "error", err, "demo_id", demo.ID)
-		reswriter.Error(w, http.StatusInternalServerError, err)
+		writerError(w, http.StatusInternalServerError, err)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(uploadDemoRes{DemoID: demo.ID}); err != nil {
-		reswriter.Error(w, http.StatusInternalServerError, err)
+	if err := json.NewEncoder(w).Encode(uploadDemoResponse{DemoID: demo.ID}); err != nil {
+		writerError(w, http.StatusInternalServerError, err)
 		return
 	}
 }
