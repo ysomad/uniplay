@@ -11,9 +11,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/minio/minio-go/v7"
 
-	"github.com/ysomad/uniplay/server/internal/appctx"
 	"github.com/ysomad/uniplay/server/internal/demoparser"
 	"github.com/ysomad/uniplay/server/internal/domain"
+	appctx "github.com/ysomad/uniplay/server/internal/kratosctx"
 	"github.com/ysomad/uniplay/server/internal/postgres"
 )
 

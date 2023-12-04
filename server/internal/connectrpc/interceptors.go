@@ -11,7 +11,7 @@ import (
 	"connectrpc.com/connect"
 	kratos "github.com/ory/kratos-client-go"
 
-	"github.com/ysomad/uniplay/server/internal/appctx"
+	"github.com/ysomad/uniplay/server/internal/kratosctx"
 )
 
 var errIdentityNotMatch = errors.New("session identity not match")
@@ -71,7 +71,7 @@ func newAuthInterceptor(client *kratos.APIClient, orgSchemaID string) connect.Un
 					fmt.Errorf("%w, must be %s", errIdentityNotMatch, orgSchemaID))
 			}
 
-			ctx = appctx.WithIdentityID(ctx, identity.Id)
+			ctx = kratosctx.WithIdentityID(ctx, identity.Id)
 
 			return next(ctx, req)
 		})

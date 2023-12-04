@@ -7,7 +7,7 @@ import (
 
 	kratos "github.com/ory/kratos-client-go"
 
-	"github.com/ysomad/uniplay/server/internal/appctx"
+	"github.com/ysomad/uniplay/server/internal/kratosctx"
 )
 
 var errIdentityNotMatch = errors.New("session identity not match")
@@ -50,7 +50,7 @@ func newSessionAuth(client *kratos.APIClient, orgSchemaID string) func(http.Hand
 				return
 			}
 
-			ctx = appctx.WithIdentityID(ctx, identity.Id)
+			ctx = kratosctx.WithIdentityID(ctx, identity.Id)
 			r = r.WithContext(ctx)
 			next.ServeHTTP(w, r)
 		})

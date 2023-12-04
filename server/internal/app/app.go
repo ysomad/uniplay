@@ -16,7 +16,7 @@ import (
 	"github.com/ysomad/uniplay/server/internal/config"
 	"github.com/ysomad/uniplay/server/internal/connectrpc"
 	"github.com/ysomad/uniplay/server/internal/httpapi"
-	"github.com/ysomad/uniplay/server/internal/pkg/httpserver"
+	"github.com/ysomad/uniplay/server/internal/httpserver"
 	"github.com/ysomad/uniplay/server/internal/postgres"
 	"github.com/ysomad/uniplay/server/internal/postgres/pgclient"
 )
