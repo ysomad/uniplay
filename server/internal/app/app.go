@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"log"
 	"log/slog"
 	"net/http"
 	"os"
@@ -20,6 +21,11 @@ import (
 	"github.com/ysomad/uniplay/server/internal/postgres/pgclient"
 )
 
+func logFatal(msg string, err error) {
+	slog.Error(msg, "error", err)
+	os.Exit(1)
+}
+
 func Run(conf *config.Config, f Flags) {
 	slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
 		Level: conf.Log.SlogLevel(),
@@ -29,10 +35,10 @@ func Run(conf *config.Config, f Flags) {
 		mustMigrate(conf.PG.URL, f.MigrationsDir)
 	}
 
+	// deps
 	pgClient, err := pgclient.New(conf.PG.URL, pgclient.WithMaxConns(conf.PG.MaxConns))
 	if err != nil {
-		slog.Error("postgres client not created", "error", err.Error())
-		os.Exit(1)
+		logFatal("postgres client not created", err)
 	}
 
 	kratosClient := kratos.NewAPIClient(&kratos.Configuration{
@@ -47,8 +53,7 @@ func Run(conf *config.Config, f Flags) {
 		Secure: conf.ObjectStorage.SSL,
 	})
 	if err != nil {
-		slog.Error("minio client not created", "error", err)
-		os.Exit(1)
+		log.Fatal("minio client not created", err)
 	}
 
 	demoStorage := postgres.NewDemoStorage(pgClient)
@@ -62,8 +67,7 @@ func Run(conf *config.Config, f Flags) {
 		OrgSchemaID: conf.Kratos.OrganizerSchemaID,
 	})
 	if err != nil {
-		slog.Error("connect rpc mux not created", "error", err.Error())
-		os.Exit(1)
+		logFatal("connect rpc mux not created", err)
 	}
 
 	connectsrv := httpserver.New(connectmux, httpserver.WithAddr(conf.Connect.Host, conf.Connect.Port))
