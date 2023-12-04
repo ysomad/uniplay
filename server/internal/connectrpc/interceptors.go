@@ -1,24 +1,23 @@
-package interceptor
+package connectrpc
 
 import (
 	"context"
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"strings"
 
 	"connectrpc.com/connect"
-	ory "github.com/ory/client-go"
+	kratos "github.com/ory/kratos-client-go"
+
 	"github.com/ysomad/uniplay/server/internal/appctx"
-	"github.com/ysomad/uniplay/server/internal/config"
 )
 
-var (
-	errIdentityNotMatch = errors.New("session identity not match")
-	errUnauthenticated  = errors.New("unauthenticated")
-)
+var errIdentityNotMatch = errors.New("session identity not match")
 
 // sessionCookie returns kratos session cookie from header Cookie
+// TODO: WRITE TESTS
 func sessionCookie(h http.Header) (string, error) {
 	cookieHdr := h.Get("Cookie")
 	if cookieHdr == "" {
@@ -26,7 +25,10 @@ func sessionCookie(h http.Header) (string, error) {
 	}
 
 	for _, cookie := range strings.Split(cookieHdr, "; ") {
-		parts := strings.Split(cookie, "=")
+		parts := strings.SplitN(cookie, "=", 2)
+
+		slog.Debug("cookie parts", "val", parts)
+
 		if len(parts) == 2 && parts[0] == "ory_kratos_session" {
 			if cookie == "" {
 				return "", errors.New("empty session cookie")
@@ -38,15 +40,15 @@ func sessionCookie(h http.Header) (string, error) {
 	return "", errors.New("session cookie not found")
 }
 
-func NewAuth(kratos *ory.APIClient, conf config.Kratos) connect.UnaryInterceptorFunc {
-	interceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
+func newAuthInterceptor(client *kratos.APIClient, orgSchemaID string) connect.UnaryInterceptorFunc {
+	return connect.UnaryInterceptorFunc(func(next connect.UnaryFunc) connect.UnaryFunc {
 		return connect.UnaryFunc(func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
 			cookie, err := sessionCookie(req.Header())
 			if err != nil {
 				return nil, connect.NewError(connect.CodeUnauthenticated, err)
 			}
 
-			session, resp, err := kratos.FrontendAPI.
+			session, resp, err := client.FrontendApi.
 				ToSession(ctx).
 				Cookie(cookie).
 				Execute()
@@ -64,16 +66,14 @@ func NewAuth(kratos *ory.APIClient, conf config.Kratos) connect.UnaryInterceptor
 
 			identity := session.GetIdentity()
 
-			if identity.SchemaId != conf.OrganizerSchemaID {
+			if identity.SchemaId != orgSchemaID {
 				return nil, connect.NewError(connect.CodePermissionDenied,
-					fmt.Errorf("%w, must be %s", errIdentityNotMatch, conf.OrganizerSchemaID))
+					fmt.Errorf("%w, must be %s", errIdentityNotMatch, orgSchemaID))
 			}
 
 			ctx = appctx.WithIdentityID(ctx, identity.Id)
 
 			return next(ctx, req)
 		})
-	}
-
-	return connect.UnaryInterceptorFunc(interceptor)
+	})
 }

@@ -7,7 +7,7 @@ import (
 
 type Option func(*Server)
 
-func WithHostPort(host, port string) Option {
+func WithAddr(host, port string) Option {
 	return func(s *Server) {
 		s.server.Addr = net.JoinHostPort(host, port)
 	}

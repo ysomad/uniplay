@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"net/http"
 
-	ory "github.com/ory/client-go"
+	kratos "github.com/ory/kratos-client-go"
 
 	"github.com/ysomad/uniplay/server/internal/appctx"
 )
 
 var errIdentityNotMatch = errors.New("session identity not match")
 
-func newSessionAuth(client *ory.APIClient, orgSchemaID string) func(http.Handler) http.Handler {
+func newSessionAuth(client *kratos.APIClient, orgSchemaID string) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			cookie, err := r.Cookie("ory_kratos_session")
@@ -23,7 +23,7 @@ func newSessionAuth(client *ory.APIClient, orgSchemaID string) func(http.Handler
 
 			ctx := r.Context()
 
-			session, resp, err := client.FrontendAPI.
+			session, resp, err := client.FrontendApi.
 				ToSession(ctx).
 				Cookie(cookie.String()).
 				Execute()

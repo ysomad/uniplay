@@ -151,10 +151,10 @@ github.com/opencontainers/image-spec v1.1.0-rc5 h1:Ygwkfw9bpDvs+c9E34SdgGOj41dX/
 github.com/opencontainers/image-spec v1.1.0-rc5/go.mod h1:X4pATf0uXsnn3g5aiGIsVnJBR4mxhKzfwmvK/B2NTm8=
 github.com/opencontainers/runc v1.1.10 h1:EaL5WeO9lv9wmS6SASjszOeQdSctvpbu0DdBQBizE40=
 github.com/opencontainers/runc v1.1.10/go.mod h1:+/R6+KmDlh+hOO8NkjmgkG9Qzvypzk0yXxAPYYR65+M=
-github.com/ory/client-go v1.4.3 h1:NBZCbn1U8JrBLcLqR6rZg5r3OJr6n6wYxcx4IE/CYHw=
-github.com/ory/client-go v1.4.3/go.mod h1:uMJcdC0rVopCcxbDA6Cq2xUmW5M0h2X2XMvPCLmsSmg=
 github.com/ory/dockertest/v3 v3.10.0 h1:4K3z2VMe8Woe++invjaTB7VRyQXQy5UY+loujO4aNE4=
 github.com/ory/dockertest/v3 v3.10.0/go.mod h1:nr57ZbRWMqfsdGdFNLHz5jjNdDb7VVFnzAeW1n5N1Lg=
+github.com/ory/kratos-client-go v1.0.0 h1:mm32FMJrt4pBv2KEuhuNtiewJApc8c1Kmz0+WFHhOMA=
+github.com/ory/kratos-client-go v1.0.0/go.mod h1:a2Tl4cgQAxsjR59w3EfnH5hengabjXUHiEVDzdqiZI0=
 github.com/paulmach/orb v0.10.0 h1:guVYVqzxHE/CQ1KpfGO077TR0ATHSNjp4s6XGLn3W9s=
 github.com/paulmach/orb v0.10.0/go.mod h1:5mULz1xQfs3bmQm63QEJA6lNGujuRafwA5S/EnuLaLU=
 github.com/pborman/getopt v0.0.0-20170112200414-7148bc3a4c30/go.mod h1:85jBQOZwpVEaDAr341tbn15RS4fCAsIst0qp7i8ex1o=

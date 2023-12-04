@@ -38,7 +38,7 @@ type uploadDemoResponse struct {
 	DemoID uuid.UUID `json:"demo_id"`
 }
 
-func (d *demoV1) Upload(w http.ResponseWriter, r *http.Request) {
+func (d *demoV1) upload(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPut {
 		writeStatus(w, http.StatusMethodNotAllowed)
 		return

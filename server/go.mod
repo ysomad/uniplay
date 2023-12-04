@@ -13,7 +13,7 @@ require (
 	github.com/jackc/pgx/v5 v5.5.0
 	github.com/markus-wa/demoinfocs-golang/v4 v4.0.0
 	github.com/minio/minio-go/v7 v7.0.65
-	github.com/ory/client-go v1.4.3
+	github.com/ory/kratos-client-go v1.0.0
 	github.com/pressly/goose/v3 v3.16.0
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa

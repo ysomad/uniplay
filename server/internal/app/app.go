@@ -8,16 +8,12 @@ import (
 	"os/signal"
 	"syscall"
 
-	"connectrpc.com/connect"
-	"connectrpc.com/validate"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	ory "github.com/ory/client-go"
+	kratos "github.com/ory/kratos-client-go"
 
 	"github.com/ysomad/uniplay/server/internal/config"
-	v1 "github.com/ysomad/uniplay/server/internal/connect/cabin/v1"
-	"github.com/ysomad/uniplay/server/internal/connect/interceptor"
-	"github.com/ysomad/uniplay/server/internal/gen/api/proto/cabin/v1/cabinv1connect"
+	"github.com/ysomad/uniplay/server/internal/connectrpc"
 	"github.com/ysomad/uniplay/server/internal/httpapi"
 	"github.com/ysomad/uniplay/server/internal/pkg/httpserver"
 	"github.com/ysomad/uniplay/server/internal/postgres"
@@ -39,10 +35,10 @@ func Run(conf *config.Config, f Flags) {
 		os.Exit(1)
 	}
 
-	oryClient := ory.NewAPIClient(&ory.Configuration{
+	kratosClient := kratos.NewAPIClient(&kratos.Configuration{
 		UserAgent:  fmt.Sprintf("%s/%s/%s/go", conf.App.Name, conf.App.Ver, conf.App.Environment),
 		Debug:      conf.Kratos.Debug,
-		Servers:    []ory.ServerConfiguration{{URL: conf.Kratos.URL}},
+		Servers:    []kratos.ServerConfiguration{{URL: conf.Kratos.URL}},
 		HTTPClient: &http.Client{Timeout: conf.Kratos.ClientTimeout},
 	})
 
@@ -60,31 +56,27 @@ func Run(conf *config.Config, f Flags) {
 	slog.Debug("starting app", "config", conf)
 
 	// connect
-	validateInterceptor, err := validate.NewInterceptor()
+	connectmux, err := connectrpc.NewMux(connectrpc.Deps{
+		DemoStorage: demoStorage,
+		Kratos:      kratosClient,
+		OrgSchemaID: conf.Kratos.OrganizerSchemaID,
+	})
 	if err != nil {
-		slog.Error("protovalidate interceptor not created", "error", err)
+		slog.Error("connect rpc mux not created", "error", err.Error())
 		os.Exit(1)
 	}
 
-	demoServer := v1.NewDemoServer(demoStorage)
-
-	connectsrv := newConnectSrv(connectSrvDeps{
-		demosrv:             demoServer,
-		kratos:              oryClient,
-		conf:                conf.Connect,
-		kratosConf:          conf.Kratos,
-		validateInterceptor: validateInterceptor,
-	})
+	connectsrv := httpserver.New(connectmux, httpserver.WithAddr(conf.Connect.Host, conf.Connect.Port))
 
 	// http
 	stdmux := httpapi.NewMux(httpapi.Deps{
 		Minio:             minioClient,
-		Ory:               oryClient,
+		Kratos:            kratosClient,
 		DemoStorage:       demoStorage,
 		DemoBucket:        conf.ObjectStorage.DemoBucket,
 		OrganizerSchemaID: conf.Kratos.OrganizerSchemaID,
 	})
-	stdsrv := httpserver.New(stdmux, httpserver.WithHostPort(conf.HTTP.Host, conf.HTTP.Port))
+	stdsrv := httpserver.New(stdmux, httpserver.WithAddr(conf.HTTP.Host, conf.HTTP.Port))
 
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
@@ -106,24 +98,4 @@ func Run(conf *config.Config, f Flags) {
 	if err := connectsrv.Shutdown(); err != nil {
 		slog.Error("go error on connect server shutdown", "error", err.Error())
 	}
-}
-
-type connectSrvDeps struct {
-	demosrv             *v1.DemoServer
-	kratos              *ory.APIClient
-	conf                config.Connect
-	kratosConf          config.Kratos
-	validateInterceptor *validate.Interceptor
-}
-
-func newConnectSrv(deps connectSrvDeps) *httpserver.Server {
-	defer slog.Info("connect server started", "host", deps.conf.Host, "port", deps.conf.Port)
-	mux := http.NewServeMux()
-	path, handler := cabinv1connect.NewDemoServiceHandler(
-		deps.demosrv, connect.WithInterceptors(
-			deps.validateInterceptor,
-			interceptor.NewAuth(deps.kratos, deps.kratosConf),
-		))
-	mux.Handle(path, handler)
-	return httpserver.New(mux, httpserver.WithHostPort(deps.conf.Host, deps.conf.Port))
 }
