@@ -23,7 +23,6 @@ jobs:
       run: |
         cd server
         go build -v ./cmd/app
-        go build -v ./cmd/demoparser
 
   server-unit-tests:
     name: server / unit tests
