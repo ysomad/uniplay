@@ -12,7 +12,7 @@ import (
 
 var errIdentityNotMatch = errors.New("session identity not match")
 
-func newSessionAuth(client *kratos.APIClient, orgSchemaID string) func(http.Handler) http.Handler {
+func newAuthMiddleware(client *kratos.APIClient, orgSchemaID string) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			cookie, err := r.Cookie("ory_kratos_session")
