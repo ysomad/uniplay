@@ -1,8 +1,8 @@
 package app
 
 import (
+	"context"
 	"fmt"
-	"log"
 	"log/slog"
 	"net/http"
 	"os"
@@ -48,12 +48,17 @@ func Run(conf *config.Config, f Flags) {
 		HTTPClient: &http.Client{Timeout: conf.Kratos.ClientTimeout},
 	})
 
+	_, res, err := kratosClient.MetadataApi.IsReady(context.Background()).Execute()
+	if err != nil && res.StatusCode != http.StatusOK {
+		logFatal("kratos is not ready", err)
+	}
+
 	minioClient, err := minio.New(conf.ObjectStorage.Endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(conf.ObjectStorage.AccessKey, conf.ObjectStorage.SecretKey, ""),
 		Secure: conf.ObjectStorage.SSL,
 	})
 	if err != nil {
-		log.Fatal("minio client not created", err)
+		logFatal("minio client not created", err)
 	}
 
 	demoStorage := postgres.NewDemoStorage(pgClient)
