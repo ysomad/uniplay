@@ -22,7 +22,7 @@ kratos:
 
 object_storage:
   endpoint: 127.0.0.1:9000
-  demo_bucket: demo
+  demo_bucket: demos
   ssl: false
 
 postgres:
