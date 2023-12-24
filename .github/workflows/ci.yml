@@ -60,6 +60,7 @@ jobs:
         run: cd server
 
       - name: golangci-lint
-        uses: reviewdog/action-golangci-lint@v2
+        uses: golangci/golangci-lint-action@v3
         with:
-          workdir: server/
+          working-directory: server
+          args: --config=.golangci.yml
