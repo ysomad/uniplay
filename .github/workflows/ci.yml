@@ -60,4 +60,4 @@ jobs:
         run: cd server
 
       - name: golangci-lint
-        uses: reviewdog/action-golangci-lint@v3
+        uses: reviewdog/action-golangci-lint@v2
