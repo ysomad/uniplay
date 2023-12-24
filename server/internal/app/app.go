@@ -49,7 +49,7 @@ func Run(conf *config.Config, f Flags) {
 	})
 
 	_, res, err := kratosClient.MetadataApi.IsReady(context.Background()).Execute()
-	if err != nil && res.StatusCode != http.StatusOK {
+	if err != nil || res.StatusCode != http.StatusOK {
 		logFatal("kratos is not ready", err)
 	}
 
