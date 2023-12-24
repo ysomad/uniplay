@@ -47,9 +47,7 @@ type List[T any] struct {
 	HasNext bool
 }
 
-var (
-	errInvalidArgs = errors.New("paging: length of items should not equal more than pageSize + 1")
-)
+var errInvalidArgs = errors.New("paging: length of items should not equal more than pageSize + 1")
 
 func NewList[T any](items []T, pageSize int32) (List[T], error) {
 	if len(items) > int(pageSize) && len(items)-int(pageSize) != 1 {

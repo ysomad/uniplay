@@ -31,6 +31,7 @@ func newAuthMiddleware(client *kratos.APIClient, orgSchemaID string) func(http.H
 				writerError(w, http.StatusUnauthorized, err)
 				return
 			}
+			defer resp.Body.Close()
 
 			if resp.StatusCode != http.StatusOK {
 				writeStatus(w, http.StatusUnauthorized)

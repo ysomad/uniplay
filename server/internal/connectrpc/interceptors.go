@@ -16,8 +16,8 @@ import (
 
 var errIdentityNotMatch = errors.New("session identity not match")
 
-// sessionCookie returns kratos session cookie from header Cookie
-// TODO: WRITE TESTS
+// sessionCookie returns kratos session cookie from header Cookie.
+// TODO: WRITE TESTS.
 func sessionCookie(h http.Header) (string, error) {
 	cookieHdr := h.Get("Cookie")
 	if cookieHdr == "" {
@@ -55,6 +55,7 @@ func newAuthInterceptor(client *kratos.APIClient, orgSchemaID string) connect.Un
 			if err != nil {
 				return nil, connect.NewError(connect.CodeUnauthenticated, err)
 			}
+			defer resp.Body.Close()
 
 			if resp.StatusCode != http.StatusOK {
 				return nil, connect.NewError(connect.CodeUnauthenticated, err)

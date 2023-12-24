@@ -42,8 +42,9 @@ func (s *DemoStorage) Save(ctx context.Context, d domain.Demo) error {
 	}
 
 	if _, err := s.Pool.Exec(ctx, sql, args...); err != nil {
-		pgErr, ok := err.(*pgconn.PgError)
-		if ok && pgErr.Code == pgerrcode.UniqueViolation {
+		var pgErr *pgconn.PgError
+
+		if errors.As(err, &pgErr) && pgErr.Code == pgerrcode.UniqueViolation {
 			return fmt.Errorf("%w, demo_id = %s", ErrDemoAlreadyExists, d.ID)
 		}
 

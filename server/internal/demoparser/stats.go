@@ -169,7 +169,7 @@ func isWeapon(e common.EquipmentType) bool {
 
 type weaponStatsMap map[uint64]map[int]*weaponStats
 
-func (ws weaponStatsMap) add(steamID uint64, ev event, et common.EquipmentType, val int) {
+func (wsm weaponStatsMap) add(steamID uint64, ev event, et common.EquipmentType, val int) {
 	if ev == eventUnknown || val <= 0 {
 		slog.Error("weapon stat not added",
 			"steam_id", steamID,
@@ -183,22 +183,22 @@ func (ws weaponStatsMap) add(steamID uint64, ev event, et common.EquipmentType, 
 		return
 	}
 
-	_, ok := ws[steamID]
+	_, ok := wsm[steamID]
 	if !ok {
-		ws[steamID] = make(map[int]*weaponStats, 100)
+		wsm[steamID] = make(map[int]*weaponStats, 100)
 	}
 
 	weaponID := int(et)
 
-	if _, ok = ws[steamID][weaponID]; !ok {
-		ws[steamID][weaponID] = newWeaponStats()
+	if _, ok = wsm[steamID][weaponID]; !ok {
+		wsm[steamID][weaponID] = newWeaponStats()
 	}
 
-	ws[steamID][weaponID].add(ev, val)
+	wsm[steamID][weaponID].add(ev, val)
 }
 
-func (ws weaponStatsMap) incr(steamID uint64, ev event, et common.EquipmentType) {
-	ws.add(steamID, ev, et, 1)
+func (wsm weaponStatsMap) incr(steamID uint64, ev event, et common.EquipmentType) {
+	wsm.add(steamID, ev, et, 1)
 }
 
 // calculateUnobtainableStats calculates unobtainable stats from demo for every player weapon stats.

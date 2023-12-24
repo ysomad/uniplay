@@ -349,7 +349,6 @@ func Test_weaponStats_add(t *testing.T) {
 		hits    *hitStats
 		kills   *killStats
 		damage  dmgStats
-		deaths  int
 		assists int
 		shots   int
 	}

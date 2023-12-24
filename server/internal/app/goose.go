@@ -1,7 +1,7 @@
 package app
 
 import (
-	_ "github.com/jackc/pgx/v5/stdlib"
+	_ "github.com/jackc/pgx/v5/stdlib" // for goose running migrations via pgx
 	"github.com/pressly/goose/v3"
 )
 

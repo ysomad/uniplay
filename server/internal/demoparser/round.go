@@ -43,7 +43,7 @@ func (rh roundHistory) cleanup() []*round {
 // start appends new round into rounds.
 // currTime is time elapsed since demo start.
 func (rh *roundHistory) start(t, ct []*common.Player, currTime time.Duration) {
-	if len(t) <= 0 || len(ct) <= 0 {
+	if len(t) == 0 || len(ct) == 0 {
 		slog.Info("skipping round start for empty team", "t_players", t, "ct_players", ct)
 		return
 	}

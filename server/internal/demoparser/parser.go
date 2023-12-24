@@ -13,7 +13,7 @@ import (
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/msgs2"
 )
 
-type parser struct {
+type Parser struct {
 	demoinfocs.Parser
 	playerStats playerStatsMap
 	weaponStats weaponStatsMap
@@ -24,8 +24,8 @@ type parser struct {
 	demoID      uuid.UUID
 }
 
-func New(demo Demo) (*parser, error) {
-	p := &parser{
+func New(demo Demo) (*Parser, error) {
+	p := &Parser{
 		Parser:      demoinfocs.NewParser(demo),
 		demoID:      demo.ID,
 		demosize:    demo.Size,
@@ -41,7 +41,7 @@ func New(demo Demo) (*parser, error) {
 	return p, nil
 }
 
-func (p *parser) Parse() error {
+func (p *Parser) Parse() error {
 	if err := p.ParseToEnd(); err != nil {
 		return fmt.Errorf("demo not parsed: %w", err)
 	}
@@ -54,7 +54,7 @@ func (p *parser) Parse() error {
 		return err
 	}
 
-	if err = os.WriteFile("playerstats.json", playerStatsBytes, 0o644); err != nil {
+	if err := os.WriteFile("playerstats.json", playerStatsBytes, 0o600); err != nil {
 		return err
 	}
 
@@ -63,7 +63,7 @@ func (p *parser) Parse() error {
 		return err
 	}
 
-	if err = os.WriteFile("weaponstats.json", weaponStatsBytes, 0o644); err != nil {
+	if err := os.WriteFile("weaponstats.json", weaponStatsBytes, 0o600); err != nil {
 		return err
 	}
 
@@ -72,7 +72,7 @@ func (p *parser) Parse() error {
 		return err
 	}
 
-	if err = os.WriteFile("rounds.json", roundsBytes, 0o644); err != nil {
+	if err := os.WriteFile("rounds.json", roundsBytes, 0o600); err != nil {
 		return err
 	}
 
@@ -81,14 +81,14 @@ func (p *parser) Parse() error {
 		return err
 	}
 
-	if err = os.WriteFile("flashbangs.json", flashbangsBytes, 0o644); err != nil {
+	if err := os.WriteFile("flashbangs.json", flashbangsBytes, 0o600); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (p *parser) attachHandlers() {
+func (p *Parser) attachHandlers() {
 	p.RegisterEventHandler(p.killHandler)
 	p.RegisterEventHandler(p.hurtHandler)
 	p.RegisterEventHandler(p.weaponFireHandler)
@@ -110,7 +110,7 @@ func (p *parser) attachHandlers() {
 	})
 }
 
-func (p *parser) roundStartHandler(e events.RoundStart) {
+func (p *Parser) roundStartHandler(_ events.RoundStart) {
 	gs := p.GameState()
 
 	if p.gameState.knifeRound || !gs.IsMatchStarted() {
@@ -125,7 +125,7 @@ func (p *parser) roundStartHandler(e events.RoundStart) {
 	slog.Info("round started", "num", p.rounds.currNum())
 }
 
-func (p *parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
+func (p *Parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
 	gs := p.GameState()
 	allPlayers := append(gs.TeamTerrorists().Members(), gs.TeamCounterTerrorists().Members()...)
 	p.gameState.detectKnifeRound(allPlayers)
@@ -143,7 +143,7 @@ func (p *parser) roundFreezetimeEndHandler(_ events.RoundFreezetimeEnd) {
 	round.setWeapons(gs.TeamTerrorists().Members(), gs.TeamCounterTerrorists().Members())
 }
 
-func (p *parser) roundEndHandler(e events.RoundEnd) {
+func (p *Parser) roundEndHandler(e events.RoundEnd) {
 	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
@@ -156,7 +156,7 @@ func (p *parser) roundEndHandler(e events.RoundEnd) {
 	slog.Info("round ended", "num", p.rounds.currNum())
 }
 
-func (p *parser) killHandler(e events.Kill) {
+func (p *Parser) killHandler(e events.Kill) {
 	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
@@ -222,7 +222,7 @@ func (p *parser) killHandler(e events.Kill) {
 	}
 }
 
-func (p *parser) hurtHandler(e events.PlayerHurt) {
+func (p *Parser) hurtHandler(e events.PlayerHurt) {
 	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
@@ -255,7 +255,7 @@ func (p *parser) hurtHandler(e events.PlayerHurt) {
 	}
 }
 
-func (p *parser) weaponFireHandler(e events.WeaponFire) {
+func (p *Parser) weaponFireHandler(e events.WeaponFire) {
 	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
@@ -280,7 +280,7 @@ func (p *parser) weaponFireHandler(e events.WeaponFire) {
 	p.weaponStats.incr(e.Shooter.SteamID64, eventShot, e.Weapon.Type)
 }
 
-func (p *parser) bombPlantedHandler(e events.BombPlanted) {
+func (p *Parser) bombPlantedHandler(e events.BombPlanted) {
 	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
@@ -293,7 +293,7 @@ func (p *parser) bombPlantedHandler(e events.BombPlanted) {
 	p.playerStats.incr(e.Player.SteamID64, eventBombPlanted)
 }
 
-func (p *parser) bombDefusedHandler(e events.BombDefused) {
+func (p *Parser) bombDefusedHandler(e events.BombDefused) {
 	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
@@ -306,7 +306,7 @@ func (p *parser) bombDefusedHandler(e events.BombDefused) {
 	p.playerStats.incr(e.Player.SteamID64, eventBombDefused)
 }
 
-func (p *parser) playerFlashedHandler(e events.PlayerFlashed) {
+func (p *Parser) playerFlashedHandler(e events.PlayerFlashed) {
 	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}
@@ -342,7 +342,7 @@ func (p *parser) playerFlashedHandler(e events.PlayerFlashed) {
 	}
 }
 
-func (p *parser) roundMVPAnnouncementHandler(e events.RoundMVPAnnouncement) {
+func (p *Parser) roundMVPAnnouncementHandler(e events.RoundMVPAnnouncement) {
 	if p.gameState.knifeRound || !p.GameState().IsMatchStarted() {
 		return
 	}

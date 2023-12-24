@@ -98,7 +98,7 @@ func (f Filter) getConditions() sq.Sqlizer {
 		return f.condition()
 	}
 
-	var conditions []sq.Sqlizer
+	conditions := make([]sq.Sqlizer, 0, len(f.filters)+1)
 
 	conditions = append(conditions, f.condition())
 

@@ -1,7 +1,7 @@
 package demoparser
 
 import (
-	"crypto/md5"
+	"crypto/md5" //nolint:gosec // its weak but ok for the project
 	"errors"
 	"fmt"
 	"io"
@@ -35,7 +35,7 @@ func NewDemo(file io.ReadSeeker, header *multipart.FileHeader) (Demo, error) {
 		return Demo{}, errors.New("demo must have .dem file extension")
 	}
 
-	hash := md5.New()
+	hash := md5.New() //nolint:gosec // using weak primitive lmao
 
 	if _, err := io.Copy(hash, file); err != nil {
 		return Demo{}, err

@@ -41,7 +41,7 @@ const (
 	eventHitLeg
 )
 
-func (p *parser) hitgroupToEvent(hg events.HitGroup) event {
+func (p *Parser) hitgroupToEvent(hg events.HitGroup) event {
 	switch hg {
 	case events.HitGroupHead:
 		return eventHitHead

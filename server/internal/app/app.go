@@ -52,6 +52,7 @@ func Run(conf *config.Config, f Flags) {
 	if err != nil || res.StatusCode != http.StatusOK {
 		logFatal("kratos is not ready", err)
 	}
+	defer res.Body.Close()
 
 	minioClient, err := minio.New(conf.ObjectStorage.Endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(conf.ObjectStorage.AccessKey, conf.ObjectStorage.SecretKey, ""),
