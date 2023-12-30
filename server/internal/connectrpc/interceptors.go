@@ -17,11 +17,6 @@ var errKratosUnsucessfulResponse = errors.New("identity service unsuccessful res
 // sessionCookie returns kratos session cookie from header Cookie.
 // TODO: WRITE TESTS.
 func sessionCookie(h http.Header) (string, error) {
-	cookieHdr := h.Get("Cookie")
-	if cookieHdr == "" {
-		return "", errors.New("cookie header not found")
-	}
-
 	req := http.Request{Header: h}
 
 	cookie, err := req.Cookie(kratosx.SessionCookie)
