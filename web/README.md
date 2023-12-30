@@ -4,7 +4,7 @@
 
 [Docs](https://connectrpc.com/docs/web/generating-code)
 
-Simply run: `npm run connect-gen`
+Simply run: `npm run generate`
 
 
 ## Recommended IDE Setup

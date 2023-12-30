@@ -48,27 +48,22 @@ export class Demo extends Message<Demo> {
   id = "";
 
   /**
-   * @generated from field: string identity_id = 2;
-   */
-  identityId = "";
-
-  /**
-   * @generated from field: cabin.v1.DemoStatus status = 3;
+   * @generated from field: cabin.v1.DemoStatus status = 2;
    */
   status = DemoStatus.DEMO_STATUS_UNSPECIFIED;
 
   /**
-   * @generated from field: string reason = 4;
+   * @generated from field: string reason = 3;
    */
   reason = "";
 
   /**
-   * @generated from field: google.protobuf.Timestamp uploaded_at = 5;
+   * @generated from field: google.protobuf.Timestamp uploaded_at = 4;
    */
   uploadedAt?: Timestamp;
 
   /**
-   * @generated from field: google.protobuf.Timestamp processed_at = 6;
+   * @generated from field: google.protobuf.Timestamp processed_at = 5;
    */
   processedAt?: Timestamp;
 
@@ -81,11 +76,10 @@ export class Demo extends Message<Demo> {
   static readonly typeName = "cabin.v1.Demo";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "identity_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "status", kind: "enum", T: proto3.getEnumType(DemoStatus) },
-    { no: 4, name: "reason", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "uploaded_at", kind: "message", T: Timestamp },
-    { no: 6, name: "processed_at", kind: "message", T: Timestamp },
+    { no: 2, name: "status", kind: "enum", T: proto3.getEnumType(DemoStatus) },
+    { no: 3, name: "reason", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "uploaded_at", kind: "message", T: Timestamp },
+    { no: 5, name: "processed_at", kind: "message", T: Timestamp },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Demo {
@@ -110,6 +104,8 @@ export class Demo extends Message<Demo> {
  */
 export class GetDemoRequest extends Message<GetDemoRequest> {
   /**
+   * required
+   *
    * @generated from field: string demo_id = 1;
    */
   demoId = "";
@@ -183,6 +179,11 @@ export class GetDemoResponse extends Message<GetDemoResponse> {
  * @generated from message cabin.v1.ListDemosRequest
  */
 export class ListDemosRequest extends Message<ListDemosRequest> {
+  /**
+   * @generated from field: cabin.v1.DemoStatus status = 1;
+   */
+  status = DemoStatus.DEMO_STATUS_UNSPECIFIED;
+
   constructor(data?: PartialMessage<ListDemosRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -191,6 +192,7 @@ export class ListDemosRequest extends Message<ListDemosRequest> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "cabin.v1.ListDemosRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "enum", T: proto3.getEnumType(DemoStatus) },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListDemosRequest {
@@ -214,6 +216,11 @@ export class ListDemosRequest extends Message<ListDemosRequest> {
  * @generated from message cabin.v1.ListDemosResponse
  */
 export class ListDemosResponse extends Message<ListDemosResponse> {
+  /**
+   * @generated from field: repeated cabin.v1.Demo demos = 1;
+   */
+  demos: Demo[] = [];
+
   constructor(data?: PartialMessage<ListDemosResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -222,6 +229,7 @@ export class ListDemosResponse extends Message<ListDemosResponse> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "cabin.v1.ListDemosResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "demos", kind: "message", T: Demo, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListDemosResponse {

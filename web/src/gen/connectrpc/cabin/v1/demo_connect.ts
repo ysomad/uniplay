@@ -23,6 +23,8 @@ export const DemoService = {
       idempotency: MethodIdempotency.NoSideEffects,
     },
     /**
+     * ListDemos returns demos list of current user.
+     *
      * @generated from rpc cabin.v1.DemoService.ListDemos
      */
     listDemos: {
