@@ -5,7 +5,6 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
-	"strings"
 
 	"connectrpc.com/connect"
 	kratos "github.com/ory/kratos-client-go"
@@ -20,24 +19,17 @@ var errKratosUnsucessfulResponse = errors.New("identity service unsuccessful res
 func sessionCookie(h http.Header) (string, error) {
 	cookieHdr := h.Get("Cookie")
 	if cookieHdr == "" {
-		return "", errors.New("not found cookie header")
+		return "", errors.New("cookie header not found")
 	}
 
-	for _, cookie := range strings.Split(cookieHdr, "; ") {
-		parts := strings.SplitN(cookie, "=", 2)
+	req := http.Request{Header: h}
 
-		slog.Debug("cookie parts", "val", parts)
-
-		if len(parts) == 2 && parts[0] == kratosx.SessionCookie {
-			if cookie == "" {
-				return "", errors.New("empty session cookie")
-			}
-
-			return cookie, nil
-		}
+	cookie, err := req.Cookie(kratosx.SessionCookie)
+	if err != nil {
+		return "", errors.New("session cookie not found")
 	}
 
-	return "", errors.New("session cookie not found")
+	return cookie.String(), nil
 }
 
 // newOrganizerInterceptor creates connect interceptor which checking current user against organizer schema id.

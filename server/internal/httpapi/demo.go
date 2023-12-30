@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	demoMaxSize       = 200 << 20
+	demoMaxSize       = 300 << 20
 	demoMemoryMaxSize = 50 << 20
 	demoTTL           = time.Hour * 24 * 7
 )
@@ -47,7 +47,7 @@ func (d *demoV1) upload(w http.ResponseWriter, r *http.Request) {
 	r.Body = http.MaxBytesReader(w, r.Body, demoMaxSize)
 
 	if err := r.ParseMultipartForm(demoMemoryMaxSize); err != nil {
-		writerError(w, http.StatusBadRequest,
+		writerError(w, http.StatusUnprocessableEntity,
 			fmt.Errorf("%w, must be equal or less than %dMB", errDemoTooLarge, demoMaxSize/1024/1024))
 		return
 	}
