@@ -2,8 +2,6 @@ package domain
 
 import (
 	"time"
-
-	"github.com/google/uuid"
 )
 
 type DemoStatus string
@@ -29,5 +27,5 @@ type Demo struct {
 	Status      DemoStatus
 	Reason      string
 	IdentityID  string // uploader of a demo
-	ID          uuid.UUID
+	ID          string
 }

@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/minio/minio-go/v7"
 
 	"github.com/ysomad/uniplay/server/internal/demoparser"
@@ -35,7 +34,7 @@ type demoV1 struct {
 }
 
 type uploadDemoResponse struct {
-	DemoID uuid.UUID `json:"demo_id"`
+	DemoID string `json:"demo_id"`
 }
 
 func (d *demoV1) upload(w http.ResponseWriter, r *http.Request) {

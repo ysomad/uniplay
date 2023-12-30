@@ -6,7 +6,6 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/google/uuid"
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs"
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/common"
 	"github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs/events"
@@ -21,7 +20,7 @@ type Parser struct {
 	gameState   *gameState
 	rounds      roundHistory
 	demosize    int64
-	demoID      uuid.UUID
+	demoID      string
 }
 
 func New(demo Demo) (*Parser, error) {

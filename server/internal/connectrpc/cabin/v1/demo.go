@@ -36,7 +36,7 @@ func (s *DemoServer) GetDemo(ctx context.Context, r *connect.Request[pb.GetDemoR
 
 	return connect.NewResponse(&pb.GetDemoResponse{
 		Demo: &pb.Demo{
-			Id:          demo.ID.String(),
+			Id:          demo.ID,
 			Status:      pb.DemoStatus(pb.DemoStatus_value[string(demo.Status)]),
 			Reason:      demo.Reason,
 			UploadedAt:  timestamppb.New(demo.UploadedAt),
@@ -55,7 +55,7 @@ func (s *DemoServer) ListDemos(ctx context.Context, r *connect.Request[pb.ListDe
 
 	for i, d := range demos {
 		res.Msg.Demos[i] = &pb.Demo{
-			Id:          d.ID.String(),
+			Id:          d.ID,
 			Status:      pb.DemoStatus(pb.DemoStatus_value[string(d.Status)]),
 			Reason:      d.Reason,
 			UploadedAt:  timestamppb.New(d.UploadedAt),

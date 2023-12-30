@@ -13,7 +13,7 @@ import (
 
 type Demo struct {
 	io.Reader
-	ID   uuid.UUID
+	ID   string
 	Size int64
 }
 
@@ -47,7 +47,7 @@ func NewDemo(file io.ReadSeeker, header *multipart.FileHeader) (Demo, error) {
 
 	return Demo{
 		Reader: file,
-		ID:     uuid.NewMD5(uuid.Nil, hash.Sum(nil)),
+		ID:     uuid.NewMD5(uuid.Nil, hash.Sum(nil)).String(),
 		Size:   header.Size,
 	}, nil
 }
