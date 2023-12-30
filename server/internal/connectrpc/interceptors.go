@@ -21,7 +21,7 @@ func sessionCookie(h http.Header) (string, error) {
 
 	cookie, err := req.Cookie(kratosx.SessionCookie)
 	if err != nil {
-		return "", errors.New("session cookie not found")
+		return "", err
 	}
 
 	return cookie.String(), nil
