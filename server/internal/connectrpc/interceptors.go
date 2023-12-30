@@ -3,7 +3,6 @@ package connectrpc
 import (
 	"context"
 	"errors"
-	"fmt"
 	"log/slog"
 	"net/http"
 	"strings"
@@ -11,14 +10,10 @@ import (
 	"connectrpc.com/connect"
 	kratos "github.com/ory/kratos-client-go"
 
-	"github.com/ysomad/uniplay/server/internal/kratosctx"
+	"github.com/ysomad/uniplay/server/internal/kratosx"
 )
 
-var (
-	errIdentityNotMatch = errors.New("session identity not match")
-	errUnauthenticated  = errors.New("unauthenticated")
-	errInactiveSession  = errors.New("inactive session")
-)
+var errKratosUnsucessfulResponse = errors.New("identity service unsuccessful response")
 
 // sessionCookie returns kratos session cookie from header Cookie.
 // TODO: WRITE TESTS.
@@ -33,10 +28,11 @@ func sessionCookie(h http.Header) (string, error) {
 
 		slog.Debug("cookie parts", "val", parts)
 
-		if len(parts) == 2 && parts[0] == "ory_kratos_session" {
+		if len(parts) == 2 && parts[0] == kratosx.SessionCookie {
 			if cookie == "" {
 				return "", errors.New("empty session cookie")
 			}
+
 			return cookie, nil
 		}
 	}
@@ -44,7 +40,8 @@ func sessionCookie(h http.Header) (string, error) {
 	return "", errors.New("session cookie not found")
 }
 
-func newAuthInterceptor(client *kratos.APIClient, orgSchemaID string) connect.UnaryInterceptorFunc {
+// newOrganizerInterceptor creates connect interceptor which checking current user against organizer schema id.
+func newOrganizerInterceptor(client *kratos.APIClient, orgSchemaID string) connect.UnaryInterceptorFunc {
 	return connect.UnaryInterceptorFunc(func(next connect.UnaryFunc) connect.UnaryFunc {
 		return connect.UnaryFunc(func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
 			cookie, err := sessionCookie(req.Header())
@@ -57,26 +54,30 @@ func newAuthInterceptor(client *kratos.APIClient, orgSchemaID string) connect.Un
 				Cookie(cookie).
 				Execute()
 			if err != nil {
-				return nil, connect.NewError(connect.CodeUnauthenticated, err)
+				slog.Error("kratos request error", "error", err)
+				return nil, connect.NewError(connect.CodeUnauthenticated, errKratosUnsucessfulResponse)
 			}
 			defer resp.Body.Close()
 
 			if resp.StatusCode != http.StatusOK {
-				return nil, connect.NewError(connect.CodeUnauthenticated, errUnauthenticated)
+				slog.Error("kratos unsuccessful status", "status", resp.StatusCode)
+				return nil, connect.NewError(connect.CodeUnauthenticated, errKratosUnsucessfulResponse)
 			}
 
 			if !session.GetActive() {
-				return nil, connect.NewError(connect.CodeUnauthenticated, errInactiveSession)
+				return nil, connect.NewError(connect.CodeUnauthenticated, errors.New("inactive session"))
 			}
 
 			identity := session.GetIdentity()
 
 			if identity.SchemaId != orgSchemaID {
-				return nil, connect.NewError(connect.CodePermissionDenied,
-					fmt.Errorf("%w, must be %s", errIdentityNotMatch, orgSchemaID))
+				slog.Info("attempt to perform organizer action",
+					"curr_schema_id", identity.SchemaId,
+					"want_schema_id", orgSchemaID)
+				return nil, connect.NewError(connect.CodePermissionDenied, errors.New("permission denied"))
 			}
 
-			ctx = kratosctx.WithIdentityID(ctx, identity.Id)
+			ctx = kratosx.WithIdentityID(ctx, identity.Id)
 			return next(ctx, req)
 		})
 	})

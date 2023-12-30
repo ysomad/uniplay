@@ -27,7 +27,7 @@ func NewMux(d Deps) (*http.ServeMux, error) {
 		return nil, fmt.Errorf("validate interceptor not created: %w", err)
 	}
 
-	authInterceptor := newAuthInterceptor(d.Kratos, d.OrgSchemaID)
+	authInterceptor := newOrganizerInterceptor(d.Kratos, d.OrgSchemaID)
 	demosrv := cabinv1.NewDemoServer(d.DemoStorage)
 
 	path, handler := cabinv1connect.NewDemoServiceHandler(demosrv, connect.WithInterceptors(

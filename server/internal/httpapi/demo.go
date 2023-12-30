@@ -13,7 +13,7 @@ import (
 
 	"github.com/ysomad/uniplay/server/internal/demoparser"
 	"github.com/ysomad/uniplay/server/internal/domain"
-	appctx "github.com/ysomad/uniplay/server/internal/kratosctx"
+	kratosx "github.com/ysomad/uniplay/server/internal/kratosx"
 	"github.com/ysomad/uniplay/server/internal/postgres"
 )
 
@@ -65,7 +65,7 @@ func (d *demoV1) upload(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
-	identityID := appctx.IdentityID(ctx)
+	identityID := kratosx.IdentityID(ctx)
 	filename := demo.Filename()
 	now := time.Now()
 

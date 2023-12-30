@@ -24,10 +24,10 @@ func NewMux(d Deps) *http.ServeMux {
 		demo:   d.DemoStorage,
 	}
 
-	kratosmw := newAuthMiddleware(d.Kratos, d.OrganizerSchemaID)
+	organizerMW := newOrganizerMiddleware(d.Kratos, d.OrganizerSchemaID)
 
 	mux := http.NewServeMux()
-	mux.Handle("/v1/demos", kratosmw(http.HandlerFunc(demov1.upload)))
+	mux.Handle("/v1/demos", organizerMW(http.HandlerFunc(demov1.upload)))
 
 	return mux
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/ysomad/uniplay/server/internal/domain"
 	pb "github.com/ysomad/uniplay/server/internal/gen/proto/cabin/v1"
 	connectpb "github.com/ysomad/uniplay/server/internal/gen/proto/cabin/v1/cabinv1connect"
-	appctx "github.com/ysomad/uniplay/server/internal/kratosctx"
+	"github.com/ysomad/uniplay/server/internal/kratosx"
 	"github.com/ysomad/uniplay/server/internal/postgres"
 )
 
@@ -25,7 +25,7 @@ func NewDemoServer(s postgres.DemoStorage) *DemoServer {
 }
 
 func (s *DemoServer) GetDemo(ctx context.Context, r *connect.Request[pb.GetDemoRequest]) (*connect.Response[pb.GetDemoResponse], error) {
-	demo, err := s.demo.GetOne(ctx, r.Msg.DemoId, appctx.IdentityID(ctx))
+	demo, err := s.demo.GetOne(ctx, r.Msg.DemoId, kratosx.IdentityID(ctx))
 	if err != nil {
 		if errors.Is(err, postgres.ErrDemoNotFound) {
 			return nil, connect.NewError(connect.CodeNotFound, err)
@@ -46,7 +46,7 @@ func (s *DemoServer) GetDemo(ctx context.Context, r *connect.Request[pb.GetDemoR
 }
 
 func (s *DemoServer) ListDemos(ctx context.Context, r *connect.Request[pb.ListDemosRequest]) (*connect.Response[pb.ListDemosResponse], error) {
-	demos, err := s.demo.GetAll(ctx, appctx.IdentityID(ctx), domain.DemoStatus(r.Msg.Status.String()))
+	demos, err := s.demo.GetAll(ctx, kratosx.IdentityID(ctx), domain.DemoStatus(r.Msg.Status.String()))
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}

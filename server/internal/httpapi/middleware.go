@@ -7,15 +7,16 @@ import (
 
 	kratos "github.com/ory/kratos-client-go"
 
-	"github.com/ysomad/uniplay/server/internal/kratosctx"
+	"github.com/ysomad/uniplay/server/internal/kratosx"
 )
 
 var errIdentityNotMatch = errors.New("session identity not match")
 
-func newAuthMiddleware(client *kratos.APIClient, orgSchemaID string) func(http.Handler) http.Handler {
+// newOrganizerMiddleware returns middleware which is authorizing request against kratos schema id.
+func newOrganizerMiddleware(client *kratos.APIClient, orgSchemaID string) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			cookie, err := r.Cookie("ory_kratos_session")
+			cookie, err := r.Cookie(kratosx.SessionCookie)
 			if err != nil {
 				writerError(w, http.StatusUnauthorized, err)
 				return
@@ -51,7 +52,7 @@ func newAuthMiddleware(client *kratos.APIClient, orgSchemaID string) func(http.H
 				return
 			}
 
-			ctx = kratosctx.WithIdentityID(ctx, identity.Id)
+			ctx = kratosx.WithIdentityID(ctx, identity.Id)
 			r = r.WithContext(ctx)
 			next.ServeHTTP(w, r)
 		})
