@@ -12,7 +12,7 @@ import (
 	"github.com/ysomad/uniplay/server/internal/kratosx"
 )
 
-var errKratosUnsucessfulResponse = errors.New("identity service unsuccessful response")
+var errKratosUnsuccessfulResponse = errors.New("identity service unsuccessful response")
 
 // sessionCookie returns kratos session cookie from header Cookie.
 func sessionCookie(h http.Header) (string, error) {
@@ -41,13 +41,13 @@ func newOrganizerInterceptor(client *kratos.APIClient, orgSchemaID string) conne
 				Execute()
 			if err != nil {
 				slog.Error("kratos request error", "error", err)
-				return nil, connect.NewError(connect.CodeUnauthenticated, errKratosUnsucessfulResponse)
+				return nil, connect.NewError(connect.CodeUnauthenticated, errKratosUnsuccessfulResponse)
 			}
 			defer resp.Body.Close()
 
 			if resp.StatusCode != http.StatusOK {
 				slog.Error("kratos unsuccessful status", "status", resp.StatusCode)
-				return nil, connect.NewError(connect.CodeUnauthenticated, errKratosUnsucessfulResponse)
+				return nil, connect.NewError(connect.CodeUnauthenticated, errKratosUnsuccessfulResponse)
 			}
 
 			if !session.GetActive() {
