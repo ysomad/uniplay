@@ -26,6 +26,9 @@ run-migrate:
 	go mod tidy && go mod download && \
 	go run ./cmd/app -migrate
 
+.PHONY: dry-run
+dry-run: goose-reset run-migrate
+
 .PHONY: lint
 lint:
 	golangci-lint run
@@ -59,5 +62,6 @@ goose-reset:
 goose-status:
 	goose -dir migrations status
 
-.PHONY: dry-run
-dry-run: goose-reset run-migrate
+.PHONY:
+generate:
+	buf generate api/proto

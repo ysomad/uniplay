@@ -8,8 +8,8 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/ysomad/uniplay/server/internal/domain"
-	pb "github.com/ysomad/uniplay/server/internal/gen/api/proto/cabin/v1"
-	connectpb "github.com/ysomad/uniplay/server/internal/gen/api/proto/cabin/v1/cabinv1connect"
+	pb "github.com/ysomad/uniplay/server/internal/gen/proto/cabin/v1"
+	connectpb "github.com/ysomad/uniplay/server/internal/gen/proto/cabin/v1/cabinv1connect"
 	appctx "github.com/ysomad/uniplay/server/internal/kratosctx"
 	"github.com/ysomad/uniplay/server/internal/postgres"
 )

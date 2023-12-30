@@ -14,7 +14,11 @@ import (
 	"github.com/ysomad/uniplay/server/internal/kratosctx"
 )
 
-var errIdentityNotMatch = errors.New("session identity not match")
+var (
+	errIdentityNotMatch = errors.New("session identity not match")
+	errUnauthenticated  = errors.New("unauthenticated")
+	errInactiveSession  = errors.New("inactive session")
+)
 
 // sessionCookie returns kratos session cookie from header Cookie.
 // TODO: WRITE TESTS.
@@ -58,11 +62,11 @@ func newAuthInterceptor(client *kratos.APIClient, orgSchemaID string) connect.Un
 			defer resp.Body.Close()
 
 			if resp.StatusCode != http.StatusOK {
-				return nil, connect.NewError(connect.CodeUnauthenticated, err)
+				return nil, connect.NewError(connect.CodeUnauthenticated, errUnauthenticated)
 			}
 
 			if !session.GetActive() {
-				return nil, connect.NewError(connect.CodeUnauthenticated, err)
+				return nil, connect.NewError(connect.CodeUnauthenticated, errInactiveSession)
 			}
 
 			identity := session.GetIdentity()
@@ -73,7 +77,6 @@ func newAuthInterceptor(client *kratos.APIClient, orgSchemaID string) connect.Un
 			}
 
 			ctx = kratosctx.WithIdentityID(ctx, identity.Id)
-
 			return next(ctx, req)
 		})
 	})

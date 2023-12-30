@@ -9,7 +9,7 @@ import (
 	kratos "github.com/ory/kratos-client-go"
 
 	cabinv1 "github.com/ysomad/uniplay/server/internal/connectrpc/cabin/v1"
-	"github.com/ysomad/uniplay/server/internal/gen/api/proto/cabin/v1/cabinv1connect"
+	"github.com/ysomad/uniplay/server/internal/gen/proto/cabin/v1/cabinv1connect"
 	"github.com/ysomad/uniplay/server/internal/postgres"
 )
 

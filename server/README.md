@@ -1,5 +1,13 @@
 # Uniplay
 
+## Generate connect code
+```sh
+make generate
+```
+
+## Migrations
+See `Makefile`
+
 ## Local development
 
 Swagger will be served at `localhost:8080/v1/docs`;
