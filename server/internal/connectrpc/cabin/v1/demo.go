@@ -46,7 +46,9 @@ func (s *DemoServer) GetDemo(ctx context.Context, r *connect.Request[pb.GetDemoR
 }
 
 func (s *DemoServer) ListDemos(ctx context.Context, r *connect.Request[pb.ListDemosRequest]) (*connect.Response[pb.ListDemosResponse], error) {
-	demos, err := s.demo.GetAll(ctx, kratosx.IdentityID(ctx), domain.DemoStatus(r.Msg.Status.String()))
+	demos, err := s.demo.GetAll(ctx,
+		kratosx.IdentityID(ctx),
+		domain.DemoStatus(r.Msg.Status.String()))
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
@@ -61,6 +63,7 @@ func (s *DemoServer) ListDemos(ctx context.Context, r *connect.Request[pb.ListDe
 			UploadedAt:  timestamppb.New(d.UploadedAt),
 			ProcessedAt: timestamppb.New(d.ProcessedAt),
 		}
+
 	}
 
 	return res, nil

@@ -1,0 +1,9 @@
+with-expecter: true
+packages:
+    github.com/markus-wa/demoinfocs-golang/v4/pkg/demoinfocs:
+        config:
+          dir: internal/demoparser/mock
+          package: mock
+        interfaces:
+            Parser:
+            GameState:
