@@ -6,7 +6,6 @@ import (
 	"mime/multipart"
 	"testing"
 
-	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -167,7 +166,7 @@ func TestNewDemo(t *testing.T) {
 			},
 			want: Demo{
 				Reader: newTestReadSeeker([]byte("success")),
-				ID:     uuid.UUID{0xec, 0x5b, 0x2d, 0xf0, 0xef, 0xa4, 0x33, 0x9f, 0xbe, 0xbb, 0xf0, 0x52, 0x73, 0xcc, 0xbf, 0x3a},
+				ID:     "ec5b2df0-efa4-339f-bebb-f05273ccbf3a",
 				Size:   10000,
 			},
 			wantErr: false,
