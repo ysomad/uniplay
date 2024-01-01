@@ -63,7 +63,6 @@ func (s *DemoServer) ListDemos(ctx context.Context, r *connect.Request[pb.ListDe
 			UploadedAt:  timestamppb.New(d.UploadedAt),
 			ProcessedAt: timestamppb.New(d.ProcessedAt),
 		}
-
 	}
 
 	return res, nil
