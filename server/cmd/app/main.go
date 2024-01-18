@@ -15,7 +15,7 @@ func main() {
 
 	flag.BoolVar(&flags.Migrate, "migrate", false, "run migrations on start")
 	flag.StringVar(&flags.MigrationsDir, "migrations-dir", "./migrations", "path to migrations directory")
-	flag.StringVar(&flags.ConfigPath, "conf", "./configs/local.yml", "path to yml config")
+	flag.StringVar(&flags.ConfigPath, "conf", "./configs/local.toml", "path to app config")
 	flag.Parse()
 
 	var conf config.Config

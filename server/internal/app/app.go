@@ -31,6 +31,10 @@ func Run(conf *config.Config, f Flags) {
 		Level: conf.Log.SlogLevel(),
 	})))
 
+	if conf.App.Environment == "local" {
+		slog.Debug("launching with config", "conf", conf)
+	}
+
 	if f.Migrate {
 		mustMigrate(conf.PG.URL, f.MigrationsDir)
 	}
